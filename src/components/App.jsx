@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import Signup from './signup-page.jsx/signup-main.jsx';
-import '../App.css'
 
+import signUpFrame from '../../src/assets/Frame 3289.svg';
+import '../App.css';
+import SignAuthenticationPagesup from './signup-page.jsx/signup-main';
 function App() {
     return (
-        <Signup />
+        <div>
+            <SignAuthenticationPagesup currentScreen={'SIGNIN'} pictureURL={signUpFrame} />
+        </div>
     )
 }
 

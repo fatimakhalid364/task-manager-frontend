@@ -1,11 +1,12 @@
 import React from 'react';
 import taskManagerLogo from '../.././assets/Frame 3.svg';
-import InputFields from './input-fields.jsx';
 import CheckBox from './checkbox-area.jsx';
-import SubmitButton from './submit-button.jsx';
 import GoogleSSO from './google-signin.jsx';
+import InputFields from './input-fields.jsx';
+import SubmitButton from './submit-button.jsx';
 
-function CreateAccountForm(){
+function CreateAccountForm({ currentScreen }) {
+    console.log("current screen i am in ==>>", currentScreen);
     return(
         <div className='signup-form'>
             <div className='signup-form-header'>
@@ -13,7 +14,7 @@ function CreateAccountForm(){
                 <div className='create-account-text'>Create Account</div>
             </div>
             <form method='post' action='https://localhost:3000/signup'>
-                <InputFields />
+                <InputFields currentScreen={currentScreen} />
                 <CheckBox />
                 <SubmitButton />
                 <GoogleSSO />
