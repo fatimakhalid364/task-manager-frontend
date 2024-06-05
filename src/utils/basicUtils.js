@@ -1,22 +1,23 @@
+import { Screen } from "src/constants/constants";
 export function getButtonText(screen) {
     const buttonTextMap = {
-        SIGNUP: 'Create Account',
-        SIGNIN: 'Log In',
-        FORGOT_PASS: 'Reset Password',
-        SET_PASS: 'Set Password',
+        [Screen.SIGNUP]: "Create Account",
+        [Screen.SIGNIN]: "Log In",
+        [Screen.FORGOT_PASS]: "Send Email",
+        [Screen.SET_PASS]: "Change Password",
     };
 
-    return buttonTextMap[screen] || 'Submit'; // Default case
+    return buttonTextMap[screen] || "Submit";
 }
 export function getTitleText(screen) {
-    const buttonTextMap = {
-        SIGNUP: 'Create Account',
-        SIGNIN: 'Log In',
-        FORGOT_PASS: 'Reset Password?',
-        SET_PASS: 'Add New Password',
+    const titleTextMap = {
+        [Screen.SIGNUP]: "Create Account",
+        [Screen.SIGNIN]: "Log In",
+        [Screen.FORGOT_PASS]: 'Reset Password?',
+        [Screen.SET_PASS]: 'Add New Password',
     };
 
-    return buttonTextMap[screen] || 'Todo App'; // Default case
+    return titleTextMap[screen] || 'Todo App';
 }
 
 
