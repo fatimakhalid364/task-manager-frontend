@@ -1,9 +1,8 @@
-import React from 'react';
-import BackToSite from './back-to-site.jsx';
-import CreateAccountForm from './signup-form.jsx';
+import BackToSite from './subComponents/back-to-site.jsx';
+import CreateAccountForm from './subComponents/signup-form.jsx';
 
 function AuthenticationPages({ currentScreen, pictureURL }) {
-    return(
+    return (
         <div className='signup-div'>
             <aside className='signup-sidecontent'>
                 <img className='signup-image' src={pictureURL} alt='sign up frame' />

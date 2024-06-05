@@ -1,8 +1,7 @@
-import React from 'react';
-import leftArrow from '../.././assets/Vector (Stroke).svg';
+import leftArrow from 'src/assets/Vector (Stroke).svg';
 
-function BackToSite(){
-    return(
+function BackToSite() {
+    return (
         <div>
             <button className='backtosite-button'>
                 <img className='leftarrow-img' src={leftArrow} alt='left arrow' />

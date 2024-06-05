@@ -1,6 +1,5 @@
-import React from 'react';
+import taskManagerLogo from 'src/assets/Frame 3.svg';
 import { getTitleText } from "src/utils/basicUtils";
-import taskManagerLogo from '../.././assets/Frame 3.svg';
 import CheckBox from './checkbox-area.jsx';
 import GoogleSSO from './google-signin.jsx';
 import InputFields from './input-fields.jsx';
@@ -9,7 +8,7 @@ import SubmitButton from './submit-button.jsx';
 function CreateAccountForm({ currentScreen }) {
     console.log("current screen i am in ==>>", currentScreen);
     const titleText = getTitleText(currentScreen)
-    return(
+    return (
         <div className='signup-form'>
             <div className='signup-form-header'>
                 <img className='logo-img' src={taskManagerLogo} alt='logo' />

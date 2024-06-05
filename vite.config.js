@@ -10,4 +10,12 @@ export default defineConfig({
       src: "/src",
     },
   },
+  optimizeDeps: {
+    force: true,
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx'
+      },
+    },
+  }
 });
