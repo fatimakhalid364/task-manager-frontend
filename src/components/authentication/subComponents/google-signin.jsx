@@ -9,6 +9,6 @@ function GoogleSSO() {
             </button>
         </div>
     )
-};
+}
 
 export default GoogleSSO;

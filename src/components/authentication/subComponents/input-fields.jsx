@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Screen } from "src/constants/constants";
 
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { Screen } from "src/constants/constants";
 function InputFields({ currentScreen }) {
 
     console.log('Inside input fields current screen ', currentScreen);
@@ -44,6 +45,11 @@ function InputFields({ currentScreen }) {
         </div>
         
     )
+}
+
+InputFields.propTypes = {
+    currentScreen: PropTypes.oneOf([Screen.SIGNUP, Screen.SIGNIN, Screen.FORGOT_PASS, Screen.SET_PASS]),
 };
+
 
 export default InputFields;

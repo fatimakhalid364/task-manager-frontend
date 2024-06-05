@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import taskManagerLogo from 'src/assets/Frame 3.svg';
 import { getTitleText } from "src/utils/basicUtils";
 import CheckBox from './checkbox-area.jsx';
@@ -22,6 +23,9 @@ function CreateAccountForm({ currentScreen }) {
             </form>
         </div>
     )
+}
+CreateAccountForm.propTypes = {
+    currentScreen: PropTypes.oneOf([Screen.SIGNUP, Screen.SIGNIN, Screen.FORGOT_PASS, Screen.SET_PASS]),
 };
 
 export default CreateAccountForm;

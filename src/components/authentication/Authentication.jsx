@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import BackToSite from './subComponents/back-to-site.jsx';
 import CreateAccountForm from './subComponents/signup-form.jsx';
 
@@ -14,5 +15,8 @@ function AuthenticationPages({ currentScreen, pictureURL }) {
         </div>
     )
 }
-
+AuthenticationPages.propTypes = {
+    currentScreen: PropTypes.oneOf(['signup', 'forgot-password']),
+    pictureURL: PropTypes.string.isRequired, // Make pictureURL required
+};
 export default AuthenticationPages;
