@@ -5,7 +5,6 @@ import { getTitleText } from "src/utils/basicUtils";
 import CheckBox from './checkbox-area.jsx';
 import GoogleSSO from './google-signin.jsx';
 import InputFields from './input-fields.jsx';
-import SubmitButton from './submit-button.jsx';
 
 function CreateAccountForm({ currentScreen }) {
     console.log("current screen i am in ==>>", currentScreen);
@@ -22,7 +21,6 @@ function CreateAccountForm({ currentScreen }) {
                     currentScreen === Screen.SIGNUP && 
                     <CheckBox />
                 }
-                <SubmitButton currentScreen={currentScreen} />
                 <GoogleSSO />
             </form>
         </div>
