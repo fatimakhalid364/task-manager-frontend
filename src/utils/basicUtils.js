@@ -29,3 +29,12 @@ export function getRoutingText(screen) {
     return routingTextMap[screen] || '';
 }
 
+export function getRoutingStatement(screen) {
+    const routingTextMap = {
+        [Screen.SIGNUP]: "Already have an account?",
+        [Screen.SIGNIN]: "Don't have an account? ",
+    };
+
+    return routingTextMap[screen] || '';
+}
+
