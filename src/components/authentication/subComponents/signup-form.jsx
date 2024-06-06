@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import taskManagerLogo from 'src/assets/Frame 3.svg';
+import { Screen } from "src/constants/constants";
 import { getTitleText } from "src/utils/basicUtils";
 import CheckBox from './checkbox-area.jsx';
 import GoogleSSO from './google-signin.jsx';
@@ -17,7 +18,10 @@ function CreateAccountForm({ currentScreen }) {
             </div>
             <form method='post' action='https://localhost:3000/signup'>
                 <InputFields currentScreen={currentScreen} />
-                <CheckBox />
+                {
+                    currentScreen === Screen.SIGNUP && 
+                    <CheckBox />
+                }
                 <SubmitButton currentScreen={currentScreen} />
                 <GoogleSSO />
             </form>
