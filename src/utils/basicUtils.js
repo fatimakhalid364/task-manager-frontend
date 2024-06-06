@@ -31,7 +31,7 @@ export function getRoutingText(screen) {
 
 export function getRoutingStatement(screen) {
     const routingTextMap = {
-        [Screen.SIGNUP]: "Already have an account?",
+        [Screen.SIGNUP]: "Already have an account? ",
         [Screen.SIGNIN]: "Don't have an account? ",
     };
 

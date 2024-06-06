@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import taskManagerLogo from 'src/assets/Frame 3.svg';
 import { Screen } from "src/constants/constants";
 import { getTitleText } from "src/utils/basicUtils";
+import BackToSite from './back-to-site.jsx';
 import GoogleSSO from './google-signin.jsx';
 import InputFields from './input-fields.jsx';
 
@@ -12,6 +13,9 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
     return (
         <div>
             <Grid container spacing={2}>
+                <Grid item xs={12} mb={-2} mt={-5}>
+                    <BackToSite />
+                </Grid>
                 <Grid item xs={12}>
                     <div className='signup-form-header'>
                         <img className='logo-img' src={taskManagerLogo} alt='logo' />
