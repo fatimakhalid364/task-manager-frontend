@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 import taskManagerLogo from 'src/assets/Frame 3.svg';
 import { Screen } from "src/constants/constants";
@@ -10,15 +11,20 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
     const titleText = getTitleText(currentScreen)
     return (
         <div>
-            <div className='signup-form-header'>
-                <img className='logo-img' src={taskManagerLogo} alt='logo' />
-                <div className='create-account-text'>{titleText}</div>
-            </div>
-            <form method='post' action='https://localhost:3000/signup'>
-                <InputFields pictureURL={pictureURL} currentScreen={currentScreen} />
-
-                <GoogleSSO />
-            </form>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <div className='signup-form-header'>
+                        <img className='logo-img' src={taskManagerLogo} alt='logo' />
+                        <div className='create-account-text'>{titleText}</div>
+                    </div>
+                </Grid>
+                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <form method='post' action='https://localhost:3000/signup'>
+                        <InputFields pictureURL={pictureURL} currentScreen={currentScreen} />
+                        <GoogleSSO />
+                    </form>
+                </Grid>
+            </Grid>
         </div>
     )
 }

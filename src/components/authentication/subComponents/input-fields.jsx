@@ -109,9 +109,10 @@ function InputFields({ currentScreen }) {
 
     return (
         <div>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div>
                         <LabelTypography variant="body1" gutterBottom>
                             Name
                         </LabelTypography>
@@ -122,9 +123,12 @@ function InputFields({ currentScreen }) {
                             value={userAccount.name}
                             onChange={handleInputChange}
                         />
+                        </div>
+
                     </Grid>
                 )}
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div>
                     <LabelTypography variant="body1" gutterBottom>
                         Email
                     </LabelTypography>
@@ -135,8 +139,10 @@ function InputFields({ currentScreen }) {
                         value={userAccount.email}
                         onChange={handleInputChange}
                     />
+                    </div>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div>
                     <LabelTypography variant="body1" gutterBottom>
                         Password
                     </LabelTypography>
@@ -148,9 +154,11 @@ function InputFields({ currentScreen }) {
                         onChange={handleInputChange}
                         type="password"
                     />
+                    </div>
                 </Grid>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div>
                         <LabelTypography variant="body1" gutterBottom>
                             Confirm Password
                         </LabelTypography>
@@ -162,10 +170,11 @@ function InputFields({ currentScreen }) {
                             onChange={handleInputChange}
                             type="password"
                         />
+                        </div>
                     </Grid>
                 )}
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div className='checkbox'>
                             <input
                                 type='checkbox'
@@ -180,7 +189,7 @@ function InputFields({ currentScreen }) {
                         </div>
                     </Grid>
                 )}
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <SubmitButton
                         currentScreen={currentScreen}
                         handleSubmit={getValidationFunction()}

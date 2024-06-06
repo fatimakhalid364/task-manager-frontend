@@ -10,6 +10,7 @@ function SubmitButton({ currentScreen, handleSubmit, disabled }) {
     });
     return (
         <div className='submit-div'>
+            <div className='submit-div-button'>
             <input
                 type='button'
                 value={getButtonText(currentScreen)}
@@ -17,6 +18,7 @@ function SubmitButton({ currentScreen, handleSubmit, disabled }) {
                 onClick={handleSubmit}
                 disabled={disabled}
             />
+            </div>
             <div className='prompt-to-signin'>
                 {getRoutingStatement(currentScreen)}
                 <a href={`${baseURL}/authentication/${page}`}>{getRoutingText(currentScreen)}</a>

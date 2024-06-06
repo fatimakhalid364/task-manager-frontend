@@ -130,12 +130,21 @@
     cursor: pointer;
 }
 
-
+.submit-div{
+    width: 100%;
+}
+.submit-div-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .submit-button{
-    width: 80%;
+    width: 40%;
     height: 40px;
     background-color: var(--primary-background-color);
     border-radius: 28px;
+    margin-bottom: 8px;
     font-family: var(--secondary-font-family);
     font-size: var(--secondary-font-size);
     color: var(--neutral-font-color);
@@ -156,6 +165,10 @@
 .prompt-to-signin{
     font-family: var(--secondary-font-family);
     font-size: var(--secondary-font-size);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .prompt-to-signin > a{
@@ -173,7 +186,7 @@
 }
 
 .google-sso-button{
-    width: 80%;
+    width: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
