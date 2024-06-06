@@ -59,12 +59,12 @@ export function validateSignin(userAccount) {
     return true;
 }
 export function validateResetForm(userAccount) {
-    const { email, password } = userAccount;
-    if (!email || !password) {
-        errorToast("Please fill in both email and password.", 'resetPass-error');
+    const { email } = userAccount;
+    if (!email) {
+        errorToast("Please fill email address", 'resetPass-error');
         return false;
     }
-    successToast("Signin successful!");
+    successToast("Reset successful!");
     return true;
 }
 export function validateSetForm(userAccount) {
