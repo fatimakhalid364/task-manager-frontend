@@ -127,6 +127,7 @@ function InputFields({ currentScreen }) {
 
                     </Grid>
                 )}
+                {currentScreen !== Screen.SET_PASS && 
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div>
                     <LabelTypography variant="body1" gutterBottom>
@@ -140,7 +141,8 @@ function InputFields({ currentScreen }) {
                         onChange={handleInputChange}
                     />
                     </div>
-                </Grid>
+                    </Grid>}
+                {currentScreen !== Screen.FORGOT_PASS && 
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div>
                     <LabelTypography variant="body1" gutterBottom>
@@ -155,8 +157,8 @@ function InputFields({ currentScreen }) {
                         type="password"
                     />
                     </div>
-                </Grid>
-                {currentScreen === Screen.SIGNUP && (
+                    </Grid>}
+                {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SET_PASS) && (
                     <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div>
                         <LabelTypography variant="body1" gutterBottom>

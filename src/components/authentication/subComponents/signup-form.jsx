@@ -25,7 +25,9 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <form method='post' action='https://localhost:3000/signup'>
                         <InputFields pictureURL={pictureURL} currentScreen={currentScreen} />
-                        <GoogleSSO />
+                        {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SIGNIN) && 
+                            <GoogleSSO />
+                        }
                     </form>
                 </Grid>
             </Grid>
