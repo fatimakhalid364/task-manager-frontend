@@ -108,7 +108,7 @@ function InputFields({ currentScreen }) {
     }
 
     return (
-        <div className='signup-input-fields'>
+        <div>
             <Grid container spacing={2}>
                 {currentScreen === Screen.SIGNUP && (
                     <Grid item xs={12}>
