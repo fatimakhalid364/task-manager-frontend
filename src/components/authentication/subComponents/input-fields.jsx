@@ -26,7 +26,7 @@ function InputFields({ currentScreen }) {
 
     return(
         <div className='signup-input-fields'>
-            {currentScreen === Screen.signup &&
+            {currentScreen === Screen.SIGNUP &&
                 <div>
                     <div className='input-header'>Name</div>
                     <input onChange={handleInputChange} type='text' name='name' value={userAccount.name} placeholder='enter name' className='input-field' />
@@ -36,7 +36,7 @@ function InputFields({ currentScreen }) {
             <input onChange={handleInputChange} type='text' name='email' value={userAccount.email} placeholder='enter email' className='input-field'/>
             <div className='input-header'>Password</div>
             <input onChange={handleInputChange} type='text' name='password' value={userAccount.password} placeholder='enter password' className='input-field'/>
-            {currentScreen === Screen.signup &&
+            {currentScreen === Screen.SIGNUP &&
                 <div>
                     <div className='input-header'>Confirm Password</div>
                     <input onChange={handleInputChange} type='text' name='confirmPassword' value={userAccount.confirmPassword} placeholder='re-enter password' className='input-field' />
