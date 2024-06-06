@@ -20,4 +20,12 @@ export function getTitleText(screen) {
     return titleTextMap[screen] || 'Todo App';
 }
 
+export function getRoutingText(screen) {
+    const routingTextMap = {
+        [Screen.SIGNUP]: "Sign In",
+        [Screen.SIGNIN]: "Sign Up",
+    };
+
+    return routingTextMap[screen] || '';
+}
 
