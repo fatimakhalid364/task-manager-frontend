@@ -15,6 +15,7 @@
     --tertiary-font-color: #9CA3AF;
     --neutral-font-color: white;
     --quaternary-font-color: #6B7280;
+    --primary-button-disabled-color: #8ab3ff;
 }
 
 .signup-div{
@@ -147,8 +148,19 @@
     font-size: var(--secondary-font-size);
     color: var(--neutral-font-color);
     border: 1px solid var(--primary-background-color);
+    cursor: pointer
 }
-
+.disabled-button {
+    width: 80%;
+    height: 40px; 
+    border-radius: 28px; 
+    font-family: var(--secondary-font-family); 
+    font-size: var(--secondary-font-size);
+    color: var(--neutral-font-color);
+    border: 1px solid var(--primary-button-disabled-color);
+    background-color: var(--primary-button-disabled-color);
+    cursor: not-allowed; 
+}
 .prompt-to-signin{
     font-family: var(--secondary-font-family);
     font-size: var(--secondary-font-size);

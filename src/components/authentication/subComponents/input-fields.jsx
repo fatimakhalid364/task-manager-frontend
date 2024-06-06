@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { Screen } from "src/constants/constants";
 import SubmitButton from './submit-button.jsx';
 
-
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInput-underline:after': {
         borderBottom: 'none', // Remove underline border
@@ -25,8 +24,6 @@ const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => 
         '& .MuiOutlinedInput-notchedOutline': {
             border: '1px solid #D1D5DB', // Custom border color and style
         },
-    },
-    '& .MuiOutlinedInput-root': {
         width: '494px', // Set width
         height: '40px', // Set height
         borderRadius: '8px', // Set border radius
@@ -56,7 +53,6 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
     height: '16px', // Label height
 }));
 
-
 function InputFields({ currentScreen }) {
     const [userAccount, setUserAccount] = useState({
         name: "",
@@ -65,12 +61,50 @@ function InputFields({ currentScreen }) {
         confirmPassword: ""
     });
 
+    const [checked, setChecked] = useState(false);
+
     function handleInputChange(event) {
         const { value, name } = event.target;
         setUserAccount((prevValue) => ({
             ...prevValue,
             [name]: value
         }));
+    }
+
+    function handleCheckboxChange(event) {
+        setChecked(event.target.checked);
+    }
+
+    function validateSignup() {
+        const { name, email, password, confirmPassword } = userAccount;
+        if (!name || !email || !password || !confirmPassword) {
+            alert("Please fill in all fields.");
+            return false;
+        }
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        if (!checked) {
+            alert("Please agree to the terms and conditions.");
+            return false;
+        }
+        alert("Signup successful!");
+        return true;
+    }
+
+    function validateSignin() {
+        const { email, password } = userAccount;
+        if (!email || !password) {
+            alert("Please fill in both email and password.");
+            return false;
+        }
+        alert("Signin successful!");
+        return true;
+    }
+
+    function getValidationFunction() {
+        return currentScreen === Screen.SIGNUP ? validateSignup : validateSignin;
     }
 
     return (
@@ -130,8 +164,28 @@ function InputFields({ currentScreen }) {
                         />
                     </Grid>
                 )}
+                {currentScreen === Screen.SIGNUP && (
+                    <Grid item xs={12}>
+                        <div className='checkbox'>
+                            <input
+                                type='checkbox'
+                                id='checkbox'
+                                name='checkbox'
+                                checked={checked}
+                                onChange={handleCheckboxChange}
+                            />
+                            <label htmlFor='checkbox'>
+                                I agree to the <a href='https://localhost:3000/terms-and-services'>Terms & Conditions</a>
+                            </label>
+                        </div>
+                    </Grid>
+                )}
                 <Grid item xs={12}>
-                    <SubmitButton currentScreen={currentScreen} />
+                    <SubmitButton
+                        currentScreen={currentScreen}
+                        handleSubmit={getValidationFunction()}
+                        disabled={currentScreen === Screen.SIGNUP && !checked} // Disable the button if signup screen and checkbox not checked
+                    />
                 </Grid>
             </Grid>
         </div>
@@ -143,3 +197,4 @@ InputFields.propTypes = {
 };
 
 export default InputFields;
+
