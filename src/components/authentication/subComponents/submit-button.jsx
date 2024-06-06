@@ -46,7 +46,7 @@ function SubmitButton({ currentScreen, handleSubmit, disabled }) {
 
 SubmitButton.propTypes = {
     currentScreen: PropTypes.oneOf([Screen.SIGNUP, Screen.SIGNIN, Screen.FORGOT_PASS, Screen.SET_PASS]),
-    handleSubmit: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func,
     disabled: PropTypes.bool.isRequired, // Change func to bool
 };
 export default SubmitButton;
