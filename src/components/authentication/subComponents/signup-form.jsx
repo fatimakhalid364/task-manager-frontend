@@ -34,6 +34,7 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
 }
 CreateAccountForm.propTypes = {
     currentScreen: PropTypes.oneOf([Screen.SIGNUP, Screen.SIGNIN, Screen.FORGOT_PASS, Screen.SET_PASS]),
+    pictureURL: PropTypes.string.isRequired,
 };
 
 export default CreateAccountForm;

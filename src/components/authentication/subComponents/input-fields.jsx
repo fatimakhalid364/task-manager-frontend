@@ -13,32 +13,32 @@ const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => 
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
-            border: 'none', // Remove the default border
+            border: 'none',
         },
         '&:hover fieldset': {
-            border: '1px solid #D1D5DB', // Remove the default border on hover
+            border: `1px solid #3B8AFF`,
         },
         '&.Mui-focused fieldset': {
-            border: 'none', // Remove the default border when focused
+            border: `2px solid #3B8AFF`,
         },
         '& .MuiOutlinedInput-notchedOutline': {
-            border: '1px solid #D1D5DB', // Custom border color and style
+            border: '1px solid #D1D5DB',
         },
-        width: '494px', // Set width
-        height: '40px', // Set height
-        borderRadius: '8px', // Set border radius
-        padding: '10px', // Set padding
+        width: '494px',
+        height: '40px',
+        borderRadius: '8px',
+        padding: '10px', 
         '& input': {
-            padding: '10px', // Additional padding inside the input
+            padding: '10px',
         },
         '& input::placeholder': {
-            fontFamily: 'DM Sans', // Placeholder font family
-            fontWeight: 400, // Placeholder font weight
-            fontSize: '14px', // Placeholder font size
-            lineHeight: '16px', // Placeholder line height
-            color: '#9CA3AF', // Placeholder color
-            width: '474px', // Placeholder width
-            height: '16px', // Placeholder height
+            fontFamily: 'DM Sans',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#9CA3AF',
+            width: '474px',
+            height: '16px',
         },
     },
 }));
@@ -46,8 +46,8 @@ const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => 
 const LabelTypography = styled(Typography)(({ theme }) => ({
     fontFamily: 'DM Sans', // Label font family
     fontWeight: 500, // Label font weight
-    fontSize: '14px', // Label font size
-    lineHeight: '16px', // Label line height
+    fontSize: theme.typography.body2.fontSize, // Use theme for font size
+    lineHeight: theme.typography.body1.lineHeight, // Label line height
     color: '#1F2937', // Label color
     width: '494px', // Label width
     height: '16px', // Label height

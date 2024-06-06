@@ -1,24 +1,39 @@
-import classNames from 'classnames';
+import { Box, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { baseURL, Screen } from "src/constants/constants";
 import { getButtonText, getRoutingStatement, getRoutingText } from "src/utils/basicUtils";
 
 function SubmitButton({ currentScreen, handleSubmit, disabled }) {
     const page = currentScreen === Screen.SIGNIN ? 'signup' : 'signin';
-    const buttonClasses = classNames('submit-button', {
-        'disabled-button': disabled // Apply 'disabled-button' class when disabled
-    });
     return (
         <div className='submit-div'>
-            <div className='prompt-to-signin'>
-            <input
-                type='button'
-                value={getButtonText(currentScreen)}
-                className={buttonClasses}
-                onClick={handleSubmit}
-                disabled={disabled}
-            />
-            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        disableElevation
+                        sx={{
+                            height: '40px',
+                            backgroundColor: 'var(--primary-background-color)',
+                            borderRadius: '28px',
+                            marginBottom: '8px',
+                            fontFamily: 'var(--secondary-font-family)',
+                            fontSize: 'var(--secondary-font-size)',
+                            color: 'var(--neutral-font-color)',
+                            cursor: 'pointer',
+                            ...(disabled && {
+                                backgroundColor: 'var(--primary-button-disabled-color)',
+                                borderColor: 'var(--primary-button-disabled-color)',
+                            }),
+                        }}
+                        onClick={handleSubmit}
+                        disabled={disabled}
+                    >
+                        {getButtonText(currentScreen)}
+                    </Button>
+                </Box>
+            </Box>
             <div className='prompt-to-signin'>
                 {getRoutingStatement(currentScreen)}
                 <a href={`${baseURL}/authentication/${page}`}>
