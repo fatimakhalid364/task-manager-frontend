@@ -3,8 +3,8 @@ export function getButtonText(screen) {
     const buttonTextMap = {
         [Screen.SIGNUP]: "Create Account",
         [Screen.SIGNIN]: "Log In",
-        [Screen.FORGOT_PASS]: "Send Email",
-        [Screen.SET_PASS]: "Change Password",
+        [Screen.FORGOT_PASS]: "Reset Password",
+        [Screen.SET_PASS]: "Set Password",
     };
 
     return buttonTextMap[screen] || "Submit";

@@ -1,12 +1,12 @@
 
-import signUpFrame from 'src/assets/Frame 3289.svg';
+import resetPassword from 'src/assets/resetPassword.svg';
 import AuthenticationPages from 'src/components/authentication/Authentication';
 import { Screen } from "src/constants/constants";
 
 function SetPassword() {
     return (
         <div>
-            <AuthenticationPages currentScreen={Screen.SET_PASS} pictureURL={signUpFrame} />
+            <AuthenticationPages currentScreen={Screen.SET_PASS} pictureURL={resetPassword} />
         </div>
     )
 }
