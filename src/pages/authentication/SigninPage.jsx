@@ -3,7 +3,7 @@ import signUpFrame from 'src/assets/Frame 3289.svg';
 import AuthenticationPages from 'src/components/authentication/Authentication';
 import { Screen } from "src/constants/constants";
 
-function SignupPage() {
+function SigninPage() {
     return (
         <div>
             <AuthenticationPages currentScreen={Screen.SIGNIN} pictureURL={signUpFrame} />
@@ -11,4 +11,4 @@ function SignupPage() {
     )
 }
 
-export default SignupPage;
+export default SigninPage;
