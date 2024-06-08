@@ -4,11 +4,12 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Screen } from "src/constants/constants";
+// import { signin, signup } from 'src/redux/thunks/auth-thunks';
+import { signupThunk } from 'src/store/thunks/authThunks';
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
-import { signup, signin } from 'src/redux/thunks/auth-thunks';
-import { useDispatch } from 'react-redux';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInput-underline:after': {
@@ -85,9 +86,22 @@ function InputFields({ currentScreen }) {
 
     function getValidationFunction() {
         console.log('inside function selector');
-        currentScreen === Screen.SIGNUP ? dispatch(signup(userAccount)) : currentScreen = Screen.SIGNIN ? dispatch(signin(userAccount)) : null;
+        // currentScreen === Screen.SIGNUP ? dispatch(signup(userAccount)) : currentScreen = Screen.SIGNIN ? dispatch(signin(userAccount)) : null;
         return currentScreen === Screen.SIGNUP ? validateSignup(userAccount, checked) : currentScreen === Screen.SIGNIN ? validateSignin(userAccount) : currentScreen === Screen.SET_PASS ? validateSetForm(userAccount) : validateResetForm(userAccount);
     }
+
+    const handleButtonClick = async () => {
+        const validation = getValidationFunction();
+        if (validation) {
+            try {
+                const response = await dispatch(signupThunk({ userAccount }))
+                console.log(response)
+            } catch (error) {
+                console.log('here is the error in signup', error);
+
+            }
+        }
+    };
 
     return (
         <div>
@@ -176,7 +190,7 @@ function InputFields({ currentScreen }) {
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <SubmitButton
                         currentScreen={currentScreen}
-                        handleSubmit={getValidationFunction}
+                        handleSubmit={handleButtonClick}
                         disabled={currentScreen === Screen.SIGNUP && !checked} // Disable the button if signup screen and checkbox not checked
                     />
                 </Grid>
