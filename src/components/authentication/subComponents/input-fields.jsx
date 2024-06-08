@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Screen } from "src/constants/constants";
 // import { signin, signup } from 'src/redux/thunks/auth-thunks';
-import { signupThunk } from 'src/store/thunks/authThunks';
+import { signinThunk, signupThunk } from 'src/store/thunks/authThunks';
+import { encryptObjectValues } from 'src/utils/encryptionUtil';
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
 
@@ -92,14 +93,30 @@ function InputFields({ currentScreen }) {
 
     const handleButtonClick = async () => {
         const validation = getValidationFunction();
+        const encryptedObj = encryptObjectValues(userAccount)
         if (validation) {
             try {
-                const response = await dispatch(signupThunk(userAccount))
-                console.log(response)
-            } catch (error) {
-                console.log('here is the error in signup', error);
+                let thunkToDispatch;
+                switch (currentScreen) {
+                    case Screen.SIGNUP:
+                        thunkToDispatch = signupThunk(encryptedObj);
+                        break;
+                    case Screen.SIGNIN:
+                        thunkToDispatch = signinThunk(encryptedObj);
+                        break;
+                    default:
+                        break;
+                }
 
+                if (thunkToDispatch) {
+                    const response = await dispatch(thunkToDispatch);
+                    console.log(response);
+                }
+            } catch (error) {
+                console.error('Error occurred while dispatching thunk:', error);
             }
+        } else {
+            console.error('Validation failed for the current screen.');
         }
     };
 

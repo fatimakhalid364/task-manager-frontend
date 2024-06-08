@@ -5,6 +5,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  // define: {
+  //   'process.env.PUBLIC_KEY': JSON.stringify(process.env.PUBLIC_KEY),
+  // },
   resolve: {
     alias: {
       src: "/src",

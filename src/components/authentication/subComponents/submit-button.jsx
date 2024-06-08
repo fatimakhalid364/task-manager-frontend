@@ -4,7 +4,6 @@ import { Screen } from "src/constants/constants";
 import { getButtonText } from "src/utils/basicUtils";
 
 function SubmitButton({ currentScreen, handleSubmit, disabled }) {
-    const page = currentScreen === Screen.SIGNIN ? 'signup' : 'signin';
     return (
         <div className='submit-div'>
             <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
