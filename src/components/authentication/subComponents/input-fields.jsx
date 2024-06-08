@@ -94,7 +94,7 @@ function InputFields({ currentScreen }) {
         const validation = getValidationFunction();
         if (validation) {
             try {
-                const response = await dispatch(signupThunk({ userAccount }))
+                const response = await dispatch(signupThunk(userAccount))
                 console.log(response)
             } catch (error) {
                 console.log('here is the error in signup', error);
