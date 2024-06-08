@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
-import CreateAccountForm from './subComponents/signup-form.jsx';
+import CreateAccountForm from 'src/components/authentication/subComponents/main-form';
 
 function AuthenticationPages({ currentScreen, pictureURL }) {
     return (

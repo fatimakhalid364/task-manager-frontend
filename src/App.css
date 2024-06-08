@@ -18,20 +18,10 @@
     --primary-button-disabled-color: #8ab3ff;
 }
 
-.signup-div{
+.authentication-div{
     display: flex;
     height: 100%;
     width: 100%;
-}
-
-.signup-sidecontent{
-    height: 100%;
-    width: 50%;
-}
-
-.signup-image{
-    height: 100%;
-    width: 490.7px;
 }
 
 .backtosite-button{
@@ -58,14 +48,8 @@
     margin-top: 6px;
 }
 
-.signup-form{
-    width: 544px;
-    height: 600px;
-    margin-left: 80px;
-  
-}
 
-.signup-form-header{
+.main-form-header{
     height: 80px;
     width: 100%;
     display: flex;
@@ -80,32 +64,10 @@
     margin-bottom: 4px;
 }
 
-.create-account-text{
+.form-header-text{
     font-family: var(--primary-font-family);
     font-size: var(--primary-font-size);
     color: var(--primary-font-color);
-}
-
-.signup-input-fields{
-    display: flex;
-    flex-direction: column;
-
-}
-
-.input-header{
-    font-family: var(--secondary-font-family);
-    font-size: var(--secondary-font-size);
-    color: var(--primary-font-color);
-    font-weight: 570;
-    margin-bottom: 1px;
-}
-
-.input-field{
-    margin-bottom: 15px;
-    height: 28px;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid var(--field-border-color);
 }
 
 .checkbox{
@@ -185,7 +147,7 @@
 
 .authentication-container {
     display: grid;
-    grid-template-columns: 50% 50%; /* Divide the container into 40% and 60% columns */
+    grid-template-columns: 40% 60%; /* Divide the container into 40% and 60% columns */
     height: 100vh; /* Ensure the container takes up the full height of the viewport */
 }
 

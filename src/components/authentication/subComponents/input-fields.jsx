@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { Screen } from "src/constants/constants";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
+import { signup, signin } from 'src/redux/thunks/auth-thunks';
+import { useDispatch } from 'react-redux';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInput-underline:after': {
@@ -55,6 +57,9 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
 }));
 
 function InputFields({ currentScreen }) {
+
+    const dispatch = useDispatch();
+
     const [userAccount, setUserAccount] = useState({
         name: "",
         email: "",
@@ -80,6 +85,7 @@ function InputFields({ currentScreen }) {
 
     function getValidationFunction() {
         console.log('inside function selector');
+        currentScreen === Screen.SIGNUP ? dispatch(signup(userAccount)) : currentScreen = Screen.SIGNIN ? dispatch(signin(userAccount)) : null;
         return currentScreen === Screen.SIGNUP ? validateSignup(userAccount, checked) : currentScreen === Screen.SIGNIN ? validateSignin(userAccount) : currentScreen === Screen.SET_PASS ? validateSetForm(userAccount) : validateResetForm(userAccount);
     }
 

@@ -9,7 +9,7 @@ import InputFields from './input-fields.jsx';
 
 function CreateAccountForm({ currentScreen, pictureURL }) {
     console.log("current screen i am in ==>>", currentScreen);
-    const titleText = getTitleText(currentScreen)
+    const titleText = getTitleText(currentScreen);
     return (
         <div>
             <Grid container spacing={2}>
@@ -17,9 +17,9 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
                     <BackToSite />
                 </Grid>
                 <Grid item xs={12}>
-                    <div className='signup-form-header'>
+                    <div className='main-form-header'>
                         <img className='logo-img' src={taskManagerLogo} alt='logo' />
-                        <div className='create-account-text'>{titleText}</div>
+                        <div className='form-header-text'>{titleText}</div>
                     </div>
                 </Grid>
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
