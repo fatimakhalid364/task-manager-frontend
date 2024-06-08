@@ -11,7 +11,7 @@ const encryptObjectValues = (obj) => {
         const encryptedObj = {};
         for (const key in obj) {
             const value = obj[key];
-            const encryptedValue = encrypt.encrypt(value);
+            const encryptedValue = encrypt.encrypt(value); // JSEncrypt defaults to base64 encoding
             encryptedObj[key] = encryptedValue;
         }
         return encryptedObj;
