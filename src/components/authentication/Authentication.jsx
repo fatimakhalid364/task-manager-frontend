@@ -1,10 +1,11 @@
 import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 import CreateAccountForm from 'src/components/authentication/subComponents/main-form';
+import BackToSite from 'src/components/authentication/subComponents/back-to-site.jsx';
 
 function AuthenticationPages({ currentScreen, pictureURL }) {
     return (
-        <Grid container sx={{ height: '97vh' }}>
+        <Grid container sx={{ height: '98.5vh'}}>
             <Grid item xs={12} md={4} lg={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left' }}>
                 <Box
                     sx={{
@@ -16,13 +17,15 @@ function AuthenticationPages({ currentScreen, pictureURL }) {
                         backgroundImage: pictureURL ? `url(${pictureURL})` : `url(${pictureURL})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover',
-                        borderRadius: '8px 0px 0px 8px',
+                        borderRadius: '8px',
                     }}
                 />
             </Grid>
-            <Grid item xs={12} md={8} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid item xs={12} md={8} sx={{}}>
                 <CreateAccountForm currentScreen={currentScreen} pictureURL={pictureURL} />
             </Grid>
+            
+            
         </Grid>
     );
 }

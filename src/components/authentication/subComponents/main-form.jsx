@@ -12,10 +12,9 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
     const titleText = getTitleText(currentScreen);
     return (
         <div>
-            <Grid container spacing={2}>
-                <Grid item xs={12} mb={-2} mt={-5}>
-                    <BackToSite />
-                </Grid>
+            <BackToSite />
+            <Grid container spacing={5}>
+                
                 <Grid item xs={12}>
                     <div className='main-form-header'>
                         <img className='logo-img' src={taskManagerLogo} alt='logo' />
@@ -23,12 +22,12 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
                     </div>
                 </Grid>
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <form method='post' action='https://localhost:3000/signup'>
+                    <div>
                         <InputFields pictureURL={pictureURL} currentScreen={currentScreen} />
                         {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SIGNIN) && 
                             <GoogleSSO />
                         }
-                    </form>
+                    </div>
                 </Grid>
             </Grid>
         </div>

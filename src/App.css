@@ -31,9 +31,10 @@
     border: none;
     display: flex;
     gap: 7.4px;
-    margin-top: 35px;
-    margin-left: 52px;
+    margin-left: 70px;
+    margin-top: 30px;
     cursor: pointer;
+    
 }
 
 .backtosite-text{
@@ -50,7 +51,7 @@
 
 
 .main-form-header{
-    height: 80px;
+    height: 100px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -171,4 +172,15 @@
     height: 100vh;
     margin-top: 20px;
     justify-content: center;
+}
+
+.forgot-password-text{
+    font-size: var(--secondary-font-size);
+    font-family: var(--secondary-font-family);
+    margin-left: 28%;
+}
+
+.forgot-password-text > a {
+    color: var(--primary-background-color);
+    text-decoration: none;
 }

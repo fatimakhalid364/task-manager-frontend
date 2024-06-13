@@ -12,7 +12,7 @@ export function getButtonText(screen) {
 export function getTitleText(screen) {
     const titleTextMap = {
         [Screen.SIGNUP]: "Create Account",
-        [Screen.SIGNIN]: "Log In",
+        [Screen.SIGNIN]: "Sign in to your account",
         [Screen.FORGOT_PASS]: 'Reset Password?',
         [Screen.SET_PASS]: 'Add New Password',
     };

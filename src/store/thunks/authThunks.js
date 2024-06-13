@@ -44,6 +44,29 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
     }
 });
 
+const forgotPassThunk = createAsyncThunk('auth/forgotpass', async (body, thunkAPI) => {
+    console.log('inside forgotpass thunk');
+    try{
+        const response = await APIS.post(`/auth/forgotpass`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is,", response);
+        return response.data;
+    }catch(error){
+        if (!error.response) {
+            throw error;
+        }
+        return thunkAPI.rejectWithValue({
+            statusCode: error.response.status,
+            message: error.response.data.error,
+        });
+    }
+    
+})
 
-export { signinThunk, signupThunk };
+
+export { signinThunk, signupThunk, forgotPassThunk };
 
