@@ -38,3 +38,10 @@ export function getRoutingStatement(screen) {
     return routingTextMap[screen] || '';
 }
 
+export function getLoadingText(screen) {
+    const loadingTextMap = {
+        [Screen.LOADING]: "Loading. Please wait...",
+        [Screen.PAGE_NOT_FOUND]: "Page not found."
+    };
+    return loadingTextMap[screen] || '';
+}

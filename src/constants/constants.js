@@ -11,5 +11,8 @@ export const Screen = {
     SIGNIN: 'SIGNIN',
     FORGOT_PASS: 'FORGOT_PASS',
     SET_PASS: 'SET_PASS',
+    LOADING: 'LOADING',
+    PAGE_NOT_FOUND: 'PAGE_NOT_FOUND'
 };
+
 
