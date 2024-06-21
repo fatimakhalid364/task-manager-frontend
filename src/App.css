@@ -184,3 +184,59 @@
     color: var(--primary-background-color);
     text-decoration: none;
 }
+
+.cssload-loader {
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	left: 49.7%;
+	transform: translate3d(-50%, -50%, 0);
+	perspective: 1200;
+    margin-bottom: 50px;
+    
+}
+
+.cssload-flipper {
+	position: relative;
+	display: block;
+	height: inherit;
+	width: inherit;
+	animation: cssload-flip 1.38s infinite ease-in-out;
+	transform-style: preserve-3d;
+}
+
+.cssload-front,
+.cssload-back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	background-color: var(--primary-background-color);
+	height: 100%;
+	width: 100%;
+	backface-visibility: hidden;
+}
+
+.cssload-back {
+	background-color: var(--primary-font-color);
+	z-index: 800;
+	transform: rotateY(-180deg);
+		-o-transform: rotateY(-180deg);
+		-ms-transform: rotateY(-180deg);
+		-webkit-transform: rotateY(-180deg);
+		-moz-transform: rotateY(-180deg);
+}
+
+
+
+@keyframes cssload-flip {
+	0% {
+		transform: perspective(117px) rotateX(0deg) rotateY(0deg);
+	}
+	50% {
+		transform: perspective(117px) rotateX(-180.1deg) rotateY(0deg);
+	}
+	100% {
+		transform: perspective(117px) rotateX(-180deg) rotateY(-179.9deg);
+	}
+}

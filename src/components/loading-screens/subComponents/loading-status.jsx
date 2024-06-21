@@ -3,9 +3,10 @@ import { getLoadingText } from 'src/utils/basicUtils';
 import PropTypes from 'prop-types';
 
 function LoadingStatus({currentScreen}){
-    console.log('jhdbjs');
     return (
-        <div>
+        <div 
+            style={{
+                    fontFamily: 'var(--secondary-font-family)'}}>
             {getLoadingText(currentScreen)}
         </div>
     )
