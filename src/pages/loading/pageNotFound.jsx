@@ -5,7 +5,7 @@ import React from 'react';
 function PageNotFound(){
     return(
         <div>
-        <LoadingStatus currentScreen = {Screen.PAGE_NOT_FOUND} />
+            <LoadingStatus currentScreen = {Screen.PAGE_NOT_FOUND} />
         </div>
     );
 }
