@@ -6,11 +6,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SpinnerLoader from "src/components/spinLoader/SpinnerLoader";
+import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
 import { forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
+
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInput-underline:after': {
@@ -113,14 +115,16 @@ function InputFields({ currentScreen }) {
                 }
 
                 if (thunkToDispatch) {
-                    setSpinner(true); // Start loading
+                    setSpinner(true);
                     const response = await dispatch(thunkToDispatch).unwrap();
                     setSpinner(false); // Stop loading
                     console.log('Dispatched thunk response:', response);
+                    successToast(response.message, 'authentication-pages-success');
                 }
             } catch (error) {
                 setSpinner(false);
                 console.error('Error occurred while dispatching thunk:', error);
+                errorToast(error.message, 'authentication-pages-error')
             }
         } else {
             console.error('Validation failed for the current screen.');

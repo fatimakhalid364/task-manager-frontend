@@ -1,4 +1,4 @@
-import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { errorToast } from 'src/components/toasters/toast.js';
 export function validatePassword(password) {
     // Minimum length check
     if (password.length < 8) {
@@ -42,8 +42,6 @@ export function validateSignup(userAccount, checked) {
         errorToast('Please agree to the terms and conditions.', 'terms-error');
         return false;
     }
-
-    successToast('Signup successful!');
     return true;
 }
 
@@ -54,8 +52,6 @@ export function validateSignin(userAccount) {
         errorToast('Please fill in both email and password.', 'signin-error'); // Use error toast
         return false;
     }
-
-    successToast('Signin successful!');
     return true;
 }
 export function validateResetForm(userAccount) {
@@ -64,7 +60,6 @@ export function validateResetForm(userAccount) {
         errorToast("Please fill email address", 'resetPass-error');
         return false;
     }
-    successToast("Reset successful!");
     return true;
 }
 export function validateSetForm(userAccount) {
@@ -77,7 +72,6 @@ export function validateSetForm(userAccount) {
         errorToast("Both passwords should be identical", 'setPass-error-dontMatch');
         return false;
     }
-    successToast("Signin successful!");
     return true;
 }
 
