@@ -41,7 +41,9 @@ export function getRoutingStatement(screen) {
 export function getLoadingText(screen) {
     const loadingTextMap = {
         [Screen.LOADING]: "Loading. Please wait...",
-        [Screen.PAGE_NOT_FOUND]: "Page not found."
+        [Screen.PAGE_NOT_FOUND]: "Page not found.",
+        [Screen.VERIFICATION_PAGE]: "Verifying your email. Please wait...",
+
     };
     return loadingTextMap[screen] || '';
 }

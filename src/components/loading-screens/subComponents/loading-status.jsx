@@ -1,6 +1,6 @@
-import React from 'react';
-import { getLoadingText } from 'src/utils/basicUtils';
 import PropTypes from 'prop-types';
+import { Screen } from "src/constants/constants";
+import { getLoadingText } from 'src/utils/basicUtils';
 
 function LoadingStatus({currentScreen}){
     return (
@@ -13,7 +13,7 @@ function LoadingStatus({currentScreen}){
 }
 
 LoadingStatus.propTypes = {
-    currentScreen: PropTypes.oneOf([Screen.LOADING, Screen.PAGE_NOT_FOUND])
+    currentScreen: PropTypes.oneOf([Screen.LOADING, Screen.PAGE_NOT_FOUND, Screen.VERIFICATION_PAGE])
 };
 
 export default LoadingStatus;
