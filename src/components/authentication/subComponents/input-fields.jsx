@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Screen } from "src/constants/constants";
 import { signinThunk, signupThunk } from 'src/store/thunks/authThunks';
-import { encryptObjectValues } from 'src/utils/encryptionUtil';
+import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
 
@@ -92,6 +92,8 @@ function InputFields({ currentScreen }) {
     const handleButtonClick = async () => {
         const validation = getValidationFunction();
         const encryptedObj = encryptObjectValues(userAccount)
+        // let encryptedObj = userAccount
+
         if (validation) {
             try {
                 let thunkToDispatch;

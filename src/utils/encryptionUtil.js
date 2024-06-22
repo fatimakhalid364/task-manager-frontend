@@ -1,18 +1,24 @@
+import forge from 'node-forge';
 
-import JSEncrypt from 'jsencrypt';
 
-// Assuming you have the correct PEM-formatted public key
-const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+
 
 const encryptObjectValues = (obj) => {
     try {
-        const encrypt = new JSEncrypt();
-        encrypt.setPublicKey(publicKey);
+        const publicKeyPem = import.meta.env.VITE_PUBLIC_KEY.replace(/\\n/g, '\n');
+        console.log(publicKeyPem)
+        const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
+        console.log(publicKey);
         const encryptedObj = {};
         for (const key in obj) {
-            const value = obj[key];
-            const encryptedValue = encrypt.encrypt(value); // JSEncrypt defaults to base64 encoding
-            encryptedObj[key] = encryptedValue;
+            if (Object.hasOwn(obj, key)) {
+                const value = obj[key];
+                const encryptedValue = publicKey.encrypt(value, 'RSA-OAEP', {
+                    md: forge.md.sha256.create(),
+                    mgf1: forge.mgf.mgf1.create(forge.md.sha256.create())
+                });
+                encryptedObj[key] = forge.util.encode64(encryptedValue);
+            }
         }
         return encryptedObj;
     } catch (error) {
