@@ -1,14 +1,13 @@
-import React from "react";
 
 function Loader(){
     return (
-        <div class="cssload-loader">
-	        <div class="cssload-flipper">
-		        <div class="cssload-front"></div>
-		        <div class="cssload-back"></div>
+        <div className="cssload-loader">
+            <div className="cssload-flipper">
+                <div className="cssload-front"></div>
+                <div className="cssload-back"></div>
 	        </div>
         </div>
     )
-};
+}
 
 export default Loader;

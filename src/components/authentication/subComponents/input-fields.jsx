@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import SpinnerLoader from "src/components/spinLoader/SpinnerLoader";
 import { Screen } from "src/constants/constants";
-import { signinThunk, signupThunk } from 'src/store/thunks/authThunks';
+import { forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
@@ -69,7 +70,7 @@ function InputFields({ currentScreen }) {
     });
 
     const [checked, setChecked] = useState(false);
-
+    const [spinner, setSpinner] = useState(false);
     function handleInputChange(event) {
         const { value, name } = event.target;
         setUserAccount((prevValue) => ({
@@ -106,15 +107,19 @@ function InputFields({ currentScreen }) {
                         break;
                     case Screen.FORGOT_PASS:
                         thunkToDispatch = forgotPassThunk(encryptedObj);
+                        break;
                     default:
                         break;
                 }
 
                 if (thunkToDispatch) {
-                    const response = await dispatch(thunkToDispatch);
-                    console.log(response);
+                    setSpinner(true); // Start loading
+                    const response = await dispatch(thunkToDispatch).unwrap();
+                    setSpinner(false); // Stop loading
+                    console.log('Dispatched thunk response:', response);
                 }
             } catch (error) {
+                setSpinner(false);
                 console.error('Error occurred while dispatching thunk:', error);
             }
         } else {
@@ -124,6 +129,7 @@ function InputFields({ currentScreen }) {
 
     return (
         <div>
+            <SpinnerLoader showSpinner={spinner} />
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
                     <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
