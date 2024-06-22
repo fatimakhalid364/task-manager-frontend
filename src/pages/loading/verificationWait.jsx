@@ -32,20 +32,18 @@ function VerificationWait() {
                 console.log('Error during verification:', error);
                 errorToast(`Verification failed: ${error.message}`, 'email-error');
             } finally {
-                // Reset verificationProcessed state after completion
                 setVerificationProcessed(false);
             }
         } else if (!token) {
             errorToast('Verification token is missing', 'email-error');
         }
-    }, 500); // Adjust debounce delay as needed (e.g., 500ms)
+    }, 500); 
 
     useEffect(() => {
         console.log('useEffect triggered with token:', token);
         sendVerification();
-        // Cleanup function to cancel debounce on component unmount
         return () => sendVerification.cancel();
-    }, [token, dispatch, navigate, verificationProcessed, sendVerification]); // Ensure correct dependencies
+    }, [token, dispatch, navigate, verificationProcessed, sendVerification]);
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
