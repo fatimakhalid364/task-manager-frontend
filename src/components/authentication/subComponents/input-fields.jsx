@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import SpinnerLoader from "src/components/spinLoader/SpinnerLoader";
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
 import { forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';

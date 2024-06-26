@@ -1,5 +1,5 @@
 import { Screen } from "src/constants/constants";
-import LoadingStatus from "src/components/loading-screens/subComponents/loading-status";
+import LoadingStatus from "src/components/LoadingScreens/LoadingStatus";
 import React from 'react';
 
 function PageNotFound(){

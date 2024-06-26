@@ -5,8 +5,8 @@ import SetPassword from "src/pages/authentication/SetPassword";
 import SigninpPage from 'src/pages/authentication/SigninPage';
 import SignupPage from 'src/pages/authentication/SignupPage';
 import PageNotFound from "src/pages/loading/pageNotFound";
-import PleaseWait from "src/pages/loading/pleaseWait";
 import VerificationWait from "src/pages/loading/verificationWait";
+import TasksPage from "src/pages/tasks/TasksPage";
 import './App.css';
 
 function App() {
@@ -17,9 +17,9 @@ function App() {
                 <Route path='/authentication/signin' element={<SigninpPage />} />
                 <Route path='/authentication/forgot-password' element={<ForgotPassword />} />
                 <Route path='/authentication/reset-password' element={<SetPassword />} />
-                <Route path='/page-not-found' element={<PageNotFound />} />
-                <Route path='/please-wait' element={<PleaseWait />} />
+                <Route path='/*' element={<PageNotFound />} />
                 <Route path='/authentication/email-verification' element={<VerificationWait />} />
+                <Route path='/tasks' element={<TasksPage />} />
 
                 
 

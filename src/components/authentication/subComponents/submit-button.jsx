@@ -2,8 +2,13 @@ import { Box, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Screen } from "src/constants/constants";
 import { getButtonText } from "src/utils/basicUtils";
+import { getRoutingStatement } from "src/utils/basicUtils";
+import { baseURL } from 'src/constants/constants';
+import { getRoutingText } from 'src/utils/basicUtils';
 
 function SubmitButton({ currentScreen, handleSubmit, disabled }) {
+    const page = currentScreen === Screen.SIGNIN ? 'signup' : currentScreen === Screen.SIGNUP ? 'signin' : null;
+    const buttonText = getButtonText(currentScreen);
     return (
         <div className='submit-div'>
             <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -29,16 +34,17 @@ function SubmitButton({ currentScreen, handleSubmit, disabled }) {
                         onClick={handleSubmit}
                         disabled={disabled}
                     >
-                        {getButtonText(currentScreen)}
+                        {buttonText}
+                        
                     </Button>
                 </Box>
             </Box>
-            {/* <div className='prompt-to-signin'>
+            <div className='prompt-to-signin'>
                 {getRoutingStatement(currentScreen)}
                 <a href={`${baseURL}/authentication/${page}`}>
                     {getRoutingText(currentScreen)}
                 </a>
-            </div> */}
+            </div>
         </div>
     );
 }

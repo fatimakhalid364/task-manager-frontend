@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 import CreateAccountForm from 'src/components/authentication/subComponents/main-form';
-import BackToSite from 'src/components/authentication/subComponents/back-to-site.jsx';
+import { Screen } from "src/constants/constants";
 
 function AuthenticationPages({ currentScreen, pictureURL }) {
     return (

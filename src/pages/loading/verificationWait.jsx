@@ -2,8 +2,8 @@ import debounce from 'lodash/debounce'; // Import debounce from lodash
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Loader from 'src/components/loading-screens/subComponents/loader';
-import LoadingStatus from 'src/components/loading-screens/subComponents/loading-status';
+import Loader from 'src/components/LoadingScreens/CSSLoader';
+import LoadingStatus from 'src/components/LoadingScreens/LoadingStatus';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from 'src/constants/constants';
 import { verificationEmailThunk } from 'src/store/thunks/authThunks';

@@ -45,7 +45,7 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
 });
 
 const forgotPassThunk = createAsyncThunk('auth/forgotpass', async (body, thunkAPI) => {
-    console.log('inside forgotpass thunk');
+    console.log('inside forgotpass thunk', body);
     try{
         const response = await APIS.post(`/auth/forgotpass`, body, {
             headers: {

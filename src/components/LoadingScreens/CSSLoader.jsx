@@ -1,4 +1,3 @@
-
 function Loader(){
     return (
         <div className="cssload-loader">
