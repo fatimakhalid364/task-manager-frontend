@@ -16,4 +16,12 @@ export const Screen = {
     VERIFICATION_PAGE: 'VERIFICATION_PAGE'
 };
 
+export const RoutesObj = {
+    dashboard: 'Dashboard',
+    tasks: 'Tasks',
+    notes: 'Notes',
+    calendar: 'Calendar',
+    settings: 'Settings',
+}
+
 

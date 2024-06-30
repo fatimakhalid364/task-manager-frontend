@@ -117,7 +117,7 @@ function InputFields({ currentScreen }) {
                 if (thunkToDispatch) {
                     setSpinner(true);
                     const response = await dispatch(thunkToDispatch).unwrap();
-                    setSpinner(false); // Stop loading
+                    setSpinner(false); 
                     console.log('Dispatched thunk response:', response);
                     successToast(response.message, 'authentication-pages-success');
                 }

@@ -4,6 +4,8 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
 import { authReducer } from "./slices/authSlice";
+import { searchReducer } from 'src/store/slices/searchSlice';
+
 
 
 const persistConfig = {
@@ -16,6 +18,8 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
+        search: searchReducer,
+        
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

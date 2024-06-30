@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import propTypes from "prop-types";
 
-function RoutesComponents({ icon, route, page }){
+
+function RoutesComponents({ icon, route, page, clickfunction }){
     const activeStyles = {
         color: 'var(--primary-background-color)', 
         backgroundColor: 'var(--active-background-color)',
@@ -14,7 +15,8 @@ function RoutesComponents({ icon, route, page }){
         marginBottom: '12px',
         width: '80%',
         fontFamily: 'var(--primary-font-family)',
-        fontWeight: '400'
+        fontWeight: '400',
+        borderRadius: '8px'
     };
     
     const inactiveStyles = {
@@ -36,13 +38,15 @@ function RoutesComponents({ icon, route, page }){
                 className='tasks-page-route'
                 to={ page }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
+
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img src={icon} alt='route-icon' />
                 </div>
-                <div className='tasks-page-route-name'>
-                    { route }
+                <div className='tasks-page-route-name' onClick={ clickfunction}>
+                    {route}
                 </div>
+                    
             </NavLink>
 
         

@@ -1,18 +1,22 @@
-function UpperBar() {
+import SearchBar from "src/components/UpperBar/subComponents/SearchBar";
+
+function UpperBar({ PageName, BellIcon }) {
     return (
-        <div>
-            <div>
+        <div className='upper-bar-div'>
+            <div className='page-title'>
                 {PageName}
             </div>
-            <div>
+            <div className='upper-bar-search'>
                 <SearchBar />
             </div>
-            <div>
-                {BellIcon}
+            <div className='bell-icon'>
+                <img src={BellIcon} alt='bell-icon' />
             </div>
             <div>
-                <ProfileSection />
+                
             </div>
         </div>
     )
 }
+
+export default UpperBar;

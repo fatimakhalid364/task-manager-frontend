@@ -19,6 +19,7 @@
     --active-background-color: #EBF3FF;
     --tertiary-font-size: 14px;
     --quinary-font-color: #4B5563;
+    --field-background-color: #F9FAFB;
 }
 
 .authentication-div{
@@ -233,14 +234,12 @@
 .tasks-page-logo-div {
     height: 12%;
     width: 100%;
-    border: 1px solid black;
 
 }
 
 .tasks-page-routes-div {
     height: 32%;
     width: 100%;
-    border: 1px solid black;
     margin-top: 30px;
 }
 
@@ -248,12 +247,15 @@
     cursor: pointer;
 }
 
+.tasks-page-route-name {
+    margin-top: 1px;
+}
+
 .tasks-page-route-name:hover {
     text-decoration: underline;
 }
 
 .tasks-page-priority-div {
-    border: 1px solid black;
     width: 100%;
     height: 28%;
     margin-top: 30px;
@@ -296,8 +298,82 @@
 
 .tasks-page-side {
     width: 269px;
-    border: 1px solid black;
-    height: 97vh;
+    height: 99vh;
+    position: fixed;
+    box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
+}
+
+.upper-bar-div {
+    display: flex;
+    margin-left: 269px;
+    align-items: center;
+    width: 100vw;
+    position: fixed;
+    height: 10%;
+    box-shadow: 1px 1px 10px 0px rgba(16, 24, 40, 0.1);
+}
+
+.upper-bar-search {
+    width: 25%;
+}
+
+.search-bar-div {
+    width: 100%;
+    height: 44px;
+    margin-left: 200px;
+    margin-top: 5px;
+}
+
+.search-bar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    padding: 10px 12px 10px 45px;
+    border-radius: 12px;
+    border: 1px solid var(--field-border-color);
+    background-color: var(--field-background-color);
+    
+}
+
+.search-input::placeholder {
+    font-size: var(--tertiary-font-size);
+    font-family: var(--primary-font-family);
+}
+
+.search-input:hover {
+    border: 1px solid var(--primary-background-color);
+}
+
+.search-button {
+    border: none;
+    background-color: var(--neutral-background-color);
+    position: absolute;
+    left: 4px;
+    top: 7.3px;
+    background-color: var(--field-background-color);
+}
+
+.search-button:hover{
+    cursor: pointer;
+}
+
+
+.page-title {
+    font-size: 20px;
+    font-family: var(--primary-font-family);
+    margin-left: 15px;
+    margin-top: 1px;
+    color: var(--secondary-font-color);
+}
+
+.bell-icon {
+    margin-left: calc(100vw - 65vw);
+    margin-top: 4px;
 }
 
 
