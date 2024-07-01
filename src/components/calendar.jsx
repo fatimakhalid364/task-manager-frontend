@@ -1,9 +1,9 @@
 
-function Dashboard() {
+function Calendar() {
     return (
         <div className='changing-component'>
         </div>
     )
 }
 
-export default Dashboard;
+export default Calendar;

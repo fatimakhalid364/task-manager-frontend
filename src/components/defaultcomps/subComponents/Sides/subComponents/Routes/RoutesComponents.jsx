@@ -36,17 +36,15 @@ function RoutesComponents({ icon, route, page, clickfunction }){
     return (
             <NavLink 
                 className='tasks-page-route'
-                to={ page }
+                to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
 
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img src={icon} alt='route-icon' />
                 </div>
-                <div className='tasks-page-route-name' onClick={ clickfunction}>
-                    {route}
-                </div>
-                    
+              
+                    <input type='submit' value={page} onClick={ clickfunction } className='tasks-page-route-name' />  
             </NavLink>
 
         

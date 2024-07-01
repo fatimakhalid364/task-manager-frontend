@@ -1,4 +1,4 @@
-import PriorityComponents from "src/components/tasks/subComponents/Sides/Priority/PriorityComponents";
+import PriorityComponents from "src/components/defaultcomps/subComponents/Sides/subComponents/Priority/PriorityComponents";
 import RedDot from "src/assets/Ellipse red.svg";
 import OrangeDot from "src/assets/Ellipse orange.svg";
 import GreenDot from "src/assets/Ellipse green.svg";

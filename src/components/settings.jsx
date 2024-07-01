@@ -1,9 +1,8 @@
-
-function Dashboard() {
+function Settings() {
     return (
         <div className='changing-component'>
         </div>
     )
 }
 
-export default Dashboard;
+export default Settings;

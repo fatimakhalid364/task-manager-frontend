@@ -1,4 +1,4 @@
-import SearchBar from "src/components/UpperBar/subComponents/SearchBar";
+import SearchBar from "src/components/defaultcomps/subComponents/UpperBar/subComponents/SearchBar";
 
 function UpperBar({ PageName, BellIcon }) {
     return (

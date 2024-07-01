@@ -1,6 +1,9 @@
 *, *::before, ::after{
     box-sizing : border-box;
 }
+body {
+    margin: 0;
+}
 
 :root{
     --neutral-background-color: white;
@@ -249,10 +252,16 @@
 
 .tasks-page-route-name {
     margin-top: 1px;
+    border: none;
+    background-color: inherit;
+    font-family: var(--primary-font-family);
+    color: var(--quaternary-font-color);
+    font-size: var(--tertiary-font-size);
 }
 
 .tasks-page-route-name:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .tasks-page-priority-div {
@@ -282,7 +291,7 @@
 }
 
 .tasks-page-number {
-    margin-left: 185px;
+    margin-left: 165px;
     position: absolute;
     font-family: var(--primary-font-family);
     font-size: var(--secondary-font-size);
@@ -297,20 +306,24 @@
 
 
 .tasks-page-side {
-    width: 269px;
+    width: 255px;
     height: 99vh;
     position: fixed;
     box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
+    z-index: 10;
+    background-color: var(--neutral-background-color);
 }
 
 .upper-bar-div {
     display: flex;
-    margin-left: 269px;
+    margin-left: 257px;
     align-items: center;
     width: 100vw;
     position: fixed;
-    height: 10%;
-    box-shadow: 1px 1px 10px 0px rgba(16, 24, 40, 0.1);
+    height: 8%;
+    box-shadow: 1px 1px 4px 0px rgba(16, 24, 40, 0.1);
+    z-index: 10;
+    background-color: var(--neutral-background-color);
 }
 
 .upper-bar-search {
@@ -373,9 +386,29 @@
 
 .bell-icon {
     margin-left: calc(100vw - 65vw);
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
+.changing-component-div {
+    top: 60px;
+    position: absolute;
+    left: 257px;
+    background-color: var(--field-background-color);
+    height: 91%;
+    width: 83%;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.changing-component {
+    margin-top: 30px;
+    height: 80%;
+    width: 95%;
+    background-color: var(--neutral-background-color);
+}
 
 
 

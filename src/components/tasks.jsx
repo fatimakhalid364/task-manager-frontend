@@ -1,9 +1,9 @@
-
-function Dashboard() {
+function Tasks() {
     return (
         <div className='changing-component'>
+
         </div>
     )
 }
 
-export default Dashboard;
+export default Tasks;

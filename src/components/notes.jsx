@@ -1,6 +1,6 @@
 function Notes() {
     return (
-        <div>
+        <div className='changing-component'>
         </div>
     )
 }
