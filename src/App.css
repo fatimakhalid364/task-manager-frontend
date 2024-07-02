@@ -251,12 +251,8 @@ body {
 }
 
 .tasks-page-route-name {
-    margin-top: 1px;
-    border: none;
-    background-color: inherit;
-    font-family: var(--primary-font-family);
-    color: var(--quaternary-font-color);
-    font-size: var(--tertiary-font-size);
+    margin-top: 2px;
+    
 }
 
 .tasks-page-route-name:hover {
@@ -307,11 +303,12 @@ body {
 
 .tasks-page-side {
     width: 255px;
-    height: 99vh;
+    height: 99.6vh;
     position: fixed;
     box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
     z-index: 10;
     background-color: var(--neutral-background-color);
+
 }
 
 .upper-bar-div {
@@ -390,15 +387,17 @@ body {
 }
 
 .changing-component-div {
-    top: 60px;
-    position: absolute;
-    left: 257px;
+    top: 20px;
+    position: relative;
+    left: 255px;
     background-color: var(--field-background-color);
-    height: 91%;
+    height: 91.6vh;
     width: 83%;
     z-index: 5;
     display: flex;
     justify-content: center;
+    left: 260px;
+    top: 60px;
     
 
 }

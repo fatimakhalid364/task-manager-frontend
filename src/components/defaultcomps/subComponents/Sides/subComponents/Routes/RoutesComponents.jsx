@@ -32,10 +32,14 @@ function RoutesComponents({ icon, route, page, clickfunction }){
         fontFamily: 'var(--primary-font-family)',
         fontWeight: '400'
     };
+
+    
+    
     
     return (
             <NavLink 
                 className='tasks-page-route'
+                
                 to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
 
@@ -44,7 +48,7 @@ function RoutesComponents({ icon, route, page, clickfunction }){
                     <img src={icon} alt='route-icon' />
                 </div>
               
-                    <input type='submit' value={page} onClick={ clickfunction } className='tasks-page-route-name' />  
+                    <div  onClick={ clickfunction }  className='tasks-page-route-name'>{page}</div>  
             </NavLink>
 
         

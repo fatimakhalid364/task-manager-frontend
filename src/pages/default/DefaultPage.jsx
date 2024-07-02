@@ -7,9 +7,9 @@ function DefaultPage({ children}){
     return (
         <div>
             <DefaultComps />
-            <div className='changing-component-div'>
+            <main className='changing-component-div'>
                 {children}
-            </div>
+            </main>
         </div>
     )
 };
