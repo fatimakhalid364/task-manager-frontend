@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
-import { forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
+import { fetchKeyThunk, forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
@@ -94,7 +94,10 @@ function InputFields({ currentScreen }) {
 
     const handleButtonClick = async () => {
         const validation = getValidationFunction();
+        console.log("Encrypting the data")
         const encryptedObj = encryptObjectValues(userAccount)
+        console.log("Encrypted the data")
+
         // let encryptedObj = userAccount
 
         if (validation) {
@@ -117,6 +120,15 @@ function InputFields({ currentScreen }) {
                 if (thunkToDispatch) {
                     setSpinner(true);
                     const response = await dispatch(thunkToDispatch).unwrap();
+                    if (currentScreen === Screen.SIGNIN) {
+                        const data = response.data;
+                        console.log(data);
+                        localStorage.setItem("access_token", data.access_token);
+
+                        const fetchKeyResponse = await dispatch(fetchKeyThunk({})).unwrap();
+                        console.log('Fetched key:', fetchKeyResponse);
+                        // Handle response as needed
+                    }
                     setSpinner(false); 
                     console.log('Dispatched thunk response:', response);
                     successToast(response.message, 'authentication-pages-success');

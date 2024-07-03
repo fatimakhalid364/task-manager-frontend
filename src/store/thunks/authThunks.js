@@ -32,7 +32,28 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
             },
         });
         console.log("response is,", response);
-        return response.data;
+        return response;
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return thunkAPI.rejectWithValue({
+            statusCode: error.response.status,
+            message: error.response.data.error,
+        });
+    }
+});
+
+const fetchKeyThunk = createAsyncThunk("auth/fetchKey", async (body, thunkAPI) => {
+    try {
+        const response = await APIS.post(`/auth/fetchKey`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is,", response);
+        return response;
     } catch (error) {
         if (!error.response) {
             throw error;
@@ -91,5 +112,5 @@ const verificationEmailThunk = createAsyncThunk("auth/verificationThunk", async 
 });
 
 
-export { forgotPassThunk, signinThunk, signupThunk, verificationEmailThunk };
+export { fetchKeyThunk, forgotPassThunk, signinThunk, signupThunk, verificationEmailThunk };
 
