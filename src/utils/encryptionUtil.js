@@ -37,5 +37,32 @@ const encryptObjectValues = (obj) => {
     }
 };
 
-export { encryptObjectValues };
+const decryptObjectValues = (encryptedObj, _privateKey) => {
+    try {
+        const privateKey = forge.pki.privateKeyFromPem(_privateKey);
+        const decryptedObj = {};
+
+        for (const key in encryptedObj) {
+            if (Object.hasOwn(encryptedObj, key)) {
+                const encryptedValue = encryptedObj[key];
+                const encryptedBytes = forge.util.decode64(encryptedValue);
+
+                const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
+                    md: forge.md.sha256.create(),
+                    mgf1: forge.mgf.mgf1.create(forge.md.sha256.create())
+                });
+
+                decryptedObj[key] = forge.util.decodeUtf8(decryptedBytes);
+            }
+        }
+
+        return decryptedObj;
+    } catch (error) {
+        console.error('Error occurred while decrypting object values:', error);
+        return null;
+    }
+};
+
+
+export { decryptObjectValues, encryptObjectValues };
 

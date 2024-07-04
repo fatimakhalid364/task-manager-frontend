@@ -2,14 +2,15 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
 import { fetchKeyThunk, forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
-import { encryptObjectValues } from "src/utils/encryptionUtil";
+import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
 
@@ -126,6 +127,10 @@ function InputFields({ currentScreen }) {
                         localStorage.setItem("access_token", data.access_token);
 
                         const fetchKeyResponse = await dispatch(fetchKeyThunk({})).unwrap();
+                        const _privateKey = fetchKeyResponse.data.privateKey;
+                        const decryptObj = decryptObjectValues(data.user, _privateKey);
+                        console.log(decryptObj);
+
                         console.log('Fetched key:', fetchKeyResponse);
                         // Handle response as needed
                     }
@@ -142,6 +147,7 @@ function InputFields({ currentScreen }) {
             console.error('Validation failed for the current screen.');
         }
     };
+    const debouncedHandleButtonClick = useCallback(debounce(handleButtonClick, 300), [userAccount, currentScreen]);
 
     return (
         <div>
@@ -243,7 +249,7 @@ function InputFields({ currentScreen }) {
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <SubmitButton
                         currentScreen={currentScreen}
-                        handleSubmit={handleButtonClick}
+                        handleSubmit={debouncedHandleButtonClick}
                         disabled={currentScreen === Screen.SIGNUP && !checked} // Disable the button if signup screen and checkbox not checked
                     />
                 </Grid>
