@@ -120,9 +120,9 @@ function InputFields({ currentScreen }) {
                 if (thunkToDispatch) {
                     setSpinner(true);
                     const response = await dispatch(thunkToDispatch).unwrap();
-                    if (currentScreen === Screen.SIGNIN) {
+                    if (currentScreen === Screen.SIGNIN && response.data.access_token) {
                         const data = response.data;
-                        console.log(data);
+                        console.log(data.access_token);
                         localStorage.setItem("access_token", data.access_token);
 
                         const fetchKeyResponse = await dispatch(fetchKeyThunk({})).unwrap();

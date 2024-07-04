@@ -28,11 +28,11 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
         const response = await APIS.post(`/auth/signin`, body, {
             headers: {
                 "Content-Type": "application/json",
-                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
             },
         });
         console.log("response is,", response);
-        return response;
+        return response.data;
     } catch (error) {
         if (!error.response) {
             throw error;
@@ -46,14 +46,14 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
 
 const fetchKeyThunk = createAsyncThunk("auth/fetchKey", async (body, thunkAPI) => {
     try {
-        const response = await APIS.post(`/auth/fetchKey`, body, {
+        const response = await APIS.get(`/auth/fetchKey`, {
             headers: {
                 "Content-Type": "application/json",
                 access_token: `Bearer ${localStorage.getItem("access_token")}`,
             },
         });
         console.log("response is,", response);
-        return response;
+        return response.data;
     } catch (error) {
         if (!error.response) {
             throw error;
@@ -71,7 +71,7 @@ const forgotPassThunk = createAsyncThunk('auth/forgotpass', async (body, thunkAP
         const response = await APIS.post(`/auth/forgotpass`, body, {
             headers: {
                 "Content-Type": "application/json",
-                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
             },
         });
         console.log("response is,", response);
