@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
@@ -14,6 +14,7 @@ import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUt
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import SubmitButton from './submit-button.jsx';
 
+import { setUser } from 'src/store/slices/authSlice';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInput-underline:after': {
@@ -64,6 +65,9 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
 function InputFields({ currentScreen }) {
 
     const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.auth.isLoading);
+    const successMsg = useSelector(state => state.auth.successMsg);
+    const errorMsg = useSelector(state => state.auth.errorMsg);
 
     const [userAccount, setUserAccount] = useState({
         name: "",
@@ -130,18 +134,18 @@ function InputFields({ currentScreen }) {
                         const _privateKey = fetchKeyResponse.data.privateKey;
                         const decryptObj = decryptObjectValues(data.user, _privateKey);
                         console.log(decryptObj);
-
+                        dispatch(setUser(decryptObj));
                         console.log('Fetched key:', fetchKeyResponse);
                         // Handle response as needed
                     }
                     setSpinner(false); 
-                    console.log('Dispatched thunk response:', response);
-                    successToast(response.message, 'authentication-pages-success');
+                    console.log('Dispatched thunk response:', successMsg);
+                    { successMsg ? successToast(response.message, 'authentication-pages-success') : errorToast('Something went wrong', 'authentication-pages-error') }
                 }
             } catch (error) {
                 setSpinner(false);
                 console.error('Error occurred while dispatching thunk:', error);
-                errorToast(error.message, 'authentication-pages-error')
+                errorToast(error.message, 'authentication-pages-error');
             }
         } else {
             console.error('Validation failed for the current screen.');
@@ -250,6 +254,7 @@ function InputFields({ currentScreen }) {
                     <SubmitButton
                         currentScreen={currentScreen}
                         handleSubmit={debouncedHandleButtonClick}
+                        isLoading={isLoading}
                         disabled={currentScreen === Screen.SIGNUP && !checked} // Disable the button if signup screen and checkbox not checked
                     />
                 </Grid>
