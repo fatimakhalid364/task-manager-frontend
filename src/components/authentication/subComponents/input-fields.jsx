@@ -146,7 +146,7 @@ function InputFields({ currentScreen }) {
                     }
                     setSpinner(false); 
                     console.log('Dispatched thunk response:', successMsg);
-                    { successMsg ? successToast(response.message, 'authentication-pages-success') : errorToast('Something went wrong', 'authentication-pages-error') }
+                    { successMsg ? successToast(response.message, 'authentication-pages-success') : '' }
                 }
             } catch (error) {
                 setSpinner(false);
