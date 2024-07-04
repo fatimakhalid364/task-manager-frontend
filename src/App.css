@@ -384,6 +384,7 @@ body {
 .bell-icon {
     margin-left: calc(100vw - 65vw);
     margin-top: 3px;
+    margin-right: 20px;
 }
 
 .changing-component-div {
