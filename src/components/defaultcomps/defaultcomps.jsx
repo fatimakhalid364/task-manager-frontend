@@ -3,32 +3,21 @@ import UpperBar from 'src/components/defaultcomps/subComponents/UpperBar/upperba
 import BellIcon from 'src/assets/bell.svg';
 import { useState } from "react";
 import {useNavigate, useSearchParams } from 'react-router-dom';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+
 
 
 
 function DefaultComps(){
 
     const [searchParams] = useSearchParams();
-    const title = searchParams.get('page')
-   // const navigate = useNavigate();
-   
+    const title = searchParams.get('page');
 
-   
-   
-
-    function handleRouteClick(event) {
-        
-        /*const {name, value} = event.target;
-        
-        setSearchParams({[name] : value});
-        console.log(searchParams.get(`${name}`));
-        console.log(name);
-        console.log(value);*/
+    function handleRouteClick() {
         console.log('clicked route');
     }
 
    
-
     return(
         <div>
             <Sides clickfunction = {handleRouteClick} />
