@@ -1,18 +1,16 @@
 import { Route, Routes } from "react-router-dom";
+import Dashboard from 'src/components/dashboard';
+import Notes from 'src/components/notes';
 import ForgotPassword from "src/pages/authentication/ForgotPassword";
 import SetPassword from "src/pages/authentication/SetPassword";
 import SigninpPage from 'src/pages/authentication/SigninPage';
 import SignupPage from 'src/pages/authentication/SignupPage';
-import PageNotFound from "src/pages/loading/pageNotFound";
-import VerificationWait from "src/pages/loading/verificationWait";
 import DefaultPage from "src/pages/default/DefaultPage";
-import Notes from 'src/components/notes';
-import Dashboard from 'src/components/dashboard';
-import Tasks from "./components/tasks";
-import Settings from "./components/settings";
-import Calendar from "./components/calendar";
+import VerificationWait from "src/pages/loading/verificationWait";
 import './App.css';
-
+import Calendar from "./components/calendar";
+import Settings from "./components/settings";
+import Tasks from "./components/tasks";
 function App() {
     return (
         <div>

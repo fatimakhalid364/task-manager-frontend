@@ -385,6 +385,7 @@ body {
 .bell-icon {
     margin-left: calc(100vw - 65vw);
     margin-top: 3px;
+    margin-right: 20px;
 }
 
 .changing-component-div {
@@ -392,8 +393,8 @@ body {
     position: relative;
     left: 255px;
     background-color: var(--field-background-color);
-    height: 91.6vh;
-    width: 83%;
+    height: 90vh;
+    width: 80%;
     z-index: 5;
     display: flex;
     justify-content: center;
@@ -404,9 +405,10 @@ body {
 }
 
 .changing-component {
-    margin-top: 30px;
-    height: 80%;
-    width: 95%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* height: 80%; */
+    width: 98%;
     background-color: var(--neutral-background-color);
 }
 

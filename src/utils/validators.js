@@ -73,7 +73,9 @@ export function validateSetForm(userAccount) {
         return false;
     }
     return true;
-}
+} // Ensure this path is correct
+
+
 
 
 export default { validateSignup, validateSignin, validateResetForm, validateSetForm };

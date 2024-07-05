@@ -1,12 +1,9 @@
 import { Box, Button } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Screen } from "src/constants/constants";
-import { getButtonText } from "src/utils/basicUtils";
-import { getRoutingStatement } from "src/utils/basicUtils";
-import { baseURL } from 'src/constants/constants';
-import { getRoutingText } from 'src/utils/basicUtils';
+import { baseURL, Screen } from "src/constants/constants";
+import { getButtonText, getRoutingStatement, getRoutingText } from "src/utils/basicUtils";
 
-function SubmitButton({ currentScreen, handleSubmit, disabled }) {
+function SubmitButton({ currentScreen, handleSubmit, disabled, isLoading }) {
     const page = currentScreen === Screen.SIGNIN ? 'signup' : currentScreen === Screen.SIGNUP ? 'signin' : null;
     const buttonText = getButtonText(currentScreen);
     return (
@@ -34,7 +31,7 @@ function SubmitButton({ currentScreen, handleSubmit, disabled }) {
                         onClick={handleSubmit}
                         disabled={disabled}
                     >
-                        {buttonText}
+                        {isLoading ? 'Loading...' : buttonText}
                         
                     </Button>
                 </Box>
