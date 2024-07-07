@@ -1,7 +1,7 @@
+import MainDiv from "src/components/maindiv/maindiv";
 function Settings() {
     return (
-        <div className='changing-component'>
-        </div>
+        <MainDiv />
     )
 }
 

@@ -20,16 +20,14 @@ function App() {
                 <Route path='/authentication/forgot-password' element={<ForgotPassword />} />
                 <Route path='/authentication/reset-password' element={<SetPassword />} />
                 <Route path='/authentication/email-verification' element={<VerificationWait />} />
-                </Routes>
-            <DefaultPage>
-            <Routes>
-                <Route path='/default/notes' element={<Notes />} />
-                <Route path='/default/dashboard' element={<Dashboard />} />
-                <Route path='/default/tasks' element={<Tasks />} />
-                <Route path='/default/calendar' element={<Calendar />} />
-                <Route path='/default/settings' element={<Settings />} />
+                <Route path='/default' element={<DefaultPage />}>
+                    <Route path='/default/notes' element={<Notes />} />
+                    <Route path='/default/dashboard' element={<Dashboard />} />
+                    <Route path='/default/tasks' element={<Tasks />} />
+                    <Route path='/default/calendar' element={<Calendar />} />
+                    <Route path='/default/settings' element={<Settings />} />
+                </Route> 
             </Routes>
-            </DefaultPage> 
 
         </div>
     );

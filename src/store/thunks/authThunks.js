@@ -23,7 +23,7 @@ const signupThunk = createAsyncThunk("auth/signup", async (body, thunkAPI) => {
     }
 });
 const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
-    console.log("inside signup thunk", body);
+    console.log("inside signin thunk", body);
     try {
         const response = await APIS.post(`/auth/signin`, body, {
             headers: {

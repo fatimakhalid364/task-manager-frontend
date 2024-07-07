@@ -1,8 +1,8 @@
+import MainDiv from "src/components/maindiv/maindiv";
 
 function Calendar() {
     return (
-        <div className='changing-component'>
-        </div>
+        <MainDiv />
     )
 }
 

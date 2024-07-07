@@ -252,12 +252,14 @@ body {
 
 .tasks-page-route-name {
     margin-top: 2px;
+    transition: font-size 0.3s ease;
     
 }
 
 .tasks-page-route-name:hover {
     text-decoration: underline;
     cursor: pointer;
+    font-size: 17px;
 }
 
 .tasks-page-priority-div {
@@ -306,6 +308,8 @@ body {
     width: 255px;
     height: 99.6vh;
     position: fixed;
+    top: 0;
+    left: 0;
     box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
     z-index: 10;
     background-color: var(--neutral-background-color);
@@ -314,7 +318,7 @@ body {
 
 .upper-bar-div {
     display: flex;
-    margin-left: 257px;
+    left: 257px;
     align-items: center;
     width: 100vw;
     position: fixed;
@@ -380,35 +384,53 @@ body {
     margin-left: 15px;
     margin-top: 1px;
     color: var(--secondary-font-color);
+    width: 107px;
 }
 
 .bell-icon {
-    margin-left: calc(100vw - 65vw);
-    margin-top: 3px;
+    margin-left: calc(100vw - 70vw);
+    margin-top: 3.45px;
     margin-right: 20px;
 }
 
+.profile-div {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: 15px;
+}
+
+
+.profile-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    border: 1px solid black;
+    margin-bottom: 1px;
+}
+
+.dropdown {
+    margin-left: 10px;
+}
+
 .changing-component-div {
-    top: 20px;
-    position: relative;
-    left: 255px;
+    position: absolute;
     background-color: var(--field-background-color);
-    height: 90vh;
-    width: 80%;
-    z-index: 5;
+    height: 91.6vh;
+    width: 83.26vw;
+    
     display: flex;
     justify-content: center;
-    left: 260px;
+    left: 257.4px;
     top: 60px;
     
 
 }
 
 .changing-component {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    /* height: 80%; */
-    width: 98%;
+    margin-top: 35px;
+    height: 80%;
+    width: 95%;
     background-color: var(--neutral-background-color);
 }
 

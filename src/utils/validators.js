@@ -28,7 +28,7 @@ export function validateSignup(userAccount, checked) {
     }
 
     if (password !== confirmPassword) {
-        errorToast('Passwords do not match.', 'password-mismatc-error');
+        errorToast('Passwords do not match.', 'password-mismatch-error');
         return false;
     }
 

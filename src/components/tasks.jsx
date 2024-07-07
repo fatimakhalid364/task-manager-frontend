@@ -1,8 +1,7 @@
+import MainDiv from "src/components/maindiv/maindiv";
 function Tasks() {
     return (
-        <div className='changing-component'>
-
-        </div>
+        <MainDiv />
     )
 }
 

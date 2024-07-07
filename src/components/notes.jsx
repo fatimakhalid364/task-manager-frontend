@@ -1,7 +1,8 @@
+import MainDiv from "src/components/maindiv/maindiv";
+
 function Notes() {
     return (
-        <div className='changing-component'>
-        </div>
+        <MainDiv />
     )
 }
 
