@@ -25,13 +25,19 @@ function ProfileSection() {
 
     return (
         <div className='profile-div'>
-            <img className='profile-img' />
-            <div className='profile-name'>
-                {formatUserName()}
+            <div className='profile-img'>
+                <img />
             </div>
-            <div className='dropdown'>
-                <img src={drop} alt='drop-icon' />
+            <div className='profile-details'>
+                <div className='profile-name'>
+                    {formatUserName()}
+                    <img src={drop} alt='drop-icon' className='dropdown' />
+                </div>
+                <div className='profile-email'>
+                    {user?.email}
+                </div>
             </div>
+            
         </div>
     )
 }

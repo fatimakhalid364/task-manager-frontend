@@ -1,5 +1,6 @@
 import ProfileSection from "src/components/defaultcomps/subComponents/UpperBar/subComponents/ProfileSection";
 import SearchBar from "src/components/defaultcomps/subComponents/UpperBar/subComponents/SearchBar";
+import 'src/components/defaultcomps/subComponents/UpperBar/subComponents/upper_bar.css';
 
 function UpperBar({ PageName, BellIcon }) {
     return (

@@ -33,6 +33,7 @@ const signinThunk = createAsyncThunk("auth/signin", async (body, thunkAPI) => {
         });
         console.log("response is,", response);
         return response.data;
+        
     } catch (error) {
         if (!error.response) {
             throw error;

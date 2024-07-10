@@ -1,0 +1,86 @@
+.tasks-page-logo-div {
+    height: 12%;
+    width: 100%;
+    background-color: var(--neutral-background-color);
+
+}
+
+.tasks-page-routes-div {
+    height: 32%;
+    width: 100%;
+    margin-top: 30px;
+    background-color: var(--neutral-background-color);
+}
+
+.tasks-page-route:hover {
+    cursor: pointer;
+}
+
+.tasks-page-route-name {
+    margin-top: 2px;
+  
+    
+}
+
+.tasks-page-route-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+  
+}
+
+.tasks-page-priority-div {
+    width: 100%;
+    height: 28%;
+    margin-top: 30px;
+    background-color: var(--neutral-background-color)
+}
+
+.priority-header {
+    margin-left: 7%;
+    font-family: var(--primary-font-family);
+    font-size: var(--tertiary-font-size);
+}
+
+.tasks-page-priority {
+    display: flex;
+    margin-left: 16%;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.tasks-page-priority-level {
+    margin-left: 9%;
+    font-family: var(--primary-font-family);
+    font-size: var(--tertiary-font-size);
+    color: var(--quinary-font-color);
+    cursor: pointer;
+}
+
+.tasks-page-number {
+    margin-left: 165px;
+    position: absolute;
+    font-family: var(--primary-font-family);
+    font-size: var(--secondary-font-size);
+    height: 20px;
+    width: 20px;
+    background-color: var(--active-background-color);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+.tasks-page-side {
+    width: 255px;
+    height: 99.6vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
+    z-index: 1;
+    background-color: var(--neutral-background-color);
+
+}

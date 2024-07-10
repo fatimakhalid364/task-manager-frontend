@@ -4,6 +4,7 @@ import BellIcon from 'src/assets/bell.svg';
 import { useState } from "react";
 import {useNavigate, useSearchParams } from 'react-router-dom';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import AddTask from "src/components/tasks/sub_components/add_task";
 
 
 
@@ -19,7 +20,8 @@ function DefaultComps(){
 
    
     return(
-        <div>
+        <div className='default-components'>
+            <AddTask />
             <Sides clickfunction = {handleRouteClick} />
             <UpperBar 
                 PageName={title}

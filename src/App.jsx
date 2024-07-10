@@ -10,7 +10,7 @@ import VerificationWait from "src/pages/loading/verificationWait";
 import './App.css';
 import Calendar from "./components/calendar";
 import Settings from "./components/settings";
-import Tasks from "./components/tasks";
+import Tasks from "src/components/tasks/tasks";
 function App() {
     return (
         <div>

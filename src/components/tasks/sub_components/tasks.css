@@ -1,0 +1,245 @@
+.task-page {
+    margin-top: 15px;
+    border: 1px solid black;
+    width: 97%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-page-top {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 45px;
+    align-items: center;
+    font-family: var(--primary-font-family);
+}
+
+.task-page-top-header {
+    display: flex;
+    
+    gap: 10px;
+    
+    color: var(--secondary-font-color);
+    align-items: center;
+    
+}
+
+.all-tasks {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.number-of-tasks {
+    font-size: 20px;
+    margin-top: 2px;
+    color: var(--tertiary-font-color);
+}
+
+.primary-button {
+    height: 40px;
+    width: 147px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    border-radius: 50px;
+    background-color: var(--primary-background-color);
+    border: none;
+    color: var(--neutral-background-color);
+    font-weight: 400;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; 
+}
+
+.primary-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.primary-button:active {
+    outline: none;
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+
+.primary-button:focus {
+    outline: none;
+}
+
+#popup {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    border: 1px solid black;
+    background-color: transparent;
+    z-index: -1; 
+    
+    transition: all 0.4s;
+    top: 0;
+    left: 0;
+}
+
+
+
+#popup {
+    &:target {
+        z-index: 2; 
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    &:target #add-task-div {
+        transform: translate(-50%, -50%) scale(1);
+
+    }
+    
+}
+
+#add-task-div {
+    position: relative;
+	height: 550px;
+	width: 550px;
+	top: 50%;
+	left: 54%;
+	transform: translate(-50%, -50%) scale(0);
+	border-radius: 10px;
+    background-color: var(--neutral-background-color);
+    border: 1px solid var(--modal-border-color);
+    opacity: 1;
+    padding: 10px;
+    transition: transform 0.5s ease-in;
+}
+
+
+
+.add-task-header {
+    height: 8%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--modal-border-color);
+    padding: 0 12px 0 14px;
+    
+} 
+
+.add-case {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--primary-font-family);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--quinary-font-color);
+}
+
+.add-task-cross {
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.add-task-details-div {
+    width: 100%;
+    height: 77%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    border-bottom: 1px solid var(--modal-border-color);
+    
+}
+
+.add-task-details {
+    & {
+        width: 95%;
+       
+    }
+    & input {
+        width: 100%;
+        border: 1px solid var(--field-border-color);
+        border-radius: 8px;
+        padding: 10px;
+    }
+    & input:hover,
+    & input:focus {
+        outline: none;
+        border-color: var(--primary-background-color);
+    }
+    & textarea {
+        width: 100%;
+        border: 1px solid var(--field-border-color);
+        border-radius: 8px;
+    }
+    & textarea:hover,
+    & textarea:focus {
+        outline: none;
+        border-color: var(--primary-background-color);
+    }
+}
+
+.add-task-input-title {
+    margin-top: 11px;
+    margin-bottom: 4px;
+    font-family: var(--secondary-font-family);
+    font-size: 14px;
+    color: var(--secondary-font-color);
+}
+
+.add-task-controls-div {
+    width: 100%;
+    height: 12%;
+
+    
+}
+
+.add-task-controls {
+    & {
+        display: flex;
+        gap: 20px;
+        height: 100%;
+        margin-left: 52.6%;
+        width: 50%;
+        align-items: center;
+    }
+    & button {
+        border: 1px solid var(--quinary-font-color);
+        
+        border-radius: 28px;
+        
+    }
+
+    & .cancel-button {
+        background-color: var(--neutral-background-color);
+        width: 95px;
+        padding: 5px 15px 5px 15px;
+    }
+
+    & #modal-add-task-btn {
+        width: 126px;
+        color: var(--neutral-background-color);
+        font-weight: 400;
+        height: 37px;
+        margin-bottom: 2px;
+        
+        
+    }
+
+    & a {
+        text-decoration: none;
+        font-family: var(--secondary-font-family);
+        font-size: 14px;
+    }
+
+    & #cancel-link {
+        
+        color: var(--quinary-font-color);
+    }
+
+    
+}
+
+
+

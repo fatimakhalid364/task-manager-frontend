@@ -2,7 +2,7 @@ const localURL = 'http://localhost:5173';
 // const liveURL = 'not yet defined';
 
 export const baseURL = localURL;
-export const defaultRedirect = `/default/notes`;
+export const defaultRedirect = `/default/notes?page=Notes`;
 
 export const LIVE_API = 'https://task-manager-backend-roan.vercel.app/api'
 export const LOCAL_API = 'http://localhost:3000/api';
