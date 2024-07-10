@@ -1,6 +1,9 @@
 import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
 import { useState } from 'react';
+import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUtil";
+import createTaskThunk from 'src/store/thunks/create_task_thunk';
+import { useDispatch } from 'react-redux';
 
 function AddTask() {
     const [taskDetails, setTaskDetails] = useState({
@@ -17,6 +20,23 @@ function AddTask() {
             ...prevValue,
             [name]: value
         }));
+    }
+
+    
+
+    const dispatch = useDispatch();
+
+    async function handleCreateClick() {
+        try 
+        {
+            const encryptedTaskDetails = encryptObjectValues(taskDetails);
+            const thunkToDispatch = createTaskThunk(encryptedTaskDetails);
+            const response = await dispatch(thunkToDispatch);
+            return response;
+        }catch (error) {
+            console.error('Error occurred while dispatching thunk:', error);
+        }
+
     }
 
     return (
@@ -50,7 +70,7 @@ function AddTask() {
                             </a>
                         </button>
                         
-                            <a className='primary-button' id='modal-add-task-btn' href='#'>
+                            <a className='primary-button' id='modal-add-task-btn' href='#' onClick =  { handleCreateClick }>
                                 Create Task
                             </a>
                         

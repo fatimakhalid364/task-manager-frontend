@@ -107,7 +107,7 @@ function InputFields({ currentScreen }) {
         const validation = getValidationFunction();
         console.log("Encrypting the data")
         const encryptedObj = encryptObjectValues(userAccount)
-        console.log("Encrypted the data")
+        console.log("Encrypted the user-account data")
 
         // let encryptedObj = userAccount
 
