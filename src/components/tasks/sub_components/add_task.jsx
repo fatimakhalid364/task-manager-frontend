@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { useDispatch } from 'react-redux';
+import modalDrop from 'src/assets/modal-drop.svg';
 
 function AddTask() {
     const [taskDetails, setTaskDetails] = useState({
@@ -20,6 +21,7 @@ function AddTask() {
             ...prevValue,
             [name]: value
         }));
+        console.log(name, value);
     }
 
     
@@ -53,13 +55,22 @@ function AddTask() {
                         <div className='add-task-input-title'>Task Title</div>
                         <input type='text' value={taskDetails.taskTitle} name='taskTitle' onChange={handleInputChange}  />
                         <div className='add-task-input-title'>Due Date</div>
-                        <input type='text' value={taskDetails.dueDate} name='dueDate' onChange={handleInputChange}  />
+                        <input type='date' value={taskDetails.dueDate} name='dueDate' onChange={handleInputChange}  />
                         <div className='add-task-input-title'>Priority</div>
-                        <input type='text' value={taskDetails.priority} name='priority' onChange={handleInputChange}  />
+                        <select value={taskDetails.priority} name='priority' onChange={handleInputChange}>
+                            <option selected>High</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                        </select>
                         <div className='add-task-input-title'>Status</div>
-                        <input type='text' value={taskDetails.status} name='status' onChange={handleInputChange} />
+                        <select value={taskDetails.status} name='status' onChange={handleInputChange}>
+                            <option selected>Not Started</option>
+                            <option>In Progress</option>
+                            <option>Completed</option>
+                            <option>Pending</option>
+                        </select>
                         <div className='add-task-input-title'>Task Description</div>
-                        <textarea rows={5} type='text' value={taskDetails.taskDescription} name='taskDescription' onChange={handleInputChange}  />
+                        <textarea rows={4} type='text' value={taskDetails.taskDescription} name='taskDescription' onChange={handleInputChange}  />
                     </form>
                 </div>
                 <div className='add-task-controls-div'>

@@ -104,7 +104,7 @@
 	height: 550px;
 	width: 550px;
 	top: 50%;
-	left: 54%;
+	left: 52%;
 	transform: translate(-50%, -50%) scale(0);
 	border-radius: 10px;
     background-color: var(--neutral-background-color);
@@ -157,26 +157,43 @@
         width: 95%;
        
     }
-    & input {
+    & input,
+    & select,
+    & textarea {
         width: 100%;
         border: 1px solid var(--field-border-color);
         border-radius: 8px;
         padding: 10px;
     }
     & input:hover,
-    & input:focus {
+    & input:focus,
+    & textarea:hover,
+    & textarea:focus,
+    & select:hover,
+    & select:focus  {
         outline: none;
         border-color: var(--primary-background-color);
     }
     & textarea {
-        width: 100%;
-        border: 1px solid var(--field-border-color);
-        border-radius: 8px;
+        padding: 0;
+        
     }
-    & textarea:hover,
-    & textarea:focus {
-        outline: none;
-        border-color: var(--primary-background-color);
+
+    & select {
+        --webkit-appearance: none;
+        appearance: none; 
+        -moz-appearance: none;
+        background-image: url('src/assets/modal-drop.svg');
+        background-repeat: no-repeat;
+        background-position: 97.4% 50%;
+        cursor: pointer;
+    }
+
+    & input[type='date']::-webkit-calendar-picker-indicator {
+        background-image: url('src/assets/calendar.svg');
+        background-repeat: no-repeat;
+        background-position: 98% 50%;
+        cursor: pointer;
     }
 }
 
@@ -191,8 +208,6 @@
 .add-task-controls-div {
     width: 100%;
     height: 12%;
-
-    
 }
 
 .add-task-controls {

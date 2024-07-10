@@ -12,7 +12,6 @@ const createTaskSlice = createSlice({
         isLoading: false,
         successMsg: '',
         errorMsg: '',
-        isAuthenticated: true,
     },
     reducers: {
         setTaskDetails: (state, action) => {

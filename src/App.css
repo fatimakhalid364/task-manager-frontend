@@ -69,10 +69,12 @@ body {
 		-moz-transform: rotateY(-180deg);
 }
 
-/* .default-components {
-	z-index: 1;
-	position: fixed;
-} */
+input,
+select,
+textarea{
+	font-family: var(--secondary-font-family);
+	
+}
 
 
 
