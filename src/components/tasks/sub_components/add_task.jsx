@@ -1,12 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
-import { useState } from 'react';
-import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
-import { useDispatch } from 'react-redux';
-import modalDrop from 'src/assets/modal-drop.svg';
+import { encryptObjectValues } from "src/utils/encryptionUtil";
 
-function AddTask() {
+const AddTask = () => {
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: "",
         dueDate: "",
@@ -15,14 +14,28 @@ function AddTask() {
         taskDescription: ""
     });
 
-    function handleInputChange(event) {
-        const { value, name } = event.target;
-        setTaskDetails((prevValue) => ({
-            ...prevValue,
+    const resetTaskDetails = () => {
+        setTaskDetails({
+            taskTitle: "",
+            dueDate: "",
+            priority: "",
+            status: "",
+            taskDescription: ""
+        });
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setTaskDetails({
+            ...taskDetails,
             [name]: value
-        }));
-        console.log(name, value);
-    }
+        });
+    };
+
+    const convertToUTC = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toISOString();
+    };
 
     
 
@@ -31,18 +44,34 @@ function AddTask() {
     async function handleCreateClick() {
         try 
         {
-            const encryptedTaskDetails = encryptObjectValues(taskDetails);
-            const thunkToDispatch = createTaskThunk(encryptedTaskDetails);
+
+            const forEncryption = { taskTitle: taskDetails.taskTitle, taskDescription: taskDetails.taskDescription }
+            const encryptedTaskDetails = encryptObjectValues(forEncryption);
+            taskDetails.taskTitle = encryptedTaskDetails.taskTitle;
+            taskDetails.taskDescription = encryptedTaskDetails.taskDescription;
+            taskDetails.dueDate = convertToUTC(taskDetails.dueDate);
+            const thunkToDispatch = createTaskThunk(taskDetails);
+
             const response = await dispatch(thunkToDispatch);
-            return response;
+            console.log(response);
         }catch (error) {
             console.error('Error occurred while dispatching thunk:', error);
         }
+        resetTaskDetails();
 
     }
+    const handleCancelClick = () => {
+        resetTaskDetails();
+    };
+
+    useEffect(() => {
+        return () => {
+            resetTaskDetails();
+        }
+    }, [])
 
     return (
-        <div id='popup'>
+        <div id='popup' onClick={handleCancelClick}>
             <div id='add-task-div' style={{opacity: '1'}}>
                 <div className='add-task-header'>
                     <div className='add-case'>
@@ -76,7 +105,7 @@ function AddTask() {
                 <div className='add-task-controls-div'>
                     <div className="add-task-controls">
                         <button className='cancel-button'>
-                            <a id='cancel-link' href='#'>
+                            <a id='cancel-link' href='#' onClick={handleCancelClick}>
                                 Cancel
                             </a>
                         </button>
