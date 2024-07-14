@@ -101,7 +101,7 @@
 
 #add-task-div {
     position: relative;
-	height: 550px;
+	height: 600px;
 	width: 550px;
 	top: 50%;
 	left: 52%;
@@ -110,8 +110,8 @@
     background-color: var(--neutral-background-color);
     border: 1px solid var(--modal-border-color);
     opacity: 1;
-    padding: 10px;
-    transition: transform 0.5s ease-in;
+    padding: 15px;
+    /* transition: transform 0.2s ease-in; */
 }
 
 
@@ -148,7 +148,7 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    border-bottom: 1px solid var(--modal-border-color);
+    /* border-bottom: 1px solid var(--modal-border-color); */
     
 }
 

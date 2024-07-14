@@ -1,124 +1,178 @@
-import { useEffect, useState } from 'react';
+import { Box, Button, FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
+import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
-import { encryptObjectValues } from "src/utils/encryptionUtil";
+import { encryptObjectValues } from 'src/utils/encryptionUtil';
+
 
 const AddTask = () => {
     const [taskDetails, setTaskDetails] = useState({
-        taskTitle: "",
-        dueDate: "",
-        priority: "",
-        status: "",
-        taskDescription: ""
+        taskTitle: '',
+        dueDate: dayjs(),
+        priority: 'HIGH',
+        status: 'NOT_STARTED',
+        taskDescription: ''
     });
 
     const resetTaskDetails = () => {
         setTaskDetails({
-            taskTitle: "",
-            dueDate: "",
-            priority: "",
-            status: "",
-            taskDescription: ""
+            taskTitle: '',
+            dueDate: dayjs(),
+            priority: 'HIGH',
+            status: 'NOT_STARTED',
+            taskDescription: ''
         });
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setTaskDetails({
-            ...taskDetails,
+        setTaskDetails((prevDetails) => ({
+            ...prevDetails,
             [name]: value
-        });
+        }));
     };
 
-    const convertToUTC = (dateStr) => {
-        const date = new Date(dateStr);
+    const handleDateChange = (date) => {
+        setTaskDetails((prevDetails) => ({
+            ...prevDetails,
+            dueDate: date
+        }));
+    };
+
+    const convertToUTC = (date) => {
         return date.toISOString();
     };
 
-    
-
     const dispatch = useDispatch();
 
-    async function handleCreateClick() {
-        try 
-        {
-
-            const forEncryption = { taskTitle: taskDetails.taskTitle, taskDescription: taskDetails.taskDescription }
+    const handleCreateClick = async (e) => {
+        e.preventDefault(); // Prevent form submission
+        try {
+            const forEncryption = {
+                taskTitle: taskDetails.taskTitle,
+                taskDescription: taskDetails.taskDescription
+            };
             const encryptedTaskDetails = encryptObjectValues(forEncryption);
-            taskDetails.taskTitle = encryptedTaskDetails.taskTitle;
-            taskDetails.taskDescription = encryptedTaskDetails.taskDescription;
-            taskDetails.dueDate = convertToUTC(taskDetails.dueDate);
-            const thunkToDispatch = createTaskThunk(taskDetails);
 
-            const response = await dispatch(thunkToDispatch);
-            console.log(response);
-        }catch (error) {
+            const updatedTaskDetails = {
+                ...taskDetails,
+                taskTitle: encryptedTaskDetails.taskTitle,
+                taskDescription: encryptedTaskDetails.taskDescription,
+                dueDate: convertToUTC(taskDetails.dueDate)
+            };
+
+            const thunkToDispatch = createTaskThunk(updatedTaskDetails);
+            const response = await dispatch(thunkToDispatch).unwrap();
+            if (response.status === 201) {
+                successToast(response.message, 'task-created');
+                resetTaskDetails(); // Reset task details after successful creation
+                // setAnchorEl(null);
+            } else {
+                errorToast('Something went wrong', 'authentication-pages-error');
+                resetTaskDetails();
+            }
+
+        } catch (error) {
             console.error('Error occurred while dispatching thunk:', error);
+            errorToast(error.message, 'authentication-pages-error');
+            resetTaskDetails();
         }
-        resetTaskDetails();
+    };
 
-    }
     const handleCancelClick = () => {
         resetTaskDetails();
     };
 
-    useEffect(() => {
-        return () => {
-            resetTaskDetails();
-        }
-    }, [])
-
     return (
         <div id='popup' onClick={handleCancelClick}>
-            <div id='add-task-div' style={{opacity: '1'}}>
+            <div id='add-task-div' style={{ opacity: '1' }} onClick={(e) => e.stopPropagation()}>
                 <div className='add-task-header'>
                     <div className='add-case'>
                         <img src={plus} alt='plus sign' /> Add Case
                     </div>
-                    <a href='#'><img src={cross} alt='cross' className='add-task-cross'/></a>
+                    <a href='#'><img src={cross} alt='cross' className='add-task-cross' /></a>
                 </div>
                 <div className='add-task-details-div'>
                     <form className='add-task-details'>
                         <div className='add-task-input-title'>Task Title</div>
-                        <input type='text' value={taskDetails.taskTitle} name='taskTitle' onChange={handleInputChange}  />
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            value={taskDetails.taskTitle}
+                            name='taskTitle'
+                            onChange={handleInputChange}
+                        />
                         <div className='add-task-input-title'>Due Date</div>
-                        <input type='date' value={taskDetails.dueDate} name='dueDate' onChange={handleInputChange}  />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                // label="Due Date"
+                                value={taskDetails.dueDate}
+                                onChange={handleDateChange}
+                                slotProps={{ textField: { fullWidth: true } }}
+                            // renderInput={(params) => <TextField {...params} fullWidth />}
+                            />
+                        </LocalizationProvider>
                         <div className='add-task-input-title'>Priority</div>
-                        <select value={taskDetails.priority} name='priority' onChange={handleInputChange}>
-                            <option selected>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                        </select>
+                        <FormControl fullWidth>
+                            <Select
+                                value={taskDetails.priority}
+                                name='priority'
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="HIGH">High</MenuItem>
+                                <MenuItem value="MEDIUM">Medium</MenuItem>
+                                <MenuItem value="LOW">Low</MenuItem>
+                            </Select>
+                        </FormControl>
                         <div className='add-task-input-title'>Status</div>
-                        <select value={taskDetails.status} name='status' onChange={handleInputChange}>
-                            <option selected>Not Started</option>
-                            <option>In Progress</option>
-                            <option>Completed</option>
-                            <option>Pending</option>
-                        </select>
+                        <FormControl fullWidth>
+                            <Select
+                                value={taskDetails.status}
+                                name='status'
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="NOT_STARTED">Not Started</MenuItem>
+                                <MenuItem value="IN_PROGRESS">In Progress</MenuItem>
+                                <MenuItem value="COMPLETED">Completed</MenuItem>
+                                <MenuItem value="PENDING">Pending</MenuItem>
+                            </Select>
+                        </FormControl>
                         <div className='add-task-input-title'>Task Description</div>
-                        <textarea rows={4} type='text' value={taskDetails.taskDescription} name='taskDescription' onChange={handleInputChange}  />
+                        <TextareaAutosize
+                            minRows={4}
+                            p={2}
+                            style={{ width: '100%' }}
+                            value={taskDetails.taskDescription}
+                            name='taskDescription'
+                            onChange={handleInputChange}
+                        />
+                        <Box display="flex" justifyContent="space-between" mt={2}>
+                            <Button
+                                variant="contained"
+                                onClick={handleCancelClick}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={handleCreateClick}
+                            >
+                                Create Task
+                            </Button>
+                        </Box>
                     </form>
                 </div>
-                <div className='add-task-controls-div'>
-                    <div className="add-task-controls">
-                        <button className='cancel-button'>
-                            <a id='cancel-link' href='#' onClick={handleCancelClick}>
-                                Cancel
-                            </a>
-                        </button>
-                        
-                            <a className='primary-button' id='modal-add-task-btn' href='#' onClick =  { handleCreateClick }>
-                                Create Task
-                            </a>
-                        
-                    </div>
-                </div>
+
             </div>
         </div>
-    )
+    );
 }
 
 export default AddTask;

@@ -1,7 +1,6 @@
-import MainDiv from "src/components/maindiv/maindiv";
 import plus from 'src/assets/plus.svg';
-import AddTask from "src/components/tasks/sub_components/add_task";
-import 'src/components/tasks/sub_components/tasks.css'
+import MainDiv from "src/components/maindiv/maindiv";
+import 'src/components/tasks/sub_components/tasks.css';
 
 function Tasks() {
     return <div className='task-page-div'>

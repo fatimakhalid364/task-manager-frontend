@@ -4,7 +4,7 @@ import { APIS } from "../axiosConfig";
 const createTaskThunk = createAsyncThunk("createTask", async (body, thunkAPI) => {
     console.log("inside createTask thunk", body);
     try {
-        const response = await APIS.post(`/create_task`, body, {
+        const response = await APIS.post(`/task/create`, body, {
             headers: {
                 "Content-Type": "application/json",
                 access_token: `Bearer ${localStorage.getItem("access_token")}`,
