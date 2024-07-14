@@ -38,10 +38,10 @@ export function validateSignup(userAccount, checked) {
         return false;
     }
 
-    if (!checked) {
-        errorToast('Please agree to the terms and conditions.', 'terms-error');
-        return false;
-    }
+    // if (!checked) {
+    //     errorToast('Please agree to the terms and conditions.', 'terms-error');
+    //     return false;
+    // }
     return true;
 }
 
