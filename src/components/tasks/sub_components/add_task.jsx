@@ -30,7 +30,23 @@ const AddTask = () => {
             ...taskDetails,
             [name]: value
         });
+        console.log([name], value);
     };
+
+    useEffect(() => {
+        if (taskDetails.priority === "") {
+            setTaskDetails(prevDetails => ({
+                ...prevDetails,
+                priority: "High"
+            }));
+        }
+        if (taskDetails.status === "") {
+            setTaskDetails(prevDetails => ({
+                ...prevDetails,
+                status: "In Progress"
+            }));
+        }
+    }, [taskDetails.priority, taskDetails.status]);
 
     const convertToUTC = (dateStr) => {
         const date = new Date(dateStr);
@@ -44,7 +60,6 @@ const AddTask = () => {
     async function handleCreateClick() {
         try 
         {
-
             const forEncryption = { taskTitle: taskDetails.taskTitle, taskDescription: taskDetails.taskDescription }
             const encryptedTaskDetails = encryptObjectValues(forEncryption);
             taskDetails.taskTitle = encryptedTaskDetails.taskTitle;
@@ -71,13 +86,13 @@ const AddTask = () => {
     }, [])
 
     return (
-        <div id='popup' onClick={handleCancelClick}>
-            <div id='add-task-div' style={{opacity: '1'}}>
+        <div id='popup'>
+            <div id='add-task-div'>
                 <div className='add-task-header'>
                     <div className='add-case'>
                         <img src={plus} alt='plus sign' /> Add Case
                     </div>
-                    <a href='#'><img src={cross} alt='cross' className='add-task-cross'/></a>
+                    <a href='#' onClick={ handleCancelClick }><img src={cross} alt='cross' className='add-task-cross'/></a>
                 </div>
                 <div className='add-task-details-div'>
                     <form className='add-task-details'>
@@ -87,14 +102,14 @@ const AddTask = () => {
                         <input type='date' value={taskDetails.dueDate} name='dueDate' onChange={handleInputChange}  />
                         <div className='add-task-input-title'>Priority</div>
                         <select value={taskDetails.priority} name='priority' onChange={handleInputChange}>
-                            <option selected>High</option>
+                            <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
                         </select>
                         <div className='add-task-input-title'>Status</div>
-                        <select value={taskDetails.status} name='status' onChange={handleInputChange}>
-                            <option selected>Not Started</option>
-                            <option>In Progress</option>
+                        <select name='status' value={ taskDetails.status } onChange={handleInputChange}>
+                            <option>In progress</option>
+                            <option>Not Started</option>
                             <option>Completed</option>
                             <option>Pending</option>
                         </select>
