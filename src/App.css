@@ -5,6 +5,11 @@ body {
     margin: 0;
 }
 
+html {
+	font-size: 10px;
+		
+}
+
 :root{
     --neutral-background-color: white;
     --primary-background-color: #3B8AFF;
@@ -87,5 +92,26 @@ textarea{
 	}
 	100% {
 		transform: perspective(117px) rotateX(-180deg) rotateY(-179.9deg);
+	}
+}
+
+@media (max-width: 37.5em) {
+	html {
+		font-size: 6px;
+	}
+}
+@media (max-width: 56.25em) {
+	html {
+		font-size: 8px;
+	}
+}
+@media (max-width: 75em) {
+	html {
+		font-size: 9px;	
+	}
+}
+@media (max-width: 112.5em) {
+	html {
+		font-size: 12px;		
 	}
 }

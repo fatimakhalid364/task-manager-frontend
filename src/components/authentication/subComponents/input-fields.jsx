@@ -93,7 +93,7 @@ function InputFields({ currentScreen }) {
     }
 
     function handleCheckboxChange(event) {
-        setChecked(event.target.checked);
+        setChecked(!checked);
     }
 
 
