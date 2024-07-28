@@ -1,13 +1,13 @@
 .upper-bar-div {
     display: flex;
-    left: 257px;
     align-items: center;
-    width: 100vw;
-    position: fixed; 
-    height: 8%;
+    width: 100vw; 
+    position: fixed;
     box-shadow: 1px 1px 4px 0px rgba(16, 24, 40, 0.1);
     z-index: 1;
     background-color: var(--neutral-background-color);
+    left: 25.7rem;   
+    height: 8%
 }
 
 .upper-bar-search {
@@ -16,9 +16,9 @@
 
 .search-bar-div {
     width: 100%;
-    height: 44px;
-    margin-left: 200px;
-    margin-top: 5px;
+    height: 4.4rem;
+    margin-left: 20rem;
+    margin-top: 0.5rem;
 
 }
 
@@ -31,8 +31,8 @@
 .search-input {
     width: 100%;
     height: 100%;
-    padding: 10px 12px 10px 45px;
-    border-radius: 12px;
+    padding: 1rem 1.2rem 1rem 4.5rem;
+    border-radius: 1.2rem;
     border: 1px solid var(--field-border-color);
     background-color: var(--field-background-color);
     
@@ -53,8 +53,8 @@
     border: none;
     background-color: var(--neutral-background-color);
     position: absolute;
-    left: 4px;
-    top: 7.3px;
+    left: 0.4rem;
+    top: 0.73rem;
     background-color: var(--field-background-color);
 }
 
@@ -69,49 +69,50 @@
     margin-left: 15px;
     margin-top: 1px;
     color: var(--secondary-font-color);
-    width: 107px;
+    width: 10.7rem;
     font-weight: 600;
 }
 
+
 .bell-icon {
-    margin-left: calc(100vw - 67vw);
-    margin-top: 3.45px;
-   
+    
+    margin-top: 0.9rem;
+    cursor: pointer
 }
 
 .profile-div {
     display: flex;
     height: 100%;
     align-items: center;
-    margin-left: 3%;
+    margin-left: 4rem;
 }
 
 
 .profile-img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50px;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 5rem;
     border: 1px solid black;
     margin-bottom: 1px;
 }
 
 .profile-details {
-    margin-left: 10px;
+    margin-left: 1rem;
     font-family: var(--primary-font-family);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0.2rem;
  
 }   
 
 .profile-name {
-    font-size: 16px;
+    font-size: 1.6rem;
     color: var(--primary-font-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 15px;
-    width: 110px;
+    height: 1.5rem;
+    width: 11rem;
     font-weight: 500;
 
 }
@@ -119,7 +120,7 @@
 .profile-email {
     color: var(--quaternary-font-color);
     font-size: var(--secondary-font-size);
-    width: 117px;
+    width: 11.7rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

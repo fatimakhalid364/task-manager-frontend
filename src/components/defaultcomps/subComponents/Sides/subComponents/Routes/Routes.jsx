@@ -9,7 +9,7 @@ import SettingsIcon from 'src/assets/cog-6-tooth.svg';
 
 function Routes({clickfunction}){
     return (
-        <div className = 'tasks-page-routes-div'>
+        <div className = 'tasks-page-routes-div' >
             <RoutesComponents icon= {DashboardIcon} page='Dashboard' route='/default/dashboard?page=Dashboard' clickfunction={clickfunction} />
             <RoutesComponents icon={ TasksIcon } page='Tasks' route='/default/tasks?page=Tasks' clickfunction={clickfunction} />
             <RoutesComponents icon={NotesIcon} page='Notes' route='/default/notes?page=Notes' clickfunction={clickfunction} />

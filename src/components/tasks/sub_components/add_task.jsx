@@ -73,8 +73,9 @@ const AddTask = ({open, handleClose}) => {
     const dispatch = useDispatch();
 
     const handleCreateClick = async (e) => {
-        e.preventDefault(); // Prevent form submission
+        // Prevent form submission
         try {
+            handleClose();
             const forEncryption = {
                 taskTitle: taskDetails.taskTitle,
                 taskDescription: taskDetails.taskDescription
@@ -94,10 +95,12 @@ const AddTask = ({open, handleClose}) => {
                 successToast(response.message, 'task-created');
                 resetTaskDetails(); // Reset task details after successful creation
                 // setAnchorEl(null);
+               
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
             }
+           
 
         } catch (error) {
             console.error('Error occurred while dispatching thunk:', error);

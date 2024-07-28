@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
+import getAllTasksThunk from 'src/store/thunks/get_all_tasks_thunk';
 
 
-const createTaskSlice = createSlice({
-    name: 'createTask',
+const getAllTasksSlice = createSlice({
+    name: 'getAllTasks',
     initialState: {
         access_token: localStorage.getItem('access_token'),
-        taskDetails: null,
+        allTasks: null,
         status: 'idle',
         error: null,
         isLoading: false,
@@ -14,33 +15,33 @@ const createTaskSlice = createSlice({
         errorMsg: '',
     },
     reducers: {
-        setTaskDetails: (state, action) => {
+        setAllTasks: (state, action) => {
             state.taskDetails = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder
             // Signup Thunk
-            .addCase(createTaskThunk.pending, (state) => {
+            .addCase(getAllTasksThunk.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
                 state.successMsg = '';
                 state.errorMsg = '';
             })
-            .addCase(createTaskThunk.fulfilled, (state, action) => {
+            .addCase(getAllTasksThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.successMsg = 'task details posted successful!ly';
+                state.successMsg = 'task details retrieved successful!ly';
                 state.errorMsg = '';
             })
-            .addCase(createTaskThunk.rejected, (state, action) => {
+            .addCase(getAllTasksThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
-                state.errorMsg = 'Error occured while posting task details!';
+                state.errorMsg = 'Error occured while retrieving task details!';
             })
             
     },
 });
 
-export const { setTaskDetails } = createTaskSlice.actions;
+export const { setGetAllTasks } = getAllTasksSlice.actions;
 
-export const createTaskReducer = createTaskSlice.reducer;
+export const getAllTasksReducer = getAllTasksSlice.reducer;

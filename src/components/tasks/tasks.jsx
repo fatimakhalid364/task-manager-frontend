@@ -3,11 +3,32 @@ import MainDiv from "src/components/maindiv/maindiv";
 import AddTask from "src/components/tasks/sub_components/add_task";
 import { useState } from 'react';
 import 'src/components/tasks/sub_components/tasks.css';
+import getAllTasksThunk from 'src/store/thunks/get_all_tasks_thunk';
+import { useDispatch } from 'react-redux';
+
+import { useEffect } from 'react';
 
 function Tasks() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const dispatch = useDispatch();
+    const fetchData = async () => {
+        // Prevent form submission
+        try {
+            const thunkToDispatch = getAllTasksThunk({ search: 'ali' });
+            const response = await dispatch(thunkToDispatch).unwrap();
+            console.log(response);
+           
+
+        } catch (error) {
+            console.error('Error occurred while dispatching thunk:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+      }, []);
 
     return <div className='task-page-div'>
     {open && (<AddTask open={open} handleClose={handleClose}/>)}

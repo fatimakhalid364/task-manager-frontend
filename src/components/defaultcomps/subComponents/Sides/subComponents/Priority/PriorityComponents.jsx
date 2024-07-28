@@ -1,8 +1,19 @@
 import propTypes from 'prop-types';
+import { useResponsive } from 'src/constants/media_queries';
 
 function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
+
+    const {
+        isAdaptableScreen,
+        isLessScreen,
+        isSmallerScreen,
+        isMobileScreen,
+        isMicroScreen,
+    } = useResponsive();
+    
     return (
-        <div className='tasks-page-priority'>
+        <div>
+        {isAdaptableScreen ? (<div className='tasks-page-priority'>
             <div>
                 <img src={Dot} alt='colored-dots' />
             </div>
@@ -12,6 +23,9 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
             <div className='tasks-page-number'>
                 {TasksAtPriorityLevel}
             </div>
+        </div>) : (<div>
+                <img src={Dot} alt='colored-dots' />
+            </div>)}
         </div>
     )
 };

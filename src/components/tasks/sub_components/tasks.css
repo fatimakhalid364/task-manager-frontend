@@ -1,5 +1,5 @@
 .task-page {
-    margin-top: 15px;
+    margin-top: 1.5rem;
     border: 1px solid black;
     width: 97%;
     height: 96%;
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     border: 1px solid black;
-    height: 45px;
+    height: 4.5rem;
     align-items: center;
     font-family: var(--primary-font-family);
 }
@@ -19,7 +19,7 @@
 .task-page-top-header {
     display: flex;
     
-    gap: 10px;
+    gap: 1rem;
     
     color: var(--secondary-font-color);
     align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .all-tasks {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 600;
 }
 
@@ -36,20 +36,20 @@
 }
 
 .number-of-tasks {
-    font-size: 20px;
-    margin-top: 2px;
+    font-size: 2rem;
+    margin-top: 0.2rem;
     color: var(--tertiary-font-color);
 }
 
 .primary-button {
-    height: 40px;
-    width: 147px;
+    height: 4rem;
+    width: 14.7rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    font-size: 16px;
-    border-radius: 50px;
+    gap: 1rem;
+    font-size: 1.6rem;
+    border-radius: 5rem;
     background-color: var(--primary-background-color);
     border: none;
     color: var(--neutral-background-color);

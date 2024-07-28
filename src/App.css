@@ -95,23 +95,34 @@ textarea{
 	}
 }
 
-@media (max-width: 37.5em) {
-	html {
-		font-size: 6px;
-	}
-}
-@media (max-width: 56.25em) {
-	html {
-		font-size: 8px;
-	}
-}
-@media (max-width: 75em) {
-	html {
-		font-size: 9px;	
-	}
-}
-@media (max-width: 112.5em) {
+
+
+@media (min-width: 1800px) {
 	html {
 		font-size: 12px;		
 	}
 }
+
+@media (max-width: 1458px) {
+	html {
+		font-size: 9px;	
+	}
+}
+
+@media (max-width: 1320px) {
+	html {
+		font-size: 8.25px;
+	}
+}
+
+@media (max-width: 1167px) {
+	html {
+		font-size: 7.5px;
+	}
+}
+
+@media (max-width: 600px) {
+	html {
+		font-size: 6px;
+	}
+} 

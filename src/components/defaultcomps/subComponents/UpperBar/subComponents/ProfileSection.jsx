@@ -14,22 +14,14 @@ function ProfileSection() {
     }
 
     const {
-        isBiggerScreen,
-        isBigScreen,
+        isAdaptableScreen,
         isLessScreen,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
 
-    
 
-    console.log('isBiggerScreen:', isBiggerScreen);
-    console.log('isBigScreen:', isBigScreen);
-    console.log('isLessScreen:', isLessScreen);
-    console.log('isSmallerScreen:', isSmallerScreen);
-    console.log('isMobileScreen:', isMobileScreen);
-    console.log('isMicroScreen:', isMicroScreen);
 
 
     const formatUserName = () => {
@@ -48,11 +40,13 @@ function ProfileSection() {
     }
 
     return (
-        <div className='profile-div' style={{marginLeft: isBigScreen ? '2%' : '3%' }}>
+        <div>
+        { isAdaptableScreen ? (<div className='profile-div'>
+
             <div className='profile-img'>
                 <img />
             </div>
-            { isBiggerScreen && (<div className='profile-details'>
+            <div className='profile-details'>
                <div className='profile-name'>
                
                     { formatUserName()}
@@ -62,8 +56,11 @@ function ProfileSection() {
                 <div className='profile-email'>
                     { user?.email}
                 </div>
-            </div>)
-}
+            </div>
+           
+        </div>) : (<div className='profile-img' style={{marginLeft: '10px'}}>
+                <img />
+            </div>)}
         </div>
     )
 }
