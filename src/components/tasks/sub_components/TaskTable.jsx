@@ -18,9 +18,11 @@ import { styled } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
+
 const calculateCellWidth = () => {
   const containerWidth = document.getElementById('table-container').offsetWidth;
   const numColumns = 6;
@@ -67,9 +69,13 @@ const TaskTable = () => {
       setTasks(response?.data);
       setMetaData(response?.metaData)
       console.log(response);
+      successToast(response.message, 'task-created');
+
       setSpinner(false);
     } catch (err) {
       console.log(err);
+      errorToast('Something went wrong', 'getTask-pages-error');
+
       setSpinner(false);
     }
   }
