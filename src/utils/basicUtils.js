@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { Screen } from "src/constants/constants";
 export function getButtonText(screen) {
     const buttonTextMap = {
@@ -47,3 +48,29 @@ export function getLoadingText(screen) {
     };
     return loadingTextMap[screen] || '';
 }
+
+export const capitalizeFirstLetter = (str) => {
+    if (!str) {
+        return '';
+    }
+
+    if (str.includes('_')) {
+        const words = str.split('_');
+        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+        return capitalizedWords.join(' ');
+    } else if (str === str.toUpperCase()) {
+        return str.charAt(0) + str.slice(1).toLowerCase();
+    } else {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+};
+
+export const formatLocalDateTime = (dateString, timeZone) => {
+    // Create a DateTime instance from the UTC date string
+    const date = DateTime.fromISO(dateString, { zone: 'utc' });
+
+    // Convert to the specified time zone
+    const localDateTime = date.setZone(timeZone).toFormat('dd MMM yyyy hh:mm a'); // Format: day month year hour:minute AM/PM
+
+    return localDateTime;
+};

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import createTaskThunk from 'src/store/thunks/create_task_thunk';
-import getAllTasksThunk from 'src/store/thunks/get_all_tasks_thunk';
+import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
+
 
 
 const getAllTasksSlice = createSlice({

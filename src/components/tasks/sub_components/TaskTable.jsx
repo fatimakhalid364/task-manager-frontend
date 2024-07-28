@@ -1,4 +1,9 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useDispatch } from 'react-redux';
+import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
+import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
+
+
 import {
   IconButton,
   Menu,
@@ -57,18 +62,26 @@ const fetchTasks = async () => {
 };
 
 const TaskTable = () => {
+  const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [metaData, setMetaData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
-
+  const getAllTasks = async () => {
+    try {
+      const response = await dispatch(getAllTasksThunk()).unwrap();
+      setTasks(response?.data);
+      setMetaData(response?.metaData)
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
-    const getTasks = async () => {
-      const data = await fetchTasks();
-      setTasks(data);
-    };
-    getTasks();
+    getAllTasks();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -135,9 +148,9 @@ const TaskTable = () => {
                     <Typography sx={{ fontSize: '12px' }} noWrap>{task.taskDescription}</Typography>
                   </Tooltip>
                 </StyledTableCell>
-                <StyledTableCell sx={{ textAlign: 'center' }}>{task.dueDate}</StyledTableCell>
-                <StyledTableCell sx={{ textAlign: 'center' }}>{task.priority}</StyledTableCell>
-                <StyledTableCell sx={{ textAlign: 'center' }}>{task.status}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: 'center' }}>{formatLocalDateTime(task.dueDate, userTimeZone)}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: 'center' }}>{capitalizeFirstLetter(task.priority)}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: 'center' }}>{capitalizeFirstLetter(task.status)}</StyledTableCell>
                 <StyledTableCell>
                   <IconButton
                     aria-controls={`menu-${task.id}`}
