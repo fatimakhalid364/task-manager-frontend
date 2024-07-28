@@ -1,9 +1,4 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useDispatch } from 'react-redux';
-import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
-import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
-
-
 import {
   IconButton,
   Menu,
@@ -21,21 +16,25 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
+import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 const calculateCellWidth = () => {
-  const containerWidth = document.getElementById('table-container').offsetWidth; // Replace with your container's ID
-  const numColumns = 6; // Number of columns in your table
-  const padding = 16; // Adjust padding as needed
+  const containerWidth = document.getElementById('table-container').offsetWidth;
+  const numColumns = 6;
+  const padding = 16;
 
   const cellWidth = (containerWidth - padding) / numColumns;
   return `${cellWidth}px`;
 };
-// Custom styled components
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: "12px",
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  maxWidth: calculateCellWidth(), // Dynamically calculate width
+  maxWidth: calculateCellWidth(),
   paddingRight: theme.spacing(1),
 }));
 
@@ -46,24 +45,10 @@ const StyledTableHeaders = styled(TableCell)({
   fontSize: "12px",
 });
 
-// Example data from API
-const fetchTasks = async () => {
-  // Simulate an API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        { id: 1, taskTitle: 'Task 1.ddddddddddddddddddddddddddddddddddddddddddd', taskDescription: 'Task 1ddddddddddddddddddddddddddddddddddddddddddd', dueDate: '2024-07-23', priority: 'Medium', status: 'Not Started' },
-        { id: 2, taskTitle: 'Task 2', taskDescription: 'Task 1', dueDate: '2024-07-24', priority: 'High', status: 'In Progress' },
-        { id: 3, taskTitle: 'Task 3', taskDescription: 'Task 1', dueDate: '2024-07-25', priority: 'Low', status: 'Completed' },
-        // More tasks can be added here
-      ]);
-    }, 1000);
-  });
-};
-
 const TaskTable = () => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
+  const [spinner, setSpinner] = useState(false);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [metaData, setMetaData] = useState([]);
   const [page, setPage] = useState(0);
@@ -72,12 +57,20 @@ const TaskTable = () => {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const getAllTasks = async () => {
     try {
+      setSpinner(true);
       const response = await dispatch(getAllTasksThunk()).unwrap();
+      const privateKey = localStorage.getItem("privateKey")
+      response?.data?.forEach(task => {
+        task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+        task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+      });
       setTasks(response?.data);
       setMetaData(response?.metaData)
       console.log(response);
+      setSpinner(false);
     } catch (err) {
       console.log(err);
+      setSpinner(false);
     }
   }
   useEffect(() => {
@@ -104,25 +97,23 @@ const TaskTable = () => {
   };
 
   const handleDelete = () => {
-    // Handle delete action
     console.log(`Delete task with ID: ${selectedTaskId}`);
     handleMenuClose();
   };
 
   const handleChangeStatus = () => {
-    // Handle change status action
     console.log(`Change status for task with ID: ${selectedTaskId}`);
     handleMenuClose();
   };
 
   const handleComplete = () => {
-    // Handle complete action
     console.log(`Complete task with ID: ${selectedTaskId}`);
     handleMenuClose();
   };
 
   return (
     <Paper>
+      <SpinnerLoader showSpinner={spinner} />
       <TableContainer id={'table-container'}>
         <Table>
           <TableHead>

@@ -63,6 +63,22 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
     }
 };
 
+const decryptSingleValues = (encryptedValue, _privateKey) => {
+    try {
+        const privateKey = forge.pki.privateKeyFromPem(_privateKey);
+        const encryptedBytes = forge.util.decode64(encryptedValue);
+        const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
+            md: forge.md.sha256.create(),
+            mgf1: forge.mgf.mgf1.create(forge.md.sha256.create())
+        });
+        const decryptedValue = forge.util.decodeUtf8(decryptedBytes);
+        return decryptedValue;
+    } catch (error) {
+        console.error('Error occurred while decrypting single values:', error);
+        return null;
+    }
+};
 
-export { decryptObjectValues, encryptObjectValues };
+
+export { decryptObjectValues, decryptSingleValues, encryptObjectValues };
 

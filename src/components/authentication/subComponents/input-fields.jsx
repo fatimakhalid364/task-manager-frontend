@@ -138,7 +138,9 @@ function InputFields({ currentScreen }) {
 
                         const fetchKeyResponse = await dispatch(fetchKeyThunk({})).unwrap();
                         const _privateKey = fetchKeyResponse.data.privateKey;
+                        localStorage.setItem("privateKey", _privateKey);
                         const decryptObj = decryptObjectValues(data.user, _privateKey);
+                        // decryptObj.privateKey = _privateKey;
                         console.log(decryptObj);
                         dispatch(setUser(decryptObj));
                         console.log('Fetched key:', fetchKeyResponse);
