@@ -1,12 +1,14 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import plus from 'src/assets/plus.svg';
 import MainDiv from "src/components/maindiv/maindiv";
 import AddTask from "src/components/tasks/sub_components/add_task";
-import { useState } from 'react';
 import 'src/components/tasks/sub_components/tasks.css';
 import getAllTasksThunk from 'src/store/thunks/get_all_tasks_thunk';
-import { useDispatch } from 'react-redux';
 
+import { Box } from '@mui/material';
 import { useEffect } from 'react';
+import TaskTable from './sub_components/TaskTable';
 
 function Tasks() {
     const [open, setOpen] = useState(false);
@@ -48,6 +50,10 @@ function Tasks() {
                         <img src={plus} alt='plus-sign' className='plus-sign' /> Add Task
                     </a>
                 </div>
+                <Box mt={3}>
+                    <TaskTable />
+
+                </Box>
             </div>
 
             

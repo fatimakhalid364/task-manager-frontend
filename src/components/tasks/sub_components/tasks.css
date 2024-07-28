@@ -1,6 +1,6 @@
 .task-page {
     margin-top: 1.5rem;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 97%;
     height: 96%;
     display: flex;
@@ -10,7 +10,7 @@
 .task-page-top {
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 4.5rem;
     align-items: center;
     font-family: var(--primary-font-family);
