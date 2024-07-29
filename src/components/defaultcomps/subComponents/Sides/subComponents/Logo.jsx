@@ -3,7 +3,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 function Logo() {
     return (
         <div className='tasks-page-logo-div'>
-            <MenuOutlinedIcon sx={{fontSize: '2rem', color: 'var(--quinary-font-color)', marginLeft: '1.46rem', marginTop: '2.1rem', cursor: 'pointer' }} />
+            <MenuOutlinedIcon sx={{fontSize: '20px', color: 'var(--quinary-font-color)', marginLeft: '14.6px', marginTop: '21px', cursor: 'pointer' }} />
         </div>
     )
 }

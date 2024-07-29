@@ -53,7 +53,7 @@ function UpperBar({ PageName, BellIcon }) {
 
     return (
             
-           <div className='upper-bar-div' style={{left: isAdaptableScreen ? '25.7rem' : '6.8rem', justifyContent: !isAdaptableScreen && 'space-between', width: !isAdaptableScreen && '99vw'}}>
+           <div className='upper-bar-div' style={{left: isAdaptableScreen ? '257px' : '68px', justifyContent: !isAdaptableScreen && 'space-between', width: !isAdaptableScreen && '99vw'}}>
            { !showSearchBar && (<div className='page-title'>
                     {PageName}
                 </div>)}

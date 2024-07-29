@@ -5,19 +5,19 @@
     width: 83.26vw;
     display: flex;
     justify-content: center;
-    left: 25.74rem;
+    left: 257.4px;
     top: 60px;
     
 
 }
 
 .changing-component {
-    margin-top: 3.5rem;
-    margin-right: 0.2rem;
+    margin-top: 35px;
+    margin-right: 2px;
     height: 80%;
     width: 96%;
     background-color: var(--neutral-background-color);
-    border-radius: 1rem;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
 }

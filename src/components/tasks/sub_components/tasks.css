@@ -1,5 +1,5 @@
 .task-page {
-    margin-top: 1.5rem;
+    margin-top: 15px;
     /* border: 1px solid black; */
     width: 97%;
     height: 96%;
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     /* border: 1px solid black; */
-    height: 4.5rem;
+    height: 45px;
     align-items: center;
     font-family: var(--primary-font-family);
 }
@@ -19,7 +19,7 @@
 .task-page-top-header {
     display: flex;
     
-    gap: 1rem;
+    gap: 10px;
     
     color: var(--secondary-font-color);
     align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .all-tasks {
-    font-size: 2.4rem;
+    font-size: 24px;
     font-weight: 600;
 }
 
@@ -36,20 +36,20 @@
 }
 
 .number-of-tasks {
-    font-size: 2rem;
-    margin-top: 0.2rem;
+    font-size: 20px;
+    margin-top: 20px;
     color: var(--tertiary-font-color);
 }
 
 .primary-button {
-    height: 4rem;
-    width: 14.7rem;
+    height: 40px;
+    width: 147px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    font-size: 1.6rem;
-    border-radius: 5rem;
+    gap: 10px;
+    font-size: 16px;
+    border-radius: 50px;
     background-color: var(--primary-background-color);
     border: none;
     color: var(--neutral-background-color);
@@ -61,13 +61,13 @@
 
 .primary-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .primary-button:active {
     outline: none;
     transform: translateY(-1px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 

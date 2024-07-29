@@ -10,7 +10,7 @@ function MainDiv({ children }) {
         isMicroScreen,
     } = useResponsive();
     return (
-        <main className='changing-component-div' style={{left: isAdaptableScreen ? '25.74rem' : '6.8rem', width: isAdaptableScreen ? '83.26vw' : '95vw'}}>
+        <main className='changing-component-div' style={{left: isAdaptableScreen ? '257.4px' : '68px', width: isAdaptableScreen ? '83.26vw' : '95vw'}}>
             <div className='changing-component'>
                 {children}
             </div>

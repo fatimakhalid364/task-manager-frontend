@@ -17,7 +17,7 @@ function Sides({clickfunction}){
     } = useResponsive();
 
     return (
-        <div className='tasks-page-side' style={{width: isAdaptableScreen ? '25.5rem' : '50px' }}>
+        <div className='tasks-page-side' style={{width: isAdaptableScreen ? '16rem' : '50px' }}>
             <Logo  />
             <Routes clickfunction = {clickfunction} />
             <Priority />
