@@ -71,7 +71,7 @@ function Tasks() {
                             All Tasks
                         </div>
                         <div className="number-of-tasks">
-                            ({metaData?.count})
+                            ({metaData?.total})
                         </div>
                     </div>
                     <a className='primary-button' onClick={handleOpen} style={{
