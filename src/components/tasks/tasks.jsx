@@ -1,14 +1,13 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import plus from 'src/assets/plus.svg';
 import MainDiv from "src/components/maindiv/maindiv";
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
-import { useResponsive } from 'src/constants/media_queries';
-import { useDispatch } from 'react-redux';
-import { decryptSingleValues } from 'src/utils/encryptionUtil';
-import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
-import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { useResponsive } from 'src/constants/media_queries';
+import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 
 
 
@@ -72,7 +71,7 @@ function Tasks() {
                             All Tasks
                         </div>
                         <div className="number-of-tasks">
-                            ({tasks.length})
+                            ({metaData?.count})
                         </div>
                     </div>
                     <a className='primary-button' onClick={handleOpen} style={{
