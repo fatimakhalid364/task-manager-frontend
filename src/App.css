@@ -5,10 +5,10 @@ body {
     margin: 0;
 }
 
-/* html {
-	font-size: 62.5%;
+html {
+	font-size: 100%;
 		
-}  */
+} 
 
 :root{
     --neutral-background-color: white;
@@ -97,32 +97,32 @@ textarea{
 
 
 
-@media (min-width: 1800px) {
+/* @media (min-width: 1800px) {
 	html {
-		font-size: 12px;		
+		font-size: 18px;		
 	}
 }
 
-@media (max-width: 1458px) {
+@media (max-width: 1464px) {
 	html {
-		font-size: 9px;	
+		font-size: 15px;	
 	}
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 1425px) {
 	html {
-		font-size: 8.25px;
+		font-size: 12px;
 	}
 }
 
-@media (max-width: 1167px) {
+ @media (max-width: 1350px) {
 	html {
-		font-size: 7.5px;
+		font-size: 10px;
 	}
-}
+} 
 
-@media (max-width: 600px) {
+/*@media (max-width: 600px) {
 	html {
 		font-size: 6px;
 	}
-} 
+}  */ 

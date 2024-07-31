@@ -7,8 +7,8 @@ import { useResponsive } from 'src/constants/media_queries';
 function Priority(){
     const {
         isAdaptableScreen,
-        isLessScreen,
         isSmallerScreen,
+        expandBar,
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
@@ -16,7 +16,7 @@ function Priority(){
 
     return (
         <div className='tasks-page-priority-div'>
-            { isAdaptableScreen && (<div className='priority-header'>Priority</div>)}
+            { expandBar && (<div className='priority-header'>Priority</div>)}
             <PriorityComponents Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel='7'  />
             <PriorityComponents Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel='7'  />
             <PriorityComponents Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel='7'  />

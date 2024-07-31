@@ -5,15 +5,17 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
 
     const {
         isAdaptableScreen,
-        isLessScreen,
+        expandBar,
+        isBp1,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
+
     
     return (
         <div>
-        {isAdaptableScreen ? (<div className='tasks-page-priority'>
+        {expandBar ? (<div className='tasks-page-priority'>
             <div>
                 <img src={Dot} alt='colored-dots' />
             </div>

@@ -47,9 +47,9 @@ const StyledTableHeaders = styled(TableCell)({
   fontSize: "12px",
 });
 
-const TaskTable = () => {
-  const dispatch = useDispatch();
-  const [tasks, setTasks] = useState([]);
+const TaskTable = ({ tasks, getAllTasks }) => {
+  // const dispatch = useDispatch();
+  // const [tasks, setTasks] = useState([]);
   const [spinner, setSpinner] = useState(false);
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [metaData, setMetaData] = useState([]);
@@ -57,30 +57,32 @@ const TaskTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
-  const getAllTasks = async () => {
-    try {
-      setSpinner(true);
-      const response = await dispatch(getAllTasksThunk()).unwrap();
-      const privateKey = localStorage.getItem("privateKey")
-      response?.data?.forEach(task => {
-        task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
-        task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-      });
-      setTasks(response?.data);
-      setMetaData(response?.metaData)
-      console.log(response);
-      successToast(response.message, 'task-created');
+  // const getAllTasks = async () => {
+  //   try {
+  //     setSpinner(true);
+  //     const response = await dispatch(getAllTasksThunk()).unwrap();
+  //     console.log(response);
+  //     const privateKey = localStorage.getItem("privateKey")
+  //     response?.data?.forEach(task => {
+  //       task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+  //       task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+  //     });
+  //     console.log(response);
+  //     setTasks(response?.data);
+  //     setMetaData(response?.metaData)
+  //     console.log(response);
+  //     successToast(response.message, 'task-created');
 
-      setSpinner(false);
-    } catch (err) {
-      console.log(err);
-      errorToast('Something went wrong', 'getTask-pages-error');
+  //     setSpinner(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //     errorToast('Something went wrong', 'getTask-pages-error');
 
-      setSpinner(false);
-    }
-  }
+  //     setSpinner(false);
+  //   }
+  // }
   useEffect(() => {
-    getAllTasks();
+    {getAllTasks()};
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -126,10 +128,10 @@ const TaskTable = () => {
             <TableRow>
               <StyledTableHeaders >Title</StyledTableHeaders>
               <StyledTableHeaders >Description</StyledTableHeaders>
-              <StyledTableHeaders sx={{ width: '15%', textAlign: 'center' }}>Due Date</StyledTableHeaders>
-              <StyledTableHeaders sx={{ width: '10%', textAlign: 'center' }}>Priority</StyledTableHeaders>
-              <StyledTableHeaders sx={{ width: '10%', textAlign: 'center' }}>Status</StyledTableHeaders>
-              <StyledTableHeaders sx={{ width: '5%', padding: '0px' }}></StyledTableHeaders>
+              <StyledTableHeaders sx={{ width: '15%', textAlign: 'center', fontSize: '16px' }}>Due Date</StyledTableHeaders>
+              <StyledTableHeaders sx={{ width: '10%', textAlign: 'center', fontSize: '16px'  }}>Priority</StyledTableHeaders>
+              <StyledTableHeaders sx={{ width: '10%', textAlign: 'center', fontSize: '16px'  }}>Status</StyledTableHeaders>
+              <StyledTableHeaders sx={{ width: '5%', padding: '0px', fontSize: '16px'  }}></StyledTableHeaders>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -181,7 +183,7 @@ const TaskTable = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        sx={{ fontSize: '12px' }}
+        sx={{ fontSize: '16px' }}
       />
     </Paper>
   );

@@ -13,8 +13,16 @@ import cross from 'src/assets/cross.svg';
 function UpperBar({ PageName, BellIcon }) {
 
     const {
+        isBp6,
+        isBp2,
+        isBp1,
+        isBp5,
+        isBp3,
         isAdaptableScreen,
-        isLessScreen,
+        isBp4,
+        isBp7,
+        isBp8,
+        expandBar,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
@@ -53,7 +61,7 @@ function UpperBar({ PageName, BellIcon }) {
 
     return (
             
-           <div className='upper-bar-div' style={{left: isAdaptableScreen ? '257px' : '68px', justifyContent: !isAdaptableScreen && 'space-between', width: !isAdaptableScreen && '99vw'}}>
+           <div className='upper-bar-div' style={{left: expandBar ? '257px' : '51px', justifyContent: !isAdaptableScreen && 'space-between', width: !isAdaptableScreen && '99vw'}}>
            { !showSearchBar && (<div className='page-title'>
                     {PageName}
                 </div>)}
@@ -82,8 +90,11 @@ function UpperBar({ PageName, BellIcon }) {
                         { !showSearchBar && (
             <div style={{
                 display: 'flex', 
-                marginLeft: isAdaptableScreen && 'calc(100vw - 66vw)', 
-                marginRight: !isAdaptableScreen && '60px',
+                marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5 || expandBar) ? 'calc(100vw - 66vw)' : 
+                            isBp6 ? 'calc(100vw - 68vw)': 
+                            isBp7 ? 'calc(100vw - 69vw)': 
+                            isBp8 ? 'calc(100vw - 70vw)' : null, 
+                marginRight: !isAdaptableScreen && '90px',
                 width: !isAdaptableScreen && '100px',
                }}>
                 {!isAdaptableScreen && (

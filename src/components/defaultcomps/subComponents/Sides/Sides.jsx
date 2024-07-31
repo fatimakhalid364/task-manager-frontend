@@ -10,14 +10,14 @@ function Sides({clickfunction}){
 
     const {
         isAdaptableScreen,
-        isLessScreen,
+        expandBar,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
 
     return (
-        <div className='tasks-page-side' style={{width: isAdaptableScreen ? '16rem' : '50px' }}>
+        <div className='tasks-page-side' style={{width: expandBar ? '255px' : '50px' }}>
             <Logo  />
             <Routes clickfunction = {clickfunction} />
             <Priority />

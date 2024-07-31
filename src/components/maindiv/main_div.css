@@ -1,19 +1,19 @@
 .changing-component-div {
     position: absolute;
-    background-color: var(--field-background-color);
+    background-color: var(--field-background-color); 
     height: 91.6vh;
-    width: 83.26vw;
+    width: 100%;
     display: flex;
     justify-content: center;
-    left: 257.4px;
-    top: 60px;
+    left: 25.74rem;
+    top: 57.6px;
     
 
 }
 
 .changing-component {
-    margin-top: 35px;
-    margin-right: 2px;
+    margin-top: 30px;
+   
     height: 80%;
     width: 96%;
     background-color: var(--neutral-background-color);

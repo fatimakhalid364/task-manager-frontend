@@ -5,8 +5,8 @@
 }
 
 .backtosite-button{
-    width: 124px;
-    height: 36px;
+    width: 7rem;
+    height: 2rem;
     background-color: var(--neutral-background-color);
     border: none;
     display: flex;
@@ -14,6 +14,7 @@
     margin-left: 70px;
     margin-top: 30px;
     cursor: pointer;
+    border: 1px solid black;
     
 }
 

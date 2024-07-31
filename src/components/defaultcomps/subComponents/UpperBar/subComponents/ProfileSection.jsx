@@ -14,8 +14,15 @@ function ProfileSection() {
     }
 
     const {
+        isBp2,
+        isBp3,
+        isBp4,
+        isBp5,
+        isBp7,
         isAdaptableScreen,
-        isLessScreen,
+        isBp6,
+        isBp8,
+        isSmallScreen,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
@@ -47,13 +54,23 @@ function ProfileSection() {
                 <img />
             </div>
             <div className='profile-details'>
-               <div className='profile-name'>
+               <div className='profile-name' style={{
+                width: isBp2 ? '98px' : 
+                isBp3 ? '95px' : 
+                isBp4 ? '92px' :
+                isBp5 || isBp6 || isBp7 || isBp8 ? '88px' :
+                '110.4px' }}>
                
                     { formatUserName()}
                 
                     <img src={drop} alt='drop-icon' className='dropdown' />
                 </div>
-                <div className='profile-email'>
+                <div className='profile-email' style={{
+                    width: isBp2 ? '100px'  : 
+                    isBp3 ? '98px': 
+                    isBp4 ? '94px' :
+                    isBp5 || isBp6 || isBp7 || isBp8 ? '90px' :
+                    '112px'}}>
                     { user?.email}
                 </div>
             </div>

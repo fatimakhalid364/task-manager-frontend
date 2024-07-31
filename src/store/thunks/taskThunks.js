@@ -14,7 +14,7 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (thunkAPI) => {
                 access_token: `Bearer ${localStorage.getItem("access_token")}`,
             },
         });
-        console.log("response is,", response);
+        console.log("response is in thunk,====================>", response);
         return response.data;
     } catch (error) {
         if (!error.response) {

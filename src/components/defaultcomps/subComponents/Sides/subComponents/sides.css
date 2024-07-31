@@ -1,14 +1,13 @@
 .tasks-page-logo-div {
-    height: 12%;
+    height: 10%;
     width: 100%;
     background-color: var(--neutral-background-color);
-
 }
 
 .tasks-page-routes-div {
     height: 22%;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 0;
     background-color: var(--neutral-background-color);
 }
 
@@ -17,7 +16,8 @@
 }
 
 .tasks-page-route-name {
-    margin-top: 2px;
+    margin-top: 0.1rem;
+   
     
 }
 
@@ -31,8 +31,8 @@
 .tasks-page-priority-div {
     width: 100%;
     height: 28%;
-    margin-top: 30px;
-    background-color: var(--neutral-background-color)
+    margin-top: 2.8rem;
+    background-color: var(--neutral-background-color);
 }
 
 .priority-header {
@@ -44,7 +44,7 @@
 .tasks-page-priority {
     display: flex;
     margin-left: 16%;
-    margin-top: 30px;
+    margin-top: 2rem;
     align-items: center;
 }
 

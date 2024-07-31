@@ -13,7 +13,6 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
 
     const {
         isAdaptableScreen,
-        isLessScreen,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
