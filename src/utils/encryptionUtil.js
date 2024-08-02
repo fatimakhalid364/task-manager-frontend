@@ -44,15 +44,20 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
 
         for (const key in encryptedObj) {
             if (Object.hasOwn(encryptedObj, key)) {
-                const encryptedValue = encryptedObj[key];
-                const encryptedBytes = forge.util.decode64(encryptedValue);
+                if (key !== 'avatar') {
+                    const encryptedValue = encryptedObj[key];
+                    const encryptedBytes = forge.util.decode64(encryptedValue);
 
-                const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
-                    md: forge.md.sha256.create(),
-                    mgf1: forge.mgf.mgf1.create(forge.md.sha256.create())
-                });
+                    const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
+                        md: forge.md.sha256.create(),
+                        mgf1: forge.mgf.mgf1.create(forge.md.sha256.create())
+                    });
 
-                decryptedObj[key] = forge.util.decodeUtf8(decryptedBytes);
+                    decryptedObj[key] = forge.util.decodeUtf8(decryptedBytes);
+                } else {
+                    decryptedObj[key] = encryptedObj[key];
+                }
+
             }
         }
 

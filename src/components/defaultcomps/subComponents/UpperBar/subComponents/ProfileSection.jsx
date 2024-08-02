@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import drop from 'src/assets/drop.svg';
-import { useMediaQuery } from 'react-responsive';
 import { useResponsive } from 'src/constants/media_queries';
 
 
@@ -8,6 +7,8 @@ import { useResponsive } from 'src/constants/media_queries';
 
 function ProfileSection() {
     const user = useSelector(state => state.auth?.user);
+    const svgData = user?.avatar?.data
+    console.log(svgData)
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -22,10 +23,6 @@ function ProfileSection() {
         isAdaptableScreen,
         isBp6,
         isBp8,
-        isSmallScreen,
-        isSmallerScreen,
-        isMobileScreen,
-        isMicroScreen,
     } = useResponsive();
 
 
@@ -50,9 +47,14 @@ function ProfileSection() {
         <div>
         { isAdaptableScreen ? (<div className='profile-div'>
 
-            <div className='profile-img'>
-                <img />
-            </div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {svgData ? (
+                        <img style={{ borderRadius: '50px', border: '1px solid #3B8AFF', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
+                    ) : (
+                        // Fallback image or placeholder if no SVG data
+                        <img alt="Default Avatar" width="40" height="40" />
+                    )}
+                </div>
             <div className='profile-details'>
                <div className='profile-name' style={{
                 width: isBp2 ? '96px' : 
@@ -75,9 +77,10 @@ function ProfileSection() {
                 </div>
             </div>
            
-        </div>) : (<div className='profile-img' style={{marginLeft: '30px', width: !isAdaptableScreen && '30px', height: !isAdaptableScreen && '30px' }}>
-                <img />
+            </div>) : (<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '8px' }}>
+                <img style={{ borderRadius: '50px', border: '1px solid #3B8AFF', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
             </div>)}
+
         </div>
     )
 }
