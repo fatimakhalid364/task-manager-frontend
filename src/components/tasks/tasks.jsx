@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import plus from 'src/assets/plus.svg';
 import MainDiv from "src/components/maindiv/maindiv";
 import AddTask from "src/components/tasks/sub_components/add_task";
@@ -8,7 +9,7 @@ import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
-import LoaderforComp from 'src/components/LoadingScreens/LoaderforComp';
+
 
 
 
@@ -23,8 +24,16 @@ function Tasks() {
     const [tasks, setTasks] = useState([]);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [metaData, setMetaData] = useState([]);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/authentication/signin'); // Redirect to defaultRedirect if authenticated
+        }
+    }, [isAuthenticated, navigate]);
 
     const getAllTasks = async () => {
+
         try {
           setSkeletonLoader(true);
           const response = await dispatch(getAllTasksThunk()).unwrap();
@@ -51,18 +60,14 @@ function Tasks() {
 
     const {
         isAdaptableScreen,
-        expandBar,
         onWholeScreen,
-        isSmallerScreen,
-        isMobileScreen,
-        isMicroScreen,
         
     } = useResponsive();
 
     // style={{width: onWholeScreen ? '95%' :   ? '93%' : '97%'}}
 
     return <div className='task-page-div'>
-    {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+        {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
 
         <MainDiv>
             <div className='task-page' style={{width: (onWholeScreen) && '98%'}}>
