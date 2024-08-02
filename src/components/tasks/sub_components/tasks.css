@@ -80,7 +80,6 @@
     width: 100vw;
     border: 1px solid black;
     background-color: transparent;
-    z-index: -1; 
     
     transition: all 0.4s;
     top: 0;
@@ -269,7 +268,31 @@
 
 .MuiTypography-root.MuiTypography-body1 {
     font-size: 14px; /* Set your desired font size */
-  }
+}
 
- 
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 17px;
+}
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+    width: 100%;
+    height: 30px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 70%);
+    }
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
+}
 

@@ -8,6 +8,7 @@ import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
+import LoaderforComp from 'src/components/LoadingScreens/LoaderforComp';
 
 
 
@@ -20,12 +21,12 @@ function Tasks() {
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
     const [tasks, setTasks] = useState([]);
-    const [spinner, setSpinner] = useState(false);
+    const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [metaData, setMetaData] = useState([]);
 
     const getAllTasks = async () => {
         try {
-          setSpinner(true);
+          setSkeletonLoader(true);
           const response = await dispatch(getAllTasksThunk()).unwrap();
           console.log('----------->', response);
           const privateKey = localStorage.getItem("privateKey")
@@ -39,12 +40,12 @@ function Tasks() {
           console.log('----------->', response);
           successToast(response.message, 'task-created');
     
-          setSpinner(false);
+          setSkeletonLoader(false);
         } catch (err) {
           console.log(err);
           errorToast('Something went wrong', 'getTask-pages-error');
     
-          setSpinner(false);
+          setSkeletonLoader(false);
         }
       }
 
@@ -55,41 +56,41 @@ function Tasks() {
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
-        onWholeScreen1
+        
     } = useResponsive();
 
-    // style={{width: onWholeScreen ? '95%' :  onWholeScreen1 ? '93%' : '97%'}}
+    // style={{width: onWholeScreen ? '95%' :   ? '93%' : '97%'}}
 
     return <div className='task-page-div'>
-    {open && (<AddTask open={open} handleClose={handleClose}/>)}
+    {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
 
         <MainDiv>
-            <div className='task-page' style={{width: (onWholeScreen ||  onWholeScreen1) && '98%'}}>
+            <div className='task-page' style={{width: (onWholeScreen) && '98%'}}>
                 <div className='task-page-top' >
-                    <div className="task-page-top-header">
-                        <div className='all-tasks'>
+                    <div className="task-page-top-header" style={{marginLeft: onWholeScreen && '16px'}}>
+                        <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px'}}>
                             All Tasks
                         </div>
-                        <div className="number-of-tasks">
+                        <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px'}}>
                             ({metaData?.total})
                         </div>
                     </div>
                     <a className='primary-button' onClick={handleOpen} style={{
-                        borderRadius: (onWholeScreen ||  onWholeScreen1) && '50%', 
-                        height: (onWholeScreen ||  onWholeScreen1) && '40px', 
-                        width: (onWholeScreen ||  onWholeScreen1) && '40px',
-                        position: (onWholeScreen ||  onWholeScreen1) && 'absolute',
-                        bottom: (onWholeScreen ||  onWholeScreen1) && '20px',
-                        left: (onWholeScreen ||  onWholeScreen1) && '46%'}}>
+                        borderRadius: (onWholeScreen) && '50%', 
+                        height: (onWholeScreen) && '40px', 
+                        width: (onWholeScreen) && '40px',
+                        position: (onWholeScreen) && 'absolute',
+                        bottom: (onWholeScreen) && '20px',
+                        left: (onWholeScreen ) && '46%'}}>
                         
-                        {onWholeScreen ||  onWholeScreen1 ? (<img src={plus} alt='plus-sign' className='plus-sign' />) : (
+                        {onWholeScreen  ? (<img src={plus} alt='plus-sign' className='plus-sign' />) : (
                             <div style={{display: 'flex', gap: '6px'}}>
                             <img src={plus} alt='plus-sign' className='plus-sign' /> <div style={{fontSize: '16px'}}>Add Task</div>
                             </div>) }
                     </a>
                 </div>
                 <Box mt={3}>
-                    <TaskTable tasks={tasks} getAllTasks={getAllTasks} />
+                    <TaskTable tasks={tasks} getAllTasks={getAllTasks} skeletonLoader={skeletonLoader} />
 
                 </Box>
             </div>

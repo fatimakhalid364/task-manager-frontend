@@ -23,6 +23,7 @@ function UpperBar({ PageName, BellIcon }) {
         isBp7,
         isBp8,
         expandBar,
+        isSmallScreen,
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
@@ -90,11 +91,11 @@ function UpperBar({ PageName, BellIcon }) {
                         { !showSearchBar && (
             <div style={{
                 display: 'flex', 
-                marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5 || expandBar) ? 'calc(100vw - 66vw)' : 
-                            isBp6 ? 'calc(100vw - 68vw)': 
-                            isBp7 ? 'calc(100vw - 69vw)': 
-                            isBp8 ? 'calc(100vw - 70vw)' : null, 
-                marginRight: !isAdaptableScreen && '90px',
+                marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5) ? 'calc(100vw - 57vw)' : 
+                            isBp6 ? 'calc(100vw - 59vw)': 
+                            isBp7 ? 'calc(100vw - 61vw)': 
+                            isBp8 ? 'calc(100vw - 63vw)' : 'calc(100vw - 66vw)', 
+                marginRight: !isAdaptableScreen && '100px',
                 width: !isAdaptableScreen && '100px',
                }}>
                 {!isAdaptableScreen && (
@@ -103,10 +104,10 @@ function UpperBar({ PageName, BellIcon }) {
                     alt='magnifying-glass' 
                     className='search-glass-image' 
                     onClick={handleShowSearchBarClick} 
-                    style={{ marginTop: '3.3px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
+                    style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
                 />
             )}
-                <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '10px'}}>
+                <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '30px', marginTop: !isAdaptableScreen && '6px'}}>
                     <img src={BellIcon} alt='bell-icon' />
                 </div>
                 <ProfileSection />

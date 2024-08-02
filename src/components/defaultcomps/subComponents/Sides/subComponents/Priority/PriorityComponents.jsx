@@ -25,8 +25,8 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
             <div className='tasks-page-number'>
                 {TasksAtPriorityLevel}
             </div>
-        </div>) : (<div>
-                <img src={Dot} alt='colored-dots' />
+        </div>) : (<div className='tasks-page-number' style={{marginLeft: '13px', position: 'relative', marginBottom: '12px'}}>
+                {TasksAtPriorityLevel}
             </div>)}
         </div>
     )

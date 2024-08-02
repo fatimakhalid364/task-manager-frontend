@@ -6,7 +6,7 @@ function MainDiv({ children }) {
         isAdaptableScreen,
         expandBar,
         onWholeScreen,
-        onWholeScreen1,
+        
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
@@ -14,10 +14,10 @@ function MainDiv({ children }) {
     return (
         <main className='changing-component-div' style={{left: expandBar ? '257.4px' : '51px', width: expandBar ? '84vw' : '97vw'}}>
             <div className='changing-component' style={{
-                width: (onWholeScreen ||  onWholeScreen1) && '100%', 
-                height: (onWholeScreen ||  onWholeScreen1) && '100%', 
-                marginTop: (onWholeScreen ||  onWholeScreen1) && '0',
-                display: (onWholeScreen || onWholeScreen1) && 'block',
+                width: (onWholeScreen) && '100%', 
+                height: (onWholeScreen ) && '100%', 
+                marginTop: (onWholeScreen) && '0',
+                display: (onWholeScreen) && 'block',
                 }}>
                 {children}
             </div>

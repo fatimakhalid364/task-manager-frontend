@@ -34,7 +34,7 @@ function DefaultComps(){
         isMobileScreen,
         isMicroScreen,
         onWholeScreen,
-        onWholeScreen1,
+        
     } = useResponsive();
 
     function handleRouteClick() {
@@ -51,7 +51,7 @@ function DefaultComps(){
     console.log('isBp7:', isBp7);
     console.log('isAdaptableScreen:', isAdaptableScreen);
     console.log('onWholeScreen:', onWholeScreen);
-    console.log('onWholeScreen1:', onWholeScreen1);
+    console.log(':', );
     console.log('isSmallScreen:', isSmallScreen);
     console.log('isSmallerScreen:', isSmallerScreen);
     console.log('isMobileScreen:', isMobileScreen);

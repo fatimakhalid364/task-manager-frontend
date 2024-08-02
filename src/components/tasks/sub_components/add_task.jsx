@@ -15,7 +15,7 @@ import { styled } from "@mui/system";
 import { CSSTransition } from 'react-transition-group';
 
 
-const AddTask = ({open, handleClose}) => {
+const AddTask = ({open, handleClose, getAllTasks}) => {
 
     const MyComponent = styled('div')({
             position: 'relative',
@@ -95,13 +95,11 @@ const AddTask = ({open, handleClose}) => {
                 successToast(response.message, 'task-created');
                 resetTaskDetails(); // Reset task details after successful creation
                 // setAnchorEl(null);
-               
+                getAllTasks(); // Get all tasks
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
             }
-           
-
         } catch (error) {
             console.error('Error occurred while dispatching thunk:', error);
             errorToast(error.message, 'authentication-pages-error');

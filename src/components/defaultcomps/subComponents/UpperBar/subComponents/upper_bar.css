@@ -4,7 +4,6 @@
     width: 100vw; 
     position: fixed;
     box-shadow: 1px 1px 4px 0px rgba(16, 24, 40, 0.1);
-    z-index: 1;
     background-color: var(--neutral-background-color);
     left: 257px;   
     height: 8%

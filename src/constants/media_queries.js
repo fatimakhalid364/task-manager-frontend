@@ -1,18 +1,20 @@
 import { useMediaQuery } from 'react-responsive';
 
 export const useResponsive = () => {
-    const expandBar = useMediaQuery({ minWidth: 854 });
-    const isBp1 = useMediaQuery({ minWidth: 1422, maxWidth: 1577 });
-    const isBp2 = useMediaQuery({ minWidth: 1415, maxWidth: 1422 });
-    const isBp3 = useMediaQuery({ minWidth: 1403, maxWidth: 1415 });
-    const isBp4 = useMediaQuery({ minWidth: 1394, maxWidth: 1403 });
-    const isBp5 = useMediaQuery({ minWidth: 1329, maxWidth: 1394 });
-    const isBp6 = useMediaQuery({ minWidth: 1298, maxWidth: 1329 });
-    const isBp7 = useMediaQuery({ minWidth: 1263, maxWidth: 1298 });
-    const isAdaptableScreen = useMediaQuery({ minWidth: 1263 });
-    const onWholeScreen = useMediaQuery({ minWidth: 1147, maxWidth: 1362 });
-    const onWholeScreen1 = useMediaQuery({ maxWidth: 1147 });
-    const isSmallScreen = useMediaQuery({ minWidth: 937, maxWidth: 1113 });
+    const expandBar = useMediaQuery({ minWidth: 1250 });
+    const isBp1 = useMediaQuery({ minWidth: 1211, maxWidth: 1250 });
+    const isBp2 = useMediaQuery({ minWidth: 1177, maxWidth: 1211 });
+    const isBp3 = useMediaQuery({ minWidth: 1153, maxWidth: 1177 });
+    const isBp4 = useMediaQuery({ minWidth: 1147, maxWidth: 1153 });
+    const isBp5 = useMediaQuery({ minWidth: 1123, maxWidth: 1147 });
+    const isBp6 = useMediaQuery({ minWidth: 1060, maxWidth: 1123 });
+    const isBp7 = useMediaQuery({ minWidth: 998, maxWidth: 1060 });
+    const isBp8 = useMediaQuery({ minWidth: 947, maxWidth: 998 });
+    const isAdaptableScreen = useMediaQuery({ minWidth: 947 });
+    const isSmallScreen = useMediaQuery({ maxWidth: 722 });
+    const onWholeScreen = useMediaQuery({ maxWidth: 1200 });
+    // const  = useMediaQuery({ maxWidth: 1147 });
+    
     const isSmallerScreen = useMediaQuery({ minWidth: 659, maxWidth: 937 });
     const isMobileScreen = useMediaQuery({ minWidth: 455, maxWidth: 659 });
     const isMicroScreen = useMediaQuery({ minWidth: 359, maxWidth: 455 });
@@ -26,9 +28,10 @@ export const useResponsive = () => {
         isBp5,
         isBp6,
         isBp7,
+        isBp8,
         isAdaptableScreen,
         onWholeScreen,
-        onWholeScreen1,
+        
         isSmallScreen,
         isSmallerScreen,
         isMobileScreen,

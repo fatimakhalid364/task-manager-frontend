@@ -55,10 +55,10 @@ function ProfileSection() {
             </div>
             <div className='profile-details'>
                <div className='profile-name' style={{
-                width: isBp2 ? '98px' : 
-                isBp3 ? '95px' : 
-                isBp4 ? '92px' :
-                isBp5 || isBp6 || isBp7 || isBp8 ? '88px' :
+                width: isBp2 ? '96px' : 
+                isBp3 ? '93px' : 
+                isBp4 ? '90px' :
+                isBp5 || isBp6 || isBp7 || isBp8 ? '83px' :
                 '110.4px' }}>
                
                     { formatUserName()}
@@ -66,16 +66,16 @@ function ProfileSection() {
                     <img src={drop} alt='drop-icon' className='dropdown' />
                 </div>
                 <div className='profile-email' style={{
-                    width: isBp2 ? '100px'  : 
-                    isBp3 ? '98px': 
-                    isBp4 ? '94px' :
-                    isBp5 || isBp6 || isBp7 || isBp8 ? '90px' :
+                    width: isBp2 ? '98px'  : 
+                    isBp3 ? '96px': 
+                    isBp4 ? '92px' :
+                    isBp5 || isBp6 || isBp7 || isBp8 ? '85px' :
                     '112px'}}>
                     { user?.email}
                 </div>
             </div>
            
-        </div>) : (<div className='profile-img' style={{marginLeft: '10px'}}>
+        </div>) : (<div className='profile-img' style={{marginLeft: '30px', width: !isAdaptableScreen && '30px', height: !isAdaptableScreen && '30px' }}>
                 <img />
             </div>)}
         </div>

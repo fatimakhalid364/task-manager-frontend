@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIS } from "../axiosConfig";
 
-const getAllTasksThunk = createAsyncThunk("getAllTasks", async (thunkAPI) => {
+const getAllTasksThunk = createAsyncThunk("getAllTasks", async (_, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
 
     try {

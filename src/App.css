@@ -29,6 +29,10 @@ html {
     --quinary-font-color: #4B5563;
     --field-background-color: #F9FAFB;
 	--modal-border-color: #C1C7D0;
+	--low-font-color: #1FDE43;
+	--high-font-color: #F87171;
+	--medium-font-color: #F59E0B;
+	--inprogress-font-color: #F59E0B;
 }
 
 
