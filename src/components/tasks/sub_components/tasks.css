@@ -296,3 +296,21 @@
     }
 }
 
+.pagination-text {
+    border-radius: 4px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: hsl(216, 100%, 50%);
+    padding: 8px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.pagination-text-div{
+    width: 200px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    justify-content: center;
+    background-color: hsl(216, 100%, 92%);
+}
+

@@ -88,7 +88,7 @@ function Tasks() {
                         </a>
                     </div>
                     <Box mt={3}>
-                        <TaskTable tasks={tasks} limit={limit} page={page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} skeletonLoader={skeletonLoader} />
+                        <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
             </MainDiv>
