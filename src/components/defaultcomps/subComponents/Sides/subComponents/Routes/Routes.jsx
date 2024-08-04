@@ -10,11 +10,11 @@ import RoutesComponents from "src/components/defaultcomps/subComponents/Sides/su
 function Routes({ clickfunction }) {
     return (
         <div className='tasks-page-routes-div' >
-            <RoutesComponents icon={DashboardIcon} page='Dashboard' route='/default/dashboard?page=Dashboard' clickfunction={clickfunction} />
-            <RoutesComponents icon={TasksIcon} page='Tasks' route='/default/tasks?page=Tasks' clickfunction={clickfunction} />
-            <RoutesComponents icon={NotesIcon} page='Notes' route='/default/notes?page=Notes' clickfunction={clickfunction} />
-            <RoutesComponents icon={CalendarIcon} page='Calendar' route='/default/calendar?page=Calendar' clickfunction={clickfunction} />
-            <RoutesComponents icon={SettingsIcon} page='Settings' route='/default/settings?page=Settings' clickfunction={clickfunction} />
+            <RoutesComponents icon={DashboardIcon} page='Dashboard' route='/dashboard' clickfunction={clickfunction} />
+            <RoutesComponents icon={TasksIcon} page='Tasks' route='/tasks' clickfunction={clickfunction} />
+            <RoutesComponents icon={NotesIcon} page='Notes' route='/notes' clickfunction={clickfunction} />
+            <RoutesComponents icon={CalendarIcon} page='Calendar' route='/calender' clickfunction={clickfunction} />
+            <RoutesComponents icon={SettingsIcon} page='Settings' route='/settings' clickfunction={clickfunction} />
             <Outlet />
 
         </div>
