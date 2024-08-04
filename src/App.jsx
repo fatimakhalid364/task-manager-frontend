@@ -1,35 +1,38 @@
-import { Route, Routes } from "react-router-dom";
-import Dashboard from 'src/components/dashboard';
-import Notes from 'src/components/notes';
-import ForgotPassword from "src/pages/authentication/ForgotPassword";
-import SetPassword from "src/pages/authentication/SetPassword";
-import SigninpPage from 'src/pages/authentication/SigninPage';
-import SignupPage from 'src/pages/authentication/SignupPage';
-import DefaultPage from "src/pages/default/DefaultPage";
-import VerificationWait from "src/pages/loading/verificationWait";
+import { Route, Routes } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import './App.css';
-import Calendar from "./components/calendar";
-import Settings from "./components/settings";
-import Tasks from "src/components/tasks/tasks";
+import Calendar from './components/calendar';
+import Dashboard from './components/dashboard';
+import Notes from './components/notes';
+import RouteGuard from './components/RouteGuard;';
+import Settings from './components/settings';
+import Tasks from './components/tasks/tasks';
+import { AuthProvider } from './contexts/AuthContext';
+import ForgotPassword from './pages/authentication/ForgotPassword';
+import SetPassword from './pages/authentication/SetPassword';
+import SigninPage from './pages/authentication/SigninPage';
+import SignupPage from './pages/authentication/SignupPage';
+import VerificationWait from './pages/loading/verificationWait';
+import { persistor } from './store/index';
+
 function App() {
     return (
-        <div>
-            <Routes>
-                <Route path='/authentication/signup' element={<SignupPage />} />
-                <Route path='/authentication/signin' element={<SigninpPage />} />
-                <Route path='/authentication/forgot-password' element={<ForgotPassword />} />
-                <Route path='/authentication/reset-password' element={<SetPassword />} />
-                <Route path='/authentication/email-verification' element={<VerificationWait />} />
-                <Route path='/default' element={<DefaultPage />}>
-                    <Route path='/default/notes' element={<Notes />} />
-                    <Route path='/default/dashboard' element={<Dashboard />} />
-                    <Route path='/default/tasks' element={<Tasks />} />
-                    <Route path='/default/calendar' element={<Calendar />} />
-                    <Route path='/default/settings' element={<Settings />} />
-                </Route> 
-            </Routes>
-
-        </div>
+        <PersistGate loading={null} persistor={persistor}>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/authentication/signup" element={<RouteGuard element={SignupPage} />} />
+                    <Route path="/authentication/signin" element={<RouteGuard element={SigninPage} />} />
+                    <Route path="/authentication/forgot-password" element={<RouteGuard element={ForgotPassword} />} />
+                    <Route path="/authentication/reset-password" element={<RouteGuard element={SetPassword} />} />
+                    <Route path="/authentication/email-verification" element={<RouteGuard element={VerificationWait} />} />
+                    <Route path="/notes" element={<RouteGuard element={Notes} />} />
+                    <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
+                    <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
+                    <Route path="/calendar" element={<RouteGuard element={Calendar} />} />
+                    <Route path="/settings" element={<RouteGuard element={Settings} />} />
+                </Routes>
+            </AuthProvider>
+        </PersistGate>
     );
 }
 

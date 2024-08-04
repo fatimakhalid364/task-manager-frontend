@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import plus from 'src/assets/plus.svg';
@@ -26,11 +26,11 @@ function Tasks() {
     const [metaData, setMetaData] = useState([]);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const navigate = useNavigate();
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/authentication/signin'); // Redirect to defaultRedirect if authenticated
-        }
-    }, [isAuthenticated, navigate]);
+    // useEffect(() => {
+    //     if (!isAuthenticated) {
+    //         navigate('/authentication/signin'); // Redirect to defaultRedirect if authenticated
+    //     }
+    // }, [isAuthenticated, navigate]);
 
     const getAllTasks = async () => {
 

@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { defaultRedirect, Screen } from "src/constants/constants";
-import { setUser } from 'src/store/slices/authSlice';
-import { fetchKeyThunk, forgotPassThunk, signinThunk, signupThunk } from 'src/store/thunks/authThunks';
-import { decryptObjectValues, encryptObjectValues } from "src/utils/encryptionUtil";
+import { forgotPassThunk, signupThunk } from 'src/store/thunks/authThunks';
+import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
+import { useAuth } from "../../../contexts/AuthContext";
 import SubmitButton from './submit-button.jsx';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
@@ -64,6 +64,7 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
 
 function InputFields({ currentScreen }) {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const { login } = useAuth();
     const navigate = useNavigate();
     useEffect(() => {
         if (isAuthenticated) {
@@ -119,7 +120,7 @@ function InputFields({ currentScreen }) {
                         thunkToDispatch = signupThunk(encryptedObj);
                         break;
                     case Screen.SIGNIN:
-                        thunkToDispatch = signinThunk(encryptedObj);
+                        await login(encryptedObj)
                         break;
                     case Screen.FORGOT_PASS:
                         thunkToDispatch = forgotPassThunk(encryptedObj);
@@ -131,21 +132,6 @@ function InputFields({ currentScreen }) {
                 if (thunkToDispatch) {
                     setSpinner(true);
                     const response = await dispatch(thunkToDispatch).unwrap();
-                    if (currentScreen === Screen.SIGNIN && response.data.access_token) {
-                        const data = response.data;
-                        console.log(data.access_token);
-                        localStorage.setItem("access_token", data.access_token);
-
-                        const fetchKeyResponse = await dispatch(fetchKeyThunk({})).unwrap();
-                        const _privateKey = fetchKeyResponse.data.privateKey;
-                        localStorage.setItem("privateKey", _privateKey);
-                        const decryptObj = decryptObjectValues(data.user, _privateKey);
-                        // decryptObj.privateKey = _privateKey;
-                        console.log(decryptObj);
-                        dispatch(setUser(decryptObj));
-                        console.log('Fetched key:', fetchKeyResponse);
-                        // Handle response as needed
-                    }
                     setSpinner(false); 
                     console.log('Dispatched thunk response:', successMsg);
                     { successMsg ? successToast(response.message, 'authentication-pages-success') : '' }
