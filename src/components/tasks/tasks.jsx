@@ -15,7 +15,7 @@ import TaskTable from './sub_components/TaskTable';
 function Tasks() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(4);
+    const [limit, setLimit] = useState(5);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function Tasks() {
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [metaData, setMetaData] = useState([]);
 
-    const getAllTasks = async (page = 0, limit = 4) => {
+    const getAllTasks = async (page = 0, limit = 5) => {
         try {
             setSkeletonLoader(true);
             const response = await dispatch(getAllTasksThunk({ page, limit })).unwrap();
