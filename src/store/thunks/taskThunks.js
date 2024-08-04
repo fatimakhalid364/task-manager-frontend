@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
 
 const getAllTasksThunk = createAsyncThunk("getAllTasks", async (_, thunkAPI) => {
@@ -20,10 +21,7 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (_, thunkAPI) => 
         if (!error.response) {
             throw error;
         }
-        return thunkAPI.rejectWithValue({
-            statusCode: error.response.status,
-            message: error.response.data.error,
-        });
+        return HandleAuthError(error, thunkAPI);
     }
 });
 
