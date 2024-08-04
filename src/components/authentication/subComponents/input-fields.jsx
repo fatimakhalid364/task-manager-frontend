@@ -4,16 +4,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
-import { defaultRedirect, Screen } from "src/constants/constants";
+import { Screen } from "src/constants/constants";
 import { forgotPassThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from '../../../contexts/AuthContext.jsx';
 import SubmitButton from './submit-button.jsx';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
@@ -63,15 +62,8 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
 }));
 
 function InputFields({ currentScreen }) {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const { login } = useAuth();
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate(defaultRedirect); // Redirect to defaultRedirect if authenticated
-        }
-    }, [isAuthenticated, navigate]);
     const dispatch = useDispatch();
+    const { login } = useAuth();
     const isLoading = useSelector(state => state.auth.isLoading);
     const successMsg = useSelector(state => state.auth.successMsg);
     const errorMsg = useSelector(state => state.auth.errorMsg);
