@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from 'src/components/LoadingScreens/CSSLoader';
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
 import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
+
 
 const AuthContext = createContext();
 
@@ -42,12 +44,18 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = () => {
+        setIsLoading(true); 
         dispatch(logoutAction());
         localStorage.removeItem('access_token');
         localStorage.removeItem('privateKey');
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1500);
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Loader />
+    </div>;
     return (
         <AuthContext.Provider value={{ isAuthenticated, user, access_token, login, logout }}>
             {children}
