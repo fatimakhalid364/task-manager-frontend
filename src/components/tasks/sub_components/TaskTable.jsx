@@ -30,20 +30,31 @@ const calculateCellWidth = () => {
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  textAlign: 'center',
   whiteSpace: 'nowrap',
   maxWidth: calculateCellWidth(),
-  textAlign: 'center',
+  color: 'var(--secondary-font-color)',
+  fontFamily: 'var(--primary-font-family)',
+}));
+
+const StyledTableHeadersLeft = styled(TableCell)(({ theme }) => ({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  textAlign: 'left',
+  whiteSpace: 'nowrap',
+  maxWidth: calculateCellWidth(),
   color: 'var(--secondary-font-color)',
   fontFamily: 'var(--primary-font-family)',
 }));
 
 const StyledTableHeaders = styled(TableCell)({
   width: '1%',
-  textAlign: 'center',
   fontWeight: 500,
+  textAlign: 'center',
   fontFamily: 'var(--primary-font-family)',
   color: 'var(--secondary-font-color)',
 });
+
 
 const TaskTable = ({
   tasks = [],
@@ -125,16 +136,16 @@ const TaskTable = ({
   return (
     <div>
       <Paper>
-        <TableContainer id="table-container">
-          <Table>
+        <TableContainer id="table-container" >
+          <Table >
             <TableHead>
               <TableRow>
                 <StyledTableHeaders>Title</StyledTableHeaders>
                 <StyledTableHeaders>Description</StyledTableHeaders>
-                <StyledTableHeaders>Date</StyledTableHeaders>
-                <StyledTableHeaders>Priority</StyledTableHeaders>
-                <StyledTableHeaders>Status</StyledTableHeaders>
-                <StyledTableHeaders>Action</StyledTableHeaders>
+                <StyledTableHeaders sx={{ textAlign: 'center' }}>Date</StyledTableHeaders>
+                <StyledTableHeaders sx={{ textAlign: 'center' }}>Priority</StyledTableHeaders>
+                <StyledTableHeaders sx={{ textAlign: 'center' }}>Status</StyledTableHeaders>
+                <StyledTableHeaders sx={{ textAlign: 'center' }}>Action</StyledTableHeaders>
               </TableRow>
             </TableHead>
             {skeletonLoader ? (
@@ -170,20 +181,20 @@ const TaskTable = ({
                   {tasks.length > 0 ? (
                     tasks.map((task) => (
                       <TableRow key={task._id}>
-                        <StyledTableCell>
+                        <StyledTableHeadersLeft>
                           <Tooltip title={task.taskTitle}>
                             <Typography sx={{ fontSize: '16px' }} noWrap>
                               {task.taskTitle}
                             </Typography>
                           </Tooltip>
-                        </StyledTableCell>
-                        <StyledTableCell>
+                        </StyledTableHeadersLeft>
+                        <StyledTableHeadersLeft>
                           <Tooltip title={task.taskDescription}>
-                            <Typography sx={{ fontSize: '16px', color: 'var(--quinary-font-color)' }} noWrap>
+                            <Typography sx={{ fontSize: '16px', color: 'var(--quinary-font-color)', justifyContent: 'left' }} noWrap>
                               {task.taskDescription}
                             </Typography>
                           </Tooltip>
-                        </StyledTableCell>
+                        </StyledTableHeadersLeft>
                         <StyledTableCell>
                           <Tooltip title={formatLocalDateTime(task.dueDate, userTimeZone)}>
                             <Typography sx={{ fontSize: '16px', color: 'var(--quinary-font-color)' }} noWrap>
@@ -194,7 +205,7 @@ const TaskTable = ({
                         <StyledTableCell sx={{ textAlign: 'center', color: handlePriorityColorChange(task.priority) }}>
                           {capitalizeFirstLetter(task.priority)}
                         </StyledTableCell>
-                        <StyledTableCell sx={{ color: 'var(--quinary-font-color)' }}>
+                        <StyledTableCell sx={{ color: 'var(--quinary-font-color)', textAlign: 'center', justifyContent: 'center' }}>
                           <div style={{
                             border: `1px solid ${handleStatusColorChange(task.status)}`,
                             borderRadius: '30px',
@@ -203,7 +214,7 @@ const TaskTable = ({
                             textAlign: 'center',
                             backgroundColor: `${handleStatusColorChange(task.status)}22`,
                           }}>
-                            <span style={{ color: handleStatusColorChange(task.status), textTransform: 'capitalize' }}>
+                            <span style={{ color: handleStatusColorChange(task.status), textTransform: 'capitalize', textAlign: 'center' }}>
                               {capitalizeFirstLetter(task.status)}
                             </span>
                           </div>
