@@ -1,13 +1,7 @@
+import { useSearchParams } from 'react-router-dom';
+import BellIcon from 'src/assets/bell.svg';
 import Sides from "src/components/defaultcomps/subComponents/Sides/Sides";
 import UpperBar from 'src/components/defaultcomps/subComponents/UpperBar/upperbar';
-import BellIcon from 'src/assets/bell.svg';
-import { renderToString } from 'react-dom/server'
-import { useState } from "react";
-import {useNavigate, useSearchParams } from 'react-router-dom';
-import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
-import AddTask from "src/components/tasks/sub_components/add_task";
-import { Context as ResponsiveContext } from 'react-responsive';
-import { render } from '@testing-library/react';
 import { useResponsive } from 'src/constants/media_queries';
 
 

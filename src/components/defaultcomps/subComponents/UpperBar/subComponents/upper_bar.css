@@ -1,8 +1,9 @@
 .upper-bar-div {
     display: flex;
     align-items: center;
-    width: 100vw; 
+    width: auto; 
     position: fixed;
+    top: 0;
     box-shadow: 1px 1px 4px 0px rgba(16, 24, 40, 0.1);
     background-color: var(--neutral-background-color);
     left: 257px;   
