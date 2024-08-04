@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
 
-const getAllTasksThunk = createAsyncThunk("getAllTasks", async (_, thunkAPI) => {
+const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
-
+    const { page, limit, search } = params
     try {
         const response = await APIS.get(`/task`, {
             params: {
-                search: ""
+                page, limit, search
             },
             headers: {
                 "Content-Type": "application/json",
