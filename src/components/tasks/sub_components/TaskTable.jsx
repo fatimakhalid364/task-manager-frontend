@@ -42,7 +42,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableHeaders = styled(TableCell)({
-  width: '1%',
+  width: '15%',
   textAlign: 'center',
   fontWeight: 500,
   fontFamily: 'var(--primary-font-family)',
@@ -196,7 +196,7 @@ const TaskTable = ({ tasks, setLimit, limit, page, setPage, skeletonLoader }) =>
               <TableRow>
                 <StyledTableHeaders>Title</StyledTableHeaders>
                 <StyledTableHeaders>Description</StyledTableHeaders>
-                <StyledTableHeaders>Date</StyledTableHeaders>
+                <StyledTableHeaders>Due Date</StyledTableHeaders>
                 <StyledTableHeaders>Priority</StyledTableHeaders>
                 <StyledTableHeaders>Status</StyledTableHeaders>
                 <StyledTableHeaders>Action</StyledTableHeaders>
@@ -206,9 +206,6 @@ const TaskTable = ({ tasks, setLimit, limit, page, setPage, skeletonLoader }) =>
               <TableBody>
                 {Array.from({ length: limit }).map((_, index) => (
                   <TableRow key={index}>
-                    <StyledTableCell>
-                      <div className="skeleton"></div>
-                    </StyledTableCell>
                     <StyledTableCell>
                       <div className="skeleton"></div>
                     </StyledTableCell>
