@@ -16,6 +16,7 @@ function Tasks() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
+    const [search, setSearch] = useState("");
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
@@ -26,7 +27,8 @@ function Tasks() {
     const getAllTasks = async (page = 0, limit = 5) => {
         try {
             setSkeletonLoader(true);
-            const response = await dispatch(getAllTasksThunk({ page, limit })).unwrap();
+            const params = { page, limit, search }
+            const response = await dispatch(getAllTasksThunk(params)).unwrap();
             const privateKey = localStorage.getItem("privateKey");
             response?.data?.forEach(task => {
                 task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
@@ -85,8 +87,8 @@ function Tasks() {
                                 </div>)}
                         </a>
                     </div>
-                    <Box mt={3}>
-                        <TaskTable tasks={tasks} limit={limit} page={page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} skeletonLoader={skeletonLoader} />
+                    <Box mt={3} mb={4}>
+                        <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
             </MainDiv>

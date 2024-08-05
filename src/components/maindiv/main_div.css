@@ -1,7 +1,7 @@
 .changing-component-div {
     position: absolute;
     background-color: var(--field-background-color); 
-    height: 91.6vh;
+    /* height: 91.6vh; */
     width: 100%;
     display: flex;
     justify-content: center;
