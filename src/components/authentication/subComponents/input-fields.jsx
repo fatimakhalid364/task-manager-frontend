@@ -211,6 +211,7 @@ function InputFields({ currentScreen }) {
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SIGNIN) && (
                     <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: currentScreen === Screen.SIGNUP ? 'center' : null }}>
                         <div className='checkbox' style={{marginLeft: currentScreen === Screen.SIGNIN ? '25.6%' : null}}>
+                            {currentScreen === Screen.SIGNUP ? (
                             <input
                                 type='checkbox'
                                 id='checkbox'
@@ -218,13 +219,9 @@ function InputFields({ currentScreen }) {
                                 checked={checked}
                                 onChange={handleCheckboxChange}
                             />
-                            {currentScreen === Screen.SIGNUP ? (
+                            
                                 <label htmlFor='checkbox'>
                                 I agree to the <a href='/terms-and-services'>Terms & Conditions</a>
-                                </label>
-                            ) : currentScreen === Screen.SIGNIN ? (
-                                <label htmlFor='checkbox'>
-                                Remember Me
                                 </label>
                             ) : null}
 
