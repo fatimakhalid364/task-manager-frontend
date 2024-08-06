@@ -1,7 +1,7 @@
 const localURL = 'http://localhost:5173';
-// const liveURL = 'not yet defined';
+const liveURL = 'https://tm-git-notes-ali013s-projects.vercel.app';
 
-export const baseURL = localURL;
+export const baseURL = liveURL;
 export const defaultRedirect = `/tasks`;
 
 export const LIVE_API = 'https://task-manager-backend-roan.vercel.app/api'
