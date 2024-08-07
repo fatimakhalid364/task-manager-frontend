@@ -1,5 +1,5 @@
-const localURL = 'http://localhost:5173';
-const liveURL = 'https://tm-git-notes-ali013s-projects.vercel.app';
+// const localURL = 'http://localhost:5173';
+const liveURL = 'https://tm-delta.vercel.app';
 
 export const baseURL = liveURL;
 export const defaultRedirect = `/tasks`;
