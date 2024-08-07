@@ -209,33 +209,31 @@ function InputFields({ currentScreen }) {
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SIGNIN) && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: currentScreen === Screen.SIGNUP ? 'center' : null }}>
-                        <div className='checkbox' style={{marginLeft: currentScreen === Screen.SIGNIN ? '25.6%' : null}}>
-                            <input
-                                type='checkbox'
-                                id='checkbox'
-                                name='checkbox'
-                                checked={checked}
-                                onChange={handleCheckboxChange}
-                            />
-                            {currentScreen === Screen.SIGNUP ? (
-                                <label htmlFor='checkbox'>
-                                I agree to the <a href='/terms-and-services'>Terms & Conditions</a>
-                                </label>
-                            ) : currentScreen === Screen.SIGNIN ? (
-                                <label htmlFor='checkbox'>
-                                Remember Me
-                                </label>
-                            ) : null}
+    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: currentScreen === Screen.SIGNUP ? 'center' : null }}>
+        <div className='checkbox' style={{marginLeft: currentScreen === Screen.SIGNIN ? '25.6%' : null}}>
+            {currentScreen === Screen.SIGNUP ? (
+                <>
+                    <input
+                        type='checkbox'
+                        id='checkbox'
+                        name='checkbox'
+                        checked={checked}
+                        onChange={handleCheckboxChange}
+                    />
+                    <label htmlFor='checkbox'>
+                        I agree to the <a href='/terms-and-services'>Terms & Conditions</a>
+                    </label>
+                </>
+            ) : null}
+        </div>
+        {currentScreen === Screen.SIGNIN && (
+            <div className='forgot-password-text'>
+                <a href='/authentication/forgot-password'>Forgot password?</a>
+            </div>
+        )}
+    </Grid>
+)}
 
-                        </div>
-                        {currentScreen === Screen.SIGNIN && (
-                            <div className='forgot-password-text'>
-                                <a href='/authentication/forgot-password'>Forgot password?</a>
-                            </div>
-                        )}
-                    </Grid>
-                )}
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <SubmitButton
                         currentScreen={currentScreen}
