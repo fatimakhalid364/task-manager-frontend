@@ -40,7 +40,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableHeadersLeft = styled(TableCell)(({ theme }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  textAlign: 'left',
+  textAlign: 'center',
   whiteSpace: 'nowrap',
   maxWidth: calculateCellWidth(),
   color: 'var(--secondary-font-color)',
@@ -52,6 +52,7 @@ const StyledTableHeaders = styled(TableCell)({
   textAlign: 'center',
   fontFamily: 'var(--primary-font-family)',
   color: 'var(--secondary-font-color)',
+  backgroundColor: 'var(--active-background-color)',
 });
 
 
@@ -208,7 +209,8 @@ const TaskTable = ({
                             width: '120px',
                             padding: '4px',
                             textAlign: 'center',
-                            backgroundColor: `${handleStatusColorChange(task.status)}22`,
+                            color: `${handleStatusColorChange(task.status)}`,
+                            marginLeft: '25px'
                           }}>
                             <span style={{ color: handleStatusColorChange(task.status), textTransform: 'capitalize', textAlign: 'center' }}>
                               {capitalizeFirstLetter(task.status)}

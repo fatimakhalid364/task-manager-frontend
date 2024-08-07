@@ -16,9 +16,10 @@ const getAllTasksSlice = createSlice({
     },
     reducers: {
         setAllTasks: (state, action) => {
-            state.taskDetails = action.payload;
+            state.allTasks = action.payload;
         },
     },
+
     extraReducers: (builder) => {
         builder
             // Signup Thunk
@@ -32,6 +33,7 @@ const getAllTasksSlice = createSlice({
                 state.isLoading = false;
                 state.successMsg = 'task details retrieved successful!ly';
                 state.errorMsg = '';
+                console.log('Fulfilled: action.payload =', state.allTasks);
             })
             .addCase(getAllTasksThunk.rejected, (state, action) => {
                 state.isLoading = false;
@@ -41,6 +43,8 @@ const getAllTasksSlice = createSlice({
             
     },
 });
+
+
 
 export const { setGetAllTasks } = getAllTasksSlice.actions;
 

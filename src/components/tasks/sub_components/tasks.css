@@ -299,7 +299,7 @@
 .pagination-text {
     border-radius: 4px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: hsl(216, 100%, 50%);
+    color: var(--secondary-font-color);
     padding: 8px;
     margin-bottom: 8px;
     text-align: center;

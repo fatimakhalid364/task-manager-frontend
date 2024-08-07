@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import plus from 'src/assets/plus.svg';
+import FilterButton from "src/components/Filter/FilterButton";
 import MainDiv from "src/components/maindiv/maindiv";
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
@@ -11,6 +11,8 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
+import PageHeader from 'src/components/PageHeader';
+import FilterDialog from 'src/components//Filter/FilterDialog';
 
 function Tasks() {
     const [open, setOpen] = useState(false);
@@ -23,6 +25,10 @@ function Tasks() {
     const [tasks, setTasks] = useState([]);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [metaData, setMetaData] = useState([]);
+    const [filterOpen, setFilterOpen] = useState(false);
+    const handleFilterOpen = () => setFilterOpen(true);
+    const handleFilterClose = () => setFilterOpen(false);
+  
 
     const getAllTasks = async (page = 0, limit = 5) => {
         try {
@@ -61,31 +67,12 @@ function Tasks() {
     return (
         <div className='task-page-div'>
             {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+            {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <div className='task-page-top'>
-                        <div className="task-page-top-header" style={{ marginLeft: onWholeScreen && '16px' }}>
-                            <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px' }}>
-                                All Tasks
-                            </div>
-                            <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px' }}>
-                                ({metaData?.total})
-                            </div>
-                        </div>
-                        <a className='primary-button' onClick={handleOpen} style={{
-                            borderRadius: (onWholeScreen) && '50%',
-                            height: (onWholeScreen) && '40px',
-                            width: (onWholeScreen) && '40px',
-                            position: (onWholeScreen) && 'absolute',
-                            bottom: (onWholeScreen) && '20px',
-                            left: (onWholeScreen) && '46%'
-                        }}>
-
-                            {onWholeScreen ? (<img src={plus} alt='plus-sign' className='plus-sign' />) : (
-                                <div style={{ display: 'flex', gap: '6px' }}>
-                                    <img src={plus} alt='plus-sign' className='plus-sign' /> <div style={{ fontSize: '16px' }}>Add Task</div>
-                                </div>)}
-                        </a>
+                    <PageHeader handleOpen={ handleOpen } total={ metaData?.total } text='All Tasks' object='Task'/>
+                    <div>
+                        <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
                         <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />

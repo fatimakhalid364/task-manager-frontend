@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
 import { authReducer } from "./slices/authSlice";
+import { getAllTasksReducer } from './slices/get_all_tasks_slice';
 
 
 
@@ -21,7 +22,7 @@ export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
         // createTask: persistedCreateTaskReducer,
-        // getAllTasks: persistedGetAllTasksReducer
+        getAllTasks: getAllTasksReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

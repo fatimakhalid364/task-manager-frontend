@@ -38,6 +38,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.successMsg = 'Signup successful!';
                 state.errorMsg = '';
+                console.log('Fulfilled for user: action.payload =', state.user);
             })
             .addCase(signupThunk.rejected, (state, action) => {
                 state.isLoading = false;
