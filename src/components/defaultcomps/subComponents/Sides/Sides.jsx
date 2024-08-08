@@ -1,8 +1,8 @@
 
-import Routes from "src/components/defaultcomps/subComponents/Sides/subComponents/Routes/Routes";
-import Priority from "src/components/defaultcomps/subComponents/Sides/subComponents/Priority/Priority";
-import 'src/components/defaultcomps/subComponents/Sides/subComponents/sides.css';
 import { useState } from 'react';
+import Priority from "src/components/defaultcomps/subComponents/Sides/subComponents/Priority/Priority";
+import Routes from "src/components/defaultcomps/subComponents/Sides/subComponents/Routes/Routes";
+import 'src/components/defaultcomps/subComponents/Sides/subComponents/sides.css';
 import { useResponsive } from 'src/constants/media_queries';
 
 function Sides({clickfunction, burgerMenuClicked }){

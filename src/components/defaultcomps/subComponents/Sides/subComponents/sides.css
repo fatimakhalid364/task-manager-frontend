@@ -70,6 +70,7 @@
 
 
 .tasks-page-side {
+    display: block;
     width: 255px;
     height: 996px;
     position: fixed;
@@ -77,4 +78,5 @@
     left: 0;
     box-shadow: 0px 1px 10px 0px rgba(16, 24, 40, 0.1);
     background-color: var(--neutral-background-color);
+    transition: width 0.3s;
 }

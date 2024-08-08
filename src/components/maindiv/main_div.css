@@ -2,22 +2,20 @@
     position: absolute;
     background-color: var(--field-background-color); 
     min-height: 91.6vh;
-    width: 100%;
-    /* display: flex;
-    justify-content: center; */
-    left: 25.74rem;
+    width: 92vw;
+    left: 0;
     top: 57.6px;
-    
-
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .changing-component {
     margin-top: 30px;
-    margin-left: 0;
     height: 85%;
-    width: 81%;
     background-color: var(--neutral-background-color);
     border-radius: 10px;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
