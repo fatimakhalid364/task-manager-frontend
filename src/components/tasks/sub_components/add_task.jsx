@@ -30,20 +30,6 @@ const CssTextField = styled((props) => <MobileDateTimePicker {...props} />)(({ t
     '& .MuiInputBase-input': {
         border: 'none',
     },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            border: 'none',
-        },
-        '&:hover fieldset': {
-            border: `1px solid #3B8AFF`,
-        },
-        '&.Mui-focused fieldset': {
-            border: `2px solid #3B8AFF`,
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-            border: '1px solid #D1D5DB',
-        },
-    },
 }));
 
 const AddTask = ({ open, handleClose, getAllTasks }) => {
