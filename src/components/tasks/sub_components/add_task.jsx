@@ -2,8 +2,8 @@ import { Box, Button, FormControl, MenuItem, Select, TextareaAutosize, TextField
 import Modal from '@mui/material/Modal';
 import { styled } from "@mui/system";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -26,9 +26,27 @@ const MyComponent = styled('div')({
     opacity: '1',
     padding: '15px',
 });
+const CssTextField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
+    '& .MuiInputBase-input': {
+        border: 'none',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            border: 'none',
+        },
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+}));
 
 const AddTask = ({ open, handleClose, getAllTasks }) => {
-
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: '',
         dueDate: dayjs(),
@@ -88,7 +106,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             const response = await dispatch(thunkToDispatch).unwrap();
             if (response.status === 201) {
                 successToast(response.message, 'task-created');
-                resetTaskDetails(); // Reset task details after successful creation
+                resetTaskDetails();
                 getAllTasks(); // Get all tasks
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
@@ -126,7 +144,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                             />
                             <div className='add-task-input-title'>Due Date</div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker
+                                <CssTextField
                                     value={taskDetails.dueDate}
                                     onChange={handleDateChange}
                                     slotProps={{ textField: { fullWidth: true } }}
@@ -170,6 +188,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                 <Button
                                     variant="contained"
                                     onClick={handleClose}
+                                    color={'secondary'}
                                 >
                                     Cancel
                                 </Button>
