@@ -14,17 +14,17 @@ function Priority({ burgerMenuClicked }){
         isMicroScreen,
     } = useResponsive();
 
-    // useEffect(() => {
-    //     console.log('burgerMenuClicked', burgerMenuClicked);
-    //   }, [burgerMenuClicked]);
+    useEffect(() => {
+    console.log('burgerMenuClicked inside priority.jsx', burgerMenuClicked);
+    }, [burgerMenuClicked]);
     
 
     return (
         <div className='tasks-page-priority-div'>
             { (expandBar && burgerMenuClicked) && (<div className='priority-header'>Priority</div>)}
-            <PriorityComponents Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel='7'  />
-            <PriorityComponents Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel='7'  />
-            <PriorityComponents Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel='7'  />
+            <PriorityComponents Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />
+            <PriorityComponents Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />
+            <PriorityComponents Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />
             
 
         </div>

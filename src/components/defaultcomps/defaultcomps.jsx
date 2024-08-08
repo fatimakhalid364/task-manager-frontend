@@ -56,6 +56,10 @@ function DefaultComps(){
     // console.log('isSmallerScreen:', isSmallerScreen);
     // console.log('isMobileScreen:', isMobileScreen);
     // console.log('isMicroScreen:', isMicroScreen);
+    useEffect(() => {
+        console.log('burgerMenuClicked inside defaultcomps', burgerMenuClicked);
+      }, [burgerMenuClicked]);
+    
     
    
     return(

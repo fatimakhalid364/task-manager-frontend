@@ -22,6 +22,7 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
         {(expandBar && burgerMenuClicked) ? (<div className='tasks-page-priority'>
             <div>
                 <img src={Dot} alt='colored-dots' />
+
             </div>
             <div className='tasks-page-priority-level'>
                 {PriorityLevel}
@@ -36,10 +37,11 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
     )
 };
 
-// PriorityComponents.propTypes = {
-//     Dot: propTypes.string.isRequired,
-//     PriorityLevel: propTypes.string.isRequired,
-//     TasksAtPriorityLevel: propTypes.string.isRequired
-// }
+PriorityComponents.propTypes = {
+    Dot: propTypes.string.isRequired,
+    PriorityLevel: propTypes.string.isRequired,
+    TasksAtPriorityLevel: propTypes.string.isRequired,
+    burgerMenuClicked: propTypes.bool,
+ }
 
 export default PriorityComponents;
