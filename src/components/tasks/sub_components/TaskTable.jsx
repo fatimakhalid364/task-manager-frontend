@@ -40,20 +40,38 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableHeadersLeft = styled(TableCell)(({ theme }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  textAlign: 'center',
+  textAlign: 'left',
   whiteSpace: 'nowrap',
   maxWidth: calculateCellWidth(),
   color: 'var(--secondary-font-color)',
   fontFamily: 'var(--primary-font-family)',
 }));
+const StyledAction = styled(TableCell)(({ theme }) => ({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  width: '5%',
+  color: 'var(--secondary-font-color)',
+  fontFamily: 'var(--primary-font-family)',
+}));
 
 const StyledTableHeaders = styled(TableCell)({
-  width: '15%',
+  width: '17%',
   textAlign: 'center',
   fontFamily: 'var(--primary-font-family)',
   color: 'var(--secondary-font-color)',
   backgroundColor: 'var(--active-background-color)',
 });
+
+const StyledTableHeadersA = styled(TableCell)({
+  width: '5%',
+  textAlign: 'center',
+  fontFamily: 'var(--primary-font-family)',
+  color: 'var(--secondary-font-color)',
+  backgroundColor: 'var(--active-background-color)',
+});
+
 
 
 const TaskTable = ({
@@ -145,7 +163,7 @@ const TaskTable = ({
                 <StyledTableHeaders>Due Date</StyledTableHeaders>
                 <StyledTableHeaders>Priority</StyledTableHeaders>
                 <StyledTableHeaders>Status</StyledTableHeaders>
-                <StyledTableHeaders>Action</StyledTableHeaders>
+                <StyledTableHeadersA></StyledTableHeadersA>
               </TableRow>
             </TableHead>
             {skeletonLoader ? (
@@ -205,7 +223,7 @@ const TaskTable = ({
                         <StyledTableCell sx={{ textAlign: 'center', justifyContent: 'center',  color: handleStatusColorChange(task.status) }}>
                           {capitalizeFirstLetter(task.status)}
                         </StyledTableCell>
-                        <StyledTableCell sx={{ width: '1%' }}>
+                        <StyledAction sx={{ width: '1%' }}>
                           <Tooltip title="Options">
                             <IconButton size="small" onClick={(event) => handleMenuClick(event, task.id)}>
                               <MoreVertIcon />
@@ -220,7 +238,7 @@ const TaskTable = ({
                             <MenuItem onClick={handleChangeStatus}>Change Status</MenuItem>
                             <MenuItem onClick={handleComplete}>Complete</MenuItem>
                           </Menu>
-                        </StyledTableCell>
+                        </StyledAction>
                       </TableRow>
                     ))
                   ) : (
