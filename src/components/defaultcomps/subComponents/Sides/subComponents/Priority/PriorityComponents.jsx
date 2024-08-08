@@ -1,7 +1,8 @@
 import propTypes from 'prop-types';
 import { useResponsive } from 'src/constants/media_queries';
+import { useEffect} from 'react';
 
-function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
+function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked}){
 
     const {
         isAdaptableScreen,
@@ -12,10 +13,13 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
         isMicroScreen,
     } = useResponsive();
 
+    useEffect(() => {
+        console.log('burgerMenuClicked', burgerMenuClicked);
+      }, [burgerMenuClicked]);
     
     return (
         <div>
-        {expandBar ? (<div className='tasks-page-priority'>
+        {(expandBar && burgerMenuClicked) ? (<div className='tasks-page-priority'>
             <div>
                 <img src={Dot} alt='colored-dots' />
             </div>
@@ -32,10 +36,10 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel}){
     )
 };
 
-PriorityComponents.propTypes = {
-    Dot: propTypes.string.isRequired,
-    PriorityLevel: propTypes.string.isRequired,
-    TasksAtPriorityLevel: propTypes.string.isRequired
-}
+// PriorityComponents.propTypes = {
+//     Dot: propTypes.string.isRequired,
+//     PriorityLevel: propTypes.string.isRequired,
+//     TasksAtPriorityLevel: propTypes.string.isRequired
+// }
 
 export default PriorityComponents;

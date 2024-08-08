@@ -9,9 +9,10 @@ import { useDispatch } from 'react-redux';
 import { searchThunk } from "src/store/thunks/searchThunk";
 import cross from 'src/assets/cross.svg';
 import Logo from "src/components/defaultcomps/subComponents/UpperBar/subComponents/Logo";
+import appLogo from 'src/assets/Frame 3.svg';
 
 
-function UpperBar({ PageName, BellIcon }) {
+function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
 
     const {
         isBp6,
@@ -64,9 +65,12 @@ function UpperBar({ PageName, BellIcon }) {
     return (
             
            <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between'}}>
-           { !showSearchBar && (<div className='page-title'>
-                    <Logo />
-                    {PageName}
+           { !showSearchBar && (<div className='page-title' style={{ marginLeft: !isAdaptableScreen && '18px' }}>
+                    { isAdaptableScreen && (<Logo handleBurgerMenuClick={ handleBurgerMenuClick }/>)}
+                    <div>
+                        {/* <img src={appLogo} alt='app-logo' style={{height: '25px', width: '25px'}}/> */}
+                        Manageria
+                    </div>
                 </div>)}
                     {/* { !isAdaptableScreen && !showSearchBar ? (
                         <img 

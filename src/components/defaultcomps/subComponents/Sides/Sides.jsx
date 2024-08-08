@@ -5,7 +5,7 @@ import 'src/components/defaultcomps/subComponents/Sides/subComponents/sides.css'
 import { useState } from 'react';
 import { useResponsive } from 'src/constants/media_queries';
 
-function Sides({clickfunction}){
+function Sides({clickfunction, burgerMenuClicked }){
     const [hamburgerClicked, setHamburgerClicked] = useState(false);
 
     const {
@@ -17,9 +17,11 @@ function Sides({clickfunction}){
     } = useResponsive();
 
     return (
-        <div className='tasks-page-side' style={{width: expandBar ? '255px' : '50px' }}>
-            <Routes clickfunction = {clickfunction} />
-            <Priority />
+        <div>
+            { isAdaptableScreen && (<div className='tasks-page-side' style={{width: (expandBar && burgerMenuClicked) ? '255px' : '50px' }}>
+                <Routes clickfunction = {clickfunction} burgerMenuClicked={ burgerMenuClicked }/>
+                <Priority burgerMenuClicked={ burgerMenuClicked } />
+            </div>)}
         </div>
     )
 }

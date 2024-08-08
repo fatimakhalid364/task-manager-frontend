@@ -15,21 +15,15 @@ const FilterButton = ({ handleFilterOpen }) => {
         isBp8,
     } = useResponsive();
     return (
-        <a className='filter-button' onClick={ handleFilterOpen }
-        style={{
-            borderRadius: (onWholeScreen) && '50%',
-            height: (onWholeScreen) && '40px',
-            width: (onWholeScreen) && '40px',
-            position: (onWholeScreen) && 'absolute',
-            bottom: (onWholeScreen) && '20px',
-            left: (onWholeScreen) && '46%'
-        }}>
+        <div>
+            { !onWholeScreen && (<a className='filter-button' onClick={ handleFilterOpen }>
 
-            {onWholeScreen ? (<img src={filter} alt='filter-sign' className='filter-sign' />) : (
-                <div style={{ display: 'flex', gap: '6px' }}>
-                    <img src={filter} alt='filter-btn' className='filter-sign' /> <div style={{ fontSize: '16px' }}>Filter</div>
-                </div>)}
-        </a>
+                {onWholeScreen ? (<img src={filter} alt='filter-sign' className='filter-sign' />) : (
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                        <img src={filter} alt='filter-btn' className='filter-sign' /> <div style={{ fontSize: '16px' }}>Filter</div>
+                    </div>)}
+            </a>)}
+        </div>
     )
 }
 

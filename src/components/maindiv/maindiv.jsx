@@ -15,14 +15,18 @@ function MainDiv({ children }) {
     } = useResponsive();
     return (
 
-        <main className='changing-component-div' style={{ left: expandBar ? '257.4px' : '51px', width: expandBar ? '84vw' : '97vw' }}>
+        <main className='changing-component-div' style={{   left: expandBar ? '0' : '0', 
+                                                            width: expandBar ? '100vw' : '100vw',
+                                                            backgroundColor: onWholeScreen && 'var(--neutral-background-color)'
+                                                        }}>
             <DefaultComps />
 
             <div className='changing-component' style={{
-                width: (onWholeScreen) && '100%', 
+                width: (!expandBar && !onWholeScreen) ? '96%' : (onWholeScreen) ? '100%' : '81%', 
                 height: (onWholeScreen ) && '100%', 
                 marginTop: (onWholeScreen) && '0',
-                display: (onWholeScreen) && 'block',
+                marginLeft: expandBar ? '273px': (onWholeScreen && isAdaptableScreen) ? '55px' : !isAdaptableScreen ? '0px' : '60px',
+                display: (onWholeScreen && isAdaptableScreen) && 'block',
                 }}>
                 {children}
             </div>

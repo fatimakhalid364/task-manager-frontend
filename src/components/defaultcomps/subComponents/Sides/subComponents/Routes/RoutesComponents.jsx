@@ -4,7 +4,7 @@ import { useResponsive } from 'src/constants/media_queries';
 
 
 
-function RoutesComponents({ icon, route, page, clickfunction }){
+function RoutesComponents({ icon, route, page, clickfunction, burgerMenuClicked={ burgerMenuClicked } }){
     const {
         isAdaptableScreen,
         expandBar,
@@ -19,10 +19,10 @@ function RoutesComponents({ icon, route, page, clickfunction }){
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
-        marginLeft: !expandBar ? '0' : '9%' ,
+        marginLeft: (!expandBar || !burgerMenuClicked) ? '0' : '9%' ,
         gap: '12px',
         padding: '8px 12px',
-        paddingRight: !expandBar && '40px',
+        paddingRight: (!expandBar || !burgerMenuClicked) && '40px',
         marginBottom: '12px',
         width: '80%',
         fontFamily: 'var(--primary-font-family)',
@@ -34,10 +34,10 @@ function RoutesComponents({ icon, route, page, clickfunction }){
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
-        marginLeft: !expandBar ? '0' : '9%' ,
+        marginLeft: (!expandBar || !burgerMenuClicked) ? '0' : '9%' ,
         gap: '12px',
         padding: '8px 12px',
-        paddingRight: !expandBar && '40px',
+        paddingRight: (!expandBar || !burgerMenuClicked) && '40px',
         marginBottom: '12px',
         width: '80%',
         color: 'var( --quaternary-font-color)',
@@ -55,7 +55,7 @@ function RoutesComponents({ icon, route, page, clickfunction }){
                 to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
             >
-                { expandBar ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
+                { (expandBar && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img src={icon} alt='route-icon' />
                 </div>

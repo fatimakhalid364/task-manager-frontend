@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FilterButton from "src/components/Filter/FilterButton";
 import MainDiv from "src/components/maindiv/maindiv";
+import Sides from 'src/components/defaultcomps/subComponents/Sides/Sides'
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
@@ -13,6 +14,7 @@ import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
 import PageHeader from 'src/components/PageHeader';
 import FilterDialog from 'src/components//Filter/FilterDialog';
+import BottomButtons from "src/components/BottomButtons";
 
 function Tasks() {
     const [open, setOpen] = useState(false);
@@ -30,7 +32,7 @@ function Tasks() {
     const handleFilterClose = () => setFilterOpen(false);
   
 
-    const getAllTasks = async (page, limit) => {
+    const getAllTasks = async (page=0, limit=5) => {
         try {
             setSkeletonLoader(true);
             const params = { page, limit, search }
@@ -78,6 +80,7 @@ function Tasks() {
                         <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
+                <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
             </MainDiv>
         </div>
     );

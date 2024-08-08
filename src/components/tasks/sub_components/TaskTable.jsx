@@ -202,20 +202,8 @@ const TaskTable = ({
                         <StyledTableCell sx={{ textAlign: 'center', color: handlePriorityColorChange(task.priority) }}>
                           {capitalizeFirstLetter(task.priority)}
                         </StyledTableCell>
-                        <StyledTableCell sx={{ color: 'var(--quinary-font-color)', textAlign: 'center', justifyContent: 'center' }}>
-                          <div style={{
-                            border: `1px solid ${handleStatusColorChange(task.status)}`,
-                            borderRadius: '30px',
-                            width: '120px',
-                            padding: '4px',
-                            textAlign: 'center',
-                            color: `${handleStatusColorChange(task.status)}`,
-                            marginLeft: '25px'
-                          }}>
-                            <span style={{ color: handleStatusColorChange(task.status), textTransform: 'capitalize', textAlign: 'center' }}>
-                              {capitalizeFirstLetter(task.status)}
-                            </span>
-                          </div>
+                        <StyledTableCell sx={{ textAlign: 'center', justifyContent: 'center',  color: handleStatusColorChange(task.status) }}>
+                          {capitalizeFirstLetter(task.status)}
                         </StyledTableCell>
                         <StyledTableCell sx={{ width: '1%' }}>
                           <Tooltip title="Options">

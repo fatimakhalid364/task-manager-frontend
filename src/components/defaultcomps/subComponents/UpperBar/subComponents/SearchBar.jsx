@@ -16,6 +16,7 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
         isSmallerScreen,
         isMobileScreen,
         isMicroScreen,
+        expandBar,
     } = useResponsive();
 
     const [searchInput, setSearchInput] = useState('');
@@ -47,7 +48,7 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
 
     return (
         <div>
-        { isAdaptableScreen && (<div className='search-bar-div'>
+        { isAdaptableScreen && (<div className='search-bar-div' style={{ marginLeft: !expandBar && '16rem'}}>
             <SpinnerLoader showSpinner={spinner} />
            <div className='search-bar'>
                 <form>

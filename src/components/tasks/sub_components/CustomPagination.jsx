@@ -13,7 +13,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
-            {/* <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Typography >Tasks per page</Typography>
                 <FormControl variant="outlined" size="small">
                     <Select
@@ -29,7 +29,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                         <MenuItem value={999}>All</MenuItem>
                     </Select>
                 </FormControl>
-            </div> */}
+            </div> 
             <div className='pagination-text-div'>
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
