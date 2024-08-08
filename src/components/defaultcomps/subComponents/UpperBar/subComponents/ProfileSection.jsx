@@ -87,7 +87,7 @@ function ProfileSection() {
                     )}
                 </div>
 
-            </div>) : (<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '8px' }} onClick={toggleProfile}>
+            </div>) : (<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }} onClick={toggleProfile}>
                 <img style={{ borderRadius: '50px', border: '1px solid #3B8AFF', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
                     {isProfileOpen && (
                         <div className='logout-button' style={{ bottom: 0 }}>

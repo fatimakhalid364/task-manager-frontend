@@ -8,10 +8,10 @@ import plus from 'src/assets/plus.svg';
 
 function PageHeader({ handleOpen, total, text, object, filterDiv}){
     // const [metaData, setMetaData] = useState([]);
-    // const specificValue = useSelector(state => state.getAllTasks?.taskDetails);
-    // useEffect(() => {
-    //     console.log('Task Details:', specificValue);
-    //   }, []);
+    const specificValue = useSelector(state => state);
+    useEffect(() => {
+        console.log('state:', specificValue);
+    }, []);
 
     const {
         isBp2,

@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
 import { searchThunk } from "src/store/thunks/searchThunk";
 import cross from 'src/assets/cross.svg';
+import Logo from "src/components/defaultcomps/subComponents/UpperBar/subComponents/Logo";
 
 
 function UpperBar({ PageName, BellIcon }) {
@@ -62,8 +63,9 @@ function UpperBar({ PageName, BellIcon }) {
 
     return (
             
-           <div className='upper-bar-div' style={{left: expandBar ? '257px' : '51px', justifyContent: !isAdaptableScreen && 'space-between', width: !isAdaptableScreen && '99vw'}}>
+           <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between'}}>
            { !showSearchBar && (<div className='page-title'>
+                    <Logo />
                     {PageName}
                 </div>)}
                     {/* { !isAdaptableScreen && !showSearchBar ? (
@@ -91,11 +93,11 @@ function UpperBar({ PageName, BellIcon }) {
                         { !showSearchBar && (
             <div style={{
                 display: 'flex', 
-                marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5) ? 'calc(100vw - 57vw)' : 
-                            isBp6 ? 'calc(100vw - 59vw)': 
-                            isBp7 ? 'calc(100vw - 61vw)': 
-                            isBp8 ? 'calc(100vw - 63vw)' : 'calc(100vw - 66vw)', 
-                marginRight: !isAdaptableScreen && '100px',
+                marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5) ? 'calc(100vw - 54vw)' : 
+                            isBp6 ? 'calc(100vw - 54vw)': 
+                            isBp7 ? 'calc(100vw - 55vw)': 
+                            isBp8 ? 'calc(100vw - 56vw)' : 'calc(100vw - 48vw)', 
+                marginRight: !isAdaptableScreen && '40px',
                 width: !isAdaptableScreen && '100px',
                }}>
                 {!isAdaptableScreen && (
@@ -107,7 +109,7 @@ function UpperBar({ PageName, BellIcon }) {
                     style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
                 />
             )}
-                <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '30px', marginTop: !isAdaptableScreen && '6px'}}>
+                <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '20px', marginTop: !isAdaptableScreen && '11px'}}>
                     <img src={BellIcon} alt='bell-icon' />
                 </div>
                 <ProfileSection />

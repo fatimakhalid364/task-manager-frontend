@@ -1,13 +1,22 @@
 .upper-bar-div {
     display: flex;
     align-items: center;
-    width: auto; 
+    width: 100vw; 
     position: fixed;
     top: 0;
     box-shadow: 1px 1px 4px 0px rgba(16, 24, 40, 0.1);
     background-color: var(--neutral-background-color);
-    left: 257px;   
-    height: 8%
+    left: 0;   
+    height: 55px;
+}
+
+.page-logo-div {
+    height: 100%;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    background-color: var(--neutral-background-color);
+    border: 1px solid black;
 }
 
 .upper-bar-search {
@@ -75,11 +84,14 @@
 .page-title {
     font-size: 20px;
     font-family: var(--primary-font-family);
-    margin-left: 15px;
-    margin-top: 1px;
+    margin-left: 16px;
+    gap: 10px;
     color: var(--secondary-font-color);
     width: 107px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 

@@ -4,9 +4,14 @@ import PageHeader from 'src/components/PageHeader';
 import 'src/components/notes/Notes.css';
 import FilterButton from "src/components/Filter/FilterButton";
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 
 
 const Notes = () => {
+    
+
+
     const notesArray = [
         {
             title: "Web Design Project",
@@ -16,6 +21,7 @@ const Notes = () => {
             date: new Date(),
             pinned: true,
             hide: false,
+            id: 1
            
         },
         {
@@ -26,6 +32,7 @@ const Notes = () => {
             pinned: true,
             hide: false,
             tag: 'Design',
+            id: 2
         },
         {
             title: "Object 3",
@@ -34,7 +41,8 @@ const Notes = () => {
             date: new Date(),
             pinned: true,
             hide: false,
-            tag: 'Design',      
+            tag: 'Design',
+            id: 3    
         },
         {
             title: "Object 4",
@@ -43,7 +51,8 @@ const Notes = () => {
             date: new Date(),
             pinned: true,
             hide: false,
-            tag: 'Design',      
+            tag: 'Design', 
+            id: 4    
         },
         {
             title: "Object 5",
@@ -52,7 +61,8 @@ const Notes = () => {
             date: new Date(),
             pinned: true,
             hide: false,
-            tag: 'Design',      
+            tag: 'Design',
+            id: 5     
         },
         {
             title: "Object 6",
@@ -61,7 +71,8 @@ const Notes = () => {
             date: new Date(),
             pinned: true,
             hide: false,
-            tag: 'Design',      
+            tag: 'Design', 
+            id: 6    
         },
     ];
 
@@ -123,7 +134,7 @@ const Notes = () => {
                                 date={note.date}
                                 pinned={note.pinned}
                                 hide={note.hide}
-                    
+                                id={note.id}
                                 tag={note.tag}
                             />
                         ))}

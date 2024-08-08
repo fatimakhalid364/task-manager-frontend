@@ -4,13 +4,27 @@ import pin from 'src/assets/pin.svg';
 import visibility from 'src/assets/eye.svg';
 import trash from 'src/assets/trash.svg';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
-const NoteCard = ({ title, desc, links, date, hide, tag}) => {
+const NoteCard = ({ title, desc, links, date, hide, tag, id}) => {
     const [pinned, setPinned] = useState(false);
+    const [pinnedNotes, setPinnedNotes] = useState([]);
 
     const handlePinnedClick = () => {
         setPinned(prevValue=> !prevValue);
     }
+
+    useEffect(() => {
+        if (pinned) {
+            setPinnedNotes(prevNotes => [...prevNotes, id]);
+            console.log(pinnedNotes);
+        } //else {
+        //     setPinnedNotes(prevNotes => prevNotes.filter(noteId => noteId !== id));
+        //     console.log(pinnedNotes);
+        // }
+       
+    }, [pinned, id]);
+
     return (
         <div className='note-card-div' style={{borderBottom: pinned && '4px solid var(--primary-background-color)' }}>
             <div className='note-card'>

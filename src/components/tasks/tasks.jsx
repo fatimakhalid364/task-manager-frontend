@@ -30,7 +30,7 @@ function Tasks() {
     const handleFilterClose = () => setFilterOpen(false);
   
 
-    const getAllTasks = async (page = 0, limit = 5) => {
+    const getAllTasks = async (page, limit) => {
         try {
             setSkeletonLoader(true);
             const params = { page, limit, search }
