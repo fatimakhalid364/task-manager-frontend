@@ -1,10 +1,9 @@
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BellIcon from 'src/assets/bell.svg';
 import Sides from "src/components/defaultcomps/subComponents/Sides/Sides";
 import UpperBar from 'src/components/defaultcomps/subComponents/UpperBar/upperbar';
 import { useResponsive } from 'src/constants/media_queries';
-import { useState } from 'react';
-import {useEffect} from 'react';
 
 
 
@@ -14,7 +13,7 @@ function DefaultComps(){
 
     const [searchParams] = useSearchParams();
     const title = searchParams.get('page');
-    const [burgerMenuClicked, setBurgerMenuClicked] = useState(true);
+    const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
     const handleBurgerMenuClick = () => {
         setBurgerMenuClicked(prevValue => !prevValue);
     }
