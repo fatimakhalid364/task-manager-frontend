@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'src/components/LoadingScreens/CSSLoader';
+import { errorToast } from 'src/components/toasters/toast.js';
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
 import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
@@ -37,7 +38,8 @@ export const AuthProvider = ({ children }) => {
                 dispatch(setUser(decryptedUser));
             }
         } catch (error) {
-            console.log('Something went wrong');
+            console.log('Something went wrong', error);
+            errorToast(error.message, 'authentication-pages-error');
         } finally {
             setIsLoading(false);
         }
