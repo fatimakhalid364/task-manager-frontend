@@ -21,17 +21,6 @@ function BottomBar({ handleDoubleArrowClicked, doubleArrowClicked }) {
             <BottomBarComponents icon={SettingsIcon} route='/settings?page=Settings'   />
             <Outlet />
         </div>
-        <div>
-            { !doubleArrowClicked ? (< KeyboardDoubleArrowRightOutlinedIcon sx={{color: 'var(--tertiary-font-color)', marginTop: '7px', cursor: 'pointer'}} 
-            className='double-arrow'
-            onClick={ handleDoubleArrowClicked }/>) : (
-                <div style={{display: 'flex', gap:'15px'}}>
-                <KeyboardDoubleArrowLeftOutlinedIcon sx={{color: 'var(--tertiary-font-color)', marginTop: '3px', cursor: 'pointer'}} 
-                    onClick={ handleDoubleArrowClicked }
-                    className='double-arrow'/>
-                <BottomButtons />
-                </div>)}
-        </div>
         </div>
     )
 }

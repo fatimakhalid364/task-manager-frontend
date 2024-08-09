@@ -83,8 +83,8 @@ function Tasks() {
                         <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
-                <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen } doubleArrowClicked={ doubleArrowClicked}/>
-                { !isAdaptableScreen && <BottomBar handleDoubleArrowClicked = { handleDoubleArrowClicked } doubleArrowClicked={ doubleArrowClicked } />}
+                <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
+                { !isAdaptableScreen && <BottomBar  />}
             </MainDiv>
             
         </div>

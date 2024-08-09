@@ -179,8 +179,8 @@ const Notes = () => {
                     </div >
 
                 </div>
-                <BottomButtons doubleArrowClicked={ doubleArrowClicked} />
-                { !isAdaptableScreen && <BottomBar handleDoubleArrowClicked = { handleDoubleArrowClicked } doubleArrowClicked={ doubleArrowClicked } />}
+                <BottomButtons  />
+                { !isAdaptableScreen && <BottomBar  />}
             </MainDiv>
         </>
     );

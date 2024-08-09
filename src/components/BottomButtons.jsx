@@ -12,14 +12,13 @@ const BottomButtons= ({ handleOpen, handleFilterOpen, doubleArrowClicked}) => {
 
     return (
         <div>
-        {(onWholeScreen) && (
+        {(onWholeScreen && isAdaptableScreen) && (
             <div style={{display: 'flex', 
                 position: 'absolute',
                 height: '40px',
-                bottom: ( !isAdaptableScreen && doubleArrowClicked) ? '7px' :'1px',
-                left: ( !isAdaptableScreen && doubleArrowClicked) ? '67%' : '46%',
+                bottom: '1px',
+                left: '46%',
                 gap: '10px',
-                zIndex: (!isAdaptableScreen && !doubleArrowClicked) ? '-1' : '1'
                
                 }}>
                 <a className='primary-button' onClick={handleOpen} style={{
