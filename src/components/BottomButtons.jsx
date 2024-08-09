@@ -4,25 +4,28 @@ import filter from 'src/assets/filter.svg';
 
 const BottomButtons= ({ handleOpen, handleFilterOpen}) => {
     const {
-        onWholeScreen
+        onWholeScreen,
+        isAdaptableScreen
 
     } = useResponsive();
 
 
     return (
         <div>
-        {onWholeScreen && (
+        {(onWholeScreen && isAdaptableScreen) && (
             <div style={{display: 'flex', 
                 position: 'absolute',
                 height: '40px',
-                bottom: '20px',
+                bottom: '1px',
                 left: '46%',
-                gap: '10px'}}>
+                gap: '10px',
+               
+                }}>
                 <a className='primary-button' onClick={handleOpen} style={{
                     borderRadius: '50%',
                     height: '40px',
                     width: '40px',
-                   
+                    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                  
                    }}>
 
@@ -33,6 +36,7 @@ const BottomButtons= ({ handleOpen, handleFilterOpen}) => {
             borderRadius: '50%',
             height: '40px',
             width: '40px',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
           
            
         }}>

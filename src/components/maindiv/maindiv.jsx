@@ -5,6 +5,8 @@ import Sides from "src/components/defaultcomps/subComponents/Sides/Sides";
 import UpperBar from "src/components/defaultcomps/subComponents/UpperBar/upperbar";
 import "src/components/maindiv/main_div.css";
 import { useResponsive } from "src/constants/media_queries";
+import BottomBar from 'src/components/BottomBar/BottomBar';
+
 
 function MainDiv({ children }) {
     const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
@@ -52,14 +54,15 @@ function MainDiv({ children }) {
                 <div
                     className='changing-component'
                     style={{
-                        marginLeft: burgerMenuClicked ? '270px' : '65px',
-                        width: burgerMenuClicked ? 'calc(100% - 300px)' : 'calc(100% - 65px)',
-                        // height: onWholeScreen && "100%",
-                        marginTop: onWholeScreen && "0",
-                        display: onWholeScreen && isAdaptableScreen && "block",
-                        overflowX: 'hidden',
+                        width: (!expandBar && !onWholeScreen) || ( expandBar && !burgerMenuClicked) ? '96%' : (onWholeScreen) ? '100%' :  '81%', 
+                        height: (onWholeScreen ) && '100%', 
+                        marginTop: (onWholeScreen) && '0',
+                        marginLeft: (expandBar && burgerMenuClicked) ? '273px': (onWholeScreen && isAdaptableScreen) ? '55px' : !isAdaptableScreen ? '0px' : '60px',
+                        display: (onWholeScreen && isAdaptableScreen) && 'block',
                     }}
                 >
+                { !isAdaptableScreen && <BottomBar />}
+               
                     {children}
                 </div>
             </div>

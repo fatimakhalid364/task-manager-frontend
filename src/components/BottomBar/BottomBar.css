@@ -1,0 +1,20 @@
+.navigation-icon-div {
+    display: flex;
+    gap: 20px;
+    position: fixed;
+    bottom: 5px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    height: 50px;
+    align-items: center;
+    background-color: var(--neutral-background-color);
+    border-radius: 10px;
+}
+
+.navigation-icon-div[draggable="true"] {
+    cursor: move;
+}
+
+.navigation-icon:hover {
+    border-bottom: 2px solid var(--primary-background-color);
+    border-radius: 10px;
+}
