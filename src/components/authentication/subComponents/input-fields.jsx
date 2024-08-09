@@ -13,6 +13,7 @@ import { forgotPassThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import { useAuth } from '../../../contexts/AuthContext.jsx';
+import './authentication.css';
 import SubmitButton from './submit-button.jsx';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({

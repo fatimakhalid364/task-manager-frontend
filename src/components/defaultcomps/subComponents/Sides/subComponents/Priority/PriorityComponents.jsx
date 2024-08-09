@@ -1,17 +1,14 @@
 import propTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useResponsive } from 'src/constants/media_queries';
-import { useEffect} from 'react';
 
 function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked}){
 
     const {
-        isAdaptableScreen,
         expandBar,
-        isBp1,
-        isSmallerScreen,
-        isMobileScreen,
-        isMicroScreen,
     } = useResponsive();
+
+    const priorityColor = PriorityLevel === 'High' ? '#EF4444' : PriorityLevel === 'Medium' ? '#F59E0B' : '#1FDE43'
 
     useEffect(() => {
         console.log('burgerMenuClicked', burgerMenuClicked);
@@ -30,12 +27,12 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
             <div className='tasks-page-number'>
                 {TasksAtPriorityLevel}
             </div>
-        </div>) : (<div className='tasks-page-number' style={{marginLeft: '13px', position: 'relative', marginBottom: '12px'}}>
+            </div>) : (<div className='tasks-page-number' style={{ marginLeft: '13px', position: 'relative', marginBottom: '12px', backgroundColor: `${priorityColor}` }}>
                 {TasksAtPriorityLevel}
             </div>)}
         </div>
     )
-};
+}
 
 PriorityComponents.propTypes = {
     Dot: propTypes.string.isRequired,
