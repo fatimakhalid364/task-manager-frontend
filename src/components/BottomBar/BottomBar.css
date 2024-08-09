@@ -1,8 +1,8 @@
 .navigation-icon-div {
     display: flex;
     gap: 20px;
-    position: fixed;
-    bottom: 5px;
+   
+   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     height: 50px;
     align-items: center;
@@ -17,4 +17,15 @@
 .navigation-icon:hover {
     border-bottom: 2px solid var(--primary-background-color);
     border-radius: 10px;
+}
+
+.bottom-bar-div {
+    display: flex;
+    position: fixed;
+    bottom: 5px;
+    align-items: center;
+}
+
+.double-arrow:hover {
+    font-size: 30px;
 }

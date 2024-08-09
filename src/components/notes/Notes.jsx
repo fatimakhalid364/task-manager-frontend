@@ -7,11 +7,28 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 import BottomButtons from "src/components/BottomButtons";
+import BottomBar from 'src/components/BottomBar/BottomBar';
+import { useResponsive } from 'src/constants/media_queries';
+
 
 
 const Notes = () => {
     
 
+    const {
+        isBp2,
+        isBp3,
+        isBp4,
+        isBp5,
+        isBp7,
+        isAdaptableScreen,
+        onWholeScreen,
+        isBp6,
+        isBp8,
+    } = useResponsive();
+
+    const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
+    const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
 
     const notesArray = [
         {
@@ -162,7 +179,8 @@ const Notes = () => {
                     </div >
 
                 </div>
-                <BottomButtons />
+                <BottomButtons doubleArrowClicked={ doubleArrowClicked} />
+                { !isAdaptableScreen && <BottomBar handleDoubleArrowClicked = { handleDoubleArrowClicked } doubleArrowClicked={ doubleArrowClicked } />}
             </MainDiv>
         </>
     );

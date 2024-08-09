@@ -5,7 +5,7 @@ import Sides from "src/components/defaultcomps/subComponents/Sides/Sides";
 import UpperBar from "src/components/defaultcomps/subComponents/UpperBar/upperbar";
 import "src/components/maindiv/main_div.css";
 import { useResponsive } from "src/constants/media_queries";
-import BottomBar from 'src/components/BottomBar/BottomBar';
+
 
 
 function MainDiv({ children }) {
@@ -61,7 +61,7 @@ function MainDiv({ children }) {
                         display: (onWholeScreen && isAdaptableScreen) && 'block',
                     }}
                 >
-                { !isAdaptableScreen && <BottomBar />}
+             
                
                     {children}
                 </div>

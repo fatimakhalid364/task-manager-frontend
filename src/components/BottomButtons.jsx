@@ -2,7 +2,7 @@ import { useResponsive } from 'src/constants/media_queries';
 import plus from 'src/assets/plus.svg';
 import filter from 'src/assets/filter.svg';
 
-const BottomButtons= ({ handleOpen, handleFilterOpen}) => {
+const BottomButtons= ({ handleOpen, handleFilterOpen, doubleArrowClicked}) => {
     const {
         onWholeScreen,
         isAdaptableScreen
@@ -12,13 +12,14 @@ const BottomButtons= ({ handleOpen, handleFilterOpen}) => {
 
     return (
         <div>
-        {(onWholeScreen && isAdaptableScreen) && (
+        {(onWholeScreen) && (
             <div style={{display: 'flex', 
                 position: 'absolute',
                 height: '40px',
-                bottom: '1px',
-                left: '46%',
+                bottom: ( !isAdaptableScreen && doubleArrowClicked) ? '7px' :'1px',
+                left: ( !isAdaptableScreen && doubleArrowClicked) ? '67%' : '46%',
                 gap: '10px',
+                zIndex: (!isAdaptableScreen && !doubleArrowClicked) ? '-1' : '1'
                
                 }}>
                 <a className='primary-button' onClick={handleOpen} style={{

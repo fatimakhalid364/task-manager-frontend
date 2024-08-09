@@ -14,6 +14,7 @@ import TaskTable from './sub_components/TaskTable';
 import PageHeader from 'src/components/PageHeader';
 import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomButtons from "src/components/BottomButtons";
+import BottomBar from 'src/components/BottomBar/BottomBar';
 
 
 function Tasks() {
@@ -30,6 +31,8 @@ function Tasks() {
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
     const handleFilterClose = () => setFilterOpen(false);
+    const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
+    const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
   
 
     const getAllTasks = async (page=0, limit=5) => {
@@ -80,7 +83,8 @@ function Tasks() {
                         <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
-                <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
+                <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen } doubleArrowClicked={ doubleArrowClicked}/>
+                { !isAdaptableScreen && <BottomBar handleDoubleArrowClicked = { handleDoubleArrowClicked } doubleArrowClicked={ doubleArrowClicked } />}
             </MainDiv>
             
         </div>
