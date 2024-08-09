@@ -26,10 +26,82 @@ const MyComponent = styled('div')({
     opacity: '1',
     padding: '15px',
 });
-const CssTextField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
+const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
     '& .MuiInputBase-input': {
         border: 'none',
     },
+    '& .MuiOutlinedInput-root': {
+
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+        height: '40px',
+        borderRadius: '8px',
+        padding: '4px',
+        '& input': {
+            padding: '4px',
+        },
+    },
+}));
+const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
+    '& .MuiInputBase-root': {
+        borderRadius: '8px',
+
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+    '& .MuiInputBase-input': {
+        border: 'none',
+    },
+    borderRadius: '8px',
+
+}));
+
+const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
+    '& .MuiSelect-select': {
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+    '& .MuiOutlinedInput-root': {
+
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+        height: '40px',
+        borderRadius: '8px',
+        padding: '4px',
+        '& input': {
+            padding: '4px',
+        },
+    },
+    borderRadius: '8px',
+
 }));
 
 const AddTask = ({ open, handleClose, getAllTasks }) => {
@@ -121,16 +193,17 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                     <div className='add-task-details-div'>
                         <form className='add-task-details'>
                             <div className='add-task-input-title'>Task Title</div>
-                            <TextField
+                            <CssInputField
+                                sx={{ height: '40px' }}
                                 fullWidth
-                                variant="outlined"
+                                // variant="outlined"
                                 value={taskDetails.taskTitle}
                                 name='taskTitle'
                                 onChange={handleInputChange}
                             />
                             <div className='add-task-input-title'>Due Date</div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <CssTextField
+                                <CssDateField
                                     value={taskDetails.dueDate}
                                     onChange={handleDateChange}
                                     slotProps={{ textField: { fullWidth: true } }}
@@ -138,7 +211,16 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                             </LocalizationProvider>
                             <div className='add-task-input-title'>Priority</div>
                             <FormControl fullWidth>
-                                <Select
+                                <CssSelectField
+                                    sx={{
+                                        height: '40px',
+                                        "&:hover": {
+                                            "&& fieldset": {
+                                                border: `1px solid #3B8AFF`,
+
+                                            }
+                                        }
+                                    }}
                                     value={taskDetails.priority}
                                     name='priority'
                                     onChange={handleInputChange}
@@ -146,11 +228,20 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                     <MenuItem value="HIGH">High</MenuItem>
                                     <MenuItem value="MEDIUM">Medium</MenuItem>
                                     <MenuItem value="LOW">Low</MenuItem>
-                                </Select>
+                                </CssSelectField>
                             </FormControl>
                             <div className='add-task-input-title'>Status</div>
                             <FormControl fullWidth>
-                                <Select
+                                <CssSelectField
+                                    sx={{
+                                        height: '40px',
+                                        "&:hover": {
+                                            "&& fieldset": {
+                                                border: `1px solid #3B8AFF`,
+
+                                            }
+                                        }
+                                    }}
                                     value={taskDetails.status}
                                     name='status'
                                     onChange={handleInputChange}
@@ -159,28 +250,32 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                     <MenuItem value="IN_PROGRESS">In Progress</MenuItem>
                                     <MenuItem value="COMPLETED">Completed</MenuItem>
                                     <MenuItem value="PENDING">Pending</MenuItem>
-                                </Select>
+                                </CssSelectField>
                             </FormControl>
                             <div className='add-task-input-title'>Task Description</div>
                             <TextareaAutosize
-                                minRows={4}
+                                minRows={7}
                                 p={2}
                                 style={{ width: '100%' }}
                                 value={taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
                             />
-                            <Box display="flex" justifyContent="space-between" mt={2}>
+                            <Box display="flex" justifyContent="right" mt={2}>
                                 <Button
-                                    variant="contained"
+                                    variant="outlined"
                                     onClick={handleClose}
-                                    color={'secondary'}
+                                    sx={{ color: '#D1D5DB', border: '1px solid #D1D5DB', width: '95px', height: '40px', borderRadius: '28px', marginRight: '10px' }}
                                 >
                                     Cancel
                                 </Button>
                                 <Button
+                                    size="small"
                                     variant="contained"
                                     onClick={handleCreateClick}
+                                    sx={{
+                                        borderRadius: '28px', padding: '8px 24px 8px 24px', textSizeAdjust: '14px', width: '126px', fontSize: '11px'
+                                    }}
                                 >
                                     Create Task
                                 </Button>
