@@ -2,7 +2,7 @@ import { useResponsive } from 'src/constants/media_queries';
 import plus from 'src/assets/plus.svg';
 import filter from 'src/assets/filter.svg';
 
-const BottomButtons= ({ handleOpen, handleFilterOpen}) => {
+const BottomButtons= ({ handleOpen, handleFilterOpen, doubleArrowClicked}) => {
     const {
         onWholeScreen,
         isAdaptableScreen
