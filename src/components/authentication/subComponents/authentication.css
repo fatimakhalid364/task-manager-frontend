@@ -88,6 +88,7 @@
     font-family: var(--secondary-font-family);
     font-size: var(--secondary-font-size);
     width: 100%;
+    margin-top: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,7 +105,7 @@
     align-items: center;
     flex-direction: column;
     gap: 5px;
-    margin-top: 25px;
+    margin-top: 16px;
 }
 
 .google-sso-button{
@@ -158,10 +159,14 @@
 .forgot-password-text{
     font-size: var(--secondary-font-size);
     font-family: var(--secondary-font-family);
-    margin-left: 28%;
+    text-align: center;
 }
 
-.forgot-password-text > a {
+/* .forgot-password-text > a {
+    color: var(--primary-background-color);
+    text-decoration: none;
+} */
+a {
     color: var(--primary-background-color);
     text-decoration: none;
 }

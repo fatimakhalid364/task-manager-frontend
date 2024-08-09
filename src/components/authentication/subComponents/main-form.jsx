@@ -13,7 +13,7 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
     return (
         <div>
             <BackToSite />
-            <Grid container spacing={5}>
+            <Grid container spacing={2}>
                 
                 <Grid item xs={12}>
                     <div className='main-form-header'>

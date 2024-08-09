@@ -37,10 +37,10 @@ function SubmitButton({ currentScreen, handleSubmit, disabled, isLoading }) {
                 </Box>
             </Box>
             <div className='prompt-to-signin'>
-                {getRoutingStatement(currentScreen)}
-                <a href={`${baseURL}/authentication/${page}`}>
+                <span>{getRoutingStatement(currentScreen)}</span><span style={{ marginLeft: '4px' }}><a style={{ textDecoration: 'none' }} href={`${baseURL}/authentication/${page}`}>
                     {getRoutingText(currentScreen)}
-                </a>
+                </a></span>
+
             </div>
         </div>
     );

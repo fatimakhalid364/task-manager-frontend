@@ -36,9 +36,9 @@ const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => 
         width: '494px',
         height: '40px',
         borderRadius: '8px',
-        padding: '10px', 
+        padding: '4px', 
         '& input': {
-            padding: '10px',
+            padding: '4px',
         },
         '& input::placeholder': {
             fontFamily: 'DM Sans',
@@ -210,8 +210,8 @@ function InputFields({ currentScreen }) {
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SIGNIN) && (
-    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: currentScreen === Screen.SIGNUP ? 'center' : null }}>
-        <div className='checkbox' style={{marginLeft: currentScreen === Screen.SIGNIN ? '25.6%' : null}}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: currentScreen === Screen.SIGNUP ? 'center' : 'center' }}>
+                        <div className='checkbox' >
             {currentScreen === Screen.SIGNUP ? (
                 <>
                     <input
