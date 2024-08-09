@@ -27,7 +27,7 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
             <div className='tasks-page-number'>
                 {TasksAtPriorityLevel}
             </div>
-            </div>) : (<div className='tasks-page-number' style={{ marginLeft: '13px', position: 'relative', marginBottom: '12px', backgroundColor: `${priorityColor}` }}>
+            </div>) : (<div className='tasks-page-number' style={{ marginLeft: '13px', position: 'relative', marginBottom: '12px', color: `${priorityColor}`, backgroundColor: 'var(--neutral-background-color)', fontSize: '14px' }}>
                 {TasksAtPriorityLevel}
             </div>)}
         </div>
