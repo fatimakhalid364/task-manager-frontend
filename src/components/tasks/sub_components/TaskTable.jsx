@@ -40,7 +40,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableHeadersLeft = styled(TableCell)(({ theme }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  textAlign: 'left',
+  textAlign: 'center',
   whiteSpace: 'nowrap',
   maxWidth: calculateCellWidth(),
   color: 'var(--secondary-font-color)',
