@@ -6,6 +6,7 @@ import FilterButton from "src/components/Filter/FilterButton";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
+import BottomButtons from "src/components/BottomButtons";
 
 
 const Notes = () => {
@@ -74,6 +75,26 @@ const Notes = () => {
             tag: 'Design', 
             id: 6    
         },
+        {
+            title: "Object 7",
+            desc: "Description for object 7",
+            links: ["link1", "link2"],
+            date: new Date(),
+            pinned: true,
+            hide: false,
+            tag: 'Design', 
+            id: 7    
+        },
+        {
+            title: "Object 8",
+            desc: "Description for object 8",
+            links: ["link1", "link2"],
+            date: new Date(),
+            pinned: true,
+            hide: false,
+            tag: 'Design', 
+            id: 8   
+        },
     ];
 
     
@@ -141,7 +162,7 @@ const Notes = () => {
                     </div >
 
                 </div>
-                
+                <BottomButtons />
             </MainDiv>
         </>
     );

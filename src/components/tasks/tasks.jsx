@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FilterButton from "src/components/Filter/FilterButton";
 import MainDiv from "src/components/maindiv/maindiv";
-import Sides from 'src/components/defaultcomps/subComponents/Sides/Sides'
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
@@ -15,6 +14,7 @@ import TaskTable from './sub_components/TaskTable';
 import PageHeader from 'src/components/PageHeader';
 import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomButtons from "src/components/BottomButtons";
+
 
 function Tasks() {
     const [open, setOpen] = useState(false);
@@ -82,6 +82,7 @@ function Tasks() {
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
             </MainDiv>
+            
         </div>
     );
 }
