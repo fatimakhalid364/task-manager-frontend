@@ -41,7 +41,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
     };
 
     return (
-        <div className='note-card-div' style={{ borderBottom: pinned ? '4px solid var(--primary-background-color)' : undefined }}>
+        <div className='note-card-div' style={{ borderBottom: pinned === 'PINNED' ? '4px solid var(--primary-background-color)' : undefined }}>
             <div className='note-card'>
                 <div className='note-title'>{title}</div>
                 <div className='note-description'>{desc}</div>
@@ -72,7 +72,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
                         {date.toLocaleDateString()}
                     </div>
                     <div className='note-icons-div'>
-                        <div className='note-icons' onClick={handlePinnedClick} style={{ backgroundColor: pinned ? 'var(--active-background-color)' : undefined }}>
+                        <div className='note-icons' onClick={handlePinnedClick} style={{ backgroundColor: pinned === 'PINNED' ? 'var(--active-background-color)' : undefined }}>
                             <img src={pin} alt='pin-icon' />
                         </div>
                         <div className='note-icons'>
