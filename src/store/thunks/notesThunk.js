@@ -4,7 +4,7 @@ import { APIS } from "../axiosConfig";
 
 const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
-    const { page, limit, search } = params
+    const { page, limit, search, pinned } = params
     try {
         const response = await APIS.get(`/notes`, {
             params: {

@@ -1,36 +1,34 @@
-import MainDiv from "src/components/maindiv/maindiv";
-import NoteCard from "./sub_components/NoteCard";
-import PageHeader from 'src/components/PageHeader';
-import 'src/components/notes/Notes.css';
-import FilterButton from "src/components/Filter/FilterButton";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
-import BottomButtons from "src/components/BottomButtons";
 import BottomBar from 'src/components/BottomBar/BottomBar';
+import BottomButtons from "src/components/BottomButtons";
+import FilterButton from "src/components/Filter/FilterButton";
+import PageHeader from 'src/components/PageHeader';
+import MainDiv from "src/components/maindiv/maindiv";
+import 'src/components/notes/Notes.css';
+import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
-
+import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
+import NoteCard from "./sub_components/NoteCard";
 
 
 const Notes = () => {
-    
+    const dispatch = useDispatch();
+    const privateKey = localStorage.getItem("privateKey");
+    console.log('.............................here is the private key', privateKey)
 
+    const [pinned, setPinned] = useState('');
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
     const {
-        isBp2,
-        isBp3,
-        isBp4,
-        isBp5,
-        isBp7,
         isAdaptableScreen,
-        onWholeScreen,
-        isBp6,
-        isBp8,
     } = useResponsive();
-
+    const [metaData, setMetaData] = useState()
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
 
-    const notesArray = [
+    const [notesArray, setNotesArray] = useState([
         {
             title: "Web Design Project",
             desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt, sapien eu vestibulum lacinia, elit lectus aliquam felis, a cursus lacus metus vel erat. Sed ac orci non arcu condimentum feugiat at id sapien.some more stuff",
@@ -112,9 +110,33 @@ const Notes = () => {
             tag: 'Design', 
             id: 8   
         },
-    ];
+    ]);
 
-    
+    const getAllNotes = async (page = 0, limit = 5, pinned = '') => {
+        try {
+            const params = { page, limit, pinned }
+            const response = await dispatch(getAllNotesThunk(params)).unwrap();
+            const notes = response?.data || []; // Ensure it's always an array
+            notes?.forEach(note => {
+                console.log(note.title)
+
+                note.title = decryptSingleValues(note.title, privateKey);
+                note.desc = decryptSingleValues(note.desc, privateKey);
+            });
+            const formattedNotes = notes.map(note => ({
+                ...note,
+                date: new Date(note.createdAt) // or response?.createdAt
+            }));
+            console.log(response?.data)
+            setNotesArray(formattedNotes);
+            setMetaData(response?.metaData);
+            successToast(response.message, 'note-created');
+        } catch (err) {
+            errorToast('Something went wrong', 'getNotes-pages-error');
+        } finally {
+            // setSkeletonLoader(false);
+        }
+    };
 
     const filterDiv = (
         <FilterButton />
@@ -133,6 +155,10 @@ const Notes = () => {
         setIsAllNotesClicked(false);
     };
 
+    useEffect(() => {
+        getAllNotes(page, limit, pinned)
+
+    }, [page, limit, pinned])
 
 
     return (
@@ -163,7 +189,7 @@ const Notes = () => {
                     </div>
                     <div className='notes-display'>
                        
-                        {notesArray.map((note, index) => (
+                        {notesArray?.map((note, index) => (
                             <NoteCard
                                 key={index} // Use index for key as notes might not have unique IDs
                                 title={note.title}
@@ -172,8 +198,8 @@ const Notes = () => {
                                 date={note.date}
                                 pinned={note.pinned}
                                 hide={note.hide}
-                                id={note.id}
-                                tag={note.tag}
+                                id={note._id}
+                                tags={note.tags}
                             />
                         ))}
                     </div >

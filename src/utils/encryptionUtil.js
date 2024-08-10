@@ -71,6 +71,7 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
 const decryptSingleValues = (encryptedValue, _privateKey) => {
     try {
         const privateKey = forge.pki.privateKeyFromPem(_privateKey);
+        console.log('here is the private key', privateKey)
         const encryptedBytes = forge.util.decode64(encryptedValue);
         const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
             md: forge.md.sha256.create(),
