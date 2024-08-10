@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import visibility from 'src/assets/eye.svg';
 import paperClip from 'src/assets/paper-clip.svg';
 import pin from 'src/assets/pin.svg';
 import trash from 'src/assets/trash.svg';
 import 'src/components/notes/sub_components/NoteCard.css';
+import { changePinnedStatus } from 'src/store/thunks/notesThunk';
+import { errorToast, successToast } from '../../toasters/toast';
+
+
 
 const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) => {
-    const [pinned, setPinned] = useState(pinning ? pinning : false);
+    const dispatch = useDispatch();
+    const [pinned, setPinned] = useState(pinning === 'PINNED' ? pinning : 'NOT_PINNED');
     const [showAllTags, setShowAllTags] = useState(false);
     const containerRef = useRef(null);
     const [visibleTags, setVisibleTags] = useState(tags);
@@ -35,11 +41,17 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
             setHiddenTagCount(tags.length - visibleTagsCount);
         }
     }, [tags, containerRef, showAllTags]);
-
-    const handlePinnedClick = () => {
-        setPinned(prevValue => !prevValue);
+    const handlePinnedClick = async () => {
+        const newPinnedStatus = pinned === 'PINNED' ? 'NOT_PINNED' : 'PINNED';
+        setPinned(newPinnedStatus);
+        const response = await dispatch(changePinnedStatus({ _id: id, pinned: newPinnedStatus })).unwrap();
+        console.log('here is the ', response)
+        if (response.status === 200) {
+            successToast(response.message, 'note-pinned');
+        } else {
+            errorToast("Note isn't pinned", "pinned-note-error");
+        }
     };
-
     return (
         <div className='note-card-div' style={{ borderBottom: pinned === 'PINNED' ? '4px solid var(--primary-background-color)' : undefined }}>
             <div className='note-card'>
