@@ -70,11 +70,26 @@
     align-items: center;
     justify-content: center;
 }
+.note-pin {
+    border: 1px solid var(--field-border-color);
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-pin-pinned {
+    background-color: red;
+}
 
 .note-icons:hover{
     background-color: var(--active-background-color);
     cursor: pointer;
 }
+
+
 
 .note-title {
     font-family: var(--primary-font-family);
@@ -108,6 +123,7 @@
 .note-tag {
     height: 36px;
     padding: 0 10px;
+    align-items: center;
     background-color: var(--active-background-color);
     border-radius: 30px;
     display: flex;
@@ -138,10 +154,27 @@
     position: relative;
 }
 
+
+.note-tag-container.scrollable {
+    overflow-x: auto;
+    padding-bottom: 10px; /* Optional: Adds some space for the scrollbar */
+}
+
+.note-tag-container.scrollable::-webkit-scrollbar {
+    height: 6px;
+}
+
+.note-tag-container.scrollable::-webkit-scrollbar-thumb {
+    background-color: var(--active-background-color);
+    border-radius: 3px;
+}
+
 .show-more-button {
     background-color: var(--active-background-color);
     color: var(--primary-font-color);
     border-radius: 30px;
+    /* margin-top: -6px; */
+    height: 36px;
     padding: 0 10px;
     font-family: var(--secondary-font-family);
     font-weight: 500;

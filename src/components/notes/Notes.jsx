@@ -16,7 +16,6 @@ import NoteCard from "./sub_components/NoteCard";
 const Notes = () => {
     const dispatch = useDispatch();
     const privateKey = localStorage.getItem("privateKey");
-    console.log('.............................here is the private key', privateKey)
 
     const [pinned, setPinned] = useState('');
     const [page, setPage] = useState(1);
@@ -28,95 +27,13 @@ const Notes = () => {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
 
-    const [notesArray, setNotesArray] = useState([
-        {
-            title: "Web Design Project",
-            desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt, sapien eu vestibulum lacinia, elit lectus aliquam felis, a cursus lacus metus vel erat. Sed ac orci non arcu condimentum feugiat at id sapien.some more stuff",
-            tag: 'Design',
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            id: 1
-           
-        },
-        {
-            title: "Object 2",
-            desc: "Description for object 2",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design',
-            id: 2
-        },
-        {
-            title: "Object 3",
-            desc: "Description for object 3",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design',
-            id: 3    
-        },
-        {
-            title: "Object 4",
-            desc: "Description for object 4",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design', 
-            id: 4    
-        },
-        {
-            title: "Object 5",
-            desc: "Description for object 5",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design',
-            id: 5     
-        },
-        {
-            title: "Object 6",
-            desc: "Description for object 6",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design', 
-            id: 6    
-        },
-        {
-            title: "Object 7",
-            desc: "Description for object 7",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design', 
-            id: 7    
-        },
-        {
-            title: "Object 8",
-            desc: "Description for object 8",
-            links: ["link1", "link2"],
-            date: new Date(),
-            pinned: true,
-            hide: false,
-            tag: 'Design', 
-            id: 8   
-        },
-    ]);
+    const [notesArray, setNotesArray] = useState([]);
 
     const getAllNotes = async (page = 0, limit = 5, pinned = '') => {
         try {
             const params = { page, limit, pinned }
             const response = await dispatch(getAllNotesThunk(params)).unwrap();
-            const notes = response?.data || []; // Ensure it's always an array
+            const notes = response?.data || [];
             notes?.forEach(note => {
                 console.log(note.title)
 
@@ -125,9 +42,9 @@ const Notes = () => {
             });
             const formattedNotes = notes.map(note => ({
                 ...note,
-                date: new Date(note.createdAt) // or response?.createdAt
+                date: new Date(note.createdAt)
             }));
-            console.log(response?.data)
+            console.log(response?.data);
             setNotesArray(formattedNotes);
             setMetaData(response?.metaData);
             successToast(response.message, 'note-created');
@@ -196,7 +113,7 @@ const Notes = () => {
                                 desc={note.desc}
                                 links={note.links}
                                 date={note.date}
-                                pinned={note.pinned}
+                                pinning={note.pinned}
                                 hide={note.hide}
                                 id={note._id}
                                 tags={note.tags}

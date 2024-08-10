@@ -5,15 +5,15 @@ import pin from 'src/assets/pin.svg';
 import trash from 'src/assets/trash.svg';
 import 'src/components/notes/sub_components/NoteCard.css';
 
-const NoteCard = ({ title, desc, links, date, hide, tags = [], id }) => {
-    const [pinned, setPinned] = useState(false);
+const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) => {
+    const [pinned, setPinned] = useState(pinning ? pinning : false);
     const [showAllTags, setShowAllTags] = useState(false);
     const containerRef = useRef(null);
     const [visibleTags, setVisibleTags] = useState(tags);
     const [hiddenTagCount, setHiddenTagCount] = useState(0);
 
     useEffect(() => {
-        if (containerRef.current) {
+        if (containerRef.current && !showAllTags) {
             const containerWidth = containerRef.current.offsetWidth;
             let totalWidth = 0;
             let visibleTagsCount = 0;
@@ -34,7 +34,7 @@ const NoteCard = ({ title, desc, links, date, hide, tags = [], id }) => {
             setVisibleTags(tags.slice(0, visibleTagsCount));
             setHiddenTagCount(tags.length - visibleTagsCount);
         }
-    }, [tags, containerRef]);
+    }, [tags, containerRef, showAllTags]);
 
     const handlePinnedClick = () => {
         setPinned(prevValue => !prevValue);
@@ -45,13 +45,13 @@ const NoteCard = ({ title, desc, links, date, hide, tags = [], id }) => {
             <div className='note-card'>
                 <div className='note-title'>{title}</div>
                 <div className='note-description'>{desc}</div>
-                <div className='note-tag-container' ref={containerRef}>
+                <div className={`note-tag-container ${showAllTags ? 'scrollable' : ''}`} ref={containerRef}>
                     {visibleTags.map((tag, index) => (
                         <div key={index} className='note-tag'>{tag}</div>
                     ))}
                     {hiddenTagCount > 0 && !showAllTags && (
                         <div className='show-more-button' onClick={() => setShowAllTags(true)}>
-                            +{hiddenTagCount} more
+                            +{hiddenTagCount}
                         </div>
                     )}
                     {showAllTags && tags.slice(visibleTags.length).map((tag, index) => (
