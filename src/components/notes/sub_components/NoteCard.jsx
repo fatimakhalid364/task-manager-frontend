@@ -64,7 +64,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
                         <div>Reference Links:</div>
                     </div>
                     <div className='note-ref-links'>
-                        {links.join(', ')}
+                        {links.join(' , ')}
                     </div>
                 </div>   
                 <div className='note-footer'>

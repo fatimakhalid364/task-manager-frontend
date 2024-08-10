@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import BottomBar from 'src/components/BottomBar/BottomBar';
 import BottomButtons from "src/components/BottomButtons";
@@ -11,6 +12,7 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import NoteCard from "./sub_components/NoteCard";
+
 
 
 const Notes = () => {
@@ -54,7 +56,12 @@ const Notes = () => {
             // setSkeletonLoader(false);
         }
     };
-
+    const debouncedGetAllNotes = useCallback(
+        debounce((page, limit, pinned) => {
+            getAllNotes(page, limit, pinned);
+        }, 300),
+        [page, limit, pinned]
+    );
     const filterDiv = (
         <FilterButton />
     )
@@ -73,9 +80,8 @@ const Notes = () => {
     };
 
     useEffect(() => {
-        getAllNotes(page, limit, pinned)
-
-    }, [page, limit, pinned])
+        debouncedGetAllNotes(page, limit, pinned)
+    }, [page, limit, pinned, debouncedGetAllNotes])
 
 
     return (
