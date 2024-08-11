@@ -5,12 +5,15 @@ import visibility from 'src/assets/eye.svg';
 import paperClip from 'src/assets/paper-clip.svg';
 import pin from 'src/assets/pin.svg';
 import trash from 'src/assets/trash.svg';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import 'src/components/notes/sub_components/NoteCard.css';
-import { changePinnedStatus } from 'src/store/thunks/notesThunk';
+import { changePinnedStatus, deleteNoteThunk } from 'src/store/thunks/notesThunk';
 import NotificationModal from '../../notifications/NotificationModal';
 import { errorToast, successToast } from '../../toasters/toast';
 
-const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) => {
+
+
+const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, notesArray, setNotesArray }) => {
     const dispatch = useDispatch();
     const [pinned, setPinned] = useState(pinning === 'PINNED' ? pinning : 'NOT_PINNED');
     const [showAllTags, setShowAllTags] = useState(false);
@@ -19,6 +22,8 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
     const [hiddenTagCount, setHiddenTagCount] = useState(0);
     const [modalOpen, setModalOpen] = useState(false); // Initially false
     const [noteToDelete, setNoteToDelete] = useState(null);
+    const [spinner, setSpinner] = useState(false);
+
 
     useEffect(() => {
         if (containerRef.current && !showAllTags) {
@@ -47,7 +52,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
     const handlePinnedClick = async () => {
         const newPinnedStatus = pinned === 'PINNED' ? 'NOT_PINNED' : 'PINNED';
         setPinned(newPinnedStatus);
-        const response = await dispatch(changePinnedStatus({ _id: id, pinned: newPinnedStatus })).unwrap();
+        const response = await dispatch(changePinnedStatus({ _id: _id, pinned: newPinnedStatus })).unwrap();
         console.log('here is the ', response);
         if (response.status === 200) {
             successToast(response.message, 'note-pinned');
@@ -56,19 +61,39 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], id }) =>
         }
     };
 
+
     const handleDeleteClick = () => {
-        setNoteToDelete(id);
+        setNoteToDelete(_id);
         setModalOpen(true);
     };
 
-    const handleOkay = () => {
+    const handleOkay = async () => {
+        setSpinner(true)
         console.log('Okay button clicked');
-        // Add your delete logic here using noteToDelete
+        try {
+            const response = await dispatch(deleteNoteThunk(_id)).unwrap();
+            console.log(response)
+            if (response.status === 200) {
+                const filteredNotes = notesArray.filter(note => note._id !== _id);
+                setNotesArray(filteredNotes);
+                successToast(response.message, 'note-deleted');
+
+            } else {
+                errorToast('Note deletion failed', 'note-delete-error');
+            }
+        } catch (error) {
+            console.error('erroe', error)
+        } finally {
+            setSpinner(false)
+
+        }
         setModalOpen(false);
     };
 
     return (
         <>
+            <SpinnerLoader showSpinner={spinner} />
+
             {modalOpen &&
                 <NotificationModal
                     open={modalOpen}

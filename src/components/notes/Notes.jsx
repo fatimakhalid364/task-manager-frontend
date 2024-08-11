@@ -121,8 +121,10 @@ const Notes = () => {
                                 date={note.date}
                                 pinning={note.pinned}
                                 hide={note.hide}
-                                id={note._id}
+                                _id={note._id}
                                 tags={note.tags}
+                                notesArray={notesArray}
+                                setNotesArray={setNotesArray}
                             />
                         ))}
                     </div >
