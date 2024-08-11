@@ -50,14 +50,24 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
     }, [tags, containerRef, showAllTags]);
 
     const handlePinnedClick = async () => {
+        setSpinner(true);
         const newPinnedStatus = pinned === 'PINNED' ? 'NOT_PINNED' : 'PINNED';
         setPinned(newPinnedStatus);
-        const response = await dispatch(changePinnedStatus({ _id: _id, pinned: newPinnedStatus })).unwrap();
-        console.log('here is the ', response);
-        if (response.status === 200) {
-            successToast(response.message, 'note-pinned');
-        } else {
+        try {
+            const response = await dispatch(changePinnedStatus({ _id: _id, pinned: newPinnedStatus })).unwrap();
+            console.log('here is the ', response);
+            if (response.status === 200) {
+                successToast(response.message, 'note-pinned');
+            } else {
+                errorToast("Note isn't pinned", "pinned-note-error");
+            }
+        } catch (error) {
+            console.log(error);
             errorToast("Note isn't pinned", "pinned-note-error");
+
+        } finally {
+            setSpinner(false);
+
         }
     };
 
@@ -72,7 +82,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
     }
 
     const handleOkay = async () => {
-        setSpinner(true)
+        setSpinner(true);
         console.log('Okay button clicked');
         try {
             const response = await dispatch(deleteNoteThunk(_id)).unwrap();
