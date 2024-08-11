@@ -63,6 +63,7 @@ export function validateResetForm(userAccount) {
     return true;
 }
 export function validateSetForm(userAccount) {
+    console.log('hereeeeeeeeeeeeeeeeeee', userAccount);
     const { password, confirmPassword } = userAccount;
     if (!confirmPassword || !password) {
         errorToast("Please fill both fields", 'setPass-error-incomplete');

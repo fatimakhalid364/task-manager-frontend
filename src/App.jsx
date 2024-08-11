@@ -13,6 +13,7 @@ import ForgotPassword from './pages/authentication/ForgotPassword';
 import SetPassword from './pages/authentication/SetPassword';
 import SigninPage from './pages/authentication/SigninPage';
 import SignupPage from './pages/authentication/SignupPage';
+import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/authentication/signin" element={<RouteGuard element={SigninPage} />} />
                     <Route path="/authentication/forgot-password" element={<RouteGuard element={ForgotPassword} />} />
                     <Route path="/authentication/reset-password" element={<RouteGuard element={SetPassword} />} />
+                    <Route path="/authentication/forgot-email-verification" element={<RouteGuard element={ForgotVerificationWait} />} />
                     <Route path="/authentication/email-verification" element={<RouteGuard element={VerificationWait} />} />
                     <Route path="/notes" element={<RouteGuard element={Notes} />} />
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
