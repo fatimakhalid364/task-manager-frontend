@@ -90,7 +90,7 @@ function NotificationModal({
                             {secondaryButtonText ? secondaryButtonText : 'Cancel'}
                         </Button>
                     }
-                    <Button variant='contained' style={{ borderRadius: '28px', width: '100px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
+                    <Button variant='contained' sx={{ borderRadius: '28px', textTransform: 'none', width: notificationType && notificationType === 'DELETE' ? '100px' : '250px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
                         {primaryButtonText}
                     </Button>
 
