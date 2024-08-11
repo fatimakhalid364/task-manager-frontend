@@ -69,7 +69,7 @@ const fetchKeyThunk = createAsyncThunk("auth/fetchKey", async (body, thunkAPI) =
 const forgotPassThunk = createAsyncThunk('auth/forgotpass', async (body, thunkAPI) => {
     console.log('inside forgotpass thunk', body);
     try{
-        const response = await APIS.post(`/auth/forgotpass`, body, {
+        const response = await APIS.post(`/auth/forgot-password`, body, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("access_token")}`,

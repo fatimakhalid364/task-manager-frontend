@@ -79,7 +79,12 @@ function InputFields({ currentScreen }) {
 
     function handleOkay() {
         setModalOpen(false);
-        navigate('/authentication/signin'); // Redirect to defaultRedirect if authenticated
+        if (currentScreen === Screen.SIGNUP) {
+            navigate('/authentication/signin');
+
+        } else {
+            navigate('/authentication/signin');
+        }
 
     }
 
@@ -146,7 +151,7 @@ function InputFields({ currentScreen }) {
                     setSpinner(false); 
                     console.log('Dispatched thunk response:', successMsg);
                     { successMsg ? successToast(response.message, 'authentication-pages-success') : '' }
-                    if (currentScreen === Screen.SIGNUP) {
+                    if (currentScreen === Screen.SIGNUP || Screen.FORGOT_PASS) {
                         setModalOpen(true);
                     }
                 }
@@ -169,8 +174,8 @@ function InputFields({ currentScreen }) {
                     open={modalOpen}
                     onOkay={handleOkay}
                     onCancel={handleOkay}
-                    title={'Email Verification Required'}
-                    message={"Thank you for signing up! We've sent a verification link to your email address. If you don't see the email, check your spam or junk folder."}
+                    title={currentScreen === Screen.SIGNUP ? 'Email Verification Required' : 'Reset password mail is sent'}
+                    message={currentScreen === Screen.SIGNUP ? "Thank you for signing up! We've sent a verification link to your email address. If you don't see the email, check your spam or junk folder." : "Verify your identy by Clicking the verification link."}
                     titleInfo={userAccount.email}
                     icon={EmailIcon}
                     primaryButtonText={'Take me to Login'}
