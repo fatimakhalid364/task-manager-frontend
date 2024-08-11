@@ -11,11 +11,11 @@ import TaskIcon from "../../../../../icons/TaskIcon";
 function Routes({ clickfunction, burgerMenuClicked }) {
     return (
         <div className='tasks-page-routes-div' >
-            <RoutesComponents icon={DashboardIcon} page='Dashboard' route='/dashboard?page=Dashboard' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={TaskIcon} page='Tasks' route='/tasks?page=Tasks' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
-            <RoutesComponents icon={NotesIcon} page='Notes' route='/notes?page=Notes' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={CalendarIcon} page='Calendar' route='/calendar?page=Calendar' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={GearIcon} page='Settings' route='/settings?page=Settings' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={DashboardIcon} currentPage='DASHBOARD' route='/dashboard' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={TaskIcon} currentPage='TASKS' route='/tasks' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={NotesIcon} currentPage='NOTES' route='/notes' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={CalendarIcon} currentPage='CALENDER' route='/calendar' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={GearIcon} currentPage='SETTINGS' route='/settings' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
             <Outlet />
 
         </div>
