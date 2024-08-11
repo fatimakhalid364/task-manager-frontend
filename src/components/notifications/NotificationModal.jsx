@@ -22,6 +22,7 @@ const IconContainer = styled("div")`
 function NotificationModal({
     open,
     onOkay,
+    onCancel,
     title,
     titleInfo,
     message,
@@ -61,6 +62,7 @@ function NotificationModal({
                         backgroundSize: "contain",
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center center",
+                        zIndex: '9999999999'
                     },
                 }}
                 disableEscapeKeyDown={true}
@@ -84,7 +86,7 @@ function NotificationModal({
                 {/* <Box mt={6}></Box> */}
                 <DialogActions mt={6} mb={-6} sx={{ display: "flex", gap: '24px', justifyContent: "center", width: '100%', height: '90px', borderTop: '1px solid #D1D5DB' }}>
                     {(notificationType && notificationType === 'DELETE') &&
-                        <Button variant='outlined' style={{ borderRadius: '28px', width: '100px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onOkay} color="info">
+                        <Button variant='outlined' style={{ borderRadius: '28px', width: '100px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onCancel} color="info">
                             {secondaryButtonText ? secondaryButtonText : 'Cancel'}
                         </Button>
                     }

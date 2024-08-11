@@ -67,6 +67,10 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
         setModalOpen(true);
     };
 
+    const handleCancel = () => {
+        setModalOpen(false);
+    }
+
     const handleOkay = async () => {
         setSpinner(true)
         console.log('Okay button clicked');
@@ -98,7 +102,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
                 <NotificationModal
                     open={modalOpen}
                     onOkay={handleOkay}
-                    onCancel={() => setModalOpen(false)}
+                onCancel={handleCancel}
                     title={'Are you sure you want to Delete'}
                     message={'Once deleted, you will not be able to recover this task. Please confirm if you wish to proceed.'}
                     titleInfo={'Task ?'}
