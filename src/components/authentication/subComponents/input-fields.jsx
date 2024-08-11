@@ -6,6 +6,8 @@ import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import EmailIcon from 'src/assets/EmailIcon.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
@@ -13,7 +15,10 @@ import { forgotPassThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import { useAuth } from '../../../contexts/AuthContext.jsx';
+
 import './authentication.css';
+
+import NotificationModal from '../../notifications/NotificationModal.jsx';
 import SubmitButton from './submit-button.jsx';
 
 const CssTextField = styled((props) => <TextField {...props} />)(({ theme }) => ({
@@ -64,10 +69,23 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
 
 function InputFields({ currentScreen }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const { login } = useAuth();
     const isLoading = useSelector(state => state.auth.isLoading);
     const successMsg = useSelector(state => state.auth.successMsg);
     const errorMsg = useSelector(state => state.auth.errorMsg);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    function handleOkay() {
+        setModalOpen(false);
+        navigate('/authentication/signin'); // Redirect to defaultRedirect if authenticated
+
+    }
+
+    function handleCancel() {
+        setModalOpen(false);
+    }
 
     const [userAccount, setUserAccount] = useState({
         name: "",
@@ -128,6 +146,9 @@ function InputFields({ currentScreen }) {
                     setSpinner(false); 
                     console.log('Dispatched thunk response:', successMsg);
                     { successMsg ? successToast(response.message, 'authentication-pages-success') : '' }
+                    if (currentScreen === Screen.SIGNUP) {
+                        setModalOpen(true);
+                    }
                 }
             } catch (error) {
                 setSpinner(false);
@@ -143,6 +164,21 @@ function InputFields({ currentScreen }) {
     return (
         <div>
             <SpinnerLoader showSpinner={spinner} />
+            {modalOpen && (
+                <NotificationModal
+                    open={modalOpen}
+                    onOkay={handleOkay}
+                    onCancel={handleOkay}
+                    title={'Email Verification Required'}
+                    message={"Thank you for signing up! We've sent a verification link to your email address. If you don't see the email, check your spam or junk folder."}
+                    titleInfo={userAccount.email}
+                    icon={EmailIcon}
+                    primaryButtonText={'Take me to Login'}
+                    primaryButtonColor='primary'
+                    secondaryButtonText={'Cancel'}
+                    secondaryButtonColor='default'
+                    notificationType={'INFO'}
+                />)}
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
                     <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
