@@ -16,7 +16,7 @@ NotesIcon.propTypes = {
 };
 
 NotesIcon.defaultProps = {
-    color: '#6B7280', // default color if none is provided
+    color: '#6B7280',
 };
 
 export default NotesIcon;
