@@ -8,6 +8,9 @@ export default defineConfig({
   // define: {
   //   'process.env.PUBLIC_KEY': JSON.stringify(process.env.PUBLIC_KEY),
   // },
+define: {
+  global: 'window',
+  },
   resolve: {
     alias: {
       src: "/src",
@@ -22,3 +25,5 @@ export default defineConfig({
     },
   }
 });
+
+

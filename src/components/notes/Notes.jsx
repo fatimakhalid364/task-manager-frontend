@@ -12,6 +12,7 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import NoteCard from "./sub_components/NoteCard";
+import CreateNotes from 'src/components/notes/sub_components/create_notes/CreateNotes';
 
 
 

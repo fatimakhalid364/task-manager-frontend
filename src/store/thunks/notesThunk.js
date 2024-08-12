@@ -3,7 +3,7 @@ import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
 
 const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI) => {
-    console.log("inside getAllTasks thunk",);
+    console.log("inside getAllNotes thunk",);
     const { page, limit, search, pinned } = params
     console.log('...................', page, limit, search, pinned)
     try {

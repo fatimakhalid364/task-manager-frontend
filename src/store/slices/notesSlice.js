@@ -32,7 +32,7 @@ const getAllNotesSlice = createSlice({
                 state.isLoading = false;
                 state.successMsg = 'task details retrieved successful!ly';
                 state.errorMsg = '';
-                console.log('Fulfilled: action.payload =', state.allTasks);
+                console.log('Fulfilled: action.payload =', state.allNotes);
             })
             .addCase(getAllNotesThunk.rejected, (state, action) => {
                 state.isLoading = false;

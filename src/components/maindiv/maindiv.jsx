@@ -9,7 +9,7 @@ import { useResponsive } from "src/constants/media_queries";
 
 
 function MainDiv({ children }) {
-    const [burgerMenuClicked, setBurgerMenuClicked] = useState(false);
+    const [burgerMenuClicked, setBurgerMenuClicked] = useState(true);
 
     const handleBurgerMenuClick = () => {
         setBurgerMenuClicked((prevValue) => !prevValue);
@@ -57,7 +57,7 @@ function MainDiv({ children }) {
                         width: (!expandBar && !onWholeScreen) || ( expandBar && !burgerMenuClicked) ? '96%' : (onWholeScreen) ? '100%' :  '81%', 
                         height: (onWholeScreen ) && '100%', 
                         marginTop: (onWholeScreen) && '0',
-                        marginLeft: (expandBar && burgerMenuClicked) ? '273px': (onWholeScreen && isAdaptableScreen) ? '55px' : !isAdaptableScreen ? '0px' : '60px',
+                        marginLeft: (expandBar && burgerMenuClicked) ? '276px': (onWholeScreen && isAdaptableScreen) ? '57px' : !isAdaptableScreen ? '0px' : '67px',
                         display: (onWholeScreen && isAdaptableScreen) && 'block',
                     }}
                 >

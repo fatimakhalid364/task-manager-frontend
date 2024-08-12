@@ -51,13 +51,12 @@ function RoutesComponents({ icon, route, page, clickfunction, burgerMenuClicked=
     return (
             <NavLink 
                 className='tasks-page-route'
-                
                 to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
             >
                 { (expandBar && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={icon} alt='route-icon' />
+                    <img src={icon} alt='route-icon'/>
                 </div>
                 <div  onClick={ clickfunction }  className='tasks-page-route-name'>{page}</div>
                 </div>) : (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
