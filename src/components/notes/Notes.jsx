@@ -14,9 +14,8 @@ import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import NoteCard from "./sub_components/NoteCard";
 import CreateNotes from 'src/components/notes/sub_components/create_notes/CreateNotes';
 
-
-
 const Notes = () => {
+
     const dispatch = useDispatch();
     const privateKey = localStorage.getItem("privateKey");
 
@@ -87,6 +86,7 @@ const Notes = () => {
 
     return (
         <>
+
             <MainDiv>
                 <div className='notes-page'>
                     <PageHeader text='All Notes' total='20' object='Notes' filterDiv={ filterDiv } />
@@ -115,15 +115,17 @@ const Notes = () => {
                        
                         {notesArray?.map((note, index) => (
                             <NoteCard
-                                key={index} // Use index for key as notes might not have unique IDs
+                                key={note._id}
                                 title={note.title}
                                 desc={note.desc}
                                 links={note.links}
                                 date={note.date}
                                 pinning={note.pinned}
                                 hide={note.hide}
-                                id={note._id}
+                                _id={note._id}
                                 tags={note.tags}
+                                notesArray={notesArray}
+                                setNotesArray={setNotesArray}
                             />
                         ))}
                     </div >

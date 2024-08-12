@@ -1,10 +1,10 @@
-import { NavLink } from "react-router-dom";
 import propTypes from "prop-types";
+import { NavLink, useLocation } from "react-router-dom";
 import { useResponsive } from 'src/constants/media_queries';
 
-
-
-function RoutesComponents({ icon, route, page, clickfunction, burgerMenuClicked={ burgerMenuClicked } }){
+function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked = { burgerMenuClicked } }) {
+    const location = useLocation();
+    const pathname = location.pathname.split('/').pop().toUpperCase();
     const {
         isAdaptableScreen,
         expandBar,
@@ -56,17 +56,20 @@ function RoutesComponents({ icon, route, page, clickfunction, burgerMenuClicked=
             >
                 { (expandBar && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={icon} alt='route-icon'/>
+                    <IconComponent color={currentPage == pathname ? '#3B8AFF' : '#6B7280'} />
+
+
                 </div>
                 <div  onClick={ clickfunction }  className='tasks-page-route-name'>{page}</div>
                 </div>) : (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <img src={icon} alt='route-icon' />
+                    <IconComponent color={currentPage == pathname ? '#3B8AFF' : '#6B7280'} />
+
                 </div>) } 
             </NavLink>
 
         
     )
-};
+}
 
 RoutesComponents.propTypes = {
     icon: propTypes.string.isRequired,

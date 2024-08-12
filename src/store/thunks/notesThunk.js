@@ -47,5 +47,24 @@ const changePinnedStatus = createAsyncThunk("changePinned", async (params, thunk
     }
 });
 
-export { changePinnedStatus, getAllNotesThunk };
+const deleteNoteThunk = createAsyncThunk("changePinned", async (_id, thunkAPI) => {
+    console.log("inside delete note thunk");
+    try {
+        const response = await APIS.delete(`/notes/${_id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is in thunk,====================>", response);
+        return response.data;
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return HandleAuthError(error, thunkAPI);
+    }
+});
+
+export { changePinnedStatus, deleteNoteThunk, getAllNotesThunk };
 

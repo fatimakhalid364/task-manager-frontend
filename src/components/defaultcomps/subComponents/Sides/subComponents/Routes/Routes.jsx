@@ -1,20 +1,21 @@
 import { Outlet } from "react-router-dom";
-import CalendarIcon from 'src/assets/calendar-days.svg';
-import TasksIcon from "src/assets/check-list.svg";
-import SettingsIcon from 'src/assets/cog-6-tooth.svg';
-import NotesIcon from 'src/assets/note-04.svg';
-import DashboardIcon from "src/assets/squares-2x2.svg";
 import RoutesComponents from "src/components/defaultcomps/subComponents/Sides/subComponents/Routes/RoutesComponents";
+import CalendarIcon from "../../../../../icons/CalendarIcon";
+import DashboardIcon from "../../../../../icons/DasboardIcon";
+import GearIcon from "../../../../../icons/GearIcon";
+import NotesIcon from "../../../../../icons/NotesIcon";
+import TaskIcon from "../../../../../icons/TaskIcon";
+
 
 
 function Routes({ clickfunction, burgerMenuClicked }) {
     return (
         <div className='tasks-page-routes-div' >
-            <RoutesComponents icon={DashboardIcon} page='Dashboard' route='/dashboard?page=Dashboard' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={TasksIcon} page='Tasks' route='/tasks?page=Tasks' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={NotesIcon} page='Notes' route='/notes?page=Notes' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={CalendarIcon} page='Calendar' route='/calendar?page=Calendar' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
-            <RoutesComponents icon={SettingsIcon} page='Settings' route='/settings?page=Settings' clickfunction={clickfunction} burgerMenuClicked={ burgerMenuClicked } />
+            <RoutesComponents icon={DashboardIcon} currentPage='DASHBOARD' route='/dashboard' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={TaskIcon} currentPage='TASKS' route='/tasks' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={NotesIcon} currentPage='NOTES' route='/notes' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={CalendarIcon} currentPage='CALENDER' route='/calendar' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={GearIcon} currentPage='SETTINGS' route='/settings' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
             <Outlet />
 
         </div>

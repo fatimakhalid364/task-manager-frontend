@@ -6,9 +6,9 @@ import Loader from 'src/components/LoadingScreens/CSSLoader';
 import LoadingStatus from 'src/components/LoadingScreens/LoadingStatus';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from 'src/constants/constants';
-import { verificationEmailThunk } from 'src/store/thunks/authThunks';
+import { resetVerificationEmailThunk } from 'src/store/thunks/authThunks';
 
-function VerificationWait() {
+function ForgotVerificationWait() {
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');
     const dispatch = useDispatch();
@@ -24,12 +24,12 @@ function VerificationWait() {
 
                 // Dispatch verification thunk
                 console.log("Calling the thunk");
-                const response = await dispatch(verificationEmailThunk(token)).unwrap();
+                const response = await dispatch(resetVerificationEmailThunk(token)).unwrap();
                 console.log('Verification response:', response);
                 localStorage.setItem('tempToken', response?.tempToken);
 
                 successToast('Verification successful!', 'email-success');
-                navigate('/authentication/signin');
+                navigate('/authentication/reset-password');
             } catch (error) {
                 console.log('Error during verification:', error);
                 errorToast(`Verification failed: ${error.message}`, 'email-error');
@@ -39,7 +39,7 @@ function VerificationWait() {
         } else if (!token) {
             errorToast('Verification token is missing', 'email-error');
         }
-    }, 500); 
+    }, 500);
 
     useEffect(() => {
         console.log('useEffect triggered with token:', token);
@@ -55,4 +55,4 @@ function VerificationWait() {
     );
 }
 
-export default VerificationWait;
+export default ForgotVerificationWait;
