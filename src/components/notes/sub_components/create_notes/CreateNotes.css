@@ -1,0 +1,69 @@
+.add-notes-header {
+    display: flex;
+    gap: 20px;
+    font-family: var(--primary-font-family);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--secondary-font-color);
+    margin-top: 20px;
+
+}
+
+.add-notes-input-fields {
+    width: 93%;
+    margin-top: 35px;
+    margin-left: 38px;
+}
+
+.create-notes-input {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid var(--field-border-color);
+}
+
+.create-notes-input::placeholder {
+    font-size: 15px;
+}
+
+.note-attachments-div {
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--field-border-color);
+    border-top: none;
+    height: 36px;
+    font-size: 16px;
+    font-family: var(--secondary-font-family);
+    color: var(--tertiary-font-color);
+    border-radius: 0 0 8px 8px;
+}
+
+.note-attachments {
+    display: flex;
+    width: 138px;
+    justify-content: center;
+    align-items:center;
+    border-right: 1px solid var(--field-border-color);
+    cursor: pointer;
+    gap: 10px;
+}
+
+
+.note-attachments:hover {
+    color: var(--primary-background-color);
+    background-color: var(--active-background-color);
+}
+
+.add-notes-controls {
+    border-top: 1px solid var(--field-border-color);
+    width: 93%;
+    margin-left: 38px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    height: 0px;
+    align-items: center;
+}

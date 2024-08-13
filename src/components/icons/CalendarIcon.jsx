@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 
 const CalendarIcon = ({ color, marginLeft = 2, marginRight = 0 }) => (
     <svg
-        width="22"
-        height="25"
+        width="16"
+        height="16"
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

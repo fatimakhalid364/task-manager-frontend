@@ -30,6 +30,9 @@ const Notes = () => {
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
 
     const [notesArray, setNotesArray] = useState([]);
+    const [createNotesClicked, setCreateNotesClicked] = useState(false);
+
+    const handleCreateNotesClick = () => setCreateNotesClicked(prevValue => !prevValue);
 
     const getAllNotes = async (page = 0, limit = 5, pinned = '') => {
         try {
@@ -89,7 +92,9 @@ const Notes = () => {
 
             <MainDiv>
                 <div className='notes-page'>
-                    <PageHeader text='All Notes' total='20' object='Notes' filterDiv={ filterDiv } />
+                    { createNotesClicked ? (< CreateNotes handleCreateNotesClick= {  handleCreateNotesClick } />) : (
+                        <div>
+                            <PageHeader text='All Notes' total='20' object='Notes' filterDiv={ filterDiv } handleOpen={ handleCreateNotesClick } />
                     <div className='notes-collection-div'>
                         <div className='notes-collection'>
                             <div className='notes all-notes' onClick={handleAllNotesClick}
@@ -129,6 +134,10 @@ const Notes = () => {
                             />
                         ))}
                     </div >
+
+                        </div>
+                    )}
+                    
 
                 </div>
                 <BottomButtons  />

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const NotesIcon = ({ color, marginLeft = -1, marginRight = 0 }) => {
     return (
-        <svg width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft, marginRight }}>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft, marginRight }}>
             <path d="M14.1667 1.6665V3.33317M9.99999 1.6665V3.33317M5.83333 1.6665V3.33317" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
             <path d="M2.91667 13.3333V7.5C2.91667 5.14298 2.91667 3.96447 3.64891 3.23223C4.38114 2.5 5.55965 2.5 7.91667 2.5H12.0833C14.4403 2.5 15.6188 2.5 16.3511 3.23223C17.0833 3.96447 17.0833 5.14298 17.0833 7.5V10C17.0833 13.9283 17.0833 15.8926 15.8629 17.1129C14.6426 18.3333 12.6783 18.3333 8.75001 18.3333H7.91667C5.55965 18.3333 4.38114 18.3333 3.64891 17.6011C2.91667 16.8688 2.91667 15.6903 2.91667 13.3333Z" stroke={color} />
             <path d="M6.66667 12.5002H10M6.66667 8.3335H13.3333" stroke={color} strokeLinecap="round" />

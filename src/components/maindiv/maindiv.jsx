@@ -59,6 +59,7 @@ function MainDiv({ children }) {
                         marginTop: (onWholeScreen) && '0',
                         marginLeft: (expandBar && burgerMenuClicked) ? '276px': (onWholeScreen && isAdaptableScreen) ? '57px' : !isAdaptableScreen ? '0px' : '67px',
                         display: (onWholeScreen && isAdaptableScreen) && 'block',
+                        transition: 'marginLeft 0.4s ease-in'
                     }}
                 >
              
