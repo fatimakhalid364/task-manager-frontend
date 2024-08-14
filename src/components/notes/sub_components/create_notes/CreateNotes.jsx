@@ -5,6 +5,7 @@ import AttachFileIcon from 'src/components/icons/AttachFileIcon';
 import { useState } from 'react';
 import TagIcon from 'src/components/icons/TagIcon';
 import ApplyLinkModal from './subComponents/ApplyLinkModal';
+import TagsInput from 'src/components/notes/sub_components/create_notes/subComponents/TagsInput';
 
 const CreateNotes = ({  handleCreateNotesClick }) => {
 
@@ -39,7 +40,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
         tags: []
     });
 
-    const handleInputChange = (event) => {
+    const handleNoteInputChange = (event) => {
         const { value, name } = event.target;
         setNoteDetails(prev => ({ ...prev, [name]: value }));
     };
@@ -63,7 +64,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                         <div style={{fontSize: '16px', fontFamily: 'var(--secondary-font-family)', color: 'var(--secondary-font-color)', fontWeight: '500'}}>
                             Title
                         </div>
-                        <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' />
+                        <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' value={noteDetails.title} />
                     </div>
                     <div className="add-notes-input-details">
                         <RichTextEditor showLinkPopup={ showLinkPopup } handleShowLinkPopup={ handleShowLinkPopup }  handleCloseLinkPopup={  handleCloseLinkPopup } handleAttachLikClick={ handleAttachLinkClick } />
@@ -76,6 +77,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                                 <TagIcon color={addTagClicked ? 'var(--primary-background-color)' : 'var(--tertiary-font-color)'}/>
                                 Add Tag
                             </div>
+                            {addTagClicked && (<TagsInput value={noteDetails.tags} />)}
                         </div>
                     </div>
             </form>
