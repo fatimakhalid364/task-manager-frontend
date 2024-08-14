@@ -4,25 +4,49 @@ import RichTextEditor from 'src/components/notes/sub_components/create_notes/sub
 import AttachFileIcon from 'src/components/icons/AttachFileIcon';
 import { useState } from 'react';
 import TagIcon from 'src/components/icons/TagIcon';
+import ApplyLinkModal from './subComponents/ApplyLinkModal';
 
 const CreateNotes = ({  handleCreateNotesClick }) => {
 
     const [attachLinkClicked, setAttachLinkClicked] = useState(false);
-
+    const [showLinkPopup, setShowLinkPopup] = useState(false);
+    const handleShowLinkPopup = () => setShowLinkPopup(true);
+    
     const handleAttachLinkClick = () => {
         setAttachLinkClicked(prevValue => !prevValue);
-        setAddTagClicked(false);
+        // setAddTagClicked(false);
+        if(!attachLinkClicked) {
+            handleShowLinkPopup();
+        } 
+    };
+
+    const handleCloseLinkPopup = () => {
+        setShowLinkPopup(false);
+        handleAttachLinkClick();
     };
 
     const [addTagClicked, setAddTagClicked] = useState(false);
 
     const handleAddTagClick = () => {
         setAddTagClicked(prevValue => !prevValue);
-        setAttachLinkClicked(false);
+        // setAttachLinkClicked(false);
+    };
+
+    const [noteDetails, setNoteDetails] = useState({
+        title: "",
+        desc: "",
+        links: [],
+        tags: []
+    });
+
+    const handleInputChange = (event) => {
+        const { value, name } = event.target;
+        setNoteDetails(prev => ({ ...prev, [name]: value }));
     };
 
     return (
         <div className="add-notes-page">
+           
             <div className="add-notes-header-div">
                 <div className="add-notes-header">
                     <div>
@@ -34,7 +58,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                 </div>
                 
             </div>
-            <div className="add-notes-input-fields">
+            <form className="add-notes-input-fields">
                     <div className="add-notes-input-title">
                         <div style={{fontSize: '16px', fontFamily: 'var(--secondary-font-family)', color: 'var(--secondary-font-color)', fontWeight: '500'}}>
                             Title
@@ -42,7 +66,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                         <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' />
                     </div>
                     <div className="add-notes-input-details">
-                        <RichTextEditor />
+                        <RichTextEditor showLinkPopup={ showLinkPopup } handleShowLinkPopup={ handleShowLinkPopup }  handleCloseLinkPopup={  handleCloseLinkPopup } handleAttachLikClick={ handleAttachLinkClick } />
                         <div className='note-attachments-div'> 
                             <div className='note-attachments note-attachments-a' onClick={ handleAttachLinkClick } style={{color: attachLinkClicked && 'var(--primary-background-color)', backgroundColor: attachLinkClicked && 'var(--active-background-color)'}}>
                                 <AttachFileIcon  color={attachLinkClicked ? 'var(--primary-background-color)' : 'var(--tertiary-font-color)'}/>
@@ -54,7 +78,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                             </div>
                         </div>
                     </div>
-            </div>
+            </form>
             <div className="add-notes-controls">
                 <button className='filter-button' style={{width: '120px', backgroundColor: 'var(--neutral-background-color)', border: '1px solid var(--field-border-color)', color: 'var(--tertiary-font-color)'}}
                     onClick = {  handleCreateNotesClick }>Cancel</button>

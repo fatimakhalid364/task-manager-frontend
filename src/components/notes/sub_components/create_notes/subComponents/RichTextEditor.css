@@ -90,3 +90,7 @@
     border-top-color: var(--quaternary-font-color);
     top: 38%;
 }
+
+.rdw-option-wrapper[title='Link'] {
+    
+}

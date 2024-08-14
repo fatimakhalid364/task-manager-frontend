@@ -1,0 +1,30 @@
+.apply-link-div {
+    
+        position: relative;
+        height: 258px;
+        width: 395px;
+        top: 50%;
+        left: 52%;
+        transform: translate(-50%, -50%) scale(1);
+        border-radius: 12px;
+        background-color: var(--neutral-background-color);
+        border: 1px solid var(--modal-border-color);
+        opacity: 1;
+      
+        transition: transform 0.2s ease-in; 
+     
+    
+}
+
+.link-popup-inputs {
+    font-family: var(--secondary-font-family);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--secondary-font-color);
+    margin-bottom: 0px;
+}
+
+#name-for-link,
+#link-for-link {
+    border: 1px solid var(--field-border-color);
+}

@@ -34,6 +34,10 @@ const Notes = () => {
 
     const handleCreateNotesClick = () => setCreateNotesClicked(prevValue => !prevValue);
 
+    useEffect(() => {
+        console.log('create notes popup', createNotesClicked);
+    }, [] )
+
     const getAllNotes = async (page = 0, limit = 5, pinned = '') => {
         try {
             const params = { page, limit, pinned }

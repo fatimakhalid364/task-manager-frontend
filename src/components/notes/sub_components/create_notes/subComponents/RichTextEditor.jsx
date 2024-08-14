@@ -3,8 +3,10 @@ import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import React, { useState } from 'react';
 import 'src/components/notes/sub_components/create_notes/subComponents/RichTextEditor.css';
+import ApplyLinkModal from './ApplyLinkModal';
+import { useEffect } from 'react';
 
-function RichTextEditor() {
+function RichTextEditor({ showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLikClick }) {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
@@ -45,7 +47,11 @@ function RichTextEditor() {
       inDropdown: false,
       options: ['undo', 'redo'],
     },
+    
   };
+
+  
+
 
   return (
     <div className="editor" style={{marginTop: '15px', width: '100%', border: '1px solid var(--field-border-color)', borderRadius: '8px 8px 0 0', minHeight: '404px'}}>
@@ -58,6 +64,8 @@ function RichTextEditor() {
         placeholder="The note goes here..."
         toolbar={toolbarConfig}
       />
+       <ApplyLinkModal editorState={editorState} setEditorState={setEditorState} showLinkPopup={ showLinkPopup } handleShowLinkPopup={ handleShowLinkPopup } handleCloseLinkPopup={ handleCloseLinkPopup } handleAttachLikClick={handleAttachLikClick} />
+       
     </div>
   );
 }
