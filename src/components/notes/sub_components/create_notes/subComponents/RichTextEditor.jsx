@@ -6,7 +6,7 @@ import 'src/components/notes/sub_components/create_notes/subComponents/RichTextE
 import ApplyLinkModal from './ApplyLinkModal';
 import { useEffect } from 'react';
 
-function RichTextEditor({ showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLikClick }) {
+function RichTextEditor({ showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLikClick, handleNoteInputChange, value }) {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
@@ -64,7 +64,14 @@ function RichTextEditor({ showLinkPopup, handleShowLinkPopup, handleCloseLinkPop
         placeholder="The note goes here..."
         toolbar={toolbarConfig}
       />
-       <ApplyLinkModal editorState={editorState} setEditorState={setEditorState} showLinkPopup={ showLinkPopup } handleShowLinkPopup={ handleShowLinkPopup } handleCloseLinkPopup={ handleCloseLinkPopup } handleAttachLikClick={handleAttachLikClick} />
+       <ApplyLinkModal editorState={editorState} 
+                        setEditorState={setEditorState} 
+                        showLinkPopup={ showLinkPopup } 
+                        handleShowLinkPopup={ handleShowLinkPopup } 
+                        handleCloseLinkPopup={ handleCloseLinkPopup } 
+                        handleAttachLikClick={handleAttachLikClick}
+                        handleNoteInputChange={ handleNoteInputChange }
+                        value={value} />
        
     </div>
   );

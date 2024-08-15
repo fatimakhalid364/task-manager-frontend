@@ -35,7 +35,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
 
     const [noteDetails, setNoteDetails] = useState({
         title: "",
-        desc: "",
+        desc: "something",
         links: [],
         tags: []
     });
@@ -67,7 +67,12 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                         <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' value={noteDetails.title} />
                     </div>
                     <div className="add-notes-input-details">
-                        <RichTextEditor showLinkPopup={ showLinkPopup } handleShowLinkPopup={ handleShowLinkPopup }  handleCloseLinkPopup={  handleCloseLinkPopup } handleAttachLikClick={ handleAttachLinkClick } />
+                        <RichTextEditor showLinkPopup={ showLinkPopup } 
+                                        handleShowLinkPopup={ handleShowLinkPopup }  
+                                        handleCloseLinkPopup={  handleCloseLinkPopup } 
+                                        handleAttachLikClick={ handleAttachLinkClick }
+                                        handleNoteInputChange={ handleNoteInputChange}
+                                        value={noteDetails.links} />
                         <div className='note-attachments-div'> 
                             <div className='note-attachments note-attachments-a' onClick={ handleAttachLinkClick } style={{color: attachLinkClicked && 'var(--primary-background-color)', backgroundColor: attachLinkClicked && 'var(--active-background-color)'}}>
                                 <AttachFileIcon  color={attachLinkClicked ? 'var(--primary-background-color)' : 'var(--tertiary-font-color)'}/>

@@ -8,10 +8,12 @@ import 'src/components/notes/sub_components/create_notes/subComponents/ApplyLink
 const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLinkClick }) => {
   const [linkText, setLinkText] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
-//   const [show, setShow] = useState(false);
 
   const handleLinkTextChange = (e) => setLinkText(e.target.value);
-  const handleLinkUrlChange = (e) => setLinkUrl(e.target.value);
+  const handleLinkUrlChange = (e) => {
+    setLinkUrl(e.target.value);
+    handleNoteInputChange();
+  };
 
   const applyLink = () => {
     const contentState = editorState.getCurrentContent();
@@ -65,6 +67,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
                     onChange={handleLinkTextChange}
                     style={{ width: '100%', padding: '8px', marginBottom: '15px', borderRadius: '8px' }}
                     id='name-for-link'
+                    
                 />
                 <label for='link-for-link' className='link-popup-inputs' >Link</label>
                 <input
@@ -74,6 +77,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
                     onChange={handleLinkUrlChange}
                     style={{ width: '100%', padding: '8px', marginBottom: '20px', borderRadius: '8px' }}
                     id='link-for-link'
+                    name='links'
                 />
             </div>
           </div>
