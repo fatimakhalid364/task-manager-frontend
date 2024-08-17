@@ -102,7 +102,8 @@ const CreateNotes = ({ handleCreateNotesClick, setCreateNotesClicked, setNotesAr
             console.log('rrrrrrrrrrrrrr', response);
             if (response.status === 201) {
                 updatedTaskDetails._id = response?.data?._id;
-                setNotesArray(prev => [noteDetails, ...prev]);
+                const obj = { ...noteDetails, links: uniqueLinks }
+                setNotesArray(prev => [obj, ...prev]);
                 successToast(response.message, 'task-created');
                 setCreateNotesClicked(false);
             } else {
