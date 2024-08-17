@@ -1,15 +1,20 @@
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import React, { useState } from 'react';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'src/components/notes/sub_components/create_notes/subComponents/RichTextEditor.css';
 import ApplyLinkModal from './ApplyLinkModal';
-import { useEffect } from 'react';
 
 function RichTextEditor({ showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLikClick, handleNoteInputChange, value }) {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
+  useEffect(() => {
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    const htmlContent = draftToHtml(rawContentState);
+    handleNoteInputChange({ target: { name: 'desc', value: htmlContent } });
+  }, [editorState]);
 
   const toolbarConfig = {
     options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'history'],
