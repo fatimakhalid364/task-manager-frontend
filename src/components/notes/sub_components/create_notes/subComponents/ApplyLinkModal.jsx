@@ -10,9 +10,20 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
   const [linkUrl, setLinkUrl] = useState('');
 
   const handleLinkTextChange = (e) => setLinkText(e.target.value);
+  // const handleLinkUrlChange = (e) => {
+  //   setLinkUrl(e.target.value);
+  //   handleNoteInputChange();
+  // };
+
   const handleLinkUrlChange = (e) => {
-    setLinkUrl(e.target.value);
-    handleNoteInputChange();
+    const url = e.target.value;
+    // Check if URL already includes protocol (http or https)
+    const hasProtocol = url.startsWith('http://') || url.startsWith('https://');
+    setLinkUrl(hasProtocol ? url : `https://${url}`); // Add https:// if missing
+    // Call handleNoteInputChange only when the URL is updated (optional)
+    // if (hasProtocol !== url.startsWith('https://')) {
+    //   handleNoteInputChange();
+    // }
   };
 
   const applyLink = () => {

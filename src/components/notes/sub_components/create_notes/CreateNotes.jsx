@@ -1,12 +1,21 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import plus from 'src/assets/add-notes.svg';
 import AttachFileIcon from 'src/components/icons/AttachFileIcon';
 import TagIcon from 'src/components/icons/TagIcon';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import 'src/components/notes/sub_components/create_notes/CreateNotes.css';
 import RichTextEditor from 'src/components/notes/sub_components/create_notes/subComponents/RichTextEditor';
 import TagsInput from 'src/components/notes/sub_components/create_notes/subComponents/TagsInput';
+import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { createNoteThunk } from 'src/store/thunks/notesThunk';
+import { encryptObjectValues } from 'src/utils/encryptionUtil';
 
-const CreateNotes = ({ handleCreateNotesClick }) => {
+
+
+const CreateNotes = ({ handleCreateNotesClick, setCreateNotesClicked, setNotesArray, notesArray }) => {
+    const dispatch = useDispatch();
+    const [spinner, setSpinner] = useState(false);
     const [attachLinkClicked, setAttachLinkClicked] = useState(false);
     const [showLinkPopup, setShowLinkPopup] = useState(false);
     const handleShowLinkPopup = () => setShowLinkPopup(true);
@@ -30,6 +39,9 @@ const CreateNotes = ({ handleCreateNotesClick }) => {
     };
 
     const [noteDetails, setNoteDetails] = useState({
+        _id: '',
+        pinned: false,
+        date: new Date(),
         title: "",
         desc: "",
         links: [],
@@ -61,24 +73,56 @@ const CreateNotes = ({ handleCreateNotesClick }) => {
     const removeDuplicateLinks = (linksArray) => {
         return [...new Set(linksArray)];
     };
+    const handleCreateClick = async () => {
+        setSpinner(true);
+        try {
 
-    const handleSave = () => {
-        const linksInDesc = extractHrefFromAnchors(noteDetails.desc);
-
-        // Remove duplicates from linksInDesc and combine with existing links in noteDetails
-        let uniqueLinks = removeDuplicateLinks([...linksInDesc]);
-
-        // Immediately update noteDetails with the new unique links
+            const linksInDesc = extractHrefFromAnchors(noteDetails.desc);
+            let uniqueLinks = removeDuplicateLinks(linksInDesc);
         setNoteDetails(prev => ({
             ...prev,
             links: uniqueLinks
         }));
 
-        console.log('Saved note details:', { ...noteDetails, links: uniqueLinks });
+            const forEncryption = {
+                title: noteDetails.title,
+                desc: noteDetails.desc,
+            };
+            const encryptedTaskDetails = encryptObjectValues(forEncryption);
+            console.log('encrypted ones', encryptedTaskDetails)
+            const updatedTaskDetails = {
+                ...noteDetails,
+                title: encryptedTaskDetails.title,
+                desc: encryptedTaskDetails.desc,
+                links: uniqueLinks,
+            };
+
+            const thunkToDispatch = createNoteThunk(updatedTaskDetails);
+            const response = await dispatch(thunkToDispatch).unwrap();
+            console.log('rrrrrrrrrrrrrr', response);
+            if (response.status === 201) {
+                updatedTaskDetails._id = response?.data?._id;
+                setNotesArray(prev => [noteDetails, ...prev]);
+                successToast(response.message, 'task-created');
+                setCreateNotesClicked(false);
+            } else {
+                errorToast('Something went wrong', 'authentication-pages-error');
+                setCreateNotesClicked(false);
+            }
+            setSpinner(false);
+            setCreateNotesClicked(false);
+        } catch (error) {
+            setSpinner(false);
+
+            console.error('Error occurred while dispatching thunk:', error);
+            errorToast(error.message, 'authentication-pages-error');
+            setCreateNotesClicked(false);
+        }
     };
 
     return (
         <div className="add-notes-page">
+            <SpinnerLoader showSpinner={spinner} />
             <div className="add-notes-header-div">
                 <div className="add-notes-header">
                     <div>
@@ -154,11 +198,11 @@ const CreateNotes = ({ handleCreateNotesClick }) => {
                         border: '1px solid var(--field-border-color)',
                         color: 'var(--tertiary-font-color)',
                     }}
-                    onClick={handleCreateNotesClick}
+                    onClick={() => setCreateNotesClicked(false)}
                 >
                     Cancel
                 </button>
-                <button className="primary-button" onClick={handleSave} style={{ width: '135px', gap: '0px' }}>
+                <button className="primary-button" onClick={handleCreateClick} style={{ width: '135px', gap: '0px' }}>
                     Save Note
                 </button>
             </div>

@@ -7,12 +7,12 @@ import FilterButton from "src/components/Filter/FilterButton";
 import PageHeader from 'src/components/PageHeader';
 import MainDiv from "src/components/maindiv/maindiv";
 import 'src/components/notes/Notes.css';
+import CreateNotes from 'src/components/notes/sub_components/create_notes/CreateNotes';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import NoteCard from "./sub_components/NoteCard";
-import CreateNotes from 'src/components/notes/sub_components/create_notes/CreateNotes';
 
 const Notes = () => {
 
@@ -90,13 +90,15 @@ const Notes = () => {
         debouncedGetAllNotes(page, limit, pinned)
     }, [page, limit, pinned, debouncedGetAllNotes])
 
-
+    useEffect(() => {
+        console.log('Notes Array:', notesArray); // Check if notesArray is updated
+    }, [notesArray]);
     return (
         <>
 
             <MainDiv>
                 <div className='notes-page'>
-                    { createNotesClicked ? (< CreateNotes handleCreateNotesClick= {  handleCreateNotesClick } />) : (
+                    {createNotesClicked ? (< CreateNotes setCreateNotesClicked={setCreateNotesClicked} notesArray={notesArray} setNotesArray={setNotesArray} handleCreateNotesClick={handleCreateNotesClick} />) : (
                         <div>
                             <PageHeader text='All Notes' total='20' object='Notes' filterDiv={ filterDiv } handleOpen={ handleCreateNotesClick } />
                     <div className='notes-collection-div'>
