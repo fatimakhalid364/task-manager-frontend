@@ -8,7 +8,7 @@ import PageHeader from "src/components/PageHeader";
 import MainDiv from "src/components/maindiv/maindiv";
 import "src/components/notes/Notes.css";
 import CreateNotes from "src/components/notes/sub_components/create_notes/CreateNotes";
-import { errorToast, successToast } from "src/components/toasters/toast.js";
+import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
 import { decryptSingleValues } from "src/utils/encryptionUtil";
@@ -61,9 +61,9 @@ const Notes = () => {
           date: new Date(note.createdAt),
       }));
         console.log(response?.data);
-        setNotesArray(formattedNotes);
+            setNotesArray((prevNotes) => [...prevNotes, ...formattedNotes]);
         setMetaData(response?.metaData);
-        successToast(response.message, "note-created");
+            // successToast(response.message, "note-created");
     } catch (err) {
             errorToast("Something went wrong", "getNotes-pages-error");
         } finally {
@@ -96,8 +96,20 @@ const Notes = () => {
   }, [page, limit, pinned, debouncedGetAllNotes]);
 
     useEffect(() => {
-      console.log("Notes Array:", notesArray); // Check if notesArray is updated
-  }, [notesArray]);
+        const handleScroll = () => {
+            const scrollableHeight = document.documentElement.scrollHeight;
+            const scrolledHeight = window.innerHeight + window.scrollY;
+            if (scrolledHeight + 200 >= scrollableHeight) {
+                // Check if there's a next page
+                if (metaData?.hasNextPage) {
+                    setPage((prevPage) => prevPage + 1);
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [metaData]);
     return (
         <>
           <MainDiv>
