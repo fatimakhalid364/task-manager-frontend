@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Delete_Icon from 'src/assets/Delete_Icon.svg';
@@ -10,7 +11,6 @@ import 'src/components/notes/sub_components/NoteCard.css';
 import { changePinnedStatus, deleteNoteThunk } from 'src/store/thunks/notesThunk';
 import NotificationModal from '../../notifications/NotificationModal';
 import { errorToast, successToast } from '../../toasters/toast';
-
 
 
 const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, notesArray, setNotesArray }) => {
@@ -80,6 +80,7 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
     const handleCancel = () => {
         setModalOpen(false);
     }
+    const sanitizedDesc = DOMPurify.sanitize(desc);
 
     const handleOkay = async () => {
         setSpinner(true);
@@ -126,7 +127,8 @@ const NoteCard = ({ title, desc, links, date, hide, pinning, tags = [], _id, not
             <div className='note-card-div' style={{ borderBottom: pinned === 'PINNED' ? '4px solid var(--primary-background-color)' : undefined }}>
                 <div className='note-card'>
                     <div className='note-title'>{title}</div>
-                    <div className='note-description'>{desc}</div>
+                    {/* <div className='note-description'>{desc}</div> */}
+                    <div className='note-description' dangerouslySetInnerHTML={{ __html: sanitizedDesc }}></div>
                     <div className={`note-tag-container ${showAllTags ? 'scrollable' : ''}`} ref={containerRef}>
                         {visibleTags.map((tag, index) => (
                             <div key={index} className='note-tag'>{tag}</div>

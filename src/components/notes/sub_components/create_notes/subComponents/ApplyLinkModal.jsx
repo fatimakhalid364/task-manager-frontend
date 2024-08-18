@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import { EditorState, Modifier, RichUtils, SelectionState } from 'draft-js';
-import 'src/components/notes/sub_components/create_notes/subComponents/ApplyLinkModal.css'
+import Modal from '@mui/material/Modal';
+import { EditorState, Modifier } from 'draft-js';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import 'src/components/notes/sub_components/create_notes/subComponents/ApplyLinkModal.css';
 
-const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShowLinkPopup, handleCloseLinkPopup, handleAttachLinkClick }) => {
+const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShowLinkPopup, handleNoteInputChange, handleCloseLinkPopup, handleAttachLinkClick }) => {
   const [linkText, setLinkText] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
 
   const handleLinkTextChange = (e) => setLinkText(e.target.value);
+  // const handleLinkUrlChange = (e) => {
+  //   setLinkUrl(e.target.value);
+  //   handleNoteInputChange();
+  // };
+
   const handleLinkUrlChange = (e) => {
-    setLinkUrl(e.target.value);
-    handleNoteInputChange();
+    const url = e.target.value;
+    // Check if URL already includes protocol (http or https)
+    const hasProtocol = url.startsWith('http://') || url.startsWith('https://');
+    setLinkUrl(hasProtocol ? url : `https://${url}`); // Add https:// if missing
+    // Call handleNoteInputChange only when the URL is updated (optional)
+    // if (hasProtocol !== url.startsWith('https://')) {
+    //   handleNoteInputChange();
+    // }
   };
 
   const applyLink = () => {
@@ -35,6 +46,8 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
 
       // Push the new content state to the editor state
       const newEditorState = EditorState.push(editorState, newContentState, 'apply-entity');
+      // handleNoteInputChange({ target: { name: 'links', value: linkUrl } });
+
       setEditorState(newEditorState);
       handleCloseLinkPopup();
       handleAttachLinkClick();
@@ -59,7 +72,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
         <div className='apply-link-div'>
         <div style={{ borderBottom: '1px solid var(--field-border-color)', height: '72%'}}>
             <div style={{ width: '100%', padding: '20px'}}>
-                <label for='name-for-link' className='link-popup-inputs'>Name</label>
+              <label htmlFor='name-for-link' className='link-popup-inputs'>Name</label>
                 <input
                     type="text"
                     placeholder="Enter link text"
@@ -69,7 +82,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
                     id='name-for-link'
                     
                 />
-                <label for='link-for-link' className='link-popup-inputs' >Link</label>
+              <label htmlFor='link-for-link' className='link-popup-inputs' >Link</label>
                 <input
                     type="text"
                     placeholder="Enter URL"
