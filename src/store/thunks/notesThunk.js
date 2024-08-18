@@ -48,6 +48,30 @@ const createNoteThunk = createAsyncThunk("createNote", async (body, thunkAPI) =>
     }
 });
 
+const updateNoteThunk = createAsyncThunk("updateNote", async (body, thunkAPI) => {
+    console.log("inside createTask thunk", body);
+    const { _id } = body;
+    console.log('its sthe thunk ', body)
+    try {
+        const response = await APIS.put(`/notes/${_id}`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is,", response);
+        return response.data;
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return thunkAPI.rejectWithValue({
+            statusCode: error.response.status,
+            message: error.response.data.error,
+        });
+    }
+});
+
 const changePinnedStatus = createAsyncThunk("changePinned", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
     const { _id, pinned } = params
@@ -88,5 +112,5 @@ const deleteNoteThunk = createAsyncThunk("changePinned", async (_id, thunkAPI) =
     }
 });
 
-export { changePinnedStatus, createNoteThunk, deleteNoteThunk, getAllNotesThunk };
+export { changePinnedStatus, createNoteThunk, deleteNoteThunk, getAllNotesThunk, updateNoteThunk };
 

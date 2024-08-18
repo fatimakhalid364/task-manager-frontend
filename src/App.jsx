@@ -5,6 +5,7 @@ import Calendar from './components/calendar';
 import Dashboard from './components/dashboard';
 // import Notes from './components/notes';
 import Notes from '../src/components/notes/Notes';
+import UpdateNote from '../src/components/notes/sub_components/update_notes/UpdateNote';
 import RouteGuard from './components/RouteGuard;';
 import Settings from './components/settings';
 import Tasks from './components/tasks/tasks';
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
                     <Route path="/calendar" element={<RouteGuard element={Calendar} />} />
                     <Route path="/settings" element={<RouteGuard element={Settings} />} />
+                    <Route path="/notes/:id" element={<RouteGuard element={UpdateNote} />} />
                 </Routes>
             </AuthProvider>
         </PersistGate>
