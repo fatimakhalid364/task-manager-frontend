@@ -33,12 +33,32 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
         // setAttachLinkClicked(false);
     };
 
-    const [noteDetails, setNoteDetails] = useState({
-        title: "",
-        desc: "something",
-        links: [],
-        tags: []
-    });
+
+    const [tags, setTags] = useState([])
+
+    // function handleKeyDown(e) {
+        
+    //     if (e.key !== 'Enter') return;
+    //     const value = e.target.value;
+    //     if (!value.trim()) return;
+    //     if (tags.length >= 5) {
+    //         alert('You can add only 5 tags.');
+    //         return; 
+    //     }
+    //     setTags([...tags, value.trim()]);
+    //     e.target.value = '';
+    // }
+
+    // function removeTag(index){
+    //     setTags(tags.filter((el, i) => i !== index))
+    // }
+
+    // const [noteDetails, setNoteDetails] = useState({
+    //     title: "",
+    //     desc: "",
+    //     links: [],
+    //     tags: []
+    // });
 
     const handleNoteInputChange = (event) => {
         const { value, name } = event.target;
@@ -64,15 +84,15 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                         <div style={{fontSize: '16px', fontFamily: 'var(--secondary-font-family)', color: 'var(--secondary-font-color)', fontWeight: '500'}}>
                             Title
                         </div>
-                        <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' value={noteDetails.title} />
+                        <input type="text" name="title" placeholder='Enter title here'  className='create-notes-input' />
                     </div>
                     <div className="add-notes-input-details">
                         <RichTextEditor showLinkPopup={ showLinkPopup } 
                                         handleShowLinkPopup={ handleShowLinkPopup }  
                                         handleCloseLinkPopup={  handleCloseLinkPopup } 
                                         handleAttachLikClick={ handleAttachLinkClick }
-                                        handleNoteInputChange={ handleNoteInputChange}
-                                        value={noteDetails.links} />
+                                      
+                                        />
                         <div className='note-attachments-div'> 
                             <div className='note-attachments note-attachments-a' onClick={ handleAttachLinkClick } style={{color: attachLinkClicked && 'var(--primary-background-color)', backgroundColor: attachLinkClicked && 'var(--active-background-color)'}}>
                                 <AttachFileIcon  color={attachLinkClicked ? 'var(--primary-background-color)' : 'var(--tertiary-font-color)'}/>
@@ -82,7 +102,7 @@ const CreateNotes = ({  handleCreateNotesClick }) => {
                                 <TagIcon color={addTagClicked ? 'var(--primary-background-color)' : 'var(--tertiary-font-color)'}/>
                                 Add Tag
                             </div>
-                            {addTagClicked && (<TagsInput value={noteDetails.tags} />)}
+                            {addTagClicked && (<TagsInput tags={ tags } setTags = { setTags }  />)}
                         </div>
                     </div>
             </form>

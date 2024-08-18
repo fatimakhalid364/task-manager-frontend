@@ -6,7 +6,7 @@ import Dashboard from './components/dashboard';
 // import Notes from './components/notes';
 import Notes from '../src/components/notes/Notes';
 import RouteGuard from './components/RouteGuard;';
-import Settings from './components/settings';
+import Settings from './components/settings/settings';
 import Tasks from './components/tasks/tasks';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './pages/authentication/ForgotPassword';
