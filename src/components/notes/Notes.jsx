@@ -55,6 +55,9 @@ const Notes = () => {
 
           note.title = decryptSingleValues(note.title, privateKey);
           note.desc = decryptSingleValues(note.desc, privateKey);
+            if (Array.isArray(note.desc)) {
+                note.desc = note.desc.join('');
+            }
       });
         const formattedNotes = notes.map((note) => ({
             ...note,

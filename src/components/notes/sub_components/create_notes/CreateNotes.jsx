@@ -10,7 +10,7 @@ import RichTextEditor from "src/components/notes/sub_components/create_notes/sub
 import TagsInput from "src/components/notes/sub_components/create_notes/subComponents/TagsInput";
 import { errorToast, successToast } from "src/components/toasters/toast.js";
 import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
-import { encryptObjectValues } from "src/utils/encryptionUtil";
+import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 
 const CreateNotes = ({
     handleCreateNotesClick,
@@ -77,6 +77,9 @@ const CreateNotes = ({
         try {
         const linksInDesc = extractHrefFromAnchors(noteDetails.desc);
         let uniqueLinks = removeDuplicateLinks(linksInDesc);
+            const splitDesc = noteDetails.desc.match(/.{1,32}/g);
+            // Encrypt the split description array
+            const encryptedDesc = encryptArrayValues(splitDesc);
         setNoteDetails((prev) => ({
             ...prev,
           links: uniqueLinks,
@@ -84,21 +87,21 @@ const CreateNotes = ({
         console.log("before encryption===========>", noteDetails);
         const forEncryption = {
             title: noteDetails.title,
-            desc: noteDetails.desc,
         };
         const encryptedTaskDetails = encryptObjectValues(forEncryption);
         console.log("encrypted ones", encryptedTaskDetails);
         const updatedTaskDetails = {
             ...noteDetails,
           title: encryptedTaskDetails?.title,
-          desc: encryptedTaskDetails?.desc,
+            desc: encryptedDesc,
           links: uniqueLinks,
       };
+            console.log('Updated Tasksssssssssssss', updatedTaskDetails)
 
         const thunkToDispatch = update
             ? updateNoteThunk(updatedTaskDetails)
             : createNoteThunk(updatedTaskDetails);
-        const response = await dispatch(thunkToDispatch).unwrap();
+            const response = await dispatch(thunkToDispatch).unwrap();
         console.log("rrrrrrrrrrrrrr", response);
         if (response.status === 201) {
             updatedTaskDetails._id = response?.data?._id;
