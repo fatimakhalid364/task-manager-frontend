@@ -13,14 +13,11 @@ import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 
 const CreateNotes = ({
-    handleCreateNotesClick,
     setCreateNotesClicked,
     setNotesArray,
     noteDetails,
     setNoteDetails,
-    handleUpdateClick,
     update = false,
-    notesArray,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -78,13 +75,11 @@ const CreateNotes = ({
         const linksInDesc = extractHrefFromAnchors(noteDetails.desc);
         let uniqueLinks = removeDuplicateLinks(linksInDesc);
             const splitDesc = noteDetails.desc.match(/.{1,32}/g);
-            // Encrypt the split description array
             const encryptedDesc = encryptArrayValues(splitDesc);
         setNoteDetails((prev) => ({
             ...prev,
           links: uniqueLinks,
-      }));
-        console.log("before encryption===========>", noteDetails);
+        }));
         const forEncryption = {
             title: noteDetails.title,
         };
@@ -95,14 +90,12 @@ const CreateNotes = ({
           title: encryptedTaskDetails?.title,
             desc: encryptedDesc,
           links: uniqueLinks,
-      };
-            console.log('Updated Tasksssssssssssss', updatedTaskDetails)
+        };
 
         const thunkToDispatch = update
             ? updateNoteThunk(updatedTaskDetails)
             : createNoteThunk(updatedTaskDetails);
             const response = await dispatch(thunkToDispatch).unwrap();
-        console.log("rrrrrrrrrrrrrr", response);
         if (response.status === 201) {
             updatedTaskDetails._id = response?.data?._id;
           const obj = { ...noteDetails, links: uniqueLinks };

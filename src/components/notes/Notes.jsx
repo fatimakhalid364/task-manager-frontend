@@ -62,11 +62,9 @@ const Notes = () => {
         const formattedNotes = notes.map((note) => ({
             ...note,
           date: new Date(note.createdAt),
-      }));
-        console.log(response?.data);
+        }));
             setNotesArray((prevNotes) => [...prevNotes, ...formattedNotes]);
-        setMetaData(response?.metaData);
-            // successToast(response.message, "note-created");
+            setMetaData(response?.metaData);
     } catch (err) {
             errorToast("Something went wrong", "getNotes-pages-error");
         } finally {
@@ -103,7 +101,6 @@ const Notes = () => {
             const scrollableHeight = document.documentElement.scrollHeight;
             const scrolledHeight = window.innerHeight + window.scrollY;
             if (scrolledHeight + 200 >= scrollableHeight) {
-                // Check if there's a next page
                 if (metaData?.hasNextPage) {
                     setPage((prevPage) => prevPage + 1);
                 }

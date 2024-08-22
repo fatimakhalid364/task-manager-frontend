@@ -89,10 +89,7 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
 const decryptSingleValues = (encryptedValue, _privateKey) => {
     try {
         const privateKey = forge.pki.privateKeyFromPem(_privateKey);
-
-        // Check if encryptedValue is an array
         if (Array.isArray(encryptedValue)) {
-            // Decrypt each element in the array
             return encryptedValue.map(item => {
                 const encryptedBytes = forge.util.decode64(item);
                 const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
@@ -102,7 +99,6 @@ const decryptSingleValues = (encryptedValue, _privateKey) => {
                 return forge.util.decodeUtf8(decryptedBytes);
             });
         } else {
-            // Decrypt the string directly
             const encryptedBytes = forge.util.decode64(encryptedValue);
             const decryptedBytes = privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
                 md: forge.md.sha256.create(),
