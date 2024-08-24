@@ -53,15 +53,24 @@
 .notes-display{
     margin-top: 35px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(345px, 385px));
+    grid-template-columns: repeat(auto-fit, minmax(305px, 32%));
     width: 100%;
     gap: 20px;
 }
-
-@media (max-width: 1286px) {
+@media (min-width: 1249px) and (max-width: 1272px) {
     .notes-display {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 310px));
-        
+        grid-template-columns: repeat(auto-fit, minmax(305px, 46%));
     }
 }
 
+@media (min-width: 649px) and (max-width: 1029px) {
+    .notes-display {
+        grid-template-columns: repeat(auto-fit, minmax(305px, 46%));
+    }
+}
+
+@media (max-width: 649px) {
+    .notes-display {
+        grid-template-columns: repeat(auto-fit, minmax(305px, 95%));
+    }
+}
