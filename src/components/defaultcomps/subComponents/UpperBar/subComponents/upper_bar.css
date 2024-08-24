@@ -8,7 +8,7 @@
     background-color: var(--neutral-background-color);
     left: 0;   
     height: 55px;
-    z-index: 99999999;
+    z-index: 2;
 }
 
 .page-logo-div {
