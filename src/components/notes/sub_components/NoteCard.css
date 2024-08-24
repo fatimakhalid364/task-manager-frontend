@@ -33,7 +33,7 @@
 .reference-div {
     display: flex;
     flex-direction: column;
-    
+    height: 60px;
     margin-bottom: 6px;
     gap: 10px;
 }
@@ -109,15 +109,14 @@
     font-family: var(--secondary-font-family);
     color: var(--tertiary-font-color);
     font-size: 16px;
-    height: 90px;
-    width: 305px;
+    min-height: 96px;
+    min-width: 90%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
     text-overflow: ellipsis;
-    
-    margin-top: 20px;
+    margin-top: 0px;
     margin-bottom: 15px;
 }
 
@@ -153,6 +152,8 @@
     flex-wrap: nowrap;
     overflow: hidden;
     position: relative;
+    height: 40px;
+    margin-bottom: 15px;
 }
 
 
@@ -183,4 +184,10 @@
     cursor: pointer;
     align-items: center;
     display: flex;
+}
+
+@media (max-width: 1286px) {
+    .note-card-div {
+        height: 360px;
+    }
 }

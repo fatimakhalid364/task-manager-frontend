@@ -50,7 +50,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
 
       setEditorState(newEditorState);
       handleCloseLinkPopup();
-      handleAttachLinkClick();
+      handleAttachLinkClick;
     } else {
       // Handle case where linkText or linkUrl is missing
       alert('Please enter both link text and URL.');
