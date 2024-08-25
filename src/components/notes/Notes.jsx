@@ -17,7 +17,7 @@ import NoteCard from "./sub_components/NoteCard";
 const Notes = () => {
     const dispatch = useDispatch();
     const privateKey = localStorage.getItem("privateKey");
-
+    const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [pinned, setPinned] = useState("");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -45,8 +45,36 @@ const Notes = () => {
       console.log("create notes popup", createNotesClicked);
   }, []);
 
+
+  const noteLoader = <div className='note-card-div'>
+  <div className="note-card">
+      <div className="note-title skeleton-for-notes" style={{height: '15px', width: '70%'}}></div>
+      <div className="note-description skeleton-for-notes" style={{minHeight: '15px', marginBottom: '5px', marginTop: '20px'}}></div>
+      <div className="note-description skeleton-for-notes" style={{minHeight: '15px', marginBottom: '5px'}}></div>
+      <div className="note-description skeleton-for-notes" style={{minHeight: '15px', marginBottom: '5px'}}></div>
+      <div className="note-description skeleton-for-notes" style={{minHeight: '15px', marginBottom: '5px', width: '80%'}}></div>
+      <div style={{display: 'flex', gap:'15px'}}>
+          <div className="note-tag skeleton-for-notes" style={{width: '80px', marginTop: '20px'}}></div>
+          <div className="note-tag skeleton-for-notes" style={{width: '80px', marginTop: '20px' }}></div>
+      </div>
+      <div style={{display: 'flex', gap: '10px', flexDirection: 'row', alignItems: 'center', marginTop: '20px'}}>
+          <div className="skeleton-for-notes" style={{width: '30px', marginBottom: '10px', height: '30px', borderRadius: '50px'}}></div>
+          <div className="skeleton-for-notes" style={{width: '100px', height: '20px'}}></div>
+      </div>
+      <div className="note-footer" style={{marginTop: '10px'}}>
+          <div className='skeleton-for-notes' style={{width: '100px', height: '15px'}}></div>
+          <div style={{display: 'flex', gap: '15px'}}>
+              <div className='skeleton-for-notes' style={{width: '35px', height: '35px', borderRadius: '50px'}}></div>
+              <div className='skeleton-for-notes' style={{width: '35px', height: '35px', borderRadius: '50px'}}></div>
+              <div className='skeleton-for-notes' style={{width: '35px', height: '35px', borderRadius: '50px'}}></div>
+          </div>
+      </div>
+  </div>
+ </div>
+
     const getAllNotes = async (page = 0, limit = 5, pinned = "") => {
         try {
+        setSkeletonLoader(true);
         const params = { page, limit, pinned };
         const response = await dispatch(getAllNotesThunk(params)).unwrap();
         const notes = response?.data || [];
@@ -65,8 +93,10 @@ const Notes = () => {
         }));
             setNotesArray((prevNotes) => [...prevNotes, ...formattedNotes]);
             setMetaData(response?.metaData);
+            setSkeletonLoader(false);
     } catch (err) {
             errorToast("Something went wrong", "getNotes-pages-error");
+            setSkeletonLoader(false);
         } finally {
             // setSkeletonLoader(false);
         }
@@ -165,21 +195,31 @@ const Notes = () => {
                                   </div>
                               </div>
                               <div className='notes-display'>
-                                  {notesArray?.map((note, index) => (
-                                      <NoteCard
-                                          key={note._id}
-                                          title={note.title}
-                                          desc={note.desc}
-                                          links={note.links}
-                                          date={note.date}
-                                          pinning={note.pinned}
-                                          hide={note.hide}
-                                          _id={note._id}
-                                          tags={note.tags}
-                                          notesArray={notesArray}
-                                          setNotesArray={setNotesArray}
-                                      />
-                                  ))}
+                                {skeletonLoader ? (
+                                   <div style={{display: 'flex', gap: '30px'}}>
+                                    {noteLoader}
+                                    {noteLoader}
+                                    {noteLoader}
+                                   </div>
+
+                                ) : (
+                                    notesArray?.map((note, index) => (
+                                        <NoteCard
+                                            key={note._id}
+                                            title={note.title}
+                                            desc={note.desc}
+                                            links={note.links}
+                                            date={note.date}
+                                            pinning={note.pinned}
+                                            hide={note.hide}
+                                            _id={note._id}
+                                            tags={note.tags}
+                                            notesArray={notesArray}
+                                            setNotesArray={setNotesArray}
+                                         
+                                        />
+                                    ))
+                                )}
                           </div>
                       </div>
                   )}
