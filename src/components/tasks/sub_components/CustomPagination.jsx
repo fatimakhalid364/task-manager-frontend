@@ -12,7 +12,8 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '16px', gap: '15px' }}>
+            <div style={{display: 'flex', gap: '20px'}}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Typography >Tasks per page</Typography>
                 <FormControl variant="outlined" size="small">
@@ -34,6 +35,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
                 </Typography>
+            </div>
             </div>
             <div>
                 <IconButton onClick={() => setPage(0)} disabled={!hasPreviousPage}>
