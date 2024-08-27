@@ -286,6 +286,31 @@
     border-radius: 10px;
 }
 
+.MuiMenu-paper{
+    box-shadow: 0px 10px 16px 1px #0C0C0D0D !important;
+    border: 1px solid var(--light-border-color) !important;
+    border-radius: 12px !important;
+    height: 158px !important;
+    width: 199px !important;
+    overflow-y: hidden !important;
+
+}
+
+.MuiMenu-list {
+    color: var(--quinary-font-color);
+    font-family: var(--primary-font-family) !important;
+    padding-top: 8px !important;
+}
+
+.css-1cner7f-MuiButtonBase-root-MuiMenuItem-root{
+    border-bottom: 1px solid var(--field-border-color) !important;
+    height: 48px !important;
+}
+
+.css-1hnc72h-MuiButtonBase-root-MuiMenuItem-root {
+    height: 48px !important;
+}
+
 
 
 @keyframes skeleton-loading {

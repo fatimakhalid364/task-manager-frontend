@@ -12,7 +12,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '16px', gap: '15px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '16px', gap: '15px', marginRight: '10px' }}>
             <div style={{display: 'flex', gap: '20px'}}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Typography >Tasks per page</Typography>

@@ -91,6 +91,6 @@
 @media (max-width: 649px) {
     .notes-display {
         grid-template-columns: repeat(auto-fit, minmax(305px, 95%));
-        margin-left: 9.7px
+        /* margin-left: 9.7px */
     }
 }

@@ -17,6 +17,9 @@ import { styled } from '@mui/system';
 import { useState } from 'react';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import CustomPagination from './CustomPagination';
+import redTrash from 'src/assets/red-trash.svg';
+import edit from 'src/assets/edit.svg';
+import tickInCircle from 'src/assets/tick-in-circle.svg';
 
 const calculateCellWidth = () => {
   const containerWidth = document.getElementById('table-container')?.offsetWidth || 0;
@@ -234,9 +237,18 @@ const TaskTable = ({
                             open={Boolean(anchorEl) && selectedTaskId === task.id}
                             onClose={handleMenuClose}
                           >
-                            <MenuItem onClick={handleDelete}>Delete</MenuItem>
-                            <MenuItem onClick={handleChangeStatus}>Change Status</MenuItem>
-                            <MenuItem onClick={handleComplete}>Complete</MenuItem>
+                            <MenuItem onClick={handleDelete} sx={{gap: '12px'}}>
+                              <img src={edit} alt='edit-icon' />
+                              <div style={{marginTop: '2px'}}>Edit</div>
+                            </MenuItem>
+                            <MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
+                              <img src={tickInCircle} alt='tick-in-circle' />
+                              <div style={{marginTop: '2px'}}>Mark as Complete</div>
+                            </MenuItem>
+                            <MenuItem onClick={handleComplete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
+                              <img src={redTrash} alt='red-trash-icon' />
+                              <div style={{marginTop: '2px'}}>Delete</div>
+                            </MenuItem>
                           </Menu>
                         </StyledAction>
                       </TableRow>

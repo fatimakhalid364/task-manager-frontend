@@ -254,9 +254,9 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                             </FormControl>
                             <div className='add-task-input-title'>Task Description</div>
                             <TextareaAutosize
-                                minRows={7}
+                                maxRows={7}
                                 p={2}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', overflowY: 'scroll' }}
                                 value={taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
