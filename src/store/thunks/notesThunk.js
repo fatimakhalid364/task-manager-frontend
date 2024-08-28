@@ -27,7 +27,7 @@ const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI
 });
 
 const createNoteThunk = createAsyncThunk("createNote", async (body, thunkAPI) => {
-    console.log("inside createTask thunk", body);
+    console.log("inside createNote thunk", body);
     try {
         const response = await APIS.post(`/notes`, body, {
             headers: {
@@ -49,7 +49,7 @@ const createNoteThunk = createAsyncThunk("createNote", async (body, thunkAPI) =>
 });
 
 const updateNoteThunk = createAsyncThunk("updateNote", async (body, thunkAPI) => {
-    console.log("inside createTask thunk", body);
+    console.log("inside update-note thunk", body);
     const { _id } = body;
     console.log('its sthe thunk ', body)
     try {
@@ -73,7 +73,7 @@ const updateNoteThunk = createAsyncThunk("updateNote", async (body, thunkAPI) =>
 });
 
 const changePinnedStatus = createAsyncThunk("changePinned", async (params, thunkAPI) => {
-    console.log("inside getAllTasks thunk",);
+    console.log("inside change-pinned thunk",);
     const { _id, pinned } = params
     console.log('...................', _id, pinned)
     try {

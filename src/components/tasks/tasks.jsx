@@ -44,9 +44,9 @@ function Tasks() {
             response?.data?.forEach(task => {
                 task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
                 task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-                // if (Array.isArray(task.desc)) {
-                //     task.desc = task.desc.join('');
-                // }
+                if (Array.isArray(task.desc)) {
+                    task.desc = task.desc.join('');
+                }
             });
             setTasks(response?.data);
             setMetaData(response?.metaData);

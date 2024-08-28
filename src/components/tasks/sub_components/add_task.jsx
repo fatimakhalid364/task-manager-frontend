@@ -11,7 +11,7 @@ import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
-import { encryptObjectValues } from 'src/utils/encryptionUtil';
+import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 
 const MyComponent = styled('div')({
     position: 'relative',
@@ -144,21 +144,27 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
 
     const dispatch = useDispatch();
 
+    
+
     const handleCreateClick = async () => {
         try {
             handleClose();
+            const splitDesc = taskDetails.taskDescription.match(/.{1,32}/g);
+            const encryptedDesc = encryptArrayValues(splitDesc);
             const forEncryption = {
                 taskTitle: taskDetails.taskTitle,
-                taskDescription: taskDetails.taskDescription
+                // taskDescription: taskDetails.taskDescription
             };
             const encryptedTaskDetails = encryptObjectValues(forEncryption);
 
             const updatedTaskDetails = {
                 ...taskDetails,
                 taskTitle: encryptedTaskDetails.taskTitle,
-                taskDescription: encryptedTaskDetails.taskDescription,
+                taskDescription: encryptedDesc,
                 dueDate: convertToUTC(taskDetails.dueDate)
             };
+
+            console.log('updated-task-details-------------------> ', updatedTaskDetails);
 
             const thunkToDispatch = createTaskThunk(updatedTaskDetails);
             const response = await dispatch(thunkToDispatch).unwrap();
@@ -176,7 +182,6 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             resetTaskDetails();
         }
     };
-
     return (
         <Modal
             open={open}
