@@ -260,6 +260,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                             <div className='add-task-input-title'>Task Description</div>
                             <TextareaAutosize
                                 maxRows={7}
+                                minRows={7}
                                 p={2}
                                 style={{ width: '100%', overflowY: 'scroll' }}
                                 value={taskDetails.taskDescription}
