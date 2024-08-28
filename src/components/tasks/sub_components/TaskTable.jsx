@@ -15,11 +15,16 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
-import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
-import CustomPagination from './CustomPagination';
-import redTrash from 'src/assets/red-trash.svg';
+import { useDispatch } from 'react-redux';
 import edit from 'src/assets/edit.svg';
+import redTrash from 'src/assets/red-trash.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
+import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
+import { errorToast, successToast } from "../../toasters/toast";
+import CustomPagination from './CustomPagination';
+
 
 const calculateCellWidth = () => {
   const containerWidth = document.getElementById('table-container')?.offsetWidth || 0;
@@ -82,6 +87,8 @@ const TaskTable = ({
   setLimit,
   limit,
   total,
+  setMetaData,
+  setTasks,
   page,
   setPage,
   previousPage,
@@ -95,6 +102,8 @@ const TaskTable = ({
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const dispatch = useDispatch();
+  const [spinner, setSpinner] = useState(false);
 
   const handlePriorityColorChange = (priority) => {
     switch (priority) {
@@ -134,8 +143,31 @@ const TaskTable = ({
     setSelectedTaskId(null);
   };
 
+  const deleteTask = async (_id) => {
+    setSpinner(true);
+
+    try {
+      const response = await dispatch(deleteTaskThunk(_id)).unwrap();
+      if (response?.status === 200) {
+        const filteredTasks = tasks.filter((task) => task._id !== selectedTaskId);
+        response?.data?.closestTask ? filteredTasks.push(response?.data?.closestTask) : "";
+        setTasks(filteredTasks);
+        setMetaData((prevMetaData) => ({
+          ...prevMetaData,
+          total: prevMetaData.total - 1,
+        }));
+        successToast(response.message, 'task-created');
+      }
+    } catch (err) {
+      errorToast('Something went wrong', 'getTask-pages-error');
+    } finally {
+      setSpinner(false)
+    }
+  };
+
   const handleDelete = () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);
+    deleteTask(selectedTaskId);
     handleMenuClose();
   };
 
@@ -156,6 +188,7 @@ const TaskTable = ({
 
   return (
     <div>
+      <SpinnerLoader showSpinner={spinner} />
       <Paper>
         <TableContainer id="table-container" >
           <Table >
@@ -228,13 +261,13 @@ const TaskTable = ({
                         </StyledTableCell>
                         <StyledAction sx={{ width: '1%' }}>
                           <Tooltip title="Options">
-                            <IconButton size="small" onClick={(event) => handleMenuClick(event, task.id)}>
+                            <IconButton size="small" onClick={(event) => handleMenuClick(event, task._id)}>
                               <MoreVertIcon />
                             </IconButton>
                           </Tooltip>
                           <Menu
                             anchorEl={anchorEl}
-                            open={Boolean(anchorEl) && selectedTaskId === task.id}
+                            open={Boolean(anchorEl) && selectedTaskId === task._id}
                             onClose={handleMenuClose}
                           >
                             <MenuItem onClick={handleDelete} sx={{gap: '12px'}}>
@@ -245,7 +278,7 @@ const TaskTable = ({
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Complete</div>
                             </MenuItem>
-                            <MenuItem onClick={handleComplete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
+                            <MenuItem onClick={handleDelete} sx={{ color: 'var(--logout-color)', gap: '12px' }}>
                               <img src={redTrash} alt='red-trash-icon' />
                               <div style={{marginTop: '2px'}}>Delete</div>
                             </MenuItem>
