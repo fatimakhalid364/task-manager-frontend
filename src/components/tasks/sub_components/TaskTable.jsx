@@ -22,6 +22,7 @@ import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
 
@@ -97,6 +98,7 @@ const TaskTable = ({
   hasNextPage,
   nextPage,
   skeletonLoader,
+  privateKey,
   metaData
 }) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -104,7 +106,7 @@ const TaskTable = ({
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const dispatch = useDispatch();
   const [spinner, setSpinner] = useState(false);
-
+  // const privateKey = localStorage.getItem("privateKey");
   const handlePriorityColorChange = (priority) => {
     switch (priority) {
       case 'HIGH':
@@ -150,7 +152,16 @@ const TaskTable = ({
       const response = await dispatch(deleteTaskThunk(_id)).unwrap();
       if (response?.status === 200) {
         const filteredTasks = tasks.filter((task) => task._id !== selectedTaskId);
-        response?.data?.closestTask ? filteredTasks.push(response?.data?.closestTask) : "";
+        const closestTask = response?.data?.closestTask
+        console.log(closestTask)
+        if (closestTask) {
+          closestTask.taskTitle = decryptSingleValues(closestTask?.taskTitle, privateKey);
+          closestTask.taskDescription = decryptSingleValues(closestTask?.taskDescription, privateKey);
+          if (Array.isArray(closestTask.taskDescription)) {
+            closestTask.taskDescription = closestTask.taskDescription.join('');
+          }
+          filteredTasks.push(closestTask);
+        }
         setTasks(filteredTasks);
         setMetaData((prevMetaData) => ({
           ...prevMetaData,

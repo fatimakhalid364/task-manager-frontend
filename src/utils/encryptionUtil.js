@@ -89,6 +89,8 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
 const decryptSingleValues = (encryptedValue, _privateKey) => {
     try {
         const privateKey = forge.pki.privateKeyFromPem(_privateKey);
+        console.log('simple private key', privateKey)
+
         if (Array.isArray(encryptedValue)) {
             return encryptedValue.map(item => {
                 const encryptedBytes = forge.util.decode64(item);
