@@ -25,5 +25,24 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
     }
 });
 
-export { getAllTasksThunk };
+const deleteTaskThunk = createAsyncThunk("deleteTask", async (_id, thunkAPI) => {
+    console.log("inside delete task thunk");
+    try {
+        const response = await APIS.delete(`/task/${_id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is in thunk,====================>", response);
+        return response.data;
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return HandleAuthError(error, thunkAPI);
+    }
+});
+
+export { getAllTasksThunk, deleteTaskThunk };
 

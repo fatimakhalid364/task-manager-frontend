@@ -57,7 +57,7 @@ function MainDiv({ children }) {
                         width: (!expandBar && !onWholeScreen) || ( expandBar && !burgerMenuClicked) ? '96%' : (onWholeScreen) ? '100%' :  '81%', 
                         height: (onWholeScreen ) && '100%', 
                         marginTop: (onWholeScreen) && '0',
-                        marginLeft: (expandBar && burgerMenuClicked) ? '276px': (onWholeScreen && isAdaptableScreen) ? '57px' : !isAdaptableScreen ? '0px' : '67px',
+                        marginLeft: (expandBar && burgerMenuClicked) ? '262px': (onWholeScreen && isAdaptableScreen) ? '57px' : !isAdaptableScreen ? '0px' : '55px',
                         display: (onWholeScreen && isAdaptableScreen) && 'block',
                         transition: 'marginLeft 0.4s ease-in'
                     }}

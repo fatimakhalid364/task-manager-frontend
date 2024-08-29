@@ -20,6 +20,13 @@ import CustomPagination from './CustomPagination';
 import redTrash from 'src/assets/red-trash.svg';
 import edit from 'src/assets/edit.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
+import {
+  deleteTaskThunk,
+} from "src/store/thunks/taskThunks";
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { useDispatch } from "react-redux";
+
+
 
 const calculateCellWidth = () => {
   const containerWidth = document.getElementById('table-container')?.offsetWidth || 0;
@@ -79,6 +86,7 @@ const StyledTableHeadersA = styled(TableCell)({
 
 const TaskTable = ({
   tasks = [],
+  setTasks,
   setLimit,
   limit,
   total,
@@ -95,6 +103,9 @@ const TaskTable = ({
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [spinner, setSpinner] = useState(false);
+  const dispatch = useDispatch();
+
 
   const handlePriorityColorChange = (priority) => {
     switch (priority) {
@@ -134,14 +145,11 @@ const TaskTable = ({
     setSelectedTaskId(null);
   };
 
-  const handleDelete = () => {
-    console.log(`Delete task with ID: ${selectedTaskId}`);
-    handleMenuClose();
-  };
+
 
   const handleChangeStatus = () => {
     console.log(`Change status for task with ID: ${selectedTaskId}`);
-    handleMenuClose();
+   
   };
 
   const handleComplete = () => {
@@ -156,6 +164,7 @@ const TaskTable = ({
 
   return (
     <div>
+       <SpinnerLoader showSpinner={spinner} />
       <Paper>
         <TableContainer id="table-container" >
           <Table >
@@ -237,7 +246,7 @@ const TaskTable = ({
                             open={Boolean(anchorEl) && selectedTaskId === task.id}
                             onClose={handleMenuClose}
                           >
-                            <MenuItem onClick={handleDelete} sx={{gap: '12px'}}>
+                            <MenuItem onClick={handleComplete} sx={{gap: '12px'}}>
                               <img src={edit} alt='edit-icon' />
                               <div style={{marginTop: '2px'}}>Edit</div>
                             </MenuItem>
@@ -245,7 +254,7 @@ const TaskTable = ({
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Complete</div>
                             </MenuItem>
-                            <MenuItem onClick={handleComplete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
+                            <MenuItem onClick={handleDelete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
                               <img src={redTrash} alt='red-trash-icon' />
                               <div style={{marginTop: '2px'}}>Delete</div>
                             </MenuItem>

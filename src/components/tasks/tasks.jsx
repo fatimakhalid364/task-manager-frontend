@@ -15,6 +15,9 @@ import PageHeader from 'src/components/PageHeader';
 import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomButtons from "src/components/BottomButtons";
 import BottomBar from 'src/components/BottomBar/BottomBar';
+import {
+    deleteTaskThunk,
+  } from "src/store/thunks/taskThunks";
 
 
 function Tasks() {
@@ -83,7 +86,7 @@ function Tasks() {
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable tasks={tasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable tasks={tasks} setTasks={setTasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
