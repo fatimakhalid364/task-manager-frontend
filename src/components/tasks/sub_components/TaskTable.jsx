@@ -85,7 +85,6 @@ const StyledTableHeadersA = styled(TableCell)({
 
 const TaskTable = ({
   tasks = [],
-  setTasks,
   setLimit,
   limit,
   total,
@@ -105,6 +104,7 @@ const TaskTable = ({
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const dispatch = useDispatch();
 
   const handlePriorityColorChange = (priority) => {
     switch (priority) {
@@ -177,6 +177,7 @@ const TaskTable = ({
 
   const handleDelete = () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);
+    deleteTask(selectedTaskId);
     handleMenuClose();
   };
 
@@ -197,6 +198,7 @@ const TaskTable = ({
 
   return (
     <div>
+      <SpinnerLoader showSpinner={spinner} />
       <Paper>
         <TableContainer id="table-container" >
           <Table >
@@ -286,7 +288,7 @@ const TaskTable = ({
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Complete</div>
                             </MenuItem>
-                            <MenuItem onClick={handleComplete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
+                            <MenuItem onClick={handleDelete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
                               <img src={redTrash} alt='red-trash-icon' />
                               <div style={{marginTop: '2px'}}>Delete</div>
                             </MenuItem>
