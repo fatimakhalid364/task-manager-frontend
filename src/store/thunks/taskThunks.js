@@ -25,8 +25,8 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
     }
 });
 
-const deleteTaskThunk = createAsyncThunk("deleteTask", async (_id, thunkAPI) => {
-    console.log("inside delete task thunk");
+const deleteTaskThunk = createAsyncThunk("changePinned", async (_id, thunkAPI) => {
+    console.log("inside delete tasks thunk");
     try {
         const response = await APIS.delete(`/task/${_id}`, {
             headers: {
@@ -44,5 +44,5 @@ const deleteTaskThunk = createAsyncThunk("deleteTask", async (_id, thunkAPI) => 
     }
 });
 
-export { getAllTasksThunk, deleteTaskThunk };
+export { deleteTaskThunk, getAllTasksThunk };
 

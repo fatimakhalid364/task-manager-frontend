@@ -2,8 +2,12 @@ import { Box } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import FilterDialog from 'src/components//Filter/FilterDialog';
+import BottomBar from 'src/components/BottomBar/BottomBar';
+import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
 import MainDiv from "src/components/maindiv/maindiv";
+import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
@@ -11,13 +15,6 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
-import PageHeader from 'src/components/PageHeader';
-import FilterDialog from 'src/components//Filter/FilterDialog';
-import BottomButtons from "src/components/BottomButtons";
-import BottomBar from 'src/components/BottomBar/BottomBar';
-import {
-    deleteTaskThunk,
-  } from "src/store/thunks/taskThunks";
 
 
 function Tasks() {
@@ -36,6 +33,7 @@ function Tasks() {
     const handleFilterClose = () => setFilterOpen(false);
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
+    const privateKey = localStorage.getItem("privateKey");
   
 
     const getAllTasks = async (page=0, limit=5) => {
@@ -43,12 +41,11 @@ function Tasks() {
             setSkeletonLoader(true);
             const params = { page, limit, search }
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            const privateKey = localStorage.getItem("privateKey");
             response?.data?.forEach(task => {
                 task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
                 task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-                if (Array.isArray(task.desc)) {
-                    task.desc = task.desc.join('');
+                if (Array.isArray(task.taskDescription)) {
+                    task.taskDescription = task.taskDescription.join('');
                 }
             });
             setTasks(response?.data);
@@ -86,7 +83,7 @@ function Tasks() {
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable tasks={tasks} setTasks={setTasks} limit={limit} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable tasks={tasks} limit={limit} privateKey={privateKey} setTasks={setTasks} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} setMetaData={setMetaData} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
