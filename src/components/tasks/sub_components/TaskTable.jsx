@@ -105,6 +105,7 @@ const TaskTable = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const dispatch = useDispatch();
+  const [spinner, setSpinner] = useState(false);
 
   const handlePriorityColorChange = (priority) => {
     switch (priority) {
