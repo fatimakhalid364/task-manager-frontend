@@ -140,7 +140,8 @@
     height: 40px;
     width: 40px;
     border-radius: 50px;
-    cursor: pointer; 
+    cursor: pointer;
+    position: relative;
 }
 
 .blue-app {
@@ -158,3 +159,172 @@
 .orange-app {
     background-color: var(--orange-accent-color);
 }
+
+
+
+.blue-app:hover .animated-blue-circle {
+        height: 50px;
+        width: 50px;
+       
+        /* border-radius: 50px; */
+        border: 1px solid var(--primary-background-color);
+        transform: translate(-50%, -50%) ;
+        position: absolute; 
+        margin-top: 20px;
+        border-radius: 50px;
+        margin-left: 20px;
+}
+
+.pink-app:hover .animated-pink-circle {
+    height: 50px;
+    width: 50px;
+   
+    /* border-radius: 50px; */
+    border: 1px solid var(--pink-accent-color);
+    transform: translate(-50%, -50%) ;
+    position: absolute; 
+    margin-top: 20px;
+    border-radius: 50px;
+    margin-left: 20px;
+}
+
+.green-app:hover .animated-green-circle {
+    height: 50px;
+    width: 50px;
+    
+    /* border-radius: 50px; */
+    border: 1px solid var(--green-accent-color);
+    transform: translate(-50%, -50%);
+    position: absolute; 
+    margin-top: 20px;
+    border-radius: 50px;
+    margin-left: 20px;
+}
+
+.orange-app:hover .animated-orange-circle {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 1px solid var(--orange-accent-color);
+    margin-top: 20px;
+    border-radius: 50px;
+    margin-left: 20px;
+    transform: translate(-50%, -50%);
+} 
+
+.orange-outer-circle {
+    border: 1px solid var(--orange-accent-color);
+}
+
+.blue-outer-circle {
+    border: 1px solid var(--primary-background-color);
+}
+
+.green-outer-circle {
+    border: 1px solid var(--green-accent-color);
+}
+
+.pink-outer-circle {
+    border: 1px solid var(--pink-accent-color);
+}
+
+.outer-circle {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    margin-top: 20px;
+    border-radius: 50px;
+    margin-left: 20px;
+    transform: translate(-50%, -50%);
+    background: transparent;
+}
+
+.app-color::before {
+    display: block;
+    position: absolute;
+    /* z-index: -1; */
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+   
+    opacity: 0;
+    content: '';
+    animation: pulse 1s infinite;
+  }
+
+.app-color:hover::before {
+    animation: none;
+}
+
+.app-color.no-animation::before {
+    animation: none;
+}
+
+.app-color.blue-blast::before {
+    animation: blastOut 1.5s;
+    background-color: var(--primary-background-color);
+}
+
+.app-color.pink-blast::before {
+    animation: blastOut 1.5s;
+    background-color: var(--pink-accent-color);
+}
+
+.app-color.green-blast::before {
+    animation: blastOut 1.5s;
+    background-color: var(--green-accent-color);
+}
+
+.app-color.orange-blast::before {
+    animation: blastOut 1.5s;
+    background-color: var(--orange-accent-color);
+}
+
+
+
+.orange-app::before {
+    background-color: var(--orange-accent-color);
+}
+
+.pink-app::before {
+    background-color: var(--pink-accent-color);
+}
+
+.green-app::before {
+    background-color: var(--green-accent-color);
+}
+
+.blue-app::before {
+    background-color: var(--primary-background-color);
+}
+
+@keyframes pulse {
+    from {
+      transform: scale(1);
+      opacity: .4;
+    }
+    to {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+@keyframes expandOut {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes blastOut {
+    from {
+      transform: scale(0.9);
+      opacity: .4;
+    }
+    to {
+      transform: scale(6);
+      opacity: 0;
+    }
+  }

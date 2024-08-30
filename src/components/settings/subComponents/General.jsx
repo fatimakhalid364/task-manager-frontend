@@ -1,8 +1,43 @@
 import { FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
 import { styled } from "@mui/system";
 import { getCurrentTimeZone } from '../../../utils/basicUtils';
+import whiteTick from 'src/assets/white-tick.svg';
+import { useState } from 'react';
 
 const General= () => {
+    const [isBlueClicked, setIsBlueClicked] = useState(false);
+    const [isPinkClicked, setIsPinkClicked] = useState(false);
+    const [isGreenClicked, setIsGreenClicked] = useState(false);
+    const [isOrangeClicked, setIsOrangeClicked] = useState(false);
+
+    const handleBlueClick = () => {
+        setIsBlueClicked(prevValue=> !prevValue);
+        setIsPinkClicked(false);
+        setIsGreenClicked(false);
+        setIsOrangeClicked(false);
+      
+    }
+
+    const handlePinkClick = () => {
+        setIsPinkClicked(prevValue=> !prevValue);
+        setIsBlueClicked(false);
+        setIsGreenClicked(false);
+        setIsOrangeClicked(false);
+    }
+
+    const handleGreenClick = () => {
+        setIsGreenClicked(prevValue=> !prevValue);
+        setIsPinkClicked(false);
+        setIsBlueClicked(false);
+        setIsOrangeClicked(false);
+    }
+
+    const handleOrangeClick = () => {
+        setIsOrangeClicked(prevValue=> !prevValue);
+        setIsPinkClicked(false);
+        setIsGreenClicked(false);
+        setIsBlueClicked(false);
+    }
 
     const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
         '& .MuiSelect-select': {
@@ -136,10 +171,22 @@ const General= () => {
                         <div className="app-colors-div" style={{display: 'flex', flexDirection: 'column', gap: '20px', height: '70px'}}>
                             <div className='app-colors-text'>Select Color</div>
                                     <div className='app-colors-list' style={{display: 'flex', gap: '15px'}}>
-                                        <div className="app-color blue-app"></div>
-                                        <div className="app-color pink-app"></div>
-                                        <div className="app-color green-app"></div>
-                                        <div className="app-color orange-app"></div>
+                                        <div className={`app-color ${isBlueClicked ? 'no-animation blue-blast' : ''} blue-app`} onClick={handleBlueClick} >
+                                            <div className={`animated-blue-circle ${isBlueClicked ? 'blue-outer-circle outer-circle' : ''}`}></div>
+                                            { isBlueClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
+                                        </div>
+                                        <div className={`app-color ${isPinkClicked ? 'no-animation pink-blast' : ''} pink-app`} onClick={handlePinkClick}  >
+                                            <div className={`animated-pink-circle ${isPinkClicked ? 'pink-outer-circle outer-circle' : ''}`}></div>
+                                            { isPinkClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
+                                        </div>
+                                        <div className={`app-color ${isGreenClicked ? 'no-animation green-blast' : ''} green-app`} onClick={handleGreenClick}  >
+                                            <div className={`animated-green-circle ${isGreenClicked ? 'green-outer-circle outer-circle' : ''}`}></div>
+                                            { isGreenClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}}/>)}
+                                        </div>
+                                        <div className={`app-color ${isOrangeClicked ? 'no-animation orange-blast' : ''} orange-app`} onClick={handleOrangeClick} style={{position: 'relative'}}  >
+                                            <div className={`animated-orange-circle ${isOrangeClicked ? 'orange-outer-circle outer-circle' : ''}`} ></div>
+                                            { isOrangeClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
+                                        </div>
                                     </div>
                             </div>
                     </div>
