@@ -25,4 +25,11 @@ export const RoutesObj = {
     settings: 'Settings',
 }
 
+export const SettingsScreen = {
+    GENERAL: 'GENERAL',
+    ACCOUNT: 'ACCOUNT',
+    NOTIFICATION: 'NOTIFICATION',
+    LOGOUT: 'LOGOUT',
+}
+
 

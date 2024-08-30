@@ -10,6 +10,7 @@
     font-size: 24px;
     color: var(--secondary-font-color);
     font-weight: 600;
+    margin-left: 12px;
 }
 
 .settings-header-nav {
@@ -24,8 +25,8 @@
     opacity: 0px;
     justify-content: space-between;
     align-items: center;
-    margin-top: 47px;
-    padding: 0 5px 0 5px;
+    margin-top: 25px;
+    padding: 0 7px 0 7px;
 
 }
 
@@ -82,3 +83,78 @@
     align-items: center;
 }
 
+.general-page-content {
+    width: 98%;
+    margin-top: 30px;
+    margin-left: 12px;
+    min-height: 350px;
+}
+
+.select-language-div {
+    display: flex;
+    width: 100%;
+    font-family: var(--primary-font-family);
+}
+
+.select-language-input {
+    width: 100%;
+    margin-top: 7px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--field-border-color);
+    
+}
+
+.select-language-input:hover,
+.select-language-input:focus {
+    outline: 1px solid var(--primary-background-color);
+}
+
+.select-d-and-t-format-div {
+    display: flex;
+    width: 100%;
+    font-family: var(--primary-font-family);
+    margin-top: 30px;
+}
+
+.time-zone-div {
+    display: flex;
+    width: 100%;
+    font-family: var(--primary-font-family);
+    margin-top: 30px;
+}
+
+.app-appearance-div {
+    width: 100%;
+    font-family: var(--primary-font-family);
+    margin-top: 30px;
+}
+
+.app-appearance-content {
+    display: flex;
+    gap: 60px;
+}
+
+.app-color {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    cursor: pointer; 
+}
+
+.blue-app {
+    background-color: var(--primary-background-color);
+}
+
+.pink-app {
+    background-color: var(--pink-accent-color);
+}
+
+.green-app {
+    background-color: var(--green-accent-color);
+}
+
+.orange-app {
+    background-color: var(--orange-accent-color);
+}

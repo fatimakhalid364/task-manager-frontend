@@ -1,21 +1,45 @@
+import { NavLink, Outlet } from "react-router-dom";
+
 const SettingsHeader= ()=> {
-    return (<div className="settings-header-div">
+    const activeStyles = {
+        backgroundColor: 'white',
+        color: 'var(--primary-background-color)',
+        boxShadow: '0px 2px 6px 0px #1018280F',
+    };
+    return (
+    <div className="settings-header-div">
         <div className="settings-header-text">
             Settings
         </div>
         <div className="settings-header-nav">
-            <div className=" settings-nav settings-general">
+            <NavLink 
+               className=" settings-nav settings-general"
+                to='/settings/general'
+                style={({ isActive }) => isActive ? activeStyles : {}}      
+            >
                 General
-            </div>
-            <div className="settings-nav settings-account">
+            </NavLink>
+            <NavLink 
+                className="settings-nav settings-account"
+                to='/settings/account'
+                style={({ isActive }) => isActive ? activeStyles : {}}
+            >
                 Account
-            </div>
-            <div className="settings-nav settings-notification">
-                Notification
-            </div>
-            <div className="settings-nav settings-logout">
+            </NavLink>
+            <NavLink 
+              className="settings-nav settings-notification"
+                to='/settings/notification'
+                style={({ isActive }) => isActive ? activeStyles : {}}       
+            >
+                Notofication
+            </NavLink>
+            <NavLink 
+                className="settings-nav settings-logout"
+                to='/settings/logout'
+                style={({ isActive }) => isActive ? activeStyles : {}} 
+            >
                 Logout
-            </div>
+            </NavLink>
         </div>
     </div>)
 }

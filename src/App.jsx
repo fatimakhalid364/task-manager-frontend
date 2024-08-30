@@ -17,6 +17,7 @@ import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
+import GeneralPage from 'src/pages/settings/GeneralPage';
 
 function App() {
     return (
@@ -33,7 +34,7 @@ function App() {
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
                     <Route path="/calendar" element={<RouteGuard element={Calendar} />} />
-                    <Route path="/settings" element={<RouteGuard element={Settings} />} />
+                    <Route path="/settings/general" element={<RouteGuard element={GeneralPage} />} />
                     <Route path="/notes/:id" element={<RouteGuard element={UpdateNote} />} />
                 </Routes>
             </AuthProvider>

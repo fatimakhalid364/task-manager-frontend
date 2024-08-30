@@ -74,3 +74,10 @@ export const formatLocalDateTime = (dateString, timeZone) => {
 
     return localDateTime;
 };
+
+export const getCurrentTimeZone = () => {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return timeZone;
+}
+
+
