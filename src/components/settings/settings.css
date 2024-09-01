@@ -261,22 +261,22 @@
 }
 
 .app-color.blue-blast::before {
-    animation: blastOut 1.5s;
+    animation: blastOut 0.3s;
     background-color: var(--primary-background-color);
 }
 
 .app-color.pink-blast::before {
-    animation: blastOut 1.5s;
+    animation: blastOut 0.3s;
     background-color: var(--pink-accent-color);
 }
 
 .app-color.green-blast::before {
-    animation: blastOut 1.5s;
+    animation: blastOut 0.3s;
     background-color: var(--green-accent-color);
 }
 
 .app-color.orange-blast::before {
-    animation: blastOut 1.5s;
+    animation: blastOut 0.3s;
     background-color: var(--orange-accent-color);
 }
 
@@ -296,6 +296,10 @@
 
 .blue-app::before {
     background-color: var(--primary-background-color);
+}
+
+.hover-effect-btn:hover {
+    background-position: left bottom;
 }
 
 @keyframes pulse {
@@ -328,3 +332,5 @@
       opacity: 0;
     }
   }
+
+

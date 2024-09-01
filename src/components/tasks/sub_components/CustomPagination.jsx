@@ -3,9 +3,10 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import { FormControl, IconButton, MenuItem, Select, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, metaData, hasPreviousPage, totalPages, nextPage, previousPage }) => {
-
+    const accentColor = useSelector((state) => state.appearance.color)
     const handleChangeRowsPerPage = (event) => {
         setLimit(parseInt(event.target.value, 10));
         setPage(0);
@@ -31,7 +32,13 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                     </Select>
                 </FormControl>
             </div> 
-            <div className='pagination-text-div'>
+            <div className='pagination-text-div' style={{ backgroundColor: accentColor === 'pink'
+                            ? 'var(--light-pink-color)'
+                            : accentColor === 'green'
+                            ? 'var(--light-green-color)'
+                            : accentColor === 'orange'
+                            ? 'var(--light-orange-color)'
+                            : 'var(--primary-background-color)'}}>
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
                 </Typography>

@@ -25,9 +25,11 @@ import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
+import { useSelector } from 'react-redux';
 
 
 const calculateCellWidth = () => {
+ 
   const containerWidth = document.getElementById('table-container')?.offsetWidth || 0;
   const numColumns = 7; // Updated number of columns
   const padding = 16;
@@ -65,22 +67,6 @@ const StyledAction = styled(TableCell)(({ theme }) => ({
   fontFamily: 'var(--primary-font-family)',
 }));
 
-const StyledTableHeaders = styled(TableCell)({
-  width: '17%',
-  textAlign: 'center',
-  fontFamily: 'var(--primary-font-family)',
-  color: 'var(--secondary-font-color)',
-  backgroundColor: 'var(--active-background-color)',
-});
-
-const StyledTableHeadersA = styled(TableCell)({
-  width: '5%',
-  textAlign: 'center',
-  fontFamily: 'var(--primary-font-family)',
-  color: 'var(--secondary-font-color)',
-  backgroundColor: 'var(--active-background-color)',
-});
-
 
 
 const TaskTable = ({
@@ -101,6 +87,38 @@ const TaskTable = ({
   privateKey,
   metaData
 }) => {
+  const accentColor = useSelector((state) => state.appearance.color)
+  const StyledTableHeaders = styled(TableCell)({
+    width: '17%',
+    textAlign: 'center',
+    fontFamily: 'var(--primary-font-family)',
+    color: 'var(--secondary-font-color)',
+    backgroundColor: accentColor === 'pink'
+                          ? 'var(--light-pink-color)'
+                          : accentColor === 'green'
+                          ? 'var(--light-green-color)'
+                          : accentColor === 'orange'
+                          ? 'var(--light-orange-color)'
+                          : 'var(--primary-background-color)',
+    
+  });
+  
+  const StyledTableHeadersA = styled(TableCell)({
+    width: '5%',
+    textAlign: 'center',
+    fontFamily: 'var(--primary-font-family)',
+    color: 'var(--secondary-font-color)',
+    backgroundColor: accentColor === 'pink'
+                          ? 'var(--light-pink-color)'
+                          : accentColor === 'green'
+                          ? 'var(--light-green-color)'
+                          : accentColor === 'orange'
+                          ? 'var(--light-orange-color)'
+                          : 'var(--primary-background-color)',
+  });
+  
+  
+  
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -203,8 +221,8 @@ const TaskTable = ({
       <Paper>
         <TableContainer id="table-container" >
           <Table >
-            <TableHead>
-              <TableRow>
+            <TableHead >
+              <TableRow >
                 <StyledTableHeaders>Title</StyledTableHeaders>
                 <StyledTableHeaders>Description</StyledTableHeaders>
                 <StyledTableHeaders>Due Date</StyledTableHeaders>

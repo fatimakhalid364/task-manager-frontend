@@ -54,14 +54,35 @@
     border-radius: 12px;
     border: 1px solid var(--field-border-color);
     background-color: var(--field-background-color);
+    transition: all 0.1s ease;
     
 }
 
-.search-input[type=search]:focus,
-.search-input[type=search]:hover {
+.search-blue-input
+ {
     border-color: var(--primary-background-color);
     outline: none;
 }
+
+.search-pink-input
+ {
+    border-color: var(--pink-accent-color);
+    outline: none;
+}
+
+.search-green-input
+ {
+    border-color: var(--green-accent-color);
+    outline: none;
+}
+
+.search-orange-input
+ {
+    border-color: var(--orange-accent-color);
+    outline: none;
+}
+
+
 
 .search-input::placeholder {
     font-size: var(--tertiary-font-size);

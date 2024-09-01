@@ -1,4 +1,4 @@
-import SearchGlass from "src/assets/search glass.svg";
+
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchThunk } from "src/store/thunks/searchThunk";
@@ -8,9 +8,19 @@ import { useResponsive } from 'src/constants/media_queries';
 import Modal from '@mui/material/Modal';
 import PropTypes from 'prop-types';
 import cross from 'src/assets/cross.svg';
+import SearchGlass from 'src/components/icons/SearchGlass';
+import { useSelector } from 'react-redux';
 
 function SearchBar({ showSearchBar, handleShowSearchBarClick }){
+    const accentColor = useSelector((state) => state.appearance.color);
+    const [hovered, setHovered] = useState(false);
+    const handleMouseEnter = () => {
+       setHovered(true);
+    };
 
+    const handleMouseLeave = () => {
+        setHovered(false);
+    };
     const {
         isAdaptableScreen,
         isSmallerScreen,
@@ -52,9 +62,23 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
             <SpinnerLoader showSpinner={spinner} />
            <div className='search-bar'>
                 <form>
-                    <input type="search" placeholder="Search here..." className='search-input' onChange={handleChange} value={searchInput} />
+                <input 
+                type="search" 
+                placeholder="Search here..." 
+                className={`search-input ${(hovered && accentColor === 'pink') ? 'search-pink-input' : (hovered && accentColor === 'green') ? 'search-green-input' : (hovered && accentColor === 'orange') ? 'search-orange-input' : (hovered && accentColor === 'blue') ? 'search-blue-input'  : ''}`}  
+                onChange={handleChange} 
+                value={searchInput} 
+                onMouseEnter={handleMouseEnter} 
+                onMouseLeave={handleMouseLeave}
+                />
                     <button type="submit" className='search-button' onClick={handleClick}>
-                        <img src={SearchGlass} alt='magnifying-glass' className='search-glass-image' />
+                        <SearchGlass color={accentColor === 'pink'
+                            ? 'var(--pink-accent-color)'
+                            : accentColor === 'green'
+                            ? 'var(--green-accent-color)'
+                            : accentColor === 'orange'
+                            ? 'var(--orange-accent-color)'
+                            : 'var(--primary-background-color)'} />
                     </button>
                 </form>
 
@@ -64,9 +88,33 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
                 <Modal open={showSearchBar} sx={{ '& .MuiPaper-root': {outline: 'none'}}}>
                     <div className='search-bar' style={{marginTop: '13px', width: '75%', marginLeft: '14.5%', height: '4%'}}>
                         <form>
-                            <input type="search" placeholder="Search here..." className='search-input' onChange={handleChange} value={searchInput} />
+                            <input 
+                                type="search" 
+                                placeholder="Search here..." 
+                                className={`search-input ${(hovered) ? 'search-pink-input' 
+                                    : '' }`}  
+                                onChange={handleChange} 
+                                value={searchInput} 
+                                onMouseEnter={handleMouseEnter} 
+                                onMouseLeave={handleMouseLeave}
+                                style={{borderColor: hovered ?
+                                    (accentColor === 'pink'
+                                        ? 'var(--pink-accent-color)'
+                                        : accentColor === 'green'
+                                        ? 'var(--green-accent-color)'
+                                        : accentColor === 'orange'
+                                        ? 'var(--orange-accent-color)'
+                                        : accentColor === 'blue'
+                                        ? 'var(--primary-background-color)'
+                                        : 'var(--quaternary-font-color)') : '', outline: hovered ? 'none' : '' }} />
                             <button type="submit" className='search-button' onClick={handleClick}>
-                                <img src={SearchGlass} alt='magnifying-glass' className='search-glass-image' />
+                                <SearchGlass color={accentColor === 'pink'
+                                    ? 'var(--pink-accent-color)'
+                                    : accentColor === 'green'
+                                    ? 'var(--green-accent-color)'
+                                    : accentColor === 'orange'
+                                    ? 'var(--orange-accent-color)'
+                                    : 'var(--primary-background-color)'} />
                             </button>
                             <img src={cross} alt='cross' style={{position: 'absolute', left: '97%', top: '36%', cursor: 'pointer' }} onClick={handleShowSearchBarClick} />
                         </form>

@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import { NavLink, useLocation } from "react-router-dom";
-import { useResponsive } from 'src/constants/media_queries';
+import { useResponsive } from 'src/constants/media_queries'; 
+import { useSelector } from "react-redux";
 
 function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked = { burgerMenuClicked }, page }) {
     const location = useLocation();
@@ -12,10 +13,11 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
+    const accentColor = useSelector((state) => state.appearance.color);
 
     const activeStyles = {
-        color: 'var(--primary-background-color)', 
-        backgroundColor: 'var(--active-background-color)',
+        color: accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : 'var(--primary-background-color)', 
+        backgroundColor:  accentColor === 'pink' ? 'var(--light-pink-color)' : accentColor === 'green' ? 'var(--light-green-color)' : accentColor === 'orange' ? 'var(--light-orange-color)' : 'var(--active-background-color)',
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
@@ -56,11 +58,11 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
             >
                 { (expandBar && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <IconComponent color={currentPage == pathname ? '#3B8AFF' : '#6B7280'} />
+                    <IconComponent color={currentPage == pathname ? ( accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF') : '#6B7280'} />
                 </div>
                 <div  onClick={ clickfunction }  className='tasks-page-route-name'>{page}</div>
                 </div>) : (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <IconComponent color={currentPage == pathname ? '#3B8AFF' : '#6B7280'} />
+                    <IconComponent color={currentPage == pathname ? ( accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF') : '#6B7280'}  />
 
                 </div>) } 
             </NavLink>

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import BellIcon from "src/assets/bell.svg";
 import Sides from "src/components/defaultcomps/subComponents/Sides/Sides";
 import UpperBar from "src/components/defaultcomps/subComponents/UpperBar/upperbar";
 import "src/components/maindiv/main_div.css";
 import { useResponsive } from "src/constants/media_queries";
+import BellIcon from "src/components/icons/BellIcon";
 
 
 

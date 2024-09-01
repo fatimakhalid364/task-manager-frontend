@@ -2,50 +2,93 @@ import { FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui
 import { styled } from "@mui/system";
 import { getCurrentTimeZone } from '../../../utils/basicUtils';
 import whiteTick from 'src/assets/white-tick.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setColor } from 'src/store/slices/appearanceSlice';
 
-const General= () => {
-    const [isBlueClicked, setIsBlueClicked] = useState(false);
-    const [isPinkClicked, setIsPinkClicked] = useState(false);
-    const [isGreenClicked, setIsGreenClicked] = useState(false);
-    const [isOrangeClicked, setIsOrangeClicked] = useState(false);
+const General= ({
+    isBlueClicked, 
+    handleBlueClick, 
+    isPinkClicked, 
+    handlePinkClick, 
+    isOrangeClicked, 
+    handleOrangeClick,
+    isGreenClicked, 
+    handleGreenClick,
+}) => {
+    // const [isBlueClicked, setIsBlueClicked] = useState(false);
+    // const [isPinkClicked, setIsPinkClicked] = useState(false);
+    // const [isGreenClicked, setIsGreenClicked] = useState(false);
+    // const [isOrangeClicked, setIsOrangeClicked] = useState(false);
+    const dispatch = useDispatch();
 
-    const handleBlueClick = () => {
-        setIsBlueClicked(prevValue=> !prevValue);
-        setIsPinkClicked(false);
-        setIsGreenClicked(false);
-        setIsOrangeClicked(false);
+    useEffect(() => {
+        switch (true) {
+            case isBlueClicked:
+                dispatch(setColor('blue'));
+                break;
+            case isPinkClicked:
+                dispatch(setColor('pink'));
+                break;
+            case isGreenClicked:
+                dispatch(setColor('green'));
+                break;
+            case isOrangeClicked:
+                dispatch(setColor('orange'));
+                break;
+        }
+    }, [isBlueClicked, isPinkClicked, isGreenClicked, isOrangeClicked, dispatch]);
+
+    // const handleBlueClick = () => {
+    //     setIsBlueClicked(prevValue=> !prevValue);
+    //     setIsPinkClicked(false);
+    //     setIsGreenClicked(false);
+    //     setIsOrangeClicked(false);
       
-    }
+    // }
 
-    const handlePinkClick = () => {
-        setIsPinkClicked(prevValue=> !prevValue);
-        setIsBlueClicked(false);
-        setIsGreenClicked(false);
-        setIsOrangeClicked(false);
-    }
+    // const handlePinkClick = () => {
+    //     setIsPinkClicked(prevValue=> !prevValue);
+    //     setIsBlueClicked(false);
+    //     setIsGreenClicked(false);
+    //     setIsOrangeClicked(false);
+    // }
 
-    const handleGreenClick = () => {
-        setIsGreenClicked(prevValue=> !prevValue);
-        setIsPinkClicked(false);
-        setIsBlueClicked(false);
-        setIsOrangeClicked(false);
-    }
+    // const handleGreenClick = () => {
+    //     setIsGreenClicked(prevValue=> !prevValue);
+    //     setIsPinkClicked(false);
+    //     setIsBlueClicked(false);
+    //     setIsOrangeClicked(false);
+    // }
 
-    const handleOrangeClick = () => {
-        setIsOrangeClicked(prevValue=> !prevValue);
-        setIsPinkClicked(false);
-        setIsGreenClicked(false);
-        setIsBlueClicked(false);
-    }
+    // const handleOrangeClick = () => {
+    //     setIsOrangeClicked(prevValue=> !prevValue);
+    //     setIsPinkClicked(false);
+    //     setIsGreenClicked(false);
+    //     setIsBlueClicked(false);
+    // }
+
+    const accentColor = useSelector((state) => state.appearance.color);
 
     const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
         '& .MuiSelect-select': {
             '&:hover fieldset': {
-                border: `1px solid #3B8AFF`,
+                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
             },
             '&.Mui-focused fieldset': {
-                border: `2px solid #3B8AFF`,
+                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -54,10 +97,22 @@ const General= () => {
         '& .MuiOutlinedInput-root': {
     
             '&:hover fieldset': {
-                border: `1px solid #3B8AFF`,
+                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
             },
             '&.Mui-focused fieldset': {
-                border: `2px solid #3B8AFF`,
+                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -80,7 +135,7 @@ const General= () => {
                         <div style={{fontSize: '18px', color: 'var(--quaternary-font-color)', marginBottomm: '0'}}>Language</div>
                         <div style={{width: '65%', fontSize: '14px', color: 'var(--tertiary-font-color)', marginTop: '7px'}}>Select your preferred language for the app-interface. This will update all menu and text.</div>
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '55%'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', width: '60.6%', marginLeft: '53px'}}>
                         <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Language</div>
             
                         <FormControl fullWidth>
@@ -90,7 +145,13 @@ const General= () => {
                                         marginTop: '8px',
                                         "&:hover": {
                                             "&& fieldset": {
-                                                border: `1px solid #3B8AFF`,
+                                                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
 
                                             }
                                         }
@@ -120,7 +181,13 @@ const General= () => {
                                         marginBottom: '20px',
                                         "&:hover": {
                                             "&& fieldset": {
-                                                border: `1px solid #3B8AFF`,
+                                                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
 
                                             }
                                         }
@@ -141,7 +208,13 @@ const General= () => {
                                         marginTop: '8px',
                                         "&:hover": {
                                             "&& fieldset": {
-                                                border: `1px solid #3B8AFF`,
+                                                border: `1px solid ${accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'}`,
 
                                             }
                                         }
@@ -196,4 +269,4 @@ const General= () => {
     )
 }
 
-export default General;
+export {General};

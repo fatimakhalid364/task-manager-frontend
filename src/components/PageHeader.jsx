@@ -6,12 +6,14 @@ import plus from 'src/assets/plus.svg';
 
 
 
+
 function PageHeader({ handleOpen, total, text, object, filterDiv}){
     // const [metaData, setMetaData] = useState([]);
     // const specificValue = useSelector(state => state);
     // useEffect(() => {
     //     console.log('state:', specificValue);
     // }, []);
+    const accentColor = useSelector((state) => state.appearance.color)
 
     const {
         isBp2,
@@ -37,7 +39,13 @@ function PageHeader({ handleOpen, total, text, object, filterDiv}){
         </div>
         { !onWholeScreen && (<div style={{display: 'flex', gap: '20px'}}>
             { (filterDiv && !onWholeScreen) && (<div>{filterDiv}</div>)}
-            <a className='primary-button' onClick={handleOpen}>
+            <a className='primary-button' onClick={handleOpen} style={{ backgroundColor: accentColor === 'pink'
+                        ? 'var(--pink-accent-color)'
+                        : accentColor === 'green'
+                        ? 'var(--green-accent-color)'
+                        : accentColor === 'orange'
+                        ? 'var(--orange-accent-color)'
+                        : 'var(--primary-background-color)'}}>
                     <div style={{ display: 'flex', gap: '6px' }}>
                         <img src={plus} alt='plus-sign' className='plus-sign' /> <div style={{ fontSize: '16px' }}>Add {object}</div>
                     </div>

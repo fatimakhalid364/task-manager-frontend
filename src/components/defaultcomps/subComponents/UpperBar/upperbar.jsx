@@ -3,16 +3,19 @@ import SearchBar from "src/components/defaultcomps/subComponents/UpperBar/subCom
 import 'src/components/defaultcomps/subComponents/UpperBar/subComponents/upper_bar.css';
 import { useResponsive } from 'src/constants/media_queries';
 import { useState } from 'react';
-import SearchGlass from "src/assets/search glass.svg";
+import SearchGlass from 'src/components/icons/SearchGlass'
 import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
 import { searchThunk } from "src/store/thunks/searchThunk";
 import cross from 'src/assets/cross.svg';
 import Logo from "src/components/defaultcomps/subComponents/UpperBar/subComponents/Logo";
-import appLogo from 'src/assets/Frame 3.svg';
+import { useSelector } from "react-redux";
+
+
 
 
 function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
+    const accentColor = useSelector((state) => state.appearance.color);
 
     const {
         isBp6,
@@ -88,7 +91,13 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                         <form>
                             <input type="search" placeholder="Search here..." className='search-input' onChange={handleChange} value={searchInput} />
                             <button type="submit" className='search-button' onClick={handleClick}>
-                                <img src={SearchGlass} alt='magnifying-glass' className='search-glass-image' />
+                                <SearchGlass color={accentColor === 'pink'
+                                    ? 'var(--pink-accent-color)'
+                                    : accentColor === 'green'
+                                    ? 'var(--green-accent-color)'
+                                    : accentColor === 'orange'
+                                    ? 'var(--orange-accent-color)'
+                                    : 'var(--primary-background-color)'} />
                             </button>
                             <img src={cross} alt='cross' style={{position: 'absolute', left: '97%', top: '36%', cursor: 'pointer' }} onClick={handleShowSearchBarClick} />
                         </form>
@@ -105,16 +114,26 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                 width: !isAdaptableScreen && '100px',
                }}>
                 {!isAdaptableScreen && (
-                <img 
-                    src={SearchGlass} 
-                    alt='magnifying-glass' 
-                    className='search-glass-image' 
-                    onClick={handleShowSearchBarClick} 
-                    style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
-                />
+                // <img 
+                //     src={SearchGlass} 
+                //     alt='magnifying-glass' 
+                //     className='search-glass-image' 
+                //     onClick={handleShowSearchBarClick} 
+                //     style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
+                // 
+                <div onClick={handleShowSearchBarClick} style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px' }}>
+                    <SearchGlass color={accentColor === 'pink'
+                                    ? 'var(--pink-accent-color)'
+                                    : accentColor === 'green'
+                                    ? 'var(--green-accent-color)'
+                                    : accentColor === 'orange'
+                                    ? 'var(--orange-accent-color)'
+                                    : 'var(--primary-background-color)'}  />
+                </div>
             )}
                 <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '20px', marginTop: !isAdaptableScreen && '11px'}}>
-                    <img src={BellIcon} alt='bell-icon' />
+                    
+                    <BellIcon color={accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF'} />
                 </div>
                 <ProfileSection />
             </div>
