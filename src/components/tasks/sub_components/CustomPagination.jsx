@@ -38,7 +38,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                             ? 'var(--light-green-color)'
                             : accentColor === 'orange'
                             ? 'var(--light-orange-color)'
-                            : 'var(--primary-background-color)'}}>
+                            : 'var(--active-background-color)'}}>
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
                 </Typography>

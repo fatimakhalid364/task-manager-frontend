@@ -99,7 +99,7 @@ const TaskTable = ({
                           ? 'var(--light-green-color)'
                           : accentColor === 'orange'
                           ? 'var(--light-orange-color)'
-                          : 'var(--primary-background-color)',
+                          : 'var(--active-background-color)',
     
   });
   
@@ -114,7 +114,7 @@ const TaskTable = ({
                           ? 'var(--light-green-color)'
                           : accentColor === 'orange'
                           ? 'var(--light-orange-color)'
-                          : 'var(--primary-background-color)',
+                          : 'var(--active-background-color)',
   });
   
   
