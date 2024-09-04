@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import edit from 'src/assets/edit.svg';
 import redTrash from 'src/assets/red-trash.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
@@ -25,7 +25,6 @@ import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
-import { useSelector } from 'react-redux';
 
 
 const calculateCellWidth = () => {
@@ -88,6 +87,10 @@ const TaskTable = ({
   metaData
 }) => {
   const accentColor = useSelector((state) => state.appearance.color)
+  const timeFormat = useSelector((state) => state.format.timeFormat)
+  const dateFormat = useSelector((state) => state.format.dateFormat)
+  console.log('forrrrrrrrrrrrrrrrrrrrrr', timeFormat, dateFormat);
+  // const dateFormat = useSelector((state) => state.format.dateFormat)
   const StyledTableHeaders = styled(TableCell)({
     width: '17%',
     textAlign: 'center',
@@ -276,9 +279,9 @@ const TaskTable = ({
                           </Tooltip>
                         </StyledTableHeadersLeft>
                         <StyledTableCell>
-                          <Tooltip title={formatLocalDateTime(task.dueDate, userTimeZone)}>
+                          <Tooltip title={formatLocalDateTime(task.dueDate, userTimeZone, timeFormat, dateFormat)}>
                             <Typography sx={{ fontSize: '16px', color: 'var(--quinary-font-color)' }} noWrap>
-                              {formatLocalDateTime(task.dueDate, userTimeZone)}
+                              {formatLocalDateTime(task.dueDate, userTimeZone, timeFormat, dateFormat)}
                             </Typography>
                           </Tooltip>
                         </StyledTableCell>

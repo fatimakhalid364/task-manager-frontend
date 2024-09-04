@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from "react-router-dom";
 import MainDiv from "src/components/maindiv/maindiv";
 import 'src/components/settings/settings.css';
@@ -8,6 +8,7 @@ import SettingsFooter from 'src/components/settings/subComponents/SettingsFooter
 import SettingsHeader from 'src/components/settings/subComponents/SettingsHeader';
 import { SettingsScreen } from "src/constants/constants";
 import { setColor } from 'src/store/slices/appearanceSlice';
+import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
 
 
 function Settings({ currentSettingsScreen }) {
@@ -20,7 +21,18 @@ function Settings({ currentSettingsScreen }) {
     const [isOrangeClicked, setIsOrangeClicked] = useState(false);
     const [allFalse, setAllFalse] = useState(true);
     const [selectedColor, setSelectedColor] = useState('');
+    const [timeFormatLocal, setTimeFormatLocal] = useState(useSelector((state) => state.format.timeFormat));
+    const [dateFormatLocal, setDateFormatLocal] = useState(useSelector((state) => state.format.dateFormat));
 
+    const handleDateFormat = (value) => {
+        console.log(value)
+        setDateFormatLocal(value);
+    }
+    const handleTimeFormat = (value) => {
+        console.log(value)
+
+        setTimeFormatLocal(value);
+    }
     const handleBlueClick = () => {
         setIsBlueClicked(prevValue=> !prevValue);
         setSelectedColor('blue');
@@ -59,6 +71,8 @@ function Settings({ currentSettingsScreen }) {
     }
     const handleSave = () => {
         dispatch(setColor(selectedColor));
+        dispatch(setDateFormat(dateFormatLocal))
+        dispatch(setTimeFormat(timeFormatLocal))
 
     }
 
@@ -70,6 +84,10 @@ function Settings({ currentSettingsScreen }) {
                     { currentSettingsScreen = SettingsScreen.GENERAL ? (
                         <General
                         allFalse={allFalse}
+                        handleDateFormat={handleDateFormat}
+                        dateFormat={dateFormatLocal}
+                        handleTimeFormat={handleTimeFormat}
+                        timeFormat={timeFormatLocal}
                         selectedColor={selectedColor}
                         setSelectedColor={setSelectedColor}
                         isBlueClicked = {isBlueClicked}

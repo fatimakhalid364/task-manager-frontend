@@ -8,6 +8,10 @@ import { getCurrentTimeZone } from '../../../utils/basicUtils';
 
 const General= ({
     allFalse,
+    handleTimeFormat,
+    timeFormat,
+    handleDateFormat,
+    dateFormat,
     isBlueClicked, 
     handleBlueClick, 
     isPinkClicked, 
@@ -143,6 +147,8 @@ const General= ({
                         <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Date Format</div>
                         <FormControl fullWidth>
                                 <CssSelectField
+                                onChange={(e) => handleDateFormat(e.target.value)}
+                                value={dateFormat}
                                     sx={{
                                         height: '40px',
                                         marginTop: '8px',
@@ -162,15 +168,17 @@ const General= ({
                                     }}
                                 
                                 >
-                                    <MenuItem value="YYYY-MM-DD">YYYY-MM-DD</MenuItem>
-                                    <MenuItem value="MM/DD/YYYY">MM/DD/YYYY</MenuItem>
-                                    <MenuItem value="DD/MM/YYYY">DD/MM/YYYY</MenuItem>
-                                    <MenuItem value="YYYY/MM/DD">YYYY/MM/DD</MenuItem>
+                                <MenuItem value="MMM dd yyyy">MM DD YYYY</MenuItem>
+                                <MenuItem value="dd MMM yyyy">DD MM YYYY</MenuItem>
+                                <MenuItem value="MMM/dd/yyyy">MM/DD/YYYY</MenuItem>
+                                <MenuItem value="dd/MMM/yyyy">DD/MM/YYYY</MenuItem>
                                 </CssSelectField>
                         </FormControl>
                         <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Time Format</div>
                         <FormControl fullWidth>
                                 <CssSelectField
+                                value={timeFormat}
+                                onChange={(e) => handleTimeFormat(e.target.value)}
                                     sx={{
                                         height: '40px',
                                         marginTop: '8px',
@@ -189,8 +197,8 @@ const General= ({
                                     }}
                                 
                                 >
-                                    <MenuItem value="12-HOUR">12-hour</MenuItem>
-                                    <MenuItem value="24-HOUR">24-hour</MenuItem>
+                                <MenuItem value="hh:mm a">12-hour</MenuItem>
+                                <MenuItem value="hh:mm">24-hour</MenuItem>
             
                                 </CssSelectField>
                         </FormControl>
