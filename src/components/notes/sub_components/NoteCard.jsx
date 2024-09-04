@@ -15,6 +15,10 @@ import {
 } from "src/store/thunks/notesThunk";
 import NotificationModal from "../../notifications/NotificationModal";
 import { errorToast, successToast } from "../../toasters/toast";
+import PinIcon from "src/components/icons/PinIcon";
+import { useSelector } from "react-redux";
+import TrashIcon from 'src/components/icons/TrashIcon';
+import EyeIcon from 'src/components/icons/EyeIcon';
 
 const NoteCard = ({
     title,
@@ -28,6 +32,45 @@ const NoteCard = ({
     notesArray,
     setNotesArray,
 }) => {
+    const accentColor = useSelector((state) => state.appearance.color);
+    
+    const [pinHovered, setPinHovered] = useState(false);
+    const [eyeHovered, setEyeHovered] = useState(false);
+    const [trashHovered, setTrashHovered] = useState(false);
+
+    const handleMouseEnter = (type) => () => {
+        switch (type) {
+            case 'pin':
+                setPinHovered(true);
+                break;
+            case 'eye':
+                setEyeHovered(true);
+                break;
+            case 'trash':
+                setTrashHovered(true);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleMouseLeave = (type) => () => {
+        switch (type) {
+            case 'pin':
+                setPinHovered(false);
+                break;
+            case 'eye':
+                setEyeHovered(false);
+                break;
+            case 'trash':
+                setTrashHovered(false);
+                break;
+            default:
+                break;
+        }
+    };
+
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [pinned, setPinned] = useState(
@@ -148,10 +191,17 @@ const NoteCard = ({
           <div
               className='note-card-div'
               style={{
-                  borderBottom:
-                      pinned === "PINNED"
-                          ? "4px solid var(--primary-background-color)"
-                          : undefined,
+                borderBottom: pinned === "PINNED"
+                  ? `4px solid ${
+                      accentColor === 'pink'
+                        ? 'var(--pink-accent-color)'
+                        : accentColor === 'green'
+                        ? 'var(--green-accent-color)'
+                        : accentColor === 'orange'
+                        ? 'var(--orange-accent-color)'
+                        : 'var(--primary-background-color)'
+                    }`
+                  : undefined,
               }}
           >
               <div className='note-card'>
@@ -198,24 +248,74 @@ const NoteCard = ({
                           <div
                               className='note-icons'
                               onClick={handlePinnedClick}
+                              onMouseEnter={handleMouseEnter('pin')}
+                                onMouseLeave={handleMouseLeave('pin')}
                               style={{
                                   backgroundColor:
-                                      pinned === "PINNED"
-                                          ? "var(--active-background-color)"
+                                      (pinHovered || pinned === "PINNED")
+                                          ? (accentColor === 'pink'
+                                            ? 'var(--light-pink-color)'
+                                            : accentColor === 'green'
+                                            ? 'var(--light-green-color)'
+                                            : accentColor === 'orange'
+                                            ? 'var(--light-orange-color)'
+                                            : 'var(--active-background-color)')
                                           : undefined,
                               }}
                           >
-                              <img src={pin} alt='pin-icon' />
+                             <PinIcon color={((pinHovered || pinned === 'PINNED') && accentColor === 'pink')
+                                    ? 'var(--pink-accent-color)'
+                                    : ((pinHovered || pinned === 'PINNED') && accentColor === 'green')
+                                    ? 'var(--green-accent-color)'
+                                    : ((pinHovered || pinned === 'PINNED') && accentColor === 'orange')
+                                    ? 'var(--orange-accent-color)'
+                                    : ((pinHovered || pinned === 'PINNED') && accentColor === 'blue') ? 'var(--primary-background-color)' : 'var(--quaternary-font-color)'}
+                                    />
                           </div>
-                          <div className='note-icons'>
-                              <img
-                                  src={visibility}
-                                  alt='visibility-icon'
-                                  onClick={handleViewNoteClick}
-                              />
+                          <div className='note-icons'  onClick={handleViewNoteClick}  onMouseEnter={handleMouseEnter('eye')}
+                                onMouseLeave={handleMouseLeave('eye')}
+                                style={{
+                                    backgroundColor:
+                                        (eyeHovered)
+                                            ? (accentColor === 'pink'
+                                              ? 'var(--light-pink-color)'
+                                              : accentColor === 'green'
+                                              ? 'var(--light-green-color)'
+                                              : accentColor === 'orange'
+                                              ? 'var(--light-orange-color)'
+                                              : 'var(--active-background-color)')
+                                            : undefined,
+                                }}>
+                            <EyeIcon color={(eyeHovered && accentColor === 'pink')
+                                    ? 'var(--pink-accent-color)'
+                                    : (eyeHovered && accentColor === 'green')
+                                    ? 'var(--green-accent-color)'
+                                    : (eyeHovered && accentColor === 'orange')
+                                    ? 'var(--orange-accent-color)'
+                                    : (eyeHovered && accentColor === 'blue') ? 'var(--primary-background-color)' : 'var(--quaternary-font-color)'}  />
                           </div>
-                          <div className='note-icons' onClick={handleDeleteClick}>
-                              <img src={trash} alt='trash-icon' />
+                          <div className='note-icons' onClick={handleDeleteClick}
+                          onMouseEnter={handleMouseEnter('trash')}
+                          onMouseLeave={handleMouseLeave('trash')}
+                          style={{
+                            backgroundColor:
+                                (trashHovered)
+                                    ? (accentColor === 'pink'
+                                      ? 'var(--light-pink-color)'
+                                      : accentColor === 'green'
+                                      ? 'var(--light-green-color)'
+                                      : accentColor === 'orange'
+                                      ? 'var(--light-orange-color)'
+                                      : 'var(--active-background-color)')
+                                    : undefined,
+                        }}>
+                            <TrashIcon color={(trashHovered && accentColor === 'pink')
+                                    ? 'var(--pink-accent-color)'
+                                    : (trashHovered && accentColor === 'green')
+                                    ? 'var(--green-accent-color)'
+                                    : (trashHovered && accentColor === 'orange')
+                                    ? 'var(--orange-accent-color)'
+                                    : (trashHovered && accentColor === 'blue') ? 'var(--primary-background-color)' : 'var(--quaternary-font-color)'}  />
                           </div>
                       </div>
                   </div>

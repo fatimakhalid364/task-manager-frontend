@@ -9,6 +9,7 @@
     gap: 10px;
 }
 
+
 .rdw-option-wrapper {
     margin: 0 8px;
     box-shadow: none;
@@ -22,7 +23,7 @@
 
   .rdw-option-wrapper:hover
   {
-    background-color: var(--active-background-color);
+    background-color: #F5F5F5;
   }
 
   .rdw-option-wrapper[title='Bold'] {
@@ -84,6 +85,7 @@
 
 .rdw-dropdown-selectedtext {
     font-family: var(--primary-font-family);
+    color: var(--quaternary-font-color);
 }
 
 .rdw-dropdown-carettoopen {
