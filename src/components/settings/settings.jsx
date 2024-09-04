@@ -73,6 +73,12 @@ function Settings({ currentSettingsScreen }) {
         dispatch(setColor(selectedColor));
         dispatch(setDateFormat(dateFormatLocal))
         dispatch(setTimeFormat(timeFormatLocal))
+        setAllFalse(true);
+        setIsOrangeClicked(false);
+        setIsPinkClicked(false);
+        setIsGreenClicked(false);
+        setIsBlueClicked(false);
+
 
     }
 
