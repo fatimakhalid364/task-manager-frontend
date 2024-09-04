@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MainDiv from "src/components/maindiv/maindiv";
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { fetchCalendarTasksThunk } from '../../store/thunks/taskThunks'; // Adjust path if necessary
@@ -15,7 +15,7 @@ const CalendarComponent = () => {
     const [events, setEvents] = useState([]);
     const [globalView, setGlobalView] = useState('month')
     const _privateKey = localStorage.getItem("privateKey");
-    // Fetch tasks based on view and date range
+    const accentColor = useSelector((state) => state.appearance.color);
     const fetchTasks = async (view, startDate, endDate) => {
 
         try {
@@ -66,6 +66,14 @@ const CalendarComponent = () => {
         console.log('range from the calendar', range)
         fetchTasks(globalView, startDate, endDate);
     };
+    const CustomEvent = ({ event }) => {
+        const style = {
+            padding: '5px',
+            backgroundColor: accentColor === 'blue' ? 'var(--primary-background-color)' : accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : 'var(--primary-background-color)',
+            borderColor: accentColor === 'blue' ? 'var(--primary-background-color)' : accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : 'var(--primary-background-color)',
+        };
+        return <div className="rbc-event" style={style}>{event.title}</div>;
+    };
 
     return (
         <MainDiv>
@@ -85,6 +93,15 @@ const CalendarComponent = () => {
                     onSelectSlot={(slotInfo) =>
                         alert(`Selected slot: \nStart: ${slotInfo.start}\nEnd: ${slotInfo.end}`)
                     }
+                    // eventClassName={(event) => {
+                    //     if (accentColor === 'blue') return 'rbc-event';
+                    //     if (accentColor === 'pink') return 'rbc-event pink';
+                    //     if (accentColor === 'orange') return 'rbc-event orange';
+                    //     return 'rbc-event primary';
+                    // }}
+                    components={{
+                        event: CustomEvent
+                    }}
                     style={{ height: '100%', width: '100%' }}
                 />
             </div>
