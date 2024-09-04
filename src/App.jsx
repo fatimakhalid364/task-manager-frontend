@@ -1,13 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import './App.css';
-import Calendar from './components/calendar';
+import { CalendarComponent } from './components/calendar/Calendar';
 import Dashboard from './components/dashboard';
 // import Notes from './components/notes';
+import GeneralPage from 'src/pages/settings/GeneralPage';
 import Notes from '../src/components/notes/Notes';
 import UpdateNote from '../src/components/notes/sub_components/update_notes/UpdateNote';
 import RouteGuard from './components/RouteGuard;';
-import Settings from './components/settings/settings';
 import Tasks from './components/tasks/tasks';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './pages/authentication/ForgotPassword';
@@ -17,7 +17,6 @@ import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
-import GeneralPage from 'src/pages/settings/GeneralPage';
 
 function App() {
     return (
@@ -33,7 +32,7 @@ function App() {
                     <Route path="/notes" element={<RouteGuard element={Notes} />} />
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
-                    <Route path="/calendar" element={<RouteGuard element={Calendar} />} />
+                    <Route path="/calendar" element={<RouteGuard element={CalendarComponent} />} />
                     <Route path="/settings/general" element={<RouteGuard element={GeneralPage} />} />
                     <Route path="/notes/:id" element={<RouteGuard element={UpdateNote} />} />
                 </Routes>
