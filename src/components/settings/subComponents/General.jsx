@@ -1,12 +1,13 @@
-import { FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import { styled } from "@mui/system";
-import { getCurrentTimeZone } from '../../../utils/basicUtils';
-import whiteTick from 'src/assets/white-tick.svg';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import whiteTick from 'src/assets/white-tick.svg';
 import { setColor } from 'src/store/slices/appearanceSlice';
+import { getCurrentTimeZone } from '../../../utils/basicUtils';
 
 const General= ({
+    allFalse,
     isBlueClicked, 
     handleBlueClick, 
     isPinkClicked, 
@@ -16,10 +17,6 @@ const General= ({
     isGreenClicked, 
     handleGreenClick,
 }) => {
-    // const [isBlueClicked, setIsBlueClicked] = useState(false);
-    // const [isPinkClicked, setIsPinkClicked] = useState(false);
-    // const [isGreenClicked, setIsGreenClicked] = useState(false);
-    // const [isOrangeClicked, setIsOrangeClicked] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -37,36 +34,7 @@ const General= ({
                 dispatch(setColor('orange'));
                 break;
         }
-    }, [isBlueClicked, isPinkClicked, isGreenClicked, isOrangeClicked, dispatch]);
-
-    // const handleBlueClick = () => {
-    //     setIsBlueClicked(prevValue=> !prevValue);
-    //     setIsPinkClicked(false);
-    //     setIsGreenClicked(false);
-    //     setIsOrangeClicked(false);
-      
-    // }
-
-    // const handlePinkClick = () => {
-    //     setIsPinkClicked(prevValue=> !prevValue);
-    //     setIsBlueClicked(false);
-    //     setIsGreenClicked(false);
-    //     setIsOrangeClicked(false);
-    // }
-
-    // const handleGreenClick = () => {
-    //     setIsGreenClicked(prevValue=> !prevValue);
-    //     setIsPinkClicked(false);
-    //     setIsBlueClicked(false);
-    //     setIsOrangeClicked(false);
-    // }
-
-    // const handleOrangeClick = () => {
-    //     setIsOrangeClicked(prevValue=> !prevValue);
-    //     setIsPinkClicked(false);
-    //     setIsGreenClicked(false);
-    //     setIsBlueClicked(false);
-    // }
+    }, [dispatch]);
 
     const accentColor = useSelector((state) => state.appearance.color);
 
@@ -246,20 +214,20 @@ const General= ({
                                     <div className='app-colors-list' style={{display: 'flex', gap: '15px'}}>
                                         <div className={`app-color ${isBlueClicked ? 'no-animation blue-blast' : ''} blue-app`} onClick={handleBlueClick} >
                                             <div className={`animated-blue-circle ${isBlueClicked ? 'blue-outer-circle outer-circle' : ''}`}></div>
-                                            { isBlueClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
+                                    {(allFalse && accentColor == 'blue') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isBlueClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
                                         </div>
                                         <div className={`app-color ${isPinkClicked ? 'no-animation pink-blast' : ''} pink-app`} onClick={handlePinkClick}  >
                                             <div className={`animated-pink-circle ${isPinkClicked ? 'pink-outer-circle outer-circle' : ''}`}></div>
-                                            { isPinkClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
-                                        </div>
+                                    {(allFalse && accentColor == 'pink') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isPinkClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
+                                </div>
                                         <div className={`app-color ${isGreenClicked ? 'no-animation green-blast' : ''} green-app`} onClick={handleGreenClick}  >
                                             <div className={`animated-green-circle ${isGreenClicked ? 'green-outer-circle outer-circle' : ''}`}></div>
-                                            { isGreenClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}}/>)}
-                                        </div>
+                                    {(allFalse && accentColor == 'green') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isGreenClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
+                                </div>
                                         <div className={`app-color ${isOrangeClicked ? 'no-animation orange-blast' : ''} orange-app`} onClick={handleOrangeClick} style={{position: 'relative'}}  >
                                             <div className={`animated-orange-circle ${isOrangeClicked ? 'orange-outer-circle outer-circle' : ''}`} ></div>
-                                            { isOrangeClicked && (<img src={whiteTick} alt='white-tick' style={{  top: '13px', left: '12px', position: 'absolute'}} />)}
-                                        </div>
+                                    {(allFalse && accentColor == 'orange') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isOrangeClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
+                                </div>
                                     </div>
                             </div>
                     </div>
@@ -269,4 +237,5 @@ const General= ({
     )
 }
 
-export {General};
+export { General };
+
