@@ -19,11 +19,13 @@ const UpdateNote = () => {
 
     return (
         <MainDiv>
-            <CreateNotes
-                noteDetails={details}
-                setNoteDetails={setDetails}
-                update={true}
-            />
+            <div style={{marginLeft: '20px', overflow: 'hidden', height: '100vh',  width: '98%'}}>
+                <CreateNotes
+                    noteDetails={details}
+                    setNoteDetails={setDetails}
+                    update={true}
+                />
+            </div>
         </MainDiv>
     );
 };

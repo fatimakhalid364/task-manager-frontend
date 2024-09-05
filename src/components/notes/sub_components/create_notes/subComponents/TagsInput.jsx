@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import 'src/components/notes/sub_components/create_notes/subComponents/TagsInput.css';
+import { useSelector } from 'react-redux';
 
 function TagsInput({ value, handleNoteInputChange }) {
     const [tags, setTags] = useState(value || []);
     const [inputValue, setInputValue] = useState('');
+    const accentColor = useSelector((state) => state.appearance.color);
 
     useEffect(() => {
         handleNoteInputChange({ target: { name: 'tags', value: tags } });
@@ -29,10 +31,17 @@ function TagsInput({ value, handleNoteInputChange }) {
     }
 
     return (
-        <div className="tags-input-container">
+        <div className="tags-input-container" 
+        >
             {tags.map((tag, index) => (
-                <div className="tag-item" key={index}>
-                    <span className="text">{tag}</span>
+                <div className="tag-item" key={index} style={{backgroundColor: accentColor === 'pink' ? 'var(--light-pink-color)'
+                    : accentColor === 'green' ? 'var(--light-green-color)'
+                    : accentColor === 'orange' ? 'var(--light-orange-color)'
+                    : 'var(--active-background-color)'}}>
+                    <span className="text" style={{color: accentColor === 'pink' ? 'var(--pink-accent-color)'
+                    : accentColor === 'green' ? 'var(--green-accent-color)'
+                    : accentColor === 'orange' ? 'var(--orange-accent-color)'
+                    : 'var(--primary-background-color)'}}>{tag}</span>
                     <span className="close" onClick={() => removeTag(index)}>&times;</span>
                 </div>
             ))}

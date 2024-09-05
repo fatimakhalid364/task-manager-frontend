@@ -121,7 +121,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                 //     onClick={handleShowSearchBarClick} 
                 //     style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
                 // 
-                <div onClick={handleShowSearchBarClick} style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px' }}>
+                <div onClick={handleShowSearchBarClick} style={{ marginTop: '10px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px' }}>
                     <SearchGlass color={accentColor === 'pink'
                                     ? 'var(--pink-accent-color)'
                                     : accentColor === 'green'

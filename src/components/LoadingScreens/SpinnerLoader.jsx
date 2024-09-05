@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { RingLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 const SpinnerLoader = ({ showSpinner, blurBackground }) => {
+    const accentColor = useSelector((state) => state.appearance.color);
     return (
         <>
             {showSpinner && (
@@ -14,7 +16,13 @@ const SpinnerLoader = ({ showSpinner, blurBackground }) => {
                             zIndex: "10000",
                         }}
                     >
-                        <RingLoader color="#3B8AFF" speedMultiplier={1.5} />
+                        <RingLoader color={accentColor === 'pink'
+                                    ? 'var(--pink-accent-color)'
+                                    : accentColor === 'green'
+                                    ? 'var(--green-accent-color)'
+                                    : accentColor === 'orange'
+                                    ? 'var(--orange-accent-color)'
+                                    : 'var(--primary-background-color)'} speedMultiplier={1.5} />
                     </div>
                     {blurBackground && (
                         <div

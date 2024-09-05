@@ -15,10 +15,13 @@
     padding: 10px;
     border-radius: 20px;
     min-width: 91px;
+   
     height: 28px;
     border-radius: 14px;
     align-items: center;
     justify-content: center;
+   
+   
 }
 .tag-item .close{
     

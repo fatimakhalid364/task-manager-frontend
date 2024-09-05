@@ -1,10 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "src/components/BottomBar/BottomBar.css";
+import { useSelector } from "react-redux";
 
-const BottomBarComponents = ({ route, icon }) => {
+const BottomBarComponents = ({ route, icon: IconComponent, currentPage }) => {
+    const location = useLocation();
+    const pathname = location.pathname.split('/').pop().toUpperCase();
+    // const pathname = 'NOTES'
+    const accentColor = useSelector((state) => state.appearance.color);
     const activeStyles = {
-        color: 'var(--primary-background-color)', 
-        backgroundColor: 'var(--active-background-color)',
+        color: accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : 'var(--primary-background-color)', 
+        backgroundColor:  accentColor === 'pink' ? 'var(--light-pink-color)' : accentColor === 'green' ? 'var(--light-green-color)' : accentColor === 'orange' ? 'var(--light-orange-color)' : 'var(--active-background-color)',
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
@@ -40,7 +45,7 @@ const BottomBarComponents = ({ route, icon }) => {
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
             >
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <img src={icon} alt='route-icon' />
+                   <IconComponent  color={currentPage == pathname ? ( accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF') : '#6B7280'} />
             </div>
         </NavLink>
     )

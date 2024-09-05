@@ -51,10 +51,10 @@
 }
 
 
-.note-attachments:hover {
+/* .note-attachments:hover {
     color: var(--primary-background-color);
     background-color: var(--active-background-color);
-}
+} */
 
 .add-notes-controls {
     border-top: 1px solid var(--field-border-color);

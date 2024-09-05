@@ -12,6 +12,7 @@ import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
 
 
 function Settings({ currentSettingsScreen }) {
+    const { isAdaptableScreen } = useResponsive();
     const [isGeneralClicked, setIsGeneralClicked] = useState (false);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -117,6 +118,7 @@ function Settings({ currentSettingsScreen }) {
                 isGreenClicked = {isGreenClicked}
                 handleGreenClick = {handleGreenClick}/>
             </div>
+            {!isAdaptableScreen && <BottomBar  />}
         </MainDiv>
     )
 }
