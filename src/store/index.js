@@ -3,9 +3,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
+import { formatReducer } from './slices//formatSlice';
+import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
 import { getAllTasksReducer } from './slices/get_all_tasks_slice';
-import { appearanceReducer } from './slices/appearanceSlice';
 
 
 
@@ -19,13 +20,15 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 // const persistedCreateTaskReducer = persistReducer(persistConfig, createTaskReducer);
 // const persistedGetAllTasksReducer = persistReducer(persistConfig, getAllTasksReducer);
 const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReducer )
+const persistedFormatReducer = persistReducer(persistConfig, formatReducer)
 
 export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
         // createTask: persistedCreateTaskReducer,
         getAllTasks: getAllTasksReducer,
-        appearance:  persistedAppearanceReducer
+        appearance: persistedAppearanceReducer,
+        format: persistedFormatReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

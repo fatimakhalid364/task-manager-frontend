@@ -1,0 +1,46 @@
+/* Custom event styling for react-big-calendar */
+:root{
+  --neutral-background-color: white;
+  --primary-background-color: #3B8AFF;
+  --primary-font-family: inter;
+  --secondary-font-family: DM Sans;
+  --primary-font-size: 28px;
+  --secondary-font-size: 12px;
+  --field-border-color: #D1D5DB;
+  --primary-font-color: #1F2937;
+  --secondary-font-color: #374151;
+  --tertiary-font-color: #9CA3AF;
+  --neutral-font-color: white;
+  --quaternary-font-color: #6B7280;
+  --primary-button-disabled-color: #8ab3ff;
+  --active-background-color: #EBF3FF;
+  --tertiary-font-size: 14px;
+  --quinary-font-color: #4B5563;
+  --field-background-color: #F9FAFB;
+--modal-border-color: #C1C7D0;
+--low-font-color: #1FDE43;
+--high-font-color: #F87171;
+--medium-font-color: #F59E0B;
+--inprogress-font-color: #F59E0B;
+--light-border-color: #E5E7EB;
+--logout-color: #EF4444;
+--pink-accent-color: #FF0080;
+--green-accent-color: #274546;
+--orange-accent-color: #F59E0B;
+--light-pink-color: #F9e1e4;
+--light-green-color: #C8F9E9;
+--light-orange-color: #FEF4E4;
+
+}
+
+.rbc-event {
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+
+  }

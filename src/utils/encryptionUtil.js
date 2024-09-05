@@ -87,6 +87,7 @@ const decryptObjectValues = (encryptedObj, _privateKey) => {
 // };
 
 const decryptSingleValues = (encryptedValue, _privateKey) => {
+    console.log('encryoted value ', encryptedValue)
     try {
         const privateKey = forge.pki.privateKeyFromPem(_privateKey);
         console.log('simple private key', privateKey)

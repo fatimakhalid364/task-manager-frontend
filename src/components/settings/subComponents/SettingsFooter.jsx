@@ -1,7 +1,8 @@
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const SettingsFooter = ({
+    handleSave,
     isBlueClicked, 
     handleBlueClick, 
     isPinkClicked, 
@@ -34,9 +35,8 @@ const SettingsFooter = ({
                     width: '80px', 
                     gap: '0px', 
                     backgroundColor: accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : 'var(--primary-background-color)', 
-                   
-
                     }}
+                    onClick={handleSave}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}>
                     Save

@@ -44,5 +44,29 @@ const deleteTaskThunk = createAsyncThunk("changePinned", async (_id, thunkAPI) =
     }
 });
 
-export { deleteTaskThunk, getAllTasksThunk };
+const fetchCalendarTasksThunk = createAsyncThunk(
+    'tasks/fetchTasks',
+    async ({ view, startDate, endDate }, thunkAPI) => {
+        console.log("inside fetchCalendarTasksThunk", view, startDate, endDate);
+
+        try {
+            // Fetch tasks from the API with the view and date as query parameters
+            const response = await APIS.get('/task/calendar', {
+                params: { view, startDate, endDate },
+                headers: {
+                    "Content-Type": "application/json",
+                    access_token: `Bearer ${localStorage.getItem("access_token")}`,
+                },
+            });
+            console.log("response is in thunk:", response);
+            return response.data;
+        } catch (error) {
+            if (!error.response) {
+                throw error;
+            }
+            return HandleAuthError(error, thunkAPI);
+        }
+    }
+);
+export { deleteTaskThunk, fetchCalendarTasksThunk, getAllTasksThunk };
 
