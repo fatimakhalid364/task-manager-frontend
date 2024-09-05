@@ -87,7 +87,7 @@ function Tasks() {
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
-                { !isAdaptableScreen && <BottomBar  />}
+                { !isAdaptableScreen && <BottomBar handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen } />}
             </MainDiv>
             
         </div>

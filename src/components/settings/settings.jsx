@@ -6,8 +6,11 @@ import SettingsFooter from 'src/components/settings/subComponents/SettingsFooter
 import { useLocation } from "react-router-dom";
 import {General} from 'src/components/settings/subComponents/General';
 import { SettingsScreen } from "src/constants/constants";
+import BottomBar from "src/components/BottomBar/BottomBar";
+import { useResponsive } from "src/constants/media_queries";
 
 function Settings({ currentSettingsScreen }) {
+    const { isAdaptableScreen } = useResponsive();
     const [isGeneralClicked, setIsGeneralClicked] = useState (false);
     const location = useLocation();
     const [isBlueClicked, setIsBlueClicked] = useState(false);
@@ -70,6 +73,7 @@ function Settings({ currentSettingsScreen }) {
                 isGreenClicked = {isGreenClicked}
                 handleGreenClick = {handleGreenClick}/>
             </div>
+            {!isAdaptableScreen && <BottomBar  />}
         </MainDiv>
     )
 }

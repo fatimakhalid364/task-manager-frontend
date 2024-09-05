@@ -12,6 +12,7 @@ import { errorToast, successToast } from "src/components/toasters/toast.js";
 import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 
 const CreateNotes = ({
@@ -40,8 +41,7 @@ const CreateNotes = ({
             case 'tag':
                 setAddTagHovered(true);
                 break;
-            default:
-                break;
+          
         }
     };
 
@@ -53,8 +53,7 @@ const CreateNotes = ({
             case 'tag':
                 setAddTagHovered(false);
                 break;
-            default:
-                break;
+           
         }
     };
 
@@ -159,6 +158,10 @@ const CreateNotes = ({
       }
   };
 
+  useEffect(() => {
+    console.log('value of addLinkHovered' , addLinkHovered);
+  }, [addLinkHovered]);
+
     return (
       <div className='add-notes-page'>
           <SpinnerLoader showSpinner={spinner} />
@@ -229,7 +232,7 @@ const CreateNotes = ({
                                         : accentColor === 'green' ? "var(--green-accent-color)"
                                         : accentColor === 'orange' ? "var(--orange-accent-color)"
                                         : accentColor === 'blue' ? 'var(--primary-background-color)'
-                                        : ''
+                                        : undefined
                                       )
                                       : "var(--tertiary-font-color)"
                               }

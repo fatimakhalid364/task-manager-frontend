@@ -13,6 +13,7 @@ import { useResponsive } from "src/constants/media_queries";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import NoteCard from "./sub_components/NoteCard";
+import { useSelector } from "react-redux";
 
 const Notes = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,33 @@ const Notes = () => {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () =>
         setDoubleArrowClicked((prevValue) => !prevValue);
+    const accentColor = useSelector((state) => state.appearance.color);
+    const [allNotesHovered, setAllNotesHovered] = useState(false);
+    const [pinnedNotesHovered, setPinnedNotesHovered] = useState(false);
+
+    const handleMouseEnter = (type) => () => {
+        switch (type) {
+            case 'all-notes':
+                setAllNotesHovered(true);
+                break;
+            case 'pinned-notes':
+                setPinnedNotesHovered(true);
+                break;
+          
+        }
+    };
+
+    const handleMouseLeave = (type) => () => {
+        switch (type) {
+            case 'all-notes':
+                setAllNotesHovered(false);
+                break;
+            case 'pinned-notes':
+                setPinnedNotesHovered(false);
+                break;
+           
+        }
+    };
 
     const [notesArray, setNotesArray] = useState([]);
     const [createNotesClicked, setCreateNotesClicked] = useState(false);
@@ -169,26 +197,56 @@ const Notes = () => {
                                           onClick={handleAllNotesClick}
                                           style={{
                                               backgroundColor:
-                                                  isAllNotesClicked && "var(--active-background-color)",
+                                                  (isAllNotesClicked || allNotesHovered) && (accentColor === 'pink'
+                                                  ? 'var(--light-pink-color)'
+                                                  : accentColor === 'green'
+                                                  ? 'var(--light-green-color)'
+                                                  : accentColor === 'orange'
+                                                  ? 'var(--light-orange-color)'
+                                                  : 'var(--active-background-color)'),
                                               cursor: isAllNotesClicked && "pointer",
                                               color:
-                                                  isAllNotesClicked && "var(--primary-background-color)",
+                                                  (isAllNotesClicked || allNotesHovered) && (accentColor === 'pink'
+                                                    ? 'var(--pink-accent-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--green-accent-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--orange-accent-color)'
+                                                    : 'var(--primary-background-color)'),
+                                            
                                           }}
+                                          onMouseEnter={handleMouseEnter('all-notes')}
+                                          onMouseLeave={handleMouseLeave('all-notes')}
+
                                       >
                                           All Notes
                                       </div>
                                       <div
                                           className='notes pinned-notes'
                                           onClick={handlePinnedNotesClick}
-                                          style={{
-                                              backgroundColor:
-                                                  isPinnedNotesClicked &&
-                                                  "var(--active-background-color)",
-                                              cursor: isPinnedNotesClicked && "pointer",
-                                              color:
-                                                  isPinnedNotesClicked &&
-                                                  "var(--primary-background-color)",
-                                          }}
+                                         
+                                            style={{
+                                                backgroundColor:
+                                                    (isPinnedNotesClicked || pinnedNotesHovered) && (accentColor === 'pink'
+                                                    ? 'var(--light-pink-color)'
+                                                    : accentColor === 'green'
+                                                    ? 'var(--light-green-color)'
+                                                    : accentColor === 'orange'
+                                                    ? 'var(--light-orange-color)'
+                                                    : 'var(--active-background-color)'),
+                                                cursor: isPinnedNotesClicked && "pointer",
+                                                color:
+                                                (isPinnedNotesClicked || pinnedNotesHovered) && (accentColor === 'pink'
+                                                      ? 'var(--pink-accent-color)'
+                                                      : accentColor === 'green'
+                                                      ? 'var(--green-accent-color)'
+                                                      : accentColor === 'orange'
+                                                      ? 'var(--orange-accent-color)'
+                                                      : 'var(--primary-background-color)'),
+                                            }}
+                                            onMouseEnter={handleMouseEnter('pinned-notes')}
+                                            onMouseLeave={handleMouseLeave('pinned-notes')}
+                                        
                                       >
                                           Pinned Notes
                                       </div>
@@ -225,7 +283,7 @@ const Notes = () => {
                   )}
               </div>
               <BottomButtons />
-              {!isAdaptableScreen && <BottomBar />}
+              {!isAdaptableScreen && <BottomBar handleOpen={ handleCreateNotesClick } />}
           </MainDiv>
       </>
   );
