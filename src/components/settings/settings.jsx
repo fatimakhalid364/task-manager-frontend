@@ -7,6 +7,8 @@ import { General } from 'src/components/settings/subComponents/General';
 import SettingsFooter from 'src/components/settings/subComponents/SettingsFooter';
 import SettingsHeader from 'src/components/settings/subComponents/SettingsHeader';
 import { SettingsScreen } from "src/constants/constants";
+import BottomBar from 'src/components/BottomBar/BottomBar';
+import { useResponsive } from 'src/constants/media_queries';
 import { setColor } from 'src/store/slices/appearanceSlice';
 import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
 

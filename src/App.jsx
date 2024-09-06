@@ -17,6 +17,7 @@ import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
+import MainDiv from 'src/components/maindiv/maindiv'
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/authentication/reset-password" element={<RouteGuard element={SetPassword} />} />
                     <Route path="/authentication/forgot-email-verification" element={<RouteGuard element={ForgotVerificationWait} />} />
                     <Route path="/authentication/email-verification" element={<RouteGuard element={VerificationWait} />} />
+                   
                     <Route path="/notes" element={<RouteGuard element={Notes} />} />
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
