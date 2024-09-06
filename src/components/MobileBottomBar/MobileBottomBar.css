@@ -1,0 +1,60 @@
+.flex-container {
+    display: flex;
+  
+    height: 50px;
+    margin-top: 50%;
+    width: 100%;
+    gap: 60px;
+    position: relative;
+    
+}
+
+.box-1 {
+    width: 45%;
+    height: 100%;
+    border: 1px solid red;
+    border-right: none;
+    border-top-right-radius: 15px;
+}
+
+.box-2 {
+    width: 45%;
+    height: 100%;
+    border: 1px solid red;
+    border-left: none;
+    border-top-left-radius: 15px;
+}
+
+.circle {
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    border: 1px solid black;
+    border-radius: 50px;
+    top: 47%;
+    left: 45%;
+    background-color: blue;
+}
+
+
+
+.circle-2 {
+    height: 65px;
+    width: 65px;
+    border-bottom: 1px solid black;
+    margin-top: 5px;
+    border-radius: 50px;
+    border-top: none;
+    top: 47%;
+    left: 44.5%;
+    position: absolute;
+}
+
+.circle-2::after {
+    border-bottom: 1px solid black;
+    height: 50px;
+    width: 63px;
+    display: block;
+    content: '';
+    margin-top: 33.5px;
+}

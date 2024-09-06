@@ -220,20 +220,20 @@ const General= ({
                         <div className="app-colors-div" style={{display: 'flex', flexDirection: 'column', gap: '20px', height: '70px'}}>
                             <div className='app-colors-text'>Select Color</div>
                                     <div className='app-colors-list' style={{display: 'flex', gap: '15px'}}>
-                                        <div className={`app-color ${isBlueClicked ? 'no-animation blue-blast' : ''} blue-app`} onClick={handleBlueClick} >
-                                            <div className={`animated-blue-circle ${isBlueClicked ? 'blue-outer-circle outer-circle' : ''}`}></div>
+                                        <div className={`app-color ${(isBlueClicked || accentColor == 'blue') ? 'no-animation blue-blast' : ''} blue-app`} onClick={handleBlueClick} >
+                                            <div className={`animated-blue-circle ${(isBlueClicked || accentColor == 'blue') ? 'blue-outer-circle outer-circle' : ''}`}></div>
                                     {(allFalse && accentColor == 'blue') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isBlueClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
                                         </div>
-                                        <div className={`app-color ${isPinkClicked ? 'no-animation pink-blast' : ''} pink-app`} onClick={handlePinkClick}  >
-                                            <div className={`animated-pink-circle ${isPinkClicked ? 'pink-outer-circle outer-circle' : ''}`}></div>
+                                        <div className={`app-color ${(isPinkClicked || accentColor == 'pink') ? 'no-animation pink-blast' : ''} pink-app`} onClick={handlePinkClick}  >
+                                            <div className={`animated-pink-circle ${(isPinkClicked || accentColor == 'pink') ? 'pink-outer-circle outer-circle' : ''}`}></div>
                                     {(allFalse && accentColor == 'pink') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isPinkClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
                                 </div>
-                                        <div className={`app-color ${isGreenClicked ? 'no-animation green-blast' : ''} green-app`} onClick={handleGreenClick}  >
-                                            <div className={`animated-green-circle ${isGreenClicked ? 'green-outer-circle outer-circle' : ''}`}></div>
+                                        <div className={`app-color ${(isGreenClicked || accentColor == 'green') ? 'no-animation green-blast' : ''} green-app`} onClick={handleGreenClick}  >
+                                            <div className={`animated-green-circle ${(isGreenClicked || accentColor == 'green')? 'green-outer-circle outer-circle' : ''}`}></div>
                                     {(allFalse && accentColor == 'green') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isGreenClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
                                 </div>
-                                        <div className={`app-color ${isOrangeClicked ? 'no-animation orange-blast' : ''} orange-app`} onClick={handleOrangeClick} style={{position: 'relative'}}  >
-                                            <div className={`animated-orange-circle ${isOrangeClicked ? 'orange-outer-circle outer-circle' : ''}`} ></div>
+                                        <div className={`app-color ${(isOrangeClicked || accentColor == 'orange') ? 'no-animation orange-blast' : ''} orange-app`} onClick={handleOrangeClick} style={{position: 'relative'}}  >
+                                            <div className={`animated-orange-circle ${(isOrangeClicked || accentColor == 'orange')  ? 'orange-outer-circle outer-circle' : ''}`} ></div>
                                     {(allFalse && accentColor == 'orange') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isOrangeClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}
                                 </div>
                                     </div>
