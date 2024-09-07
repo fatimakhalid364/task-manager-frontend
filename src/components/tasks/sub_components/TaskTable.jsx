@@ -96,13 +96,7 @@ const TaskTable = ({
     textAlign: 'center',
     fontFamily: 'var(--primary-font-family)',
     color: 'var(--secondary-font-color)',
-    backgroundColor: accentColor === 'pink'
-                          ? 'var(--light-pink-color)'
-                          : accentColor === 'green'
-                          ? 'var(--light-green-color)'
-                          : accentColor === 'orange'
-                          ? 'var(--light-orange-color)'
-                          : 'var(--active-background-color)',
+    backgroundColor:  'var(--active-background-color)',
     
   });
   
@@ -111,13 +105,7 @@ const TaskTable = ({
     textAlign: 'center',
     fontFamily: 'var(--primary-font-family)',
     color: 'var(--secondary-font-color)',
-    backgroundColor: accentColor === 'pink'
-                          ? 'var(--light-pink-color)'
-                          : accentColor === 'green'
-                          ? 'var(--light-green-color)'
-                          : accentColor === 'orange'
-                          ? 'var(--light-orange-color)'
-                          : 'var(--active-background-color)',
+    backgroundColor:  'var(--active-background-color)',
   });
   
   

@@ -8,8 +8,8 @@ const BottomBarComponents = ({ route, icon: IconComponent, currentPage }) => {
     // const pathname = 'NOTES'
     const accentColor = useSelector((state) => state.appearance.color);
     const activeStyles = {
-        color: accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : 'var(--primary-background-color)', 
-        backgroundColor:  accentColor === 'pink' ? 'var(--light-pink-color)' : accentColor === 'green' ? 'var(--light-green-color)' : accentColor === 'orange' ? 'var(--light-orange-color)' : 'var(--active-background-color)',
+        color: 'var(--primary-background-color)', 
+        backgroundColor: 'var(--active-background-color)',
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
@@ -45,7 +45,7 @@ const BottomBarComponents = ({ route, icon: IconComponent, currentPage }) => {
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
             >
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                   <IconComponent  color={currentPage == pathname ? ( accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF') : '#6B7280'} />
+                   <IconComponent  color={currentPage == pathname ?  'var(--primary-background-color)' : 'var(--quaternary-font-color)'} />
             </div>
         </NavLink>
     )

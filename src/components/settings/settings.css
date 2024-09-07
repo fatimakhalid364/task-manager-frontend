@@ -145,7 +145,7 @@
 }
 
 .blue-app {
-    background-color: var(--primary-background-color);
+    background-color: #3B8AFF;
 }
 
 .pink-app {
@@ -167,7 +167,7 @@
         width: 50px;
        
         /* border-radius: 50px; */
-        border: 1px solid var(--primary-background-color);
+        border: 1px solid #3B8AFF;
         transform: translate(-50%, -50%) ;
         position: absolute; 
         margin-top: 20px;
@@ -262,7 +262,7 @@
 
 .app-color.blue-blast::before {
     animation: blastOut 0.3s;
-    background-color: var(--primary-background-color);
+    background-color: #3B8AFF;
 }
 
 .app-color.pink-blast::before {
@@ -295,12 +295,160 @@
 }
 
 .blue-app::before {
-    background-color: var(--primary-background-color);
+    background-color: #3B8AFF;
 }
 
 .hover-effect-btn:hover {
     background-position: left bottom;
 }
+
+.account-page-content {
+    width: 98%;
+    margin-top: 30px;
+    margin-left: 12px;
+    min-height: 350px;
+}
+
+.account-profile-div {
+    display: flex;
+    gap: 70px;
+}
+
+.end-line {
+    height: 0;
+    width: 100%;
+    border-top: 1px solid var(--field-border-color);
+    margin-top: 40px
+}
+
+.account-details-div {
+    width: 100%;
+    height: 152px;
+    margin-top: 20px;
+}
+
+.account-details-username,
+.account-details-email {
+    display: flex;
+    gap: 97px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.account-details-display {
+    width: 100%;
+    
+}
+
+.account-box {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    width: 62.5%;
+    border: 1px solid var(--field-border-color);
+    border-radius: 8px;
+    margin-top: 8px;
+    font-family: var(--secondary-font-family);
+    color: var(--quinary-font-color);
+    font-size: 14px;
+}
+
+.account-details-text {
+    width: 150px;
+    color: var(--quaternary-font-color);
+    font-size: 16px;
+    font-family: var(--primary-font-family);
+   
+    display: flex;
+    align-items: center;
+}
+
+.account-password {
+    display: flex;
+    gap: 70px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.cp-text,
+.np-text,
+.rp-text {
+    width: 150px;
+    color: var(--quaternary-font-color);
+    font-size: 16px;
+    font-family: var(--primary-font-family);
+    display: flex;
+    align-items: center;
+}
+
+.cp-input-header,
+.np-input-header,
+.rp-input-header,
+.account-username-text,
+.account-email-text {
+    font-family: var(--secondary-font-family);
+    color: var(--primary-font-color);
+    font-size: 14px;
+}
+
+
+.np-input-div,
+.cp-input-div,
+.rp-input-div {
+    width: 50.5%;
+}
+
+.cp-input,
+.np-input,
+.rp-input {
+    height: 40px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 8px;
+    border: 1px solid var(--field-border-color);
+}
+
+.cp-input:hover,
+.np-input:hover,
+.rp-input:hover {
+    
+    border: 1px solid var(--primary-background-color);
+}
+
+.cp-input:focus,
+.rp-input:focus,
+.np-input:focus {
+    border: 1px solid var(--primary-background-color);
+    outline: none;
+}
+
+.account-profile-header {
+    color: var(--quinary-font-color);
+    font-family: var(--primary-font-family);
+    font-size: 16px;
+}
+
+.account-profile-para {
+    color: var(--tertiary-font-color);
+    font-family: var(--primary-font-family);
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.account-change-password-text {
+    font-family: var(--primary-font-family);
+    color: #000000;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.account-current-password {
+    margin-top: 40px;
+}
+
 
 @keyframes pulse {
     from {

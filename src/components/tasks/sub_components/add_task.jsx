@@ -54,22 +54,10 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
         '& .MuiOutlinedInput-root': {
     
             '&:hover fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '&.Mui-focused fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -87,22 +75,10 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             borderRadius: '8px',
     
             '&:hover fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '&.Mui-focused fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -118,22 +94,10 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
     const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
         '& .MuiSelect-select': {
             '&:hover fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '&.Mui-focused fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -142,22 +106,10 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
         '& .MuiOutlinedInput-root': {
     
             '&:hover fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border: '1px solid var(--primary-background-color)',
             },
             '&.Mui-focused fieldset': {
-                border: `1px solid ${accentColor === 'pink'
-                    ? 'var(--pink-accent-color)'
-                    : accentColor === 'green'
-                    ? 'var(--green-accent-color)'
-                    : accentColor === 'orange'
-                    ? 'var(--orange-accent-color)'
-                    : 'var(--primary-background-color)'}`,
+                border:'1px solid var(--primary-background-color)',
             },
             '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid #D1D5DB',
@@ -282,13 +234,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                         height: '40px',
                                         "&:hover": {
                                             "&& fieldset": {
-                                                border:`1px solid ${accentColor === 'pink'
-                                                    ? 'var(--pink-accent-color)'
-                                                    : accentColor === 'green'
-                                                    ? 'var(--green-accent-color)'
-                                                    : accentColor === 'orange'
-                                                    ? 'var(--orange-accent-color)'
-                                                    : 'var(--primary-background-color)'}`,
+                                                border:'1px solid var(--primary-background-color)',
 
                                             }
                                         }
@@ -309,13 +255,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                         height: '40px',
                                         "&:hover": {
                                             "&& fieldset": {
-                                                border: `1px solid ${accentColor === 'pink'
-                                                    ? 'var(--pink-accent-color)'
-                                                    : accentColor === 'green'
-                                                    ? 'var(--green-accent-color)'
-                                                    : accentColor === 'orange'
-                                                    ? 'var(--orange-accent-color)'
-                                                    : 'var(--primary-background-color)'}`,
+                                                border: '1px solid var(--primary-background-color)',
 
                                             }
                                         }
@@ -335,13 +275,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                 maxRows={7}
                                 minRows={7}
                                 p={2}
-                                style={{ width: '100%', overflowY: 'scroll', border: hovered && `1px solid ${accentColor === 'pink'
-                                                    ? 'var(--pink-accent-color)'
-                                                    : accentColor === 'green'
-                                                    ? 'var(--green-accent-color)'
-                                                    : accentColor === 'orange'
-                                                    ? 'var(--orange-accent-color)'
-                                                    : 'var(--primary-background-color)'}`  }}
+                                style={{ width: '100%', overflowY: 'scroll', border: hovered && '1px solid var(--primary-background-color)'  }}
                                 value={taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
@@ -363,10 +297,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                                    
                                     onClick={handleCreateClick}
                                     style={{
-                                        borderRadius: '28px', padding: '8px  8px ', textSizeAdjust: '14px', width: '126px', fontSize: '14px', textTransform: 'capitalize', backgroundColor: accentColor === 'pink' ? "var(--pink-accent-color)"
-                                        : accentColor === 'green' ? "var(--green-accent-color)"
-                                        : accentColor === 'orange' ? "var(--orange-accent-color)"
-                                        : 'var(--primary-background-color)',
+                                        borderRadius: '28px', padding: '8px  8px ', textSizeAdjust: '14px', width: '126px', fontSize: '14px', textTransform: 'capitalize', backgroundColor: 'var(--primary-background-color)',
                                         fontWeight: '400', 
                                         fontFamily: 'var(--primary-font-family)'
                                     }}

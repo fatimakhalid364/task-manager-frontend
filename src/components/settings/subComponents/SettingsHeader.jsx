@@ -1,9 +1,16 @@
-import { NavLink } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
 
-const SettingsHeader = () => {
+const SettingsHeader = ({ handleGeneralClick, 
+    handleNotificationClick, 
+    handleAccountClick, 
+    handleLogoutClick,
+    isAccountClicked,
+    isGeneralClicked,
+    isNotificationClicked,
+    isLogoutClicked}) => {
     const [generalHovered, setGeneralHovered] = useState(false);
     const [accountHovered, setAccountHovered] = useState(false);
     const [notificationHovered, setNotificationHovered] = useState(false);
@@ -40,42 +47,15 @@ const SettingsHeader = () => {
         }
     };
 
-    const accentColor = useSelector((state) => state.appearance.color);
+   
 
     const getActiveStyles = () => ({
         backgroundColor: 'white',
-        color: accentColor === 'pink'
-            ? 'var(--pink-accent-color)'
-            : accentColor === 'green'
-            ? 'var(--green-accent-color)'
-            : accentColor === 'orange'
-            ? 'var(--orange-accent-color)'
-            : 'var(--primary-background-color)',
+        color: 'var(--primary-background-color)',
         boxShadow: '0px 2px 6px 0px #1018280F',
     });
 
-    const getInactiveStyles = (hovered) => ({
-        color: hovered
-            ? accentColor === 'pink'
-                ? 'var(--pink-accent-color)'
-                : accentColor === 'green'
-                ? 'var(--green-accent-color)'
-                : accentColor === 'orange'
-                ? 'var(--orange-accent-color)'
-                : accentColor === 'blue'
-                ? 'var(--primary-background-color)'
-                : 'var(--quaternary-font-color)'
-            : 'var(--quaternary-font-color)',
-        fontFamily: 'var(--primary-font-family)',
-        fontSize: '18px',
-        cursor: 'pointer',
-        height: '44px',
-        width: '130px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '22px',
-    });
+    
 
     return (
         <div className="settings-header-div">
@@ -83,40 +63,44 @@ const SettingsHeader = () => {
                 Settings
             </div>
             <div className="settings-header-nav">
-                <NavLink
+                <div
                     className="settings-nav settings-general"
-                    to='/settings/general'
-                    style={({ isActive }) => isActive ? getActiveStyles() : getInactiveStyles(generalHovered)}
+                  
+                    style={{ backgroundColor: isGeneralClicked && 'white', color: isGeneralClicked && 'var(--primary-background-color)', boxShadow: isGeneralClicked && '0px 2px 6px 0px #1018280F'}}
                     onMouseEnter={handleMouseEnter('general')}
                     onMouseLeave={handleMouseLeave('general')}
+                    onClick={ handleGeneralClick}
                 >
                     General
-                </NavLink>
-                <NavLink
+                </div>
+                <div
                     className="settings-nav settings-account"
-                    to='/settings/account'
-                    style={({ isActive }) => isActive ? getActiveStyles() : getInactiveStyles(accountHovered)}
+                   
+                    style={{ backgroundColor: isAccountClicked && 'white', color: isAccountClicked && 'var(--primary-background-color)', boxShadow: isAccountClicked && '0px 2px 6px 0px #1018280F'}}
                     onMouseEnter={handleMouseEnter('account')}
                     onMouseLeave={handleMouseLeave('account')}
+                    onClick={ handleAccountClick}
                 >
                     Account
-                </NavLink>
-                <NavLink
+                </div>
+                <div
                     className="settings-nav settings-notification"
-                    to='/settings/notification'
-                    style={({ isActive }) => isActive ? getActiveStyles() : getInactiveStyles(notificationHovered)}
+                   
+                    style={{ backgroundColor: isNotificationClicked && 'white', color: isNotificationClicked && 'var(--primary-background-color)', boxShadow: isNotificationClicked && '0px 2px 6px 0px #1018280F'}}
                     onMouseEnter={handleMouseEnter('notification')}
                     onMouseLeave={handleMouseLeave('notification')}
+                    onClick={ handleNotificationClick}
                 >
                     Notification
-                </NavLink>
-                <NavLink
+                </div>
+                <div
                     className="settings-nav settings-logout"
-                    to='/settings/logout'
-                    style={({ isActive }) => isActive ? getActiveStyles() : {}}
+                    
+                    style={{ backgroundColor: isLogoutClicked && 'white', color: isLogoutClicked && 'var(--primary-background-color)', boxShadow: isLogoutClicked && '0px 2px 6px 0px #1018280F'}}
+                    onClick={ handleLogoutClick}
                 >
                     Logout
-                </NavLink>
+                </div>
             </div>
         </div>
     );

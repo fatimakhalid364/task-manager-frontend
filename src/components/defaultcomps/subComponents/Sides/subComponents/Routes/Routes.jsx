@@ -15,7 +15,7 @@ function Routes({ clickfunction, burgerMenuClicked }) {
             <RoutesComponents icon={TaskIcon} currentPage='TASKS' page='Tasks' route='/tasks' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
             <RoutesComponents icon={NotesIcon} currentPage='NOTES' page='Notes' route='/notes' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
             <RoutesComponents icon={CalendarIcon} currentPage='CALENDER' page='Calendar' route='/calendar' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
-            <RoutesComponents icon={GearIcon} currentPage='GENERAL' page='Settings' route='/settings/general' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
+            <RoutesComponents icon={GearIcon} currentPage='SETTINGS' page='Settings' route='/settings' clickfunction={clickfunction} burgerMenuClicked={burgerMenuClicked} />
             <Outlet />
 
         </div>

@@ -15,9 +15,11 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
+import { useSelector } from 'react-redux';
 
 
 function Tasks() {
+  
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -71,6 +73,8 @@ function Tasks() {
     useEffect(() => {
         debouncedGetAllTasks(page, limit);
     }, [page, limit, debouncedGetAllTasks]);
+
+    
 
     return (
         <div className='task-page-div'>

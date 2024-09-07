@@ -75,7 +75,7 @@ function NotificationModal({
                 <DialogTitle mb={-1} sx={{ textAlign: "center", }}>
                     <Typography variant="h3" fontWeight={600} sx={{ fontSize: '20px', lineHeight: '28px' }} color="#495057">
                         {title}
-                        <Box style={{ color: '#3B8AFF', lineHeight: '28px' }}>{titleInfo}</Box>
+                        <Box style={{ color: '#495057', lineHeight: '28px' }}>{titleInfo}</Box>
                     </Typography>
                 </DialogTitle>
                 <DialogContent mb={2} mt={3} sx={{ textAlign: "center", padding: '0px', alignItems: 'center', justifyContent: 'center', width: '490px' }}>
@@ -86,13 +86,13 @@ function NotificationModal({
                 {/* <Box mt={6}></Box> */}
                 <DialogActions mt={6} mb={-6} sx={{ display: "flex", gap: '24px', justifyContent: "center", width: '100%', height: '90px', borderTop: '1px solid #D1D5DB' }}>
                     {(notificationType && notificationType === 'DELETE') &&
-                        <Button variant='outlined' style={{ borderRadius: '28px', width: '100px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onCancel} color="info">
+                        <div variant='outlined' className='filter-button' style={{ borderRadius: '28px', width: '100px', height: '40px', textTransform: 'capitalize' }} size="medium" mb={4} mt={3} onClick={onCancel} color="info">
                             {secondaryButtonText ? secondaryButtonText : 'Cancel'}
-                        </Button>
+                        </div>
                     }
-                    <Button variant='contained' sx={{ borderRadius: '28px', textTransform: 'none', width: notificationType && notificationType === 'DELETE' ? '100px' : '250px', height: '40px' }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
+                    <div variant='contained' className='primary-button' style={{ borderRadius: '28px', textTransform: 'none', width: notificationType && notificationType === 'DELETE' ? '100px' : '250px', height: '40px', backgroundColor: notificationType && notificationType === 'DELETE' && '#EF4444', fontFamily: 'var(--primary-font-family)'  }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
                         {primaryButtonText}
-                    </Button>
+                    </div>
 
                 </DialogActions>
             </Dialog>

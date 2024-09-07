@@ -95,12 +95,12 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
             </div>
           </div>
           <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-end', gap: '10px', marginRight: '20px'}}>
-            <Button onClick={handleCloseLinkPopup} variant="outlined"  style={{borderRadius: '28px'}}>
+            <div className='filter-button' onClick={handleCloseLinkPopup} variant="outlined"  style={{borderRadius: '28px', width: '100px'}}>
               Cancel
-            </Button>
-            <Button onClick={applyLink} variant="contained"  style={{borderRadius: '28px', backgroundColor: 'var(--primary-background-color)'}}>
+            </div>
+            <div className='primary-button' onClick={applyLink} variant="contained"  style={{borderRadius: '28px', backgroundColor: 'var(--primary-background-color)', fontFamily: 'var(--primary-font-family)', width: '100px'}}>
               Apply
-            </Button>
+            </div>
           </div>
         </div>
       </Modal>

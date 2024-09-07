@@ -58,6 +58,11 @@
     
 }
 
+.search-input:hover {
+    border-color: var(--primary-background-color);
+    outline: none;
+}
+
 .search-blue-input
  {
     border-color: var(--primary-background-color);

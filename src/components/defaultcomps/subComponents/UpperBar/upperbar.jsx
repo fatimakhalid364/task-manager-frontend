@@ -91,13 +91,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                         <form>
                             <input type="search" placeholder="Search here..." className='search-input' onChange={handleChange} value={searchInput} />
                             <button type="submit" className='search-button' onClick={handleClick}>
-                                <SearchGlass color={accentColor === 'pink'
-                                    ? 'var(--pink-accent-color)'
-                                    : accentColor === 'green'
-                                    ? 'var(--green-accent-color)'
-                                    : accentColor === 'orange'
-                                    ? 'var(--orange-accent-color)'
-                                    : 'var(--primary-background-color)'} />
+                                <SearchGlass color='var(--primary-background-color)'/>
                             </button>
                             <img src={cross} alt='cross' style={{position: 'absolute', left: '97%', top: '36%', cursor: 'pointer' }} onClick={handleShowSearchBarClick} />
                         </form>
@@ -122,18 +116,12 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                 //     style={{ marginTop: '1px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px'}} 
                 // 
                 <div onClick={handleShowSearchBarClick} style={{ marginTop: '10px', cursor: 'pointer', marginLeft: !isAdaptableScreen && '10px' }}>
-                    <SearchGlass color={accentColor === 'pink'
-                                    ? 'var(--pink-accent-color)'
-                                    : accentColor === 'green'
-                                    ? 'var(--green-accent-color)'
-                                    : accentColor === 'orange'
-                                    ? 'var(--orange-accent-color)'
-                                    : 'var(--primary-background-color)'}  />
+                    <SearchGlass color='var(--primary-background-color)'/>
                 </div>
             )}
                 <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '20px', marginTop: !isAdaptableScreen && '11px'}}>
                     
-                    <BellIcon color={accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : '#3B8AFF'} />
+                    <BellIcon color='var(--primary-background-color)'/>
                 </div>
                 <ProfileSection />
             </div>
