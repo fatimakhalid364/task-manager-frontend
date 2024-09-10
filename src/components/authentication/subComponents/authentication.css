@@ -96,7 +96,7 @@
 
 .prompt-to-signin > a{
     text-decoration: none;
-    color: var(--primary-background-color);
+    color: #3B8AFF;
     font-weight: 550;
 }
 
