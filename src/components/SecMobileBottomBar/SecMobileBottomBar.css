@@ -1,0 +1,17 @@
+.sec-mobile-bottom-bar {
+   
+        display: flex;
+        bottom: 0;
+        height: 50px;
+        margin-bottom: 0;
+        width: 100%;
+        gap: 60px;
+        background-color: white;
+        position: fixed;
+        z-index: 999;
+        border: 1px solid var(--quaternary-font-color);
+        align-items: center;
+        justify-content: space-between;
+        
+   
+}
