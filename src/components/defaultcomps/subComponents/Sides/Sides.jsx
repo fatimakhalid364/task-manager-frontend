@@ -24,7 +24,7 @@ function Sides({clickfunction, burgerMenuClicked, handleBurgerMenuClick }){
             : (isMicroScreen && !burgerMenuClicked && !expandBar) ? '0'
             : '50px',
             top: (isMicroScreen && burgerMenuClicked && !expandBar) && '0',
-           
+            zIndex: (isMicroScreen && burgerMenuClicked) && '999999999999'
              }}>
                 { (isMicroScreen && burgerMenuClicked && !expandBar) && (
                     <div style={{height: '30px', width: '30px', backgroundColor: 'var(--active-background-color)', borderRadius: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginLeft: '80%', cursor: 'pointer'}}
