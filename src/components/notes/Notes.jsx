@@ -14,6 +14,8 @@ import { getAllNotesThunk } from "src/store/thunks/notesThunk";
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import NoteCard from "./sub_components/NoteCard";
 import { useSelector } from "react-redux";
+import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
+import PlusIcon from 'src/components/icons/PlusIcon';
 
 const Notes = () => {
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const Notes = () => {
     const [pinned, setPinned] = useState("");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
-    const { isAdaptableScreen } = useResponsive();
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const [metaData, setMetaData] = useState();
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () =>
@@ -283,7 +285,14 @@ const Notes = () => {
                   )}
               </div>
               <BottomButtons />
-              {!isAdaptableScreen && <BottomBar handleOpen={ handleCreateNotesClick } />}
+              {(!isAdaptableScreen && !isMicroScreen) && <BottomBar handleOpen={ handleCreateNotesClick } />}
+            { (isMicroScreen && !isAdaptableScreen) && (<div className="circle-2">
+                <div style={{width: '100%', borderRadius: '50px', display: 'flex', marginTop: '24px', justifyContent: 'center'}}
+                onClick={handleCreateNotesClick}>
+                <PlusIcon color='white' width='17' height='17' />
+                </div>
+            </div>)}
+             
           </MainDiv>
       </>
   );

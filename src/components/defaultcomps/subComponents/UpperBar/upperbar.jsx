@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 
 
-function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
+function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, handleShowSearchBarClick }) {
     const accentColor = useSelector((state) => state.appearance.color);
 
     const {
@@ -34,11 +34,11 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
         isMicroScreen,
     } = useResponsive();
 
-    const [showSearchBar, setShowSearchBar] = useState(false);
+    // const [showSearchBar, setShowSearchBar] = useState(false);
 
-    const handleShowSearchBarClick = () => {
-        setShowSearchBar(prevValue=> !prevValue);
-    }
+    // const handleShowSearchBarClick = () => {
+    //     setShowSearchBar(prevValue=> !prevValue);
+    // }
 
     const handleChange = (event) => {
         const {value} = event.target;
@@ -107,7 +107,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                 marginRight: !isAdaptableScreen && '40px',
                 width: !isAdaptableScreen && '100px',
                }}>
-                {!isAdaptableScreen && (
+                {!isAdaptableScreen && !isMicroScreen && (
                 // <img 
                 //     src={SearchGlass} 
                 //     alt='magnifying-glass' 
@@ -119,10 +119,10 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick }) {
                     <SearchGlass color='var(--primary-background-color)'/>
                 </div>
             )}
-                <div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '20px', marginTop: !isAdaptableScreen && '11px'}}>
+                { !isMicroScreen && (<div className='bell-icon' style={{marginLeft: !isAdaptableScreen && '20px', marginTop: !isAdaptableScreen && '11px'}}>
                     
                     <BellIcon color='var(--primary-background-color)'/>
-                </div>
+                </div>)}
                 <ProfileSection />
             </div>
     )

@@ -30,6 +30,7 @@ function ProfileSection() {
         isAdaptableScreen,
         isBp6,
         isBp8,
+        isMicroScreen,
     } = useResponsive();
 
 
@@ -52,7 +53,7 @@ function ProfileSection() {
 
     return (
         <div>
-            {isAdaptableScreen ? (<div className='profile-div' onClick={toggleProfile}>
+            {isAdaptableScreen ? (<div className='profile-div' onClick={toggleProfile} >
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     {svgData ? (

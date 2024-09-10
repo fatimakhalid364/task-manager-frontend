@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useResponsive } from 'src/constants/media_queries'; 
 import { useSelector } from "react-redux";
 
-function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked = { burgerMenuClicked }, page }) {
+function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked, page }) {
     const location = useLocation();
     const pathname = location.pathname.split('/').pop().toUpperCase();
     const {
@@ -21,7 +21,7 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
-        marginLeft: (!expandBar || !burgerMenuClicked) ? '0' : '9%' ,
+        marginLeft: (isMicroScreen && burgerMenuClicked && !expandBar) ? '4px' : (!expandBar || !burgerMenuClicked) ? '0'  : '9%' ,
         gap: '12px',
         padding: '8px 12px',
         paddingRight: (!expandBar || !burgerMenuClicked) && '40px',
@@ -36,7 +36,7 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
         textDecoration: 'none',
         display: 'flex',
         fontSize: 'var(--tertiary-font-size)',
-        marginLeft: (!expandBar || !burgerMenuClicked) ? '0' : '9%' ,
+        marginLeft:(isMicroScreen && burgerMenuClicked && !expandBar) ? '4px' : (!expandBar || !burgerMenuClicked) ? '0'  : '9%' ,
         gap: '12px',
         padding: '8px 12px',
         paddingRight: (!expandBar || !burgerMenuClicked) && '40px',
@@ -56,15 +56,15 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
                 to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
             >
-                { (expandBar && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
+                { (expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <IconComponent color={currentPage == pathname ? 'var(--primary-background-color)' : 'var(--quaternary-font-color)'} />
                 </div>
                 <div  onClick={ clickfunction }  className='tasks-page-route-name'>{page}</div>
-                </div>) : (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                </div>) : ( !expandBar || !isMicroScreen) ? (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <IconComponent color={currentPage == pathname ? 'var(--primary-background-color)' : 'var(--quaternary-font-color)'}  />
 
-                </div>) } 
+                </div>) : null } 
             </NavLink>
 
         

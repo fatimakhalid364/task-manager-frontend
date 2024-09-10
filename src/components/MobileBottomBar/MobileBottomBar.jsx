@@ -1,22 +1,35 @@
-import 'src/components/MobileBottomBar/MobileBottomBar.css'
-const MobileBottomBar = () => {
+import 'src/components/MobileBottomBar/MobileBottomBar.css';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import SearchGlass from 'src/components/icons/SearchGlass'
+
+const MobileBottomBar = ({ handleBurgerMenuClick, handleShowSearchBarClick, BellIcon  }) => {
+    
     return (
-        <div className='mobile-bottom-bar-div'>
+       
+            
             <div className="mobile-bottom-bar">
                 <div className="box-1">
-                    <div className="item1"></div>
+                    <MenuOutlinedIcon sx={{marginLeft: '10px', color: 'var(--primary-background-color)'}} onClick={ handleBurgerMenuClick} />
                     <div className="item2"></div>
                     <div className="item3"></div>
                 </div>
                 <div className="box-2">
-                    <div className="item-a1"></div>
-                    <div className="item-a2"></div>
+               
+                    
+                    <BellIcon color='var(--primary-background-color)'/>
+               
+                <div onClick={handleShowSearchBarClick} style={{  cursor: 'pointer', marginTop: '2px'}}>
+                    <SearchGlass color='var(--primary-background-color)'/>
+                </div>
+               
                     <div className="item-a3"></div>
                 </div>
             
             </div>
-            <div className="circle-1"></div>
-            <div className="circle-2"></div>
-        </div>
+           
+           
+       
     )
 }
+
+export { MobileBottomBar };

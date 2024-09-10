@@ -1,60 +1,73 @@
-.flex-container {
+
+
+
+.mobile-bottom-bar {
     display: flex;
-  
+    bottom: 0;
     height: 50px;
-    margin-top: 50%;
+    margin-bottom: 0;
     width: 100%;
     gap: 60px;
-    position: relative;
+    background-color: white;
+    position: fixed;
     
 }
 
 .box-1 {
     width: 45%;
     height: 100%;
-    border: 1px solid red;
+    border: 1px solid var(--quaternary-font-color);
     border-right: none;
     border-top-right-radius: 15px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    
 }
 
 .box-2 {
     width: 45%;
     height: 100%;
-    border: 1px solid red;
+    border: 1px solid var(--quaternary-font-color);
     border-left: none;
     border-top-left-radius: 15px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
 }
 
-.circle {
+/* .circle-1 {
     position: absolute;
     height: 60px;
     width: 60px;
     border: 1px solid black;
     border-radius: 50px;
-    top: 47%;
-    left: 45%;
-    background-color: blue;
-}
+    top: 20px;
+    left: 42%;
+    background-color: white;
+} */
 
 
 
 .circle-2 {
     height: 65px;
     width: 65px;
-    border-bottom: 1px solid black;
+    /* border: 1px solid var(--quaternary-font-color); */
     margin-top: 5px;
     border-radius: 50px;
-    border-top: none;
-    top: 47%;
-    left: 44.5%;
-    position: absolute;
+    background-color: var(--primary-background-color);
+    bottom: 10px;
+    left: 41.46%;
+    position: fixed;
 }
 
-.circle-2::after {
-    border-bottom: 1px solid black;
+/* .circle-2::after {
+    border-bottom: 4px solid #3B8AFF;
     height: 50px;
     width: 63px;
     display: block;
     content: '';
     margin-top: 33.5px;
-}
+} */

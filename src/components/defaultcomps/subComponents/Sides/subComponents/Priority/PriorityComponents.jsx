@@ -7,6 +7,7 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
     
     const {
         expandBar,
+        isMicroScreen
     } = useResponsive();
 
     
@@ -19,7 +20,8 @@ function PriorityComponents({Dot, PriorityLevel, TasksAtPriorityLevel, burgerMen
     
     return (
         <div>
-        {(expandBar && burgerMenuClicked) ? (<div className='tasks-page-priority'>
+        {((expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked)) ? (<div className='tasks-page-priority'
+        style={{marginLeft: (isMicroScreen && burgerMenuClicked && !expandBar) && '20px'}}>
             <div>
                 <img src={Dot} alt='colored-dots' />
 
