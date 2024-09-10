@@ -103,8 +103,9 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, ha
                 marginLeft: (isBp1 || isBp2 || isBp3 || isBp4 || isBp5) ? 'calc(100vw - 54vw)' : 
                             isBp6 ? 'calc(100vw - 54vw)': 
                             isBp7 ? 'calc(100vw - 55vw)': 
-                            isBp8 ? 'calc(100vw - 56vw)' : 'calc(100vw - 48vw)', 
-                marginRight: !isAdaptableScreen && '40px',
+                            isBp8 ? 'calc(100vw - 56vw)' :
+                            isMicroScreen ? 'calc(100vw - 51vw)' : 'calc(100vw - 48vw)', 
+                marginRight:  !isAdaptableScreen && '40px',
                 width: !isAdaptableScreen && '100px',
                }}>
                 {!isAdaptableScreen && !isMicroScreen && (
