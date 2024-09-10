@@ -7,11 +7,15 @@ import { useResponsive } from "src/constants/media_queries";
 import BellIcon from "src/components/icons/BellIcon";
 import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { SecMobileBottomBar } from 'src/components/SecMobileBottomBar/SecMobileBottomBar';
 
 
 
 function MainDiv({ children }) {
     const [burgerMenuClicked, setBurgerMenuClicked] = useState(true);
+    const location = useLocation();
+    const pathname = location.pathname;
 
     const handleBurgerMenuClick = () => {
         setBurgerMenuClicked((prevValue) => !prevValue);
@@ -58,7 +62,8 @@ function MainDiv({ children }) {
                     handleShowSearchBarClick={handleShowSearchBarClick}
                 />
             </div>
-            { (isMicroScreen && !isAdaptableScreen) && (<MobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
+            { (isMicroScreen && !isAdaptableScreen && (pathname == '/notes' || pathname == '/tasks')) && (<MobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
+            { (isMicroScreen && !isAdaptableScreen && (pathname == '/settings' || pathname == '/calendar')) && (<SecMobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
 
             <div style={{ display: 'block', justifyContent: 'space-between', gap: '20px' }}>
                 <Sides

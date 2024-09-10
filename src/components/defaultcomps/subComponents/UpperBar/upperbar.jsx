@@ -104,7 +104,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, ha
                             isBp6 ? 'calc(100vw - 54vw)': 
                             isBp7 ? 'calc(100vw - 55vw)': 
                             isBp8 ? 'calc(100vw - 56vw)' :
-                            isMicroScreen ? 'calc(100vw - 51vw)' : 'calc(100vw - 48vw)', 
+                            isMicroScreen ? 'calc(100vw - 50vw)' : 'calc(100vw - 48vw)', 
                 marginRight:  !isAdaptableScreen && '40px',
                 width: !isAdaptableScreen && '100px',
                }}>

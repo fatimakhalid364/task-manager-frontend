@@ -10,19 +10,18 @@ const MobileBottomBar = ({ handleBurgerMenuClick, handleShowSearchBarClick, Bell
             <div className="mobile-bottom-bar">
                 <div className="box-1">
                     <MenuOutlinedIcon sx={{marginLeft: '10px', color: 'var(--primary-background-color)'}} onClick={ handleBurgerMenuClick} />
-                    <div className="item2"></div>
-                    <div className="item3"></div>
+                    
                 </div>
                 <div className="box-2">
                
                     
                     <BellIcon color='var(--primary-background-color)'/>
                
-                <div onClick={handleShowSearchBarClick} style={{  cursor: 'pointer', marginTop: '2px'}}>
+                <div onClick={handleShowSearchBarClick} style={{  cursor: 'pointer', marginTop: '2px', marginRight: '13px'}}>
                     <SearchGlass color='var(--primary-background-color)'/>
                 </div>
                
-                    <div className="item-a3"></div>
+                 
                 </div>
             
             </div>
