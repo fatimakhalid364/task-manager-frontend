@@ -65,20 +65,13 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
                 <input 
                 type="search" 
                 placeholder="Search here..." 
-                className={`search-input ${(hovered && accentColor === 'pink') ? 'search-pink-input' : (hovered && accentColor === 'green') ? 'search-green-input' : (hovered && accentColor === 'orange') ? 'search-orange-input' : (hovered && accentColor === 'blue') ? 'search-blue-input'  : ''}`}  
+                className='search-input'  
                 onChange={handleChange} 
                 value={searchInput} 
-                onMouseEnter={handleMouseEnter} 
-                onMouseLeave={handleMouseLeave}
+               
                 />
                     <button type="submit" className='search-button' onClick={handleClick}>
-                        <SearchGlass color={accentColor === 'pink'
-                            ? 'var(--pink-accent-color)'
-                            : accentColor === 'green'
-                            ? 'var(--green-accent-color)'
-                            : accentColor === 'orange'
-                            ? 'var(--orange-accent-color)'
-                            : 'var(--primary-background-color)'} />
+                        <SearchGlass color='var(--primary-background-color)'/>
                     </button>
                 </form>
 
@@ -91,22 +84,12 @@ function SearchBar({ showSearchBar, handleShowSearchBarClick }){
                             <input 
                                 type="search" 
                                 placeholder="Search here..." 
-                                className={`search-input ${(hovered) ? 'search-pink-input' 
-                                    : '' }`}  
+                                className='search-input' 
                                 onChange={handleChange} 
                                 value={searchInput} 
                                 onMouseEnter={handleMouseEnter} 
                                 onMouseLeave={handleMouseLeave}
-                                style={{borderColor: hovered ?
-                                    (accentColor === 'pink'
-                                        ? 'var(--pink-accent-color)'
-                                        : accentColor === 'green'
-                                        ? 'var(--green-accent-color)'
-                                        : accentColor === 'orange'
-                                        ? 'var(--orange-accent-color)'
-                                        : accentColor === 'blue'
-                                        ? 'var(--primary-background-color)'
-                                        : 'var(--quaternary-font-color)') : '', outline: hovered ? 'none' : '' }} />
+                                />
                             <button type="submit" className='search-button' onClick={handleClick}>
                                 <SearchGlass color={accentColor === 'pink'
                                     ? 'var(--pink-accent-color)'

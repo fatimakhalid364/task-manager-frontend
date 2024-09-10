@@ -20,8 +20,8 @@ function Priority({ burgerMenuClicked }){
     
 
     return (
-        <div className='tasks-page-priority-div'>
-            { (expandBar && burgerMenuClicked) && (<div className='priority-header'>Priority</div>)}
+        <div className='tasks-page-priority-div' style={{display: (isMicroScreen && !burgerMenuClicked && !expandBar) && 'none'}}>
+            { ((expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked))  && (<div className='priority-header'>Priority</div>)}
             <PriorityComponents Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />
             <PriorityComponents Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />
             <PriorityComponents Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel='7' burgerMenuClicked={ burgerMenuClicked}  />

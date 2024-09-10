@@ -5,6 +5,8 @@ import drop from 'src/assets/drop.svg';
 import { useResponsive } from 'src/constants/media_queries';
 import { useAuth } from 'src/contexts/AuthContext.jsx';
 
+import { capitalizeFirstLetter } from 'src/utils/basicUtils';
+
 
 
 function ProfileSection() {
@@ -15,9 +17,9 @@ function ProfileSection() {
     const toggleProfile = () => {
         setIsProfileOpen(prevState => !prevState);
     }
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    // const capitalizeFirstLetter = (string) => {
+    //     return string.charAt(0).toUpperCase() + string.slice(1);
+    // }
 
     const {
         isBp2,
@@ -28,6 +30,7 @@ function ProfileSection() {
         isAdaptableScreen,
         isBp6,
         isBp8,
+        isMicroScreen,
     } = useResponsive();
 
 
@@ -50,11 +53,11 @@ function ProfileSection() {
 
     return (
         <div>
-            {isAdaptableScreen ? (<div className='profile-div' onClick={toggleProfile}>
+            {isAdaptableScreen ? (<div className='profile-div' onClick={toggleProfile} >
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     {svgData ? (
-                        <img style={{ borderRadius: '50px', border: '1px solid #3B8AFF', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
+                        <img style={{ borderRadius: '50px', border: '1px solid var(--primary-background-color)', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
                     ) : (
                         // Fallback image or placeholder if no SVG data
                         <img alt="Default Avatar" width="40" height="40" />
@@ -88,7 +91,7 @@ function ProfileSection() {
                 </div>
 
             </div>) : (<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }} onClick={toggleProfile}>
-                <img style={{ borderRadius: '50px', border: '1px solid #3B8AFF', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
+                <img style={{ borderRadius: '50px', border: '1px solid var(--primary-background-color)', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
                     {isProfileOpen && (
                         <div className='logout-button' style={{ bottom: 0 }}>
                             <div style={{ display: 'flex', justifyContent: 'right' }}>

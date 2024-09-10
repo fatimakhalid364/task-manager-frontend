@@ -1,10 +1,10 @@
 import { useResponsive } from 'src/constants/media_queries';
 import plus from 'src/assets/plus.svg';
 import filter from 'src/assets/filter.svg';
-import { useSelector } from 'react-redux';
+
 
 const BottomButtons= ({ handleOpen, handleFilterOpen, doubleArrowClicked}) => {
-    const accentColor = useSelector((state) => state.appearance.color)
+    
     const {
         onWholeScreen,
         isAdaptableScreen
@@ -28,13 +28,7 @@ const BottomButtons= ({ handleOpen, handleFilterOpen, doubleArrowClicked}) => {
                     height: '40px',
                     width: '40px',
                     boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
-                    backgroundColor: accentColor === 'pink'
-                        ? 'var(--pink-accent-color)'
-                        : accentColor === 'green'
-                        ? 'var(--green-accent-color)'
-                        : accentColor === 'orange'
-                        ? 'var(--orange-accent-color)'
-                        : 'var(--primary-background-color)'
+                    backgroundColor: 'var(--primary-background-color)'
                  
                    }}>
 

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import MainDiv from "src/components/maindiv/maindiv";
 import 'src/components/settings/settings.css';
 import { General } from 'src/components/settings/subComponents/General';
+import { Account } from 'src/components/settings/subComponents/Account';
 import SettingsFooter from 'src/components/settings/subComponents/SettingsFooter';
 import SettingsHeader from 'src/components/settings/subComponents/SettingsHeader';
 import { SettingsScreen } from "src/constants/constants";
@@ -13,11 +14,49 @@ import { setColor } from 'src/store/slices/appearanceSlice';
 import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
 
 
+
 function Settings({ currentSettingsScreen }) {
-    const { isAdaptableScreen } = useResponsive();
-    const [isGeneralClicked, setIsGeneralClicked] = useState (false);
+
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
+    const [isGeneralClicked, setIsGeneralClicked] = useState (true);
+    const [isAccountClicked, setIsAccountClicked] = useState (false);
+    const [isNotificationClicked, setIsNotificationClicked] = useState (false);
+    const [isLogoutClicked, setIsLogoutClicked] = useState (false);
+    const handleGeneralClick = () => {
+        setIsGeneralClicked(true);
+       
+        setIsAccountClicked(false);
+        setIsNotificationClicked(false);
+        setIsLogoutClicked(false);
+      
+    }
+    const handleNotificationClick = () => {
+        setIsGeneralClicked(false);
+       
+        setIsAccountClicked(false);
+        setIsNotificationClicked(true);
+        setIsLogoutClicked(false);
+      
+    }
+    const handleAccountClick = () => {
+        setIsGeneralClicked(false);
+       
+        setIsAccountClicked(true);
+        setIsNotificationClicked(false);
+        setIsLogoutClicked(false);
+      
+    }
+    const handleLogoutClick = () => {
+        setIsGeneralClicked(false);
+       
+        setIsAccountClicked(false);
+        setIsNotificationClicked(false);
+        setIsLogoutClicked(true);
+      
+    }
     const dispatch = useDispatch();
     const location = useLocation();
+    const pathname = location.pathname;
     const [isBlueClicked, setIsBlueClicked] = useState(false);
     const [isPinkClicked, setIsPinkClicked] = useState(false);
     const [isGreenClicked, setIsGreenClicked] = useState(false);
@@ -89,9 +128,16 @@ function Settings({ currentSettingsScreen }) {
     return (
         <MainDiv>
             <div className='settings-page-div'>
-                <SettingsHeader />
-                    { currentSettingsScreen = SettingsScreen.GENERAL ? (
-                        <General
+                <SettingsHeader handleGeneralClick={handleGeneralClick} 
+                handleNotificationClick={handleNotificationClick}
+                handleAccountClick={handleAccountClick}
+                handleLogoutClick={handleLogoutClick}
+                isGeneralClicked = {isGeneralClicked}
+                isAccountClicked = {isAccountClicked}
+                isNotificationClicked = {isNotificationClicked}
+                isLogoutClicked = {isLogoutClicked} />
+              
+                    { isGeneralClicked ? (<General
                         allFalse={allFalse}
                         handleDateFormat={handleDateFormat}
                         dateFormat={dateFormatLocal}
@@ -107,8 +153,9 @@ function Settings({ currentSettingsScreen }) {
                         handleOrangeClick = {handleOrangeClick}
                         isGreenClicked = {isGreenClicked}
                         handleGreenClick = {handleGreenClick}/>
-
-                    ) : (<div></div>) }
+                    ) : isAccountClicked ? (<Account />) : (<div></div>)
+                }
+                   
                 <SettingsFooter
                     handleSave={handleSave}
                 isBlueClicked = {isBlueClicked}
@@ -120,7 +167,7 @@ function Settings({ currentSettingsScreen }) {
                 isGreenClicked = {isGreenClicked}
                 handleGreenClick = {handleGreenClick}/>
             </div>
-            {!isAdaptableScreen && <BottomBar  />}
+            { (!isAdaptableScreen && !isMicroScreen) && <BottomBar  />}
         </MainDiv>
     )
 }

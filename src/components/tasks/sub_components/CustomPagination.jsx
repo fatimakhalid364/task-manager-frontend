@@ -6,7 +6,7 @@ import { FormControl, IconButton, MenuItem, Select, Typography } from '@mui/mate
 import { useSelector } from 'react-redux';
 
 const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, metaData, hasPreviousPage, totalPages, nextPage, previousPage }) => {
-    const accentColor = useSelector((state) => state.appearance.color)
+   
     const handleChangeRowsPerPage = (event) => {
         setLimit(parseInt(event.target.value, 10));
         setPage(0);
@@ -32,13 +32,7 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                     </Select>
                 </FormControl>
             </div> 
-            <div className='pagination-text-div' style={{ backgroundColor: accentColor === 'pink'
-                            ? 'var(--light-pink-color)'
-                            : accentColor === 'green'
-                            ? 'var(--light-green-color)'
-                            : accentColor === 'orange'
-                            ? 'var(--light-orange-color)'
-                            : 'var(--active-background-color)'}}>
+            <div className='pagination-text-div' style={{ backgroundColor:  'var(--active-background-color)'}}>
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
                 </Typography>

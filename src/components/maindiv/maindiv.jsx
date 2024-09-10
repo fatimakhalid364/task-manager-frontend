@@ -5,6 +5,8 @@ import UpperBar from "src/components/defaultcomps/subComponents/UpperBar/upperba
 import "src/components/maindiv/main_div.css";
 import { useResponsive } from "src/constants/media_queries";
 import BellIcon from "src/components/icons/BellIcon";
+import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
+import { useEffect } from "react";
 
 
 
@@ -14,6 +16,16 @@ function MainDiv({ children }) {
     const handleBurgerMenuClick = () => {
         setBurgerMenuClicked((prevValue) => !prevValue);
     };
+
+    const [showSearchBar, setShowSearchBar] = useState(false);
+
+    const handleShowSearchBarClick = () => {
+        setShowSearchBar(prevValue=> !prevValue);
+    }
+
+    // useEffect(() => {
+    //     isMicroScreen && setBurgerMenuClicked(false); 
+    // }, [])
     const [searchParams] = useSearchParams();
     const title = searchParams.get("page");
     function handleRouteClick() {
@@ -42,14 +54,19 @@ function MainDiv({ children }) {
                     PageName={title}
                     BellIcon={BellIcon}
                     handleBurgerMenuClick={handleBurgerMenuClick}
+                    showSearchBar={showSearchBar}
+                    handleShowSearchBarClick={handleShowSearchBarClick}
                 />
             </div>
+            { (isMicroScreen && !isAdaptableScreen) && (<MobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
 
             <div style={{ display: 'block', justifyContent: 'space-between', gap: '20px' }}>
                 <Sides
                     clickfunction={handleRouteClick}
                     burgerMenuClicked={burgerMenuClicked}
+                    handleBurgerMenuClick={handleBurgerMenuClick}
                 />
+
 
                 <div
                     className='changing-component'

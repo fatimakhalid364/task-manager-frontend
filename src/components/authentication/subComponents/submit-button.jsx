@@ -16,7 +16,7 @@ function SubmitButton({ currentScreen, handleSubmit, disabled, isLoading }) {
                         disableElevation
                         sx={{
                             height: '40px',
-                            backgroundColor: 'var(--primary-background-color)',
+                            backgroundColor: '#3B8AFF',
                             borderRadius: '28px',
                             marginBottom: '8px',
                             fontFamily: 'var(--secondary-font-family)',

@@ -15,9 +15,14 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
+import { useSelector } from 'react-redux';
+import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
+import PlusIcon from 'src/components/icons/PlusIcon';
+
 
 
 function Tasks() {
+  
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -34,6 +39,11 @@ function Tasks() {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
+    const user = useSelector(state => state);
+    useEffect(() => {
+       console.log('state is logged here ========>', user);
+    }, []);
+
   
 
     const getAllTasks = async (page=0, limit=5) => {
@@ -61,7 +71,9 @@ function Tasks() {
     const {
         isAdaptableScreen,
         onWholeScreen,
+        isMicroScreen,
     } = useResponsive();
+
     const debouncedGetAllTasks = useCallback(
         debounce((page, limit) => {
             getAllTasks(page, limit);
@@ -71,6 +83,8 @@ function Tasks() {
     useEffect(() => {
         debouncedGetAllTasks(page, limit);
     }, [page, limit, debouncedGetAllTasks]);
+
+    
 
     return (
         <div className='task-page-div'>
@@ -87,7 +101,14 @@ function Tasks() {
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
-                { !isAdaptableScreen && <BottomBar handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen } />}
+                { (!isAdaptableScreen && !isMicroScreen) && <BottomBar handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen } />}
+              
+                { (isMicroScreen && !isAdaptableScreen) && (<div className="circle-2">
+                <div style={{width: '100%', borderRadius: '50px', display: 'flex', marginTop: '24px', justifyContent: 'center'}}
+                onClick={handleOpen}>
+                <PlusIcon color='white' width='17' height='17' />
+                </div>
+            </div>)}
             </MainDiv>
             
         </div>
@@ -95,3 +116,4 @@ function Tasks() {
 }
 
 export default Tasks;
+

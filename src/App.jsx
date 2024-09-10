@@ -17,9 +17,41 @@ import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
-import MainDiv from 'src/components/maindiv/maindiv'
+import MainDiv from 'src/components/maindiv/maindiv';
+import Settings from 'src/components/settings/settings';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
+    const accentColor = useSelector((state) => state.appearance.color)
+    useEffect(() => {
+
+        // Update --active-background-color
+        const activeBackgroundColor = accentColor === 'pink'
+            ? 'var(--light-pink-color)'
+            : accentColor === 'green'
+            ? 'var(--light-green-color)'
+            : accentColor === 'orange'
+            ? 'var(--light-orange-color)'
+            : '#EBF3FF'
+           ;
+
+        document.documentElement.style.setProperty('--active-background-color', activeBackgroundColor);
+
+        // Update --primary-background-color
+        const primaryBackgroundColor = accentColor === 'pink'
+            ? 'var(--pink-accent-color)'
+            : accentColor === 'green'
+            ? 'var(--green-accent-color)'
+            : accentColor === 'orange'
+            ? 'var(--orange-accent-color)'
+            :  '#3B8AFF'
+           ;
+
+        document.documentElement.style.setProperty('--primary-background-color', primaryBackgroundColor);
+
+    }, [accentColor]);
+    
     return (
         <PersistGate loading={null} persistor={persistor}>
             <AuthProvider>
@@ -35,7 +67,8 @@ function App() {
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
                     <Route path="/calendar" element={<RouteGuard element={CalendarComponent} />} />
-                    <Route path="/settings/general" element={<RouteGuard element={GeneralPage} />} />
+                    <Route path="/settings" element={<RouteGuard element={Settings} />} />
+                
                     <Route path="/notes/:id" element={<RouteGuard element={UpdateNote} />} />
                 </Routes>
             </AuthProvider>

@@ -23,7 +23,7 @@
 
   .rdw-option-wrapper:hover
   {
-    background-color: #F5F5F5;
+    background-color: var(--active-background-color);
   }
 
   .rdw-option-wrapper[title='Bold'] {

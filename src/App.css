@@ -97,13 +97,13 @@ textarea{
  
  
 
-/* .note-attachments-a:hover .attach-file-path {
+.note-attachments-a:hover .attach-file-path {
     stroke: var(--primary-background-color);
 } 
 
 .note-attachments-b:hover .tag-path {
     stroke: var(--primary-background-color);
-}  */
+} 
 
 
 

@@ -207,65 +207,41 @@ const CreateNotes = ({
                   />
                   <div className='note-attachments-div'>
                       <div
-                            onMouseEnter = {handleMouseEnter('link')}
-                            onMouseLeave = {handleMouseLeave('link')}
+                        
                           className='note-attachments note-attachments-a'
                           onClick={handleAttachLinkClick}
                           style={{
-                              color: (attachLinkClicked || addLinkHovered) &&  (accentColor === 'pink' ? "var(--pink-accent-color)"
-                                : accentColor === 'green' ? "var(--green-accent-color)"
-                                : accentColor === 'orange' ? "var(--orange-accent-color)"
-                                : 'var(--primary-background-color)'
-                              ),
+                              color: attachLinkClicked && 'var(--primary-background-color)'
+                              ,
                               backgroundColor:
-                              (attachLinkClicked || addLinkHovered) && (accentColor === 'pink' ? "var(--light-pink-color)"
-                                    : accentColor === 'green' ? "var(--light-green-color)"
-                                    : accentColor === 'orange' ? "var(--light-orange-color)"
-                                    : 'var(--active-background-color)'
-                                  ),
+                              attachLinkClicked && 'var(--active-background-color)'
+                                  ,
                           }}
                       >
                           <AttachFileIcon
                               color={
-                                  (attachLinkClicked || addLinkHovered)
-                                      ? (accentColor === 'pink' ? "var(--pink-accent-color)"
-                                        : accentColor === 'green' ? "var(--green-accent-color)"
-                                        : accentColor === 'orange' ? "var(--orange-accent-color)"
-                                        : accentColor === 'blue' ? 'var(--primary-background-color)'
-                                        : undefined
-                                      )
-                                      : "var(--tertiary-font-color)"
+                                  attachLinkClicked ? 'var(--primary-background-color)'
+                                   : "var(--tertiary-font-color)"
                               }
                           />
                           <div>Attach Link</div>
                       </div>
                       <div
-                             onMouseEnter = {handleMouseEnter('tag')}
-                             onMouseLeave = {handleMouseLeave('tag')}
+                             
                           className='note-attachments note-attachments-b'
                           onClick={handleAddTagClick}
                           style={{
-                            color: (addTagClicked || addTagHovered) &&  (accentColor === 'pink' ? "var(--pink-accent-color)"
-                              : accentColor === 'green' ? "var(--green-accent-color)"
-                              : accentColor === 'orange' ? "var(--orange-accent-color)"
-                              : 'var(--primary-background-color)'
-                            ),
+                            color: addTagClicked  &&   'var(--primary-background-color)'
+                            ,
                             backgroundColor:
-                            (addTagClicked || addTagHovered)  && (accentColor === 'pink' ? "var(--light-pink-color)"
-                                  : accentColor === 'green' ? "var(--light-green-color)"
-                                  : accentColor === 'orange' ? "var(--light-orange-color)"
-                                  : 'var(--active-background-color)'
-                                ),
+                            addTagClicked   && 'var(--active-background-color)'
+                            ,
                         }}
                       >
                           <TagIcon
                               color={
-                                  (addTagClicked || addTagHovered)
-                                      ? (accentColor === 'pink' ? "var(--pink-accent-color)"
-                                        : accentColor === 'green' ? "var(--green-accent-color)"
-                                        : accentColor === 'orange' ? "var(--orange-accent-color)"
-                                        : 'var(--primary-background-color)'
-                                      )
+                                  addTagClicked ? 'var(--primary-background-color)'
+                                      
                                       : "var(--tertiary-font-color)"
                               }
                           />
@@ -302,13 +278,7 @@ const CreateNotes = ({
               <button
                   className='primary-button'
                   onClick={handleCreateClick}
-                  style={{ width: "135px", gap: "0px", backgroundColor: accentColor === 'pink'
-                                                            ? 'var(--pink-accent-color)'
-                                                            : accentColor === 'green'
-                                                            ? 'var(--green-accent-color)'
-                                                            : accentColor === 'orange'
-                                                            ? 'var(--orange-accent-color)'
-                                                            : 'var(--primary-background-color)', }}
+                  style={{ width: "135px", gap: "0px", backgroundColor: 'var(--primary-background-color)', }}
               >
                   {update ? "Update Note" : "Save Note"}
               </button>
