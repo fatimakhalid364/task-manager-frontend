@@ -70,7 +70,7 @@
 
 .checkbox > label > a{
     text-decoration: none;
-    color: var(--primary-background-color);
+    color: #3B8AFF;
     font-weight: 550;
     cursor: pointer;
 }
@@ -167,7 +167,7 @@
     text-decoration: none;
 } */
 a {
-    color: var(--primary-background-color);
+    color: #3B8AFF;
     text-decoration: none;
 }
 input:-webkit-autofill {
