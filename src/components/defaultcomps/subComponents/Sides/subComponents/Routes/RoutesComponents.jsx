@@ -3,9 +3,10 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useResponsive } from 'src/constants/media_queries'; 
 import { useSelector } from "react-redux";
 
-function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked, page }) {
+function RoutesComponents({ icon: IconComponent, route, currentPage, clickfunction, burgerMenuClicked, page, handleBurgerMenuClick }) {
     const location = useLocation();
     const pathname = location.pathname.split('/').pop().toUpperCase();
+    
     const {
         isAdaptableScreen,
         expandBar,
@@ -14,6 +15,8 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
         isMicroScreen,
     } = useResponsive();
     const accentColor = useSelector((state) => state.appearance.color);
+
+    
 
     const activeStyles = {
         color: 'var(--primary-background-color)', 
@@ -49,12 +52,12 @@ function RoutesComponents({ icon: IconComponent, route, currentPage, clickfuncti
 
     
     
-    
     return (
             <NavLink 
                 className='tasks-page-route'
                 to={ route }
                 style={({ isActive }) => (isActive ? activeStyles : inactiveStyles)}
+                onClick={ isMicroScreen ? (e) => handleBurgerMenuClick(e, route) : null} 
             >
                 { (expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked) ? (<div style={{display: 'flex', alignItems: 'center', gap: '9px'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>

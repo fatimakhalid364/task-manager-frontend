@@ -9,32 +9,11 @@ import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar'
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { SecMobileBottomBar } from 'src/components/SecMobileBottomBar/SecMobileBottomBar';
+import { useNavigate } from "react-router-dom";
 
 
 
 function MainDiv({ children }) {
-    const [burgerMenuClicked, setBurgerMenuClicked] = useState(true);
-    const location = useLocation();
-    const pathname = location.pathname;
-
-    const handleBurgerMenuClick = () => {
-        setBurgerMenuClicked((prevValue) => !prevValue);
-    };
-
-    const [showSearchBar, setShowSearchBar] = useState(false);
-
-    const handleShowSearchBarClick = () => {
-        setShowSearchBar(prevValue=> !prevValue);
-    }
-
-    // useEffect(() => {
-    //     isMicroScreen && setBurgerMenuClicked(false); 
-    // }, [])
-    const [searchParams] = useSearchParams();
-    const title = searchParams.get("page");
-    function handleRouteClick() {
-        console.log("clicked route");
-    }
     const {
         isAdaptableScreen,
         expandBar,
@@ -44,6 +23,37 @@ function MainDiv({ children }) {
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
+    const [burgerMenuClicked, setBurgerMenuClicked] = useState(isMicroScreen ? false : true);
+    const location = useLocation();
+    const pathname = location.pathname;
+    const navigate = useNavigate();
+
+    const handleBurgerMenuClick = (e, path) => {
+        if (isMicroScreen) {
+            e.preventDefault();
+            
+        };
+        setBurgerMenuClicked((prevValue) => !prevValue);
+        isMicroScreen && setTimeout(() => navigate(path), 500);
+       
+        console.log('burgermenuclick handled');
+    };
+
+    const [showSearchBar, setShowSearchBar] = useState(false);
+
+    const handleShowSearchBarClick = () => {
+        setShowSearchBar(prevValue=> !prevValue);
+    }
+
+    useEffect(() => {
+       console.log('value of burgermenuclicked is ///////////////////// ' + burgerMenuClicked);
+    }, [])
+    const [searchParams] = useSearchParams();
+    const title = searchParams.get("page");
+    function handleRouteClick() {
+        console.log("clicked route");
+    }
+    
     return (
         <main
             className='changing-component-div'

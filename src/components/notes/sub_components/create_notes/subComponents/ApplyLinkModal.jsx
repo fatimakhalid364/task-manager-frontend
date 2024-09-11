@@ -4,8 +4,14 @@ import { EditorState, Modifier } from 'draft-js';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import 'src/components/notes/sub_components/create_notes/subComponents/ApplyLinkModal.css';
+import { useResponsive } from 'src/constants/media_queries';
 
 const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShowLinkPopup, handleNoteInputChange, handleCloseLinkPopup, handleAttachLinkClick }) => {
+  const {
+    isAdaptableScreen,
+    onWholeScreen,
+    isMicroScreen,
+} = useResponsive();
   const [linkText, setLinkText] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
 
@@ -69,7 +75,7 @@ const ApplyLinkModal = ({ editorState, setEditorState, showLinkPopup, handleShow
         aria-labelledby="apply-link-modal"
         aria-describedby="modal-for-applying-links"
       >
-        <div className='apply-link-div'>
+        <div className='apply-link-div' style={{width: isMicroScreen ? '300px' : '395px', left: isMicroScreen ? '49.3%' : '52%'}}>
         <div style={{ borderBottom: '1px solid var(--field-border-color)', height: '72%'}}>
             <div style={{ width: '100%', padding: '20px'}}>
               <label htmlFor='name-for-link' className='link-popup-inputs'>Name</label>

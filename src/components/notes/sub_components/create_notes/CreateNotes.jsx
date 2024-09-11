@@ -13,6 +13,7 @@ import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useResponsive } from 'src/constants/media_queries';
 
 
 const CreateNotes = ({
@@ -22,6 +23,11 @@ const CreateNotes = ({
     setNoteDetails,
     update = false,
 }) => {
+    const {
+        isAdaptableScreen,
+        onWholeScreen,
+        isMicroScreen,
+    } = useResponsive();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [spinner, setSpinner] = useState(false);
@@ -163,19 +169,19 @@ const CreateNotes = ({
   }, [addLinkHovered]);
 
     return (
-      <div className='add-notes-page'>
+      <div className='add-notes-page' style={{marginBottom: isMicroScreen && '40px'}}>
           <SpinnerLoader showSpinner={spinner} />
           <div className='add-notes-header-div'>
-              <div className='add-notes-header'>
+              <div className='add-notes-header' style={{marginLeft: isMicroScreen && '11px'}}>
                   {!update && (
                       <div>
                           <img src={plus} alt='plus-sign' />
                       </div>
                   )}
-                  <div>{update ? "View or Update" : "Add Note"}</div>
+                  <div style={{fontSize: isMicroScreen && '21px', marginTop: isMicroScreen && '2px'}}>{update ? "View or Update" : "Add Note"}</div>
               </div>
           </div>
-          <form className='add-notes-input-fields'>
+          <form className='add-notes-input-fields' style={{marginLeft: isMicroScreen ? '12px' : '38px'}}>
               <div className='add-notes-input-title'>
                   <div
                       style={{
@@ -214,8 +220,8 @@ const CreateNotes = ({
                               color: attachLinkClicked && 'var(--primary-background-color)'
                               ,
                               backgroundColor:
-                              attachLinkClicked && 'var(--active-background-color)'
-                                  ,
+                              attachLinkClicked && 'var(--active-background-color)',
+                            width: isMicroScreen ? '40px' : '138px'
                           }}
                       >
                           <AttachFileIcon
@@ -224,7 +230,7 @@ const CreateNotes = ({
                                    : "var(--tertiary-font-color)"
                               }
                           />
-                          <div>Attach Link</div>
+                          { !isMicroScreen && (<div>Attach Link</div>)}
                       </div>
                       <div
                              
@@ -234,8 +240,8 @@ const CreateNotes = ({
                             color: addTagClicked  &&   'var(--primary-background-color)'
                             ,
                             backgroundColor:
-                            addTagClicked   && 'var(--active-background-color)'
-                            ,
+                            addTagClicked   && 'var(--active-background-color)',
+                            width: isMicroScreen ? '40px' : '138px',
                         }}
                       >
                           <TagIcon
@@ -245,7 +251,7 @@ const CreateNotes = ({
                                       : "var(--tertiary-font-color)"
                               }
                           />
-                          Add Tag
+                          { !isMicroScreen && (<div>Add Tag</div>)}
                       </div>
                       {addTagClicked && (
                           <TagsInput
@@ -256,7 +262,7 @@ const CreateNotes = ({
                   </div>
               </div>
           </form>
-          <div className='add-notes-controls'>
+          <div className='add-notes-controls'  style={{marginLeft: isMicroScreen ? '12px' : '38px', justifyContent: isMicroScreen ? 'space-between' : 'flex-end'}}>
               <button
                   className='filter-button'
                   style={{
