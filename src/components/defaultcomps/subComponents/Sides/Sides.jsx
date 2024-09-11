@@ -31,7 +31,7 @@ function Sides({clickfunction, burgerMenuClicked, handleBurgerMenuClick }){
                         onClick={handleBurgerMenuClick}>
                     <img src={ cross} alt='cross-sign' />
                     </div>)}
-                <Routes clickfunction = {clickfunction} burgerMenuClicked={ burgerMenuClicked }/>
+                <Routes clickfunction = {clickfunction} burgerMenuClicked={ burgerMenuClicked } handleBurgerMenuClick={handleBurgerMenuClick}/>
                 <Priority burgerMenuClicked={ burgerMenuClicked } />
             </div>)}
         </div>

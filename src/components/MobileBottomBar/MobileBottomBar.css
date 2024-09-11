@@ -10,7 +10,7 @@
     gap: 60px;
     background-color: white;
     position: fixed;
-    z-index: 999;
+    z-index: 9;
     
 }
 
@@ -64,7 +64,7 @@
     bottom: 10px;
     left: 41.46%;
     position: fixed;
-    z-index: 9999;
+    z-index: 15;
 }
 
 /* .circle-2::after {

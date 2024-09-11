@@ -13,22 +13,31 @@ import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 import { useSelector } from 'react-redux';
+import { useResponsive } from 'src/constants/media_queries';
 
-const MyComponent = styled('div')({
-    position: 'relative',
-    height: '600px',
-    width: '550px',
-    top: '50%',
-    left: '52%',
-    transform: 'translate(-50%, -50%)',
-    borderRadius: '10px',
-    backgroundColor: 'var(--neutral-background-color)',
-    border: '1px solid var(--modal-border-color)',
-    opacity: '1',
-    padding: '15px',
-});
+
+
 
 const AddTask = ({ open, handleClose, getAllTasks }) => {
+    const {
+        isAdaptableScreen,
+        onWholeScreen,
+        isMicroScreen,
+    } = useResponsive();
+
+    const MyComponent = styled('div')({
+        position: 'relative',
+        height:  '600px',
+        width: isMicroScreen ? '340px' : '550px',
+        top: '50%',
+        left: isMicroScreen ? '49.7%' : '52%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '10px',
+        backgroundColor: 'var(--neutral-background-color)',
+        border: '1px solid var(--modal-border-color)',
+        opacity: '1',
+        padding: '15px',
+    });
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: '',
         dueDate: dayjs(),
