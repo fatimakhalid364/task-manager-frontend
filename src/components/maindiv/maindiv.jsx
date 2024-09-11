@@ -34,7 +34,7 @@ function MainDiv({ children }) {
             
         };
         setBurgerMenuClicked((prevValue) => !prevValue);
-        isMicroScreen && setTimeout(() => navigate(path), 500);
+        isMicroScreen && setTimeout(() => navigate(path), 200);
        
         console.log('burgermenuclick handled');
     };
