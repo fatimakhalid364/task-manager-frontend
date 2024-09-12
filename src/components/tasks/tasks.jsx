@@ -87,7 +87,7 @@ function Tasks() {
     
 
     return (
-        <div className='task-page-div'>
+        <div className='task-page-div' >
             {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>

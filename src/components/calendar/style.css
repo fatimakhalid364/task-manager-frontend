@@ -42,5 +42,5 @@
     margin: 0px;
     padding: 0px;
     cursor: pointer;
-
+    font-family: var(--primary-font-family);
   }

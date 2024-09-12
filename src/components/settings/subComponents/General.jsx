@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import whiteTick from 'src/assets/white-tick.svg';
 import { setColor } from 'src/store/slices/appearanceSlice';
 import { getCurrentTimeZone } from '../../../utils/basicUtils';
+import { useResponsive } from 'src/constants/media_queries';
 
 const General= ({
     allFalse,
@@ -21,6 +22,7 @@ const General= ({
     isGreenClicked, 
     handleGreenClick,
 }) => {
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -103,11 +105,11 @@ const General= ({
         <>
             <div className="general-page-content">
                 <div className="select-language-div">
-                    <div className="select-language-text">
+                    { !isMicroScreen && (<div className="select-language-text">
                         <div style={{fontSize: '18px', color: 'var(--quaternary-font-color)', marginBottomm: '0'}}>Language</div>
                         <div style={{width: '65%', fontSize: '14px', color: 'var(--tertiary-font-color)', marginTop: '7px'}}>Select your preferred language for the app-interface. This will update all menu and text.</div>
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '60.6%', marginLeft: '53px'}}>
+                    </div>)}
+                    <div style={{display: 'flex', flexDirection: 'column', width: isMicroScreen ? '95%' : '60.6%',  marginLeft: isMicroScreen ? '0' : '53px'}}>
                         <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Language</div>
             
                         <FormControl fullWidth>
@@ -139,11 +141,11 @@ const General= ({
                     </div>
                 </div>
                 <div className="select-d-and-t-format-div">
-                    <div className="select-d-and-t-format-text">
+                    {!isMicroScreen && (<div className="select-d-and-t-format-text">
                         <div style={{fontSize: '18px', color: 'var(--quaternary-font-color)', marginBottomm: '0'}}>Date and Time Format</div>
                         <div style={{width: '65%', fontSize: '14px', color: 'var(--tertiary-font-color)', marginTop: '7px'}}>Choose how date and time are displayed in the app, with options for date formats and 12-hour or 24-hour clock.</div>
-                    </div>
-                    <div className="select-d-and-t-format-inputs" style={{display: 'flex', flexDirection: 'column', width: '70%'}}>
+                    </div>)}
+                    <div className="select-d-and-t-format-inputs" style={{display: 'flex', flexDirection: 'column', width: isMicroScreen ? '95%' : '70%'}}>
                         <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Date Format</div>
                         <FormControl fullWidth>
                                 <CssSelectField
@@ -174,7 +176,7 @@ const General= ({
                                 <MenuItem value="dd/MMM/yyyy">DD/MM/YYYY</MenuItem>
                                 </CssSelectField>
                         </FormControl>
-                        <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)'}}>Select Time Format</div>
+                        <div  style={{fontFamily: 'var(--secondary-font-family)', fontSize: '14px', fontWeight: '500', color: 'var(--primary-font-color)', marginTop: isMicroScreen && '18px'}}>Select Time Format</div>
                         <FormControl fullWidth>
                                 <CssSelectField
                                 value={timeFormat}
@@ -205,21 +207,21 @@ const General= ({
                         
                     </div>
                 </div>
-                <div className="time-zone-div">
-                    <div className="time-zone-text" style={{width: '47%'}}>
-                        <div style={{fontSize: '18px', color: 'var(--quaternary-font-color)', marginBottomm: '0'}}>Time Zone</div>
-                        <div style={{width: '65%', fontSize: '14px', color: 'var(--tertiary-font-color)', marginTop: '7px'}}>Your current time zone is {getCurrentTimeZone()}.</div>
+                <div className="time-zone-div" style={{ marginLeft: isMicroScreen && '0'}}>
+                    <div className="time-zone-text" style={{width: isMicroScreen ? '87%' : '47%', display: isMicroScreen && 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{fontSize: '18px', color: 'var(--quaternary-font-color)', marginBottomm: '0', marginLeft: isMicroScreen && '4%'}}>Time Zone</div>
+                        <div style={{width: isMicroScreen ? '100%' : '65%', fontSize: '14px', color: 'var(--tertiary-font-color)', marginTop: '7px', marginLeft: isMicroScreen && '24.7%'}}>Your current time zone is {getCurrentTimeZone()}.</div>
                     </div>
             
                 </div>
                 <div style={{height: '0', width: '100%', borderTop: '1px solid var(--field-border-color)', marginTop: '40px'}}></div>
                 <div className="app-appearance-div">
-                    <div className="app-appearance-header" style={{fontWeight: '600', fontSize: '20px', color: 'var(--quinary-font-color)'}}>Appearance</div>
+                    <div className="app-appearance-header" style={{fontWeight: '600', fontSize: '20px', color: 'var(--quinary-font-color)', marginLeft: isMicroScreen && '30%'}}>Appearance</div>
                     <div className="app-appearance-content" style={{marginTop: '36px'}}>
-                        <div className="app-appearance-text" style={{color: 'var(--quaternary-font-color)', fontSize: '18px', height: '70px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>Change Primary Color</div>
+                        { !isMicroScreen && (<div className="app-appearance-text" style={{color: 'var(--quaternary-font-color)', fontSize: '18px', height: '70px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>Change Primary Color</div>)}
                         <div className="app-colors-div" style={{display: 'flex', flexDirection: 'column', gap: '20px', height: '70px'}}>
-                            <div className='app-colors-text'>Select Color</div>
-                                    <div className='app-colors-list' style={{display: 'flex', gap: '15px'}}>
+                            <div className='app-colors-text' style={{marginLeft: isMicroScreen && '57%', width: isMicroScreen && '100%'}}>Select Color</div>
+                                    <div className='app-colors-list' style={{display: 'flex', gap: '15px', marginLeft: isMicroScreen && '30%', width: isMicroScreen && '100%'}}>
                                         <div className={`app-color ${(isBlueClicked || accentColor == 'blue') ? 'no-animation blue-blast' : ''} blue-app`} onClick={handleBlueClick} >
                                             <div className={`animated-blue-circle ${(isBlueClicked || accentColor == 'blue') ? 'blue-outer-circle outer-circle' : ''}`}></div>
                                     {(allFalse && accentColor == 'blue') ? <img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} /> : isBlueClicked && (<img src={whiteTick} alt='white-tick' style={{ top: '13px', left: '12px', position: 'absolute' }} />)}

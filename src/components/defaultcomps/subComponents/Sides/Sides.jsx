@@ -27,9 +27,13 @@ function Sides({clickfunction, burgerMenuClicked, handleBurgerMenuClick }){
             zIndex: (isMicroScreen && burgerMenuClicked) && '999999999999'
              }}>
                 { (isMicroScreen && burgerMenuClicked && !expandBar) && (
-                    <div style={{height: '30px', width: '30px', backgroundColor: 'var(--active-background-color)', borderRadius: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginLeft: '80%', cursor: 'pointer'}}
-                        onClick={handleBurgerMenuClick}>
-                    <img src={ cross} alt='cross-sign' />
+                    <div style={{display: 'flex', width: '100%', gap: '31%'}}>
+                        <div style={{fontFamily: 'var(--primary-font-family)', fontSize: '19px', color: 'var(--quinary-font-color)', marginTop: '22px', marginLeft: '16px', fontWeight: '500'}}>Manageria</div>
+                        <div style={{height: '30px', width: '30px', backgroundColor: 'var(--active-background-color)', borderRadius: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', cursor: 'pointer'}}
+                            onClick={handleBurgerMenuClick}>
+                    
+                        <img src={ cross} alt='cross-sign' />
+                        </div>
                     </div>)}
                 <Routes clickfunction = {clickfunction} burgerMenuClicked={ burgerMenuClicked } handleBurgerMenuClick={handleBurgerMenuClick}/>
                 <Priority burgerMenuClicked={ burgerMenuClicked } />

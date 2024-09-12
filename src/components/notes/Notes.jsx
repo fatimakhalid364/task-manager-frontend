@@ -173,7 +173,7 @@ const Notes = () => {
     return (
         <>
           <MainDiv>
-              <div className='notes-page'>
+              <div className='notes-page' >
                   {createNotesClicked ? (
                       <CreateNotes
                           noteDetails={noteDetails}
@@ -254,7 +254,7 @@ const Notes = () => {
                                       </div>
                                   </div>
                               </div>
-                              <div className='notes-display'>
+                              <div className='notes-display' style={{marginLeft: isMicroScreen && '8px'}}>
                                 {skeletonLoader ? (
                                    <div style={{display: 'flex', gap: '30px'}}>
                                     {noteLoader}

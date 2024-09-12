@@ -25,6 +25,7 @@ import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
+import { useResponsive } from "src/constants/media_queries";
 
 
 const calculateCellWidth = () => {
@@ -87,6 +88,8 @@ const TaskTable = ({
   metaData
 }) => {
   const accentColor = useSelector((state) => state.appearance.color)
+  const { isAdaptableScreen, isMicroScreen } = useResponsive();
+
   const timeFormat = useSelector((state) => state.format.timeFormat)
   const dateFormat = useSelector((state) => state.format.dateFormat)
   console.log('forrrrrrrrrrrrrrrrrrrrrr', timeFormat, dateFormat);
@@ -216,9 +219,9 @@ const TaskTable = ({
               <TableRow >
                 <StyledTableHeaders>Title</StyledTableHeaders>
                 <StyledTableHeaders>Description</StyledTableHeaders>
-                <StyledTableHeaders>Due Date</StyledTableHeaders>
-                <StyledTableHeaders>Priority</StyledTableHeaders>
-                <StyledTableHeaders>Status</StyledTableHeaders>
+                { !isMicroScreen && (<StyledTableHeaders>Due Date</StyledTableHeaders>)}
+                { !isMicroScreen && <StyledTableHeaders>Priority</StyledTableHeaders>}
+                { !isMicroScreen && <StyledTableHeaders>Status</StyledTableHeaders>}
                 <StyledTableHeadersA></StyledTableHeadersA>
               </TableRow>
             </TableHead>
@@ -232,16 +235,16 @@ const TaskTable = ({
                     <StyledTableCell>
                       <div className="skeleton"></div>
                     </StyledTableCell>
-                    <StyledTableCell>
+                    {  !isMicroScreen && <StyledTableCell>
                       <div className="skeleton"></div>
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </StyledTableCell>}
+                    { !isMicroScreen && <StyledTableCell>
                       <div className="skeleton"></div>
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </StyledTableCell>}
+                    { !isMicroScreen && <StyledTableCell>
                       <div className="skeleton"></div>
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </StyledTableCell>}
+                     <StyledTableCell>
                       <div className="skeleton"></div>
                     </StyledTableCell>
                   </TableRow>
@@ -254,7 +257,7 @@ const TaskTable = ({
                       <TableRow key={task._id}>
                         <StyledTableHeadersLeft>
                           <Tooltip title={task.taskTitle}>
-                            <Typography sx={{ fontSize: '16px' }} noWrap>
+                            <Typography sx={{ fontSize: '16px', color: isMicroScreen && handleStatusColorChange(task.status) }} noWrap>
                               {task.taskTitle}
                             </Typography>
                           </Tooltip>
@@ -266,19 +269,19 @@ const TaskTable = ({
                             </Typography>
                           </Tooltip>
                         </StyledTableHeadersLeft>
-                        <StyledTableCell>
+                        { !isMicroScreen && (<StyledTableCell>
                           <Tooltip title={formatLocalDateTime(task.dueDate, userTimeZone, timeFormat, dateFormat)}>
                             <Typography sx={{ fontSize: '16px', color: 'var(--quinary-font-color)' }} noWrap>
                               {formatLocalDateTime(task.dueDate, userTimeZone, timeFormat, dateFormat)}
                             </Typography>
                           </Tooltip>
-                        </StyledTableCell>
-                        <StyledTableCell sx={{ textAlign: 'center', color: handlePriorityColorChange(task.priority) }}>
+                        </StyledTableCell>)}
+                        { !isMicroScreen && (<StyledTableCell sx={{ textAlign: 'center', color: handlePriorityColorChange(task.priority) }}>
                           {capitalizeFirstLetter(task.priority)}
-                        </StyledTableCell>
-                        <StyledTableCell sx={{ textAlign: 'center', justifyContent: 'center',  color: handleStatusColorChange(task.status) }}>
+                        </StyledTableCell>)}
+                        { !isMicroScreen && (<StyledTableCell sx={{ textAlign: 'center', justifyContent: 'center',  color: handleStatusColorChange(task.status) }}>
                           {capitalizeFirstLetter(task.status)}
-                        </StyledTableCell>
+                        </StyledTableCell>)}
                         <StyledAction sx={{ width: '1%' }}>
                           <Tooltip title="Options">
                             <IconButton size="small" onClick={(event) => handleMenuClick(event, task._id)}>
@@ -292,7 +295,7 @@ const TaskTable = ({
                           >
                             <MenuItem onClick={handleComplete} sx={{gap: '12px'}}>
                               <img src={edit} alt='edit-icon' />
-                              <div style={{marginTop: '2px'}}>Edit</div>
+                              <div style={{marginTop: '2px'}}>View or Edit</div>
                             </MenuItem>
                             <MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
                               <img src={tickInCircle} alt='tick-in-circle' />

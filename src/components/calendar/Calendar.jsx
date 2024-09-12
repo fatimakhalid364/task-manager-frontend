@@ -7,11 +7,13 @@ import MainDiv from "src/components/maindiv/maindiv";
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { fetchCalendarTasksThunk } from '../../store/thunks/taskThunks'; // Adjust path if necessary
 import './style.css'; // Make sure this path is correct
+import { useResponsive } from "src/constants/media_queries";
 
 const localizer = dayjsLocalizer(dayjs);
 
 const CalendarComponent = () => {
     const dispatch = useDispatch();
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const [events, setEvents] = useState([]);
     const [globalView, setGlobalView] = useState('month')
     const _privateKey = localStorage.getItem("privateKey");
@@ -69,15 +71,16 @@ const CalendarComponent = () => {
     const CustomEvent = ({ event }) => {
         const style = {
             padding: '5px',
-            backgroundColor: accentColor === 'blue' ? 'var(--primary-background-color)' : accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : 'var(--primary-background-color)',
-            borderColor: accentColor === 'blue' ? 'var(--primary-background-color)' : accentColor === 'pink' ? 'var(--pink-accent-color)' : accentColor === 'orange' ? 'var(--orange-accent-color)' : accentColor === 'green' ? 'var(--green-accent-color)' : 'var(--primary-background-color)',
+            backgroundColor:  'var(--primary-background-color)',
+            borderColor:  'var(--primary-background-color)',
+            fontFamily: 'var(--primary-font-family)',
         };
         return <div className="rbc-event" style={style}>{event.title}</div>;
     };
 
     return (
         <MainDiv>
-            <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box' }}>
+            <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box', marginBottom: isMicroScreen && '50px' }}>
                 <Calendar
                     localizer={localizer}
                     events={events}

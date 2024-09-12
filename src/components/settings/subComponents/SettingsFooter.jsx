@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useResponsive } from 'src/constants/media_queries';
 
 const SettingsFooter = ({
     handleSave,
@@ -12,6 +13,7 @@ const SettingsFooter = ({
     isGreenClicked, 
     handleGreenClick,
 }) => {
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const accentColor = useSelector((state) => state.appearance.color);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -19,7 +21,9 @@ const SettingsFooter = ({
     const handleMouseLeave = () => setIsHovered(false);
     return (
         <div>
-            <div className="settings-controls">
+            <div className="settings-controls" style={{justifyContent: isMicroScreen ? 'space-between' : 'flex-end',
+                marginLeft: isMicroScreen ? '4px' : '10px'
+            }}>
                 <button
                     className="filter-button"
                     style={{
