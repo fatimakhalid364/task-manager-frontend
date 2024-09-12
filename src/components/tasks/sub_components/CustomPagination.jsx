@@ -4,6 +4,7 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import { FormControl, IconButton, MenuItem, Select, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useResponsive } from "src/constants/media_queries";
 
 const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, metaData, hasPreviousPage, totalPages, nextPage, previousPage }) => {
    
@@ -11,11 +12,12 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
         setLimit(parseInt(event.target.value, 10));
         setPage(0);
     };
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '16px', gap: '15px', marginRight: '10px' }}>
             <div style={{display: 'flex', gap: '20px'}}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            { !isMicroScreen && (<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Typography >Tasks per page</Typography>
                 <FormControl variant="outlined" size="small">
                     <Select
@@ -31,12 +33,12 @@ const CustomPagination = ({ total, limit, page, setPage, setLimit, hasNextPage, 
                         <MenuItem value={999}>All</MenuItem>
                     </Select>
                 </FormControl>
-            </div> 
-            <div className='pagination-text-div' style={{ backgroundColor:  'var(--active-background-color)'}}>
+            </div>) }
+            { !isMicroScreen && (<div className='pagination-text-div' style={{ backgroundColor:  'var(--active-background-color)'}}>
                 <Typography className='pagination-text'>
                     Showig Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
                 </Typography>
-            </div>
+            </div>)}
             </div>
             <div>
                 <IconButton onClick={() => setPage(0)} disabled={!hasPreviousPage}>

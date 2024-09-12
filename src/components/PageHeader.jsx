@@ -13,7 +13,7 @@ function PageHeader({ handleOpen, total, text, object, filterDiv}){
     // useEffect(() => {
     //     console.log('state:', specificValue);
     // }, []);
-    const accentColor = useSelector((state) => state.appearance.color)
+    const accentColor = useSelector((state) => state.appearance.color);
 
     const {
         isBp2,
@@ -25,12 +25,13 @@ function PageHeader({ handleOpen, total, text, object, filterDiv}){
         onWholeScreen,
         isBp6,
         isBp8,
+        isMicroScreen
     } = useResponsive();
 
     return (
     <div className='task-page-top'>
         <div className="task-page-top-header" style={{ marginLeft: (onWholeScreen && isAdaptableScreen) ? '16px' : !isAdaptableScreen ? '10px' : '' }}>
-            <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px' }}>
+            <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px', marginLeft: isMicroScreen && '5px' }}>
                 { text } 
             </div>
             <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px' }}>

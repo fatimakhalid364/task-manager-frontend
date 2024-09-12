@@ -15,7 +15,7 @@ function Dashboard() {
     }, [isAuthenticated, navigate]);
 
     return (
-        <MainDiv />
+        <MainDiv></MainDiv>
     )
 }
 

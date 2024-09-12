@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "src/utils/basicUtils";
+import { useResponsive } from 'src/constants/media_queries';
+
 const Account = () => {
+    const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const user = useSelector(state => state.auth?.user);
     const svgData = user?.avatar?.data;
 
@@ -33,20 +36,20 @@ const Account = () => {
             <div className="end-line"></div>
             <div className="account-details-div">
                 <div className="account-details-username">
-                    <div className="account-details-text">Username</div>
-                    <div className="account-details-display">
+                    { !isMicroScreen && (<div className="account-details-text">Username</div>)}
+                    <div className="account-details-display" style={{width: isMicroScreen && '95%'}}>
                         <div className="account-username-text">Name</div>
-                        <div className="account-box">
+                        <div className="account-box" style={{width: isMicroScreen && '100%'}}>
                             { formatUserName()}
                 
                         </div>
                     </div>
                 </div>
                 <div className="account-details-email">
-                    <div className="account-details-text">Email</div>
-                    <div className="account-details-display">
+                    { !isMicroScreen && (<div className="account-details-text">Email</div>)}
+                    <div className="account-details-display" style={{width: isMicroScreen && '95%'}}>
                     <div className="account-email-text">Email</div>
-                        <div className="account-box">
+                        <div className="account-box" style={{width: isMicroScreen && '100%'}}>
                             { user?.email}
                         </div>
                     </div>
@@ -54,29 +57,29 @@ const Account = () => {
             </div>
             <div className="end-line"></div>
             <div className="account-change-password-div">
-                <div className="account-change-password-text">Change Password</div>
+                <div className="account-change-password-text" style={{marginLeft: isMicroScreen && '24%'}}>Change Password</div>
                 <div className="account-current-password account-password">
-                    <div className="cp-text" >Current Password</div>
-                    <div className="cp-input-div">
+                    {  !isMicroScreen && (<div className="cp-text" >Current Password</div>)}
+                    <div className="cp-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="cp-input-header">Current Password</div>
-                        <input type="text" className="cp-input" />
+                        <input type="text" className="cp-input" style={{width: isMicroScreen && '100%'}} />
                         <a href='/authentication/forgot-password' style={{display: 'flex', justifyContent: 'flex-end', marginTop: '8px', color: 'var(--primary-background-color)', fontFamily: 'var(--secondary-font-family)', fontWeight: '500', fontSize: '14px'}}>Forgot Password?</a>
                     </div>
                   
                 </div>
               
                 <div className="account-new-password account-password">
-                    <div className="np-text">New Password</div>
-                    <div className="np-input-div">
+                    {  !isMicroScreen && (<div className="np-text">New Password</div>)}
+                    <div className="np-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="np-input-header">New Password</div>
-                        <input type="password" className="np-input" />
+                        <input type="password" className="np-input" style={{width: isMicroScreen && '100%'}}/>
                     </div>
                 </div>
                 <div className="account-retype-password account-password">
-                    <div className="rp-text">Retype Password</div>
-                    <div className="rp-input-div">
+                    {  !isMicroScreen && (<div className="rp-text">Retype Password</div>)}
+                    <div className="rp-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="rp-input-header">Retype Password</div>
-                        <input type="password" className="rp-input" />
+                        <input type="password" className="rp-input" style={{width: isMicroScreen && '100%'}} />
                     </div>
                 </div>
             </div>

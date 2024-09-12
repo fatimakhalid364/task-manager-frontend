@@ -73,7 +73,7 @@ function MainDiv({ children }) {
                 />
             </div>
             { (isMicroScreen && !isAdaptableScreen && (pathname == '/notes' || pathname == '/tasks')) && (<MobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
-            { (isMicroScreen && !isAdaptableScreen && (pathname == '/settings' || pathname == '/calendar')) && (<SecMobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
+            { (isMicroScreen && !isAdaptableScreen && (pathname == '/settings' || pathname == '/calendar' || pathname == '/dashboard')) && (<SecMobileBottomBar handleBurgerMenuClick={handleBurgerMenuClick} handleShowSearchBarClick={handleShowSearchBarClick} BellIcon={BellIcon}/>)}
 
             <div style={{ display: 'block', justifyContent: 'space-between', gap: '20px' }}>
                 <Sides

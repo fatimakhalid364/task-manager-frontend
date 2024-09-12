@@ -67,7 +67,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, ha
 
     return (
             
-           <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between'}}>
+           <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between', zIndex: isMicroScreen && '9999'}}>
            { !showSearchBar && (<div className='page-title' style={{ marginLeft: !isAdaptableScreen && '18px' }}>
                     { isAdaptableScreen && (<Logo handleBurgerMenuClick={ handleBurgerMenuClick }/>)}
                     <div>

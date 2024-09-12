@@ -127,7 +127,7 @@ function Settings({ currentSettingsScreen }) {
 
     return (
         <MainDiv>
-            <div className='settings-page-div'>
+            <div className='settings-page-div' style={{marginBottom: isMicroScreen ? '95px' : '65px'}}>
                 <SettingsHeader handleGeneralClick={handleGeneralClick} 
                 handleNotificationClick={handleNotificationClick}
                 handleAccountClick={handleAccountClick}
