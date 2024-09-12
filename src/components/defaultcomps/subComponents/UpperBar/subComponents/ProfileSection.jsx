@@ -120,3 +120,5 @@ function LogoutComp() {
         </div>
     )
 }
+
+export { LogoutComp }

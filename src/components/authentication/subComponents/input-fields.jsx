@@ -21,6 +21,13 @@ import { useResponsive } from "src/constants/media_queries";
 
 import './authentication.css';
 
+const userDetails = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+}
+
 
 const LabelTypography = styled(Typography)(({ theme }) => ({
     fontFamily: 'DM Sans',
@@ -101,18 +108,21 @@ const InputFields = ({ currentScreen }) => {
     const errorMsg = useSelector(state => state.auth.errorMsg);
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [userAccount, setUserAccount] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    });
+    const [userAccount, setUserAccount] = useState(
+        userDetails
+    );
     const [checked, setChecked] = useState(false);
     const [spinner, setSpinner] = useState(false);
 
+    const updateUserAccount = (name, value) => {
+        setUserAccount(prev => ({ ...prev, [name]: value }));
+    };
+
+    const debouncedUpdateUserAccount = useCallback(debounce(updateUserAccount, 200), [userAccount]);
+
     const handleInputChange = (event) => {
         const { value, name } = event.target;
-        setUserAccount(prev => ({ ...prev, [name]: value }));
+        debouncedUpdateUserAccount(name, value); 
     };
 
     const handleCheckboxChange = () => setChecked(prev => !prev);

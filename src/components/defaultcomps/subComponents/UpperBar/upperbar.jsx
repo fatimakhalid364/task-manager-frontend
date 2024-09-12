@@ -67,7 +67,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, ha
 
     return (
             
-           <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between', zIndex: isMicroScreen && '9999'}}>
+           <div className='upper-bar-div' style={{ justifyContent: !isAdaptableScreen && 'space-between', zIndex: isMicroScreen && '999'}}>
            { !showSearchBar && (<div className='page-title' style={{ marginLeft: !isAdaptableScreen && '18px' }}>
                     { isAdaptableScreen && (<Logo handleBurgerMenuClick={ handleBurgerMenuClick }/>)}
                     <div>
@@ -104,7 +104,7 @@ function UpperBar({ PageName, BellIcon, handleBurgerMenuClick, showSearchBar, ha
                             isBp6 ? 'calc(100vw - 54vw)': 
                             isBp7 ? 'calc(100vw - 55vw)': 
                             isBp8 ? 'calc(100vw - 56vw)' :
-                            isMicroScreen ? 'calc(100vw - 50vw)' : 'calc(100vw - 48vw)', 
+                            isMicroScreen ? 'calc(100vw - 52vw)' : 'calc(100vw - 48vw)', 
                 marginRight:  !isAdaptableScreen && '40px',
                 width: !isAdaptableScreen && '100px',
                }}>

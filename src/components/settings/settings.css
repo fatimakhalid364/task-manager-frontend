@@ -424,6 +424,51 @@
     outline: none;
 }
 
+.email-task-due-box,
+.email-task-completed-box,
+.email-task-overdue-box {
+    display: flex;
+    border: 1px solid var(--field-border-color);
+    margin-bottom: 18px;
+    border-radius: 12px;
+    width: 100%;
+    padding-left: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+}
+
+.email-task-due-header,
+.email-task-completed-header,
+.email-task-overdue-header {
+    font-size: 14px;
+    color: var(--quaternary-font-color);
+    font-family: var(--secondary-font-family);
+}
+
+.settings-notifications-div {
+    display: flex;
+    margin-left: 10px;
+    margin-top: 35px;
+    gap: 90px;
+}
+
+.email-task-due-text,
+.email-task-completed-text,
+.email-task-overdue-text {
+    width: 350px;
+}
+
+.email-task-due-para,
+.email-task-completed-para,
+.email-task-overdue-para {
+    font-size: 14px;
+    font-family: var(--primary-font-family);
+    color: var(--tertiary-font-color);
+    margin-top: 10px;
+}
+
+
 .account-profile-header {
     color: var(--quinary-font-color);
     font-family: var(--primary-font-family);
@@ -448,6 +493,8 @@
 .account-current-password {
     margin-top: 40px;
 }
+
+
 
 
 @keyframes pulse {
