@@ -6,6 +6,7 @@ import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomBar from 'src/components/BottomBar/BottomBar';
 import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
+import PlusIcon from 'src/components/icons/PlusIcon';
 import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
@@ -15,9 +16,6 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
-import { useSelector } from 'react-redux';
-import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
-import PlusIcon from 'src/components/icons/PlusIcon';
 
 
 
@@ -39,10 +37,6 @@ function Tasks() {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
-    const user = useSelector(state => state);
-    useEffect(() => {
-       console.log('state is logged here ========>', user);
-    }, []);
 
   
 
