@@ -12,7 +12,7 @@ function CreateAccountForm({ currentScreen, pictureURL }) {
     const titleText = getTitleText(currentScreen);
     return (
         <div>
-            <BackToSite />
+            
             <Grid container spacing={2}>
                 
                 <Grid item xs={12}>

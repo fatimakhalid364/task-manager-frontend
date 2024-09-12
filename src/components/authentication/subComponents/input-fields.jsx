@@ -17,44 +17,10 @@ import { validateResetForm, validateSetForm, validateSignin, validateSignup } fr
 import { useAuth } from '../../../contexts/AuthContext.jsx';
 import NotificationModal from '../../notifications/NotificationModal.jsx';
 import SubmitButton from './submit-button.jsx';
+import { useResponsive } from "src/constants/media_queries";
 
 import './authentication.css';
 
-const CssTextField = styled(TextField)(({ theme }) => ({
-    '& .MuiInput-underline:after': {
-        borderBottom: 'none', 
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            border: 'none',
-        },
-        '&:hover fieldset': {
-            border: `1px solid #3B8AFF`,
-        },
-        '&.Mui-focused fieldset': {
-            border: `2px solid #3B8AFF`,
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-            border: '1px solid #D1D5DB',
-        },
-        width: '494px',
-        height: '40px',
-        borderRadius: '8px',
-        padding: '4px', 
-        '& input': {
-            padding: '4px',
-        },
-        '& input::placeholder': {
-            fontFamily: 'DM Sans',
-            fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '16px',
-            color: '#9CA3AF',
-            width: '474px',
-            height: '16px',
-        },
-    },
-}));
 
 const LabelTypography = styled(Typography)(({ theme }) => ({
     fontFamily: 'DM Sans',
@@ -82,6 +48,51 @@ const getValidationFunction = (currentScreen, userAccount, checked) => {
 };
 
 const InputFields = ({ currentScreen }) => {
+    const {
+        isAdaptableScreen,
+        expandBar,
+        onWholeScreen,
+
+        isSmallerScreen,
+        isMobileScreen,
+        isMicroScreen,
+    } = useResponsive();
+    const CssTextField = styled(TextField)(({ theme }) => ({
+        '& .MuiInput-underline:after': {
+            borderBottom: 'none', 
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                border: 'none',
+            },
+            '&:hover fieldset': {
+                border: `1px solid #3B8AFF`,
+            },
+            '&.Mui-focused fieldset': {
+                border: `2px solid #3B8AFF`,
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+                border: '1px solid #D1D5DB',
+            },
+            width: isMicroScreen ? '350px' : '494px',
+            height: '40px',
+            borderRadius: '8px',
+            padding: '4px', 
+            '& input': {
+                padding: '4px',
+            },
+            '& input::placeholder': {
+                fontFamily: 'DM Sans',
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '16px',
+                color: '#9CA3AF',
+                width: '474px',
+                height: '16px',
+            },
+        },
+    }));
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -192,7 +203,7 @@ const InputFields = ({ currentScreen }) => {
             )}
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Name</LabelTypography>
                             <CssTextField
@@ -206,7 +217,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.SET_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Email</LabelTypography>
                             <CssTextField
@@ -220,7 +231,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.FORGOT_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Password</LabelTypography>
                             <CssTextField
@@ -235,7 +246,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SET_PASS) && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Confirm Password</LabelTypography>
                             <CssTextField
