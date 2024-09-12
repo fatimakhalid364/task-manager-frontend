@@ -11,13 +11,13 @@ import EmailIcon from 'src/assets/EmailIcon.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
+import { useResponsive } from "src/constants/media_queries";
 import { forgotPassThunk, resetPassThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
 import { useAuth } from '../../../contexts/AuthContext.jsx';
 import NotificationModal from '../../notifications/NotificationModal.jsx';
 import SubmitButton from './submit-button.jsx';
-import { useResponsive } from "src/constants/media_queries";
 
 import './authentication.css';
 
@@ -28,7 +28,41 @@ const userDetails = {
     confirmPassword: ""
 }
 
-
+const CssTextField = styled(TextField)(({ theme }) => ({
+    '& .MuiInput-underline:after': {
+        borderBottom: 'none',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            border: 'none',
+        },
+        '&:hover fieldset': {
+            border: `1px solid #3B8AFF`,
+        },
+        '&.Mui-focused fieldset': {
+            border: `2px solid #3B8AFF`,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+        width: '494px',
+        height: '40px',
+        borderRadius: '8px',
+        padding: '4px',
+        '& input': {
+            padding: '4px',
+        },
+        '& input::placeholder': {
+            fontFamily: 'DM Sans',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#9CA3AF',
+            width: '474px',
+            height: '16px',
+        },
+    },
+}));
 const LabelTypography = styled(Typography)(({ theme }) => ({
     fontFamily: 'DM Sans',
     fontWeight: 500,
@@ -64,41 +98,7 @@ const InputFields = ({ currentScreen }) => {
         isMobileScreen,
         isMicroScreen,
     } = useResponsive();
-    const CssTextField = styled(TextField)(({ theme }) => ({
-        '& .MuiInput-underline:after': {
-            borderBottom: 'none', 
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                border: 'none',
-            },
-            '&:hover fieldset': {
-                border: `1px solid #3B8AFF`,
-            },
-            '&.Mui-focused fieldset': {
-                border: `2px solid #3B8AFF`,
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #D1D5DB',
-            },
-            width: isMicroScreen ? '350px' : '494px',
-            height: '40px',
-            borderRadius: '8px',
-            padding: '4px', 
-            '& input': {
-                padding: '4px',
-            },
-            '& input::placeholder': {
-                fontFamily: 'DM Sans',
-                fontWeight: 400,
-                fontSize: '14px',
-                lineHeight: '16px',
-                color: '#9CA3AF',
-                width: '474px',
-                height: '16px',
-            },
-        },
-    }));
+
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -117,12 +117,9 @@ const InputFields = ({ currentScreen }) => {
     const updateUserAccount = (name, value) => {
         setUserAccount(prev => ({ ...prev, [name]: value }));
     };
-
-    const debouncedUpdateUserAccount = useCallback(debounce(updateUserAccount, 200), [userAccount]);
-
     const handleInputChange = (event) => {
         const { value, name } = event.target;
-        debouncedUpdateUserAccount(name, value); 
+        updateUserAccount(name, value); 
     };
 
     const handleCheckboxChange = () => setChecked(prev => !prev);
