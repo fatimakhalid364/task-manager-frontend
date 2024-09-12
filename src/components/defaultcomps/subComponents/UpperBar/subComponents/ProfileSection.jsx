@@ -93,18 +93,7 @@ function ProfileSection() {
             </div>) : (<div style={{ display: 'flex', justifyContent: 'center', marginLeft: '20px' }} onClick={toggleProfile}>
                 <img style={{ borderRadius: '50px', border: '1px solid var(--primary-background-color)', padding: '1px' }} src={`data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`} alt="User Avatar" width="40" height="40" />
                     {isProfileOpen && (
-                        <div className='logout-button' style={{ bottom: 0 }}>
-                            <div style={{ display: 'flex', justifyContent: 'right' }}>
-                                <CloseRoundedIcon className='cancel-button' />
-                            </div>
-                            <div className='logout-text'>
-                                Logout from account?
-                            </div>
-                            <div>
-                                <button onClick={() => console.log('Logout')}>Logout</button>
-
-                            </div>
-                        </div>
+                        <LogoutComp />
                     )}
             </div>)}
 
