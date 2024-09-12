@@ -1,27 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCalendarTasksThunk } from '../thunks/taskThunks';
+import { getAllTasksThunk } from '../thunks/taskThunks';
 
-const tasksSlice = createSlice({
+const taskSlice = createSlice({
     name: 'tasks',
     initialState: {
         tasks: [],
-        status: 'idle',
+        metaData: {},
+        loading: false,
     },
-    reducers: {},
+    reducers: {
+        clearTasks: (state) => {
+            state.tasks = [];
+            state.metaData = {};
+        },
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCalendarTasksThunk.pending, (state) => {
-                state.status = 'loading';
+            .addCase(getAllTasksThunk.pending, (state) => {
+                state.loading = true;
             })
-            .addCase(fetchCalendarTasksThunk.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.tasks = action.payload;
-                console.info('payload in sllice', action.payload)
+            .addCase(getAllTasksThunk.fulfilled, (state, action) => {
+                state.tasks = action.payload.data; // Store tasks in Redux
+                state.metaData = action.payload.metaData; // Store meta data in Redux
+                state.loading = false;
             })
-            .addCase(fetchCalendarTasksThunk.rejected, (state) => {
-                state.status = 'failed';
+            .addCase(getAllTasksThunk.rejected, (state) => {
+                state.loading = false;
             });
     },
 });
 
-export default tasksSlice.reducer;
+export const { clearTasks } = taskSlice.actions;
+export const taskReducer = taskSlice.reducer;
