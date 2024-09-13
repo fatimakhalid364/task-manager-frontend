@@ -6,14 +6,24 @@ import { getTitleText } from "src/utils/basicUtils";
 import BackToSite from './back-to-site.jsx';
 import GoogleSSO from './google-signin.jsx';
 import InputFields from './input-fields.jsx';
+import { useResponsive } from "src/constants/media_queries";
 
 function CreateAccountForm({ currentScreen, pictureURL }) {
     console.log("current screen i am in ==>>", currentScreen);
     const titleText = getTitleText(currentScreen);
+    const {
+        isAdaptableScreen,
+        expandBar,
+        onWholeScreen,
+
+        isSmallerScreen,
+        isMobileScreen,
+        isMicroScreen,
+    } = useResponsive();
     return (
         <div>
-            <BackToSite />
-            <Grid container spacing={2}>
+            
+            <Grid container spacing={2} sx={{marginTop: !isMicroScreen && '50px'}}>
                 
                 <Grid item xs={12}>
                     <div className='main-form-header'>

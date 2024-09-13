@@ -1,10 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
+
 
 const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
     const { page, limit, search } = params
+    const privateKey = localStorage.getItem("privateKey");
+
     try {
         const response = await APIS.get(`/task`, {
             params: {
@@ -16,7 +20,21 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
             },
         });
         console.log("response is in thunk,====================>", response);
-        return response.data;
+        response.data.data.forEach(task => {
+            task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+            task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+
+            if (Array.isArray(task.taskDescription)) {
+                task.taskDescription = task.taskDescription.join('');
+            }
+        });
+
+        console.log("tasks", response)
+
+        return {
+            data: response.data.data,
+            metaData: response.data.metaData,
+        };
     } catch (error) {
         if (!error.response) {
             throw error;

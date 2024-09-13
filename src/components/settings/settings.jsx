@@ -12,6 +12,8 @@ import BottomBar from 'src/components/BottomBar/BottomBar';
 import { useResponsive } from 'src/constants/media_queries';
 import { setColor } from 'src/store/slices/appearanceSlice';
 import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
+import { Notification } from 'src/components/settings/subComponents/Notification';
+import { Logout } from 'src/components/settings/subComponents/Logout';
 
 
 
@@ -153,10 +155,10 @@ function Settings({ currentSettingsScreen }) {
                         handleOrangeClick = {handleOrangeClick}
                         isGreenClicked = {isGreenClicked}
                         handleGreenClick = {handleGreenClick}/>
-                    ) : isAccountClicked ? (<Account />) : (<div></div>)
+                    ) : isAccountClicked ? (<Account />) : isNotificationClicked ? (<Notification />) : (<Logout />)
                 }
                    
-                <SettingsFooter
+                { !isLogoutClicked && (<SettingsFooter
                     handleSave={handleSave}
                 isBlueClicked = {isBlueClicked}
                 handleBlueClick = {handleBlueClick}
@@ -165,7 +167,7 @@ function Settings({ currentSettingsScreen }) {
                 isOrangeClicked = {isOrangeClicked}
                 handleOrangeClick = {handleOrangeClick}
                 isGreenClicked = {isGreenClicked}
-                handleGreenClick = {handleGreenClick}/>
+                handleGreenClick = {handleGreenClick}/>)}
             </div>
             { (!isAdaptableScreen && !isMicroScreen) && <BottomBar  />}
         </MainDiv>

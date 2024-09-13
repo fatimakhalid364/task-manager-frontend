@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
+import { Box, FormControl, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { styled } from "@mui/system";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -6,18 +6,105 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { useResponsive } from 'src/constants/media_queries';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
-import { useSelector } from 'react-redux';
-import { useResponsive } from 'src/constants/media_queries';
 
 
+const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
+    '& .MuiInputBase-input': {
+        border: 'none',
+    },
+    '& .MuiOutlinedInput-root': {
 
+        '&:hover fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+        height: '40px',
+        borderRadius: '8px',
+        padding: '4px',
+        '& input': {
+            padding: '4px',
+        },
+    },
+}));
+const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
+    '& .MuiInputBase-root': {
+        borderRadius: '8px',
 
+        '&:hover fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+    '& .MuiInputBase-input': {
+        border: 'none',
+    },
+    borderRadius: '8px',
+
+}));
+
+const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
+    '& .MuiSelect-select': {
+        '&:hover fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+    '& .MuiOutlinedInput-root': {
+
+        '&:hover fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+        height: '40px',
+        borderRadius: '8px',
+        padding: '4px',
+        '& input': {
+            padding: '4px',
+        },
+    },
+    borderRadius: '8px',
+
+}));
+const MyComponent = styled('div')({
+    position: 'relative',
+    height: '600px',
+    width: '550px',
+    top: '50%',
+    left: '52%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '10px',
+    backgroundColor: 'var(--neutral-background-color)',
+    border: '1px solid var(--modal-border-color)',
+    opacity: '1',
+    padding: '15px',
+});
 const AddTask = ({ open, handleClose, getAllTasks }) => {
     const {
         isAdaptableScreen,
@@ -25,19 +112,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
         isMicroScreen,
     } = useResponsive();
 
-    const MyComponent = styled('div')({
-        position: 'relative',
-        height:  '600px',
-        width: isMicroScreen ? '340px' : '550px',
-        top: '50%',
-        left: isMicroScreen ? '49.7%' : '52%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '10px',
-        backgroundColor: 'var(--neutral-background-color)',
-        border: '1px solid var(--modal-border-color)',
-        opacity: '1',
-        padding: '15px',
-    });
+
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: '',
         dueDate: dayjs(),
@@ -56,83 +131,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
         setHovered(false);
     }
 
-    const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
-        '& .MuiInputBase-input': {
-            border: 'none',
-        },
-        '& .MuiOutlinedInput-root': {
-    
-            '&:hover fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '&.Mui-focused fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #D1D5DB',
-            },
-            height: '40px',
-            borderRadius: '8px',
-            padding: '4px',
-            '& input': {
-                padding: '4px',
-            },
-        },
-    }));
-    const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
-        '& .MuiInputBase-root': {
-            borderRadius: '8px',
-    
-            '&:hover fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '&.Mui-focused fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #D1D5DB',
-            },
-        },
-        '& .MuiInputBase-input': {
-            border: 'none',
-        },
-        borderRadius: '8px',
-    
-    }));
-    
-    const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => ({
-        '& .MuiSelect-select': {
-            '&:hover fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '&.Mui-focused fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #D1D5DB',
-            },
-        },
-        '& .MuiOutlinedInput-root': {
-    
-            '&:hover fieldset': {
-                border: '1px solid var(--primary-background-color)',
-            },
-            '&.Mui-focused fieldset': {
-                border:'1px solid var(--primary-background-color)',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #D1D5DB',
-            },
-            height: '40px',
-            borderRadius: '8px',
-            padding: '4px',
-            '& input': {
-                padding: '4px',
-            },
-        },
-        borderRadius: '8px',
-    
-    }));
+
     
 
     const resetTaskDetails = () => {

@@ -11,6 +11,7 @@ import EmailIcon from 'src/assets/EmailIcon.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { Screen } from "src/constants/constants";
+import { useResponsive } from "src/constants/media_queries";
 import { forgotPassThunk, resetPassThunk, signupThunk } from 'src/store/thunks/authThunks';
 import { encryptObjectValues } from "src/utils/encryptionUtil";
 import { validateResetForm, validateSetForm, validateSignin, validateSignup } from 'src/utils/validators.js';
@@ -20,9 +21,16 @@ import SubmitButton from './submit-button.jsx';
 
 import './authentication.css';
 
+const userDetails = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+}
+
 const CssTextField = styled(TextField)(({ theme }) => ({
     '& .MuiInput-underline:after': {
-        borderBottom: 'none', 
+        borderBottom: 'none',
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -40,7 +48,7 @@ const CssTextField = styled(TextField)(({ theme }) => ({
         width: '494px',
         height: '40px',
         borderRadius: '8px',
-        padding: '4px', 
+        padding: '4px',
         '& input': {
             padding: '4px',
         },
@@ -55,7 +63,6 @@ const CssTextField = styled(TextField)(({ theme }) => ({
         },
     },
 }));
-
 const LabelTypography = styled(Typography)(({ theme }) => ({
     fontFamily: 'DM Sans',
     fontWeight: 500,
@@ -82,6 +89,17 @@ const getValidationFunction = (currentScreen, userAccount, checked) => {
 };
 
 const InputFields = ({ currentScreen }) => {
+    const {
+        isAdaptableScreen,
+        expandBar,
+        onWholeScreen,
+
+        isSmallerScreen,
+        isMobileScreen,
+        isMicroScreen,
+    } = useResponsive();
+
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -90,18 +108,18 @@ const InputFields = ({ currentScreen }) => {
     const errorMsg = useSelector(state => state.auth.errorMsg);
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [userAccount, setUserAccount] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    });
+    const [userAccount, setUserAccount] = useState(
+        userDetails
+    );
     const [checked, setChecked] = useState(false);
     const [spinner, setSpinner] = useState(false);
 
+    const updateUserAccount = (name, value) => {
+        setUserAccount(prev => ({ ...prev, [name]: value }));
+    };
     const handleInputChange = (event) => {
         const { value, name } = event.target;
-        setUserAccount(prev => ({ ...prev, [name]: value }));
+        updateUserAccount(name, value); 
     };
 
     const handleCheckboxChange = () => setChecked(prev => !prev);
@@ -192,7 +210,7 @@ const InputFields = ({ currentScreen }) => {
             )}
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Name</LabelTypography>
                             <CssTextField
@@ -206,7 +224,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.SET_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Email</LabelTypography>
                             <CssTextField
@@ -220,7 +238,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.FORGOT_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Password</LabelTypography>
                             <CssTextField
@@ -235,7 +253,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SET_PASS) && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Confirm Password</LabelTypography>
                             <CssTextField

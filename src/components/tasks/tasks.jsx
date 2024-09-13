@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomBar from 'src/components/BottomBar/BottomBar';
 import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
+import PlusIcon from 'src/components/icons/PlusIcon';
 import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
@@ -15,9 +16,6 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
-import { useSelector } from 'react-redux';
-import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
-import PlusIcon from 'src/components/icons/PlusIcon';
 
 
 
@@ -30,39 +28,38 @@ function Tasks() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(useSelector((state) => state.tasks?.tasks));
     const [skeletonLoader, setSkeletonLoader] = useState(false);
-    const [metaData, setMetaData] = useState([]);
+    const [metaData, setMetaData] = useState(useSelector((state) => state.tasks.metaData));
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
     const handleFilterClose = () => setFilterOpen(false);
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
-    const user = useSelector(state => state);
-    useEffect(() => {
-       console.log('state is logged here ========>', user);
-    }, []);
-
-  
+    console.log('tasks in the component', tasks)
 
     const getAllTasks = async (page=0, limit=5) => {
         try {
-            setSkeletonLoader(true);
-            const params = { page, limit, search }
-            const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            response?.data?.forEach(task => {
-                task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
-                task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-                if (Array.isArray(task.taskDescription)) {
-                    task.taskDescription = task.taskDescription.join('');
-                }
-            });
-            setTasks(response?.data);
-            setMetaData(response?.metaData);
-            successToast(response.message, 'task-created');
+            if (tasks.length === 0) {
+                setSkeletonLoader(true);
+                const params = { page, limit, search }
+                const response = await dispatch(getAllTasksThunk(params)).unwrap();
+                response?.data?.forEach(task => {
+                    task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+                    task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+                    if (Array.isArray(task.taskDescription)) {
+                        task.taskDescription = task.taskDescription.join('');
+                    }
+                });
+                setTasks(response?.data);
+                setMetaData(response?.metaData);
+                successToast(response.message, 'task-created');
+            }
+
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
+            console.log('error in tasks', err)
         } finally {
             setSkeletonLoader(false);
         }
@@ -82,7 +79,7 @@ function Tasks() {
     );
     useEffect(() => {
         debouncedGetAllTasks(page, limit);
-    }, [page, limit, debouncedGetAllTasks]);
+    }, [page, limit, debouncedGetAllTasks, tasks]);
 
     
 
