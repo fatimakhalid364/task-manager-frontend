@@ -69,7 +69,7 @@ const LabelTypography = styled(Typography)(({ theme }) => ({
     fontSize: theme.typography.body2.fontSize,
     lineHeight: theme.typography.body1.lineHeight,
     color: '#1F2937',
-    width: '494px',
+    width: '90%',
     height: '16px',
 }));
 
@@ -210,60 +210,67 @@ const InputFields = ({ currentScreen }) => {
             )}
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Name</LabelTypography>
-                            <CssTextField
-                                placeholder="Enter your name"
-                                variant="outlined"
-                                name="name"
-                                value={userAccount.name}
-                                onChange={handleInputChange}
-                            />
+                                <input
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    name="name"
+                                    value={userAccount.name}
+                                    onChange={handleInputChange}
+                                    className='authentication-input'
+                                    style={{width: isMicroScreen ? '350px' : '494px'}}
+                                />
                         </div>
                     </Grid>
                 )}
                 {currentScreen !== Screen.SET_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Email</LabelTypography>
-                            <CssTextField
-                                placeholder="Enter your email"
-                                variant="outlined"
-                                name="email"
-                                value={userAccount.email}
-                                onChange={handleInputChange}
-                            />
+            
+                             <input
+                                    type="text"
+                                    placeholder="Enter your email"
+                                    name="email"
+                                    value={userAccount.email}
+                                    onChange={handleInputChange}
+                                    className='authentication-input'
+                                    style={{width: isMicroScreen ? '350px' : '494px'}}
+                                />
                         </div>
                     </Grid>
                 )}
                 {currentScreen !== Screen.FORGOT_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Password</LabelTypography>
-                            <CssTextField
-                                placeholder="Enter your password"
-                                variant="outlined"
-                                name="password"
-                                value={userAccount.password}
-                                onChange={handleInputChange}
-                                type="password"
-                            />
+                             <input
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    name="password"
+                                    value={userAccount.password}
+                                    onChange={handleInputChange}
+                                    className='authentication-input'
+                                    style={{width: isMicroScreen ? '350px' : '494px'}}
+                                />
                         </div>
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SET_PASS) && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '28%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Confirm Password</LabelTypography>
-                            <CssTextField
-                                placeholder="Confirm your password"
-                                variant="outlined"
-                                name="confirmPassword"
-                                value={userAccount.confirmPassword}
-                                onChange={handleInputChange}
-                                type="password"
-                            />
+                             <input
+                                    type="password"
+                                    placeholder="Confirm your password"
+                                    name="confirmPassword"
+                                    value={userAccount.confirmPassword}
+                                    onChange={handleInputChange}
+                                    className='authentication-input'
+                                    style={{width: isMicroScreen ? '350px' : '494px'}}
+                                />
                         </div>
                     </Grid>
                 )}
