@@ -210,7 +210,7 @@ const InputFields = ({ currentScreen }) => {
             )}
             <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {currentScreen === Screen.SIGNUP && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '0' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Name</LabelTypography>
                                 <input
@@ -226,7 +226,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.SET_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '0' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Email</LabelTypography>
             
@@ -243,7 +243,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {currentScreen !== Screen.FORGOT_PASS && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '0' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Password</LabelTypography>
                              <input
@@ -259,7 +259,7 @@ const InputFields = ({ currentScreen }) => {
                     </Grid>
                 )}
                 {(currentScreen === Screen.SIGNUP || currentScreen === Screen.SET_PASS) && (
-                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '2%' }}>
+                    <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: isMicroScreen && '0' }}>
                         <div>
                             <LabelTypography variant="body1" gutterBottom>Confirm Password</LabelTypography>
                              <input
@@ -299,7 +299,7 @@ const InputFields = ({ currentScreen }) => {
                         )}
                     </Grid>
                 )}
-                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: isMicroScreen && '500px' }}>
                     <SubmitButton
                         currentScreen={currentScreen}
                         handleSubmit={debouncedHandleButtonClick}
