@@ -19,6 +19,53 @@
     
 }
 
+.checkbox-input {
+    display: none;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    margin-bottom: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color:white; 
+    border: 2px solid var(--tertiary-font-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-filter-div {
+    position: relative;
+    height: 386px;
+    width: 440px;
+    top: 50%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    background-color: var(--neutral-background-color);
+    border: 1px solid var(--modal-border-color);
+    opacity: 1;
+}
+
+
+.checkbox-input:checked + .checkbox-custom {
+    background-color: var(--primary-background-color); 
+    border: none;
+}
+
+
+
+
 .add-filter {
     display: flex;
     align-items: center;

@@ -4,27 +4,87 @@ import filter from 'src/assets/filter.svg';
 import 'src/components/Filter/FilterDialog.css';
 import { styled } from "@mui/system";
 import fwdArrow from 'src/assets/fwd-arrow.svg';
+import whiteTick from 'src/assets/white-tick.svg';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setValue } from 'src/store/slices/filterByStatusSlice';
+import { setCheckboxState } from 'src/store/slices/checkboxSlice';
+
 
 const FilterDialog = ({filterOpen, handleFilterClose}) => {
-    const MyComponent = styled('div')({
-        position: 'relative',
-        height: '386px',
-        width: '440px',
-        top: '50%',
-        left: '52%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '10px',
-        backgroundColor: 'var(--neutral-background-color)',
-        border: '1px solid var(--modal-border-color)',
-        opacity: '1',
-       
+   
+    const dispatch = useDispatch();
+
+    const checkboxStates = useSelector((state) => state.checkbox.checkboxStates);
         
-    });
+   
+
+    const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
+
+    const [isStatusClicked, setIsStatusClicked] = useState(true);
+    const [isDueDateClicked, setIsDueDateClicked] = useState(false);
+    const [isCreationDateClicked, setIsCreationDateClicked] = useState(false);
+
+    const handleStatusClick = () => {
+        setIsStatusClicked(true);
+        setIsDueDateClicked(false);
+        setIsCreationDateClicked(false);
+    }
+
+    const handleDueDateClick = () => {
+        setIsStatusClicked(false);
+        setIsDueDateClicked(true);
+        setIsCreationDateClicked(false);
+    }
+
+    const handleCreationDateClick = () => {
+        setIsStatusClicked(false);
+        setIsDueDateClicked(false);
+        setIsCreationDateClicked(true);
+    }
+
+    // const [checkedCount, setCheckedCount] = useState(0);
+   
+    const handleIncrement = () => {
+       
+        const checkboxes = document.querySelectorAll('.checkbox-input');
+        
+        
+        const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+        switch (checkedCount) {
+            case 0:
+                dispatch(setValue('0'));
+                break;
+            case 1:
+                dispatch(setValue('1'));
+                break;
+            case 2:
+                dispatch(setValue('2'));
+                break;
+            case 3:
+                dispatch(setValue('3'));
+                break;
+            case 4:
+                dispatch(setValue('4'));
+                break;
+        }
+    
+        
+      
+    };
+
+    const handleCheckboxChange = (checkboxId) => (event) => {
+        dispatch(setCheckboxState(checkboxId, event.target.checked));
+        handleIncrement();
+    };
+    
+   
     return (
         <Modal
         open={filterOpen}
         >
-            <MyComponent>
+            <div className='add-filter-div'>
                 <div className='add-filter-header-div'>
                     <div className='add-filter-header'>
                         <div className='add-filter'>
@@ -38,26 +98,77 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                 </div>
                 <div className='add-filter-content'>
                     <div className='filter-portion-1'>
-                        <div className='filter-portion-1-menu'>
+                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleStatusClick }>
                             <div>Status</div>
+                            <div style={{
+                                height: '20px',
+                                width: '20px',
+                                borderRadius: '50px',
+                                backgroundColor: 'var(--primary-background-color)',
+                                color: 'white',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: '2px'
+                            }}>{ filterByStatusValue}</div>
                             <img src={fwdArrow} alt='forward-arrow' />
                         </div>
-                        <div className='filter-portion-1-menu'>
+                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleDueDateClick }> 
                             <div>Due Date</div>
                             <img src={fwdArrow} alt='forward-arrow' />
                         </div>
-                        <div className='filter-portion-1-menu'>
-                            <div>Creation</div>
+                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleCreationDateClick}>
+                            <div>Creation Date</div>
                             <img src={fwdArrow} alt='forward-arrow' />
                         </div>
                     </div>
                     <div className='filter-portion-2'>
-                        <div>
-                        </div>
+                        { isStatusClicked ? (<div style={{width: '100%'}}>
+                            <div className="not-started-filter" style={{width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px'}}>
+                                <label className="checkbox-wrapper">
+                                    <input type="checkbox" className="checkbox-input" id='checkbox-not-started' onChange={handleCheckboxChange('checkbox-not-started')} />
+                                    <span className="checkbox-custom">
+                                    <img src={whiteTick} alt='white-tick' />
+                                    </span>
+                                    
+                                </label>
+                                <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '1px'}}>Not Started</div>
+                            </div>
+                            <div className="pending-filter" style={{width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px' }}>
+                            <label className="checkbox-wrapper" >
+                                <input type="checkbox" className="checkbox-input" id='checkbox-pending'  onChange={handleIncrement}  />
+                                <span className="checkbox-custom">
+                                <img src={whiteTick} alt='white-tick' />
+                                </span>
+                               
+                            </label>
+                            <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '2px'}}>Pending</div>
+                            </div>
+                            <div className="in-progress-filter" style={{width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px'}}>
+                            <label className="checkbox-wrapper"  >
+                                <input type="checkbox" className="checkbox-input"  onChange={handleIncrement} id='checkbox-inprogress'   />
+                                <span className="checkbox-custom">
+                                <img src={whiteTick} alt='white-tick' />
+                                </span>
+                               
+                            </label>
+                            <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '2px'}}>In Progress</div>
+                            </div>
+                            <div className="complete-filter" style={{width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px'}}>
+                            <label className="checkbox-wrapper">
+                                <input type="checkbox" className="checkbox-input" id='checkbox-complete' onChange={handleIncrement} />
+                                <span className="checkbox-custom">
+                                <img src={whiteTick} alt='white-tick' />
+                                </span>
+                               
+                            </label>
+                            <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '2px'}}>Complete</div>
+                            </div>
+                        </div>) : isDueDateClicked ? <div></div> : <div></div>}
                     </div>
                 </div>
                 
-            </MyComponent>
+            </div>
         </Modal>
     )
 };
