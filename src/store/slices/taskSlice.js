@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { getAllTasksThunk } from '../thunks/taskThunks';
 
 const taskSlice = createSlice({
@@ -21,9 +20,9 @@ const taskSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createTaskThunk.fulfilled, (state, action) => {
-                state.tasks.push(action.payload.data);
-            })
+            // .addCase(createTaskThunk.fulfilled, (state, action) => {
+            //     state.tasks.push(action.payload.data);
+            // })
             .addCase(getAllTasksThunk.pending, (state) => {
                 state.loading = true;
             })
