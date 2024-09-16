@@ -163,7 +163,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                     </div>
                     <div className='filter-portion-2'>
                         { isStatusClicked ? (<div style={{width: '100%'}}>
-                            {Object.keys(checkboxStates).map((checkboxId) => (
+                            {/* {Object.keys(checkboxStates).map((checkboxId) => (
                                     <div key={checkboxId} className={`${checkboxId}-filter`} style={{ width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px' }}>
                                         <label className="checkbox-wrapper">
                                             <input
@@ -182,7 +182,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                             
                                         </div>
                                     </div>
-                                ))}
+                                ))} */}
                         </div>) :
                         isTagsClicked ? (
                             <div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

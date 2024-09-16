@@ -20,7 +20,7 @@ const filterByStatusSlice = createSlice({
     setCheckboxState: (state, action) => {
         const checkboxId = action.payload?.checkboxId;
         const isChecked = action.payload?.isChecked;
-        state.checkboxStates[checkboxId] = isChecked
+        state.checkboxStates[checkboxId] = isChecked;
         console.log('boolean value of the checkbox being clicked with the id ' + checkboxId + ' is ' + state.checkboxStates[checkboxId]);
     }
   },
