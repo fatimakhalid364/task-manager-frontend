@@ -204,10 +204,12 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                                 <SearchGlass color='var(--primary-background-color)'  />
                                             </div>
                                         </div>
-                                        <div style={{width: '100%'}}>
-                                            {
-                                                notesArray?.map((note, index) => {})
-                                            }
+                                        <div style={{ width: '100%' }}>
+                                            {notesArray?.map((note, index) => (
+                                                <div key={index}>
+                                                    {note?.tags}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                         )
