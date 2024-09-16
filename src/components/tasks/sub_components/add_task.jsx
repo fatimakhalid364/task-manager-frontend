@@ -92,25 +92,27 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
     borderRadius: '8px',
 
 }));
-const MyComponent = styled('div')({
-    position: 'relative',
-    height: '600px',
-    width: '550px',
-    top: '50%',
-    left: '52%',
-    transform: 'translate(-50%, -50%)',
-    borderRadius: '10px',
-    backgroundColor: 'var(--neutral-background-color)',
-    border: '1px solid var(--modal-border-color)',
-    opacity: '1',
-    padding: '15px',
-});
+
 const AddTask = ({ open, handleClose, getAllTasks }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
         isMicroScreen,
     } = useResponsive();
+
+    const MyComponent = styled('div')({
+        position: 'relative',
+        height: '600px',
+        width: isMicroScreen ? '350px' : '550px',
+        top: '50%',
+        left: isMicroScreen ? '50%' : '52%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '10px',
+        backgroundColor: 'var(--neutral-background-color)',
+        border: '1px solid var(--modal-border-color)',
+        opacity: '1',
+        padding: '15px',
+    });
 
 
     const [taskDetails, setTaskDetails] = useState({
@@ -208,7 +210,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             open={open}
             onClose={handleClose} // Ensure the modal can be closed by clicking outside
         >
-            <MyComponent>
+            <div className='add-task-div' style={{width: isMicroScreen ? '350px' : '550px',  left: isMicroScreen ? '50%' : '52%', }}>
                 <div>
                     <div className='add-task-header'>
                         <div className='add-case'>
@@ -219,12 +221,11 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                     <div className='add-task-details-div'>
                         <form className='add-task-details'>
                             <div className='add-task-input-title'>Task Title</div>
-                            <CssInputField
-                                sx={{ height: '40px' }}
-                                fullWidth
-                                // variant="outlined"
+                            <input
+                                type="text"
+                                style= {{height: '40px', width: '100%'}}
                                 value={taskDetails.taskTitle}
-                                name='taskTitle'
+                                name="taskTitle"
                                 onChange={handleInputChange}
                             />
                             <div className='add-task-input-title'>Due Date</div>
@@ -280,10 +281,10 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                             </FormControl>
                             <div className='add-task-input-title'>Task Description</div>
                             <TextareaAutosize
-                                maxRows={7}
-                                minRows={7}
+                                maxRows={4}
+                                minRows={4}
                                 p={2}
-                                style={{ width: '100%', overflowY: 'scroll', border: hovered && '1px solid var(--primary-background-color)'  }}
+                                style={{ width: '100%', overflowY: 'scroll', border: hovered && '1px solid var(--primary-background-color)', padding: '5px'  }}
                                 value={taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
@@ -316,7 +317,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
                         </form>
                     </div>
                 </div>
-            </MyComponent>
+            </div>
         </Modal>
     );
 }

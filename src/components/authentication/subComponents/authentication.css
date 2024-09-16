@@ -174,3 +174,27 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px #fff inset;
   -webkit-text-fill-color: #000;
 }
+
+.authentication-input {
+    width: 494px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #D1D5DB;
+}
+
+.authentication-input:hover,
+.authentication-input:focus {
+    border: 1px solid #3B8AFF;
+    outline: none;
+}
+
+.authentication-input::placeholder {
+    font-family: var(--secondary-font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #9CA3AF;
+    width: 474px;
+    height: 16px
+}
