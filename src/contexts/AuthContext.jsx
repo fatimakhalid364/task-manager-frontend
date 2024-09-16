@@ -35,7 +35,9 @@ export const AuthProvider = ({ children }) => {
                 const privateKey = fetchKeyResponse.data.privateKey;
                 localStorage.setItem('privateKey', privateKey);
                 const decryptedUser = decryptObjectValues(user, privateKey);
+                console.log('dispatching the user', decryptedUser);
                 dispatch(setUser(decryptedUser));
+                console.log('User is set')
             }
         } catch (error) {
             console.log('Something went wrong', error);
