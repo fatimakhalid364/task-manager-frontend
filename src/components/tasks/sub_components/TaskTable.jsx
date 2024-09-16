@@ -21,6 +21,7 @@ import redTrash from 'src/assets/red-trash.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
+import { setMetaData, setTasks } from "src/store/slices/taskSlice";
 import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
@@ -83,7 +84,6 @@ const TaskTable = ({
   hasNextPage,
   nextPage,
   skeletonLoader,
-  privateKey,
   metaData
 }) => {
   const accentColor = useSelector((state) => state.appearance.color)
@@ -111,6 +111,7 @@ const TaskTable = ({
   });
   
   
+  const privateKey = localStorage.getItem("privateKey");
   
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -160,7 +161,9 @@ const TaskTable = ({
     setSpinner(true);
 
     try {
-      const response = await dispatch(deleteTaskThunk(_id)).unwrap();
+      const tasksIds = tasks.map(task => task._id);
+      const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
+
       if (response?.status === 200) {
         const filteredTasks = tasks.filter((task) => task._id !== selectedTaskId);
         const closestTask = response?.data?.closestTask
@@ -173,6 +176,9 @@ const TaskTable = ({
           }
           filteredTasks.push(closestTask);
         }
+        const updMeta = { ...metaData, total: metaData.total - 1 }
+        dispatch(setTasks(filteredTasks));
+        dispatch(setMetaData(updMeta));
         successToast(response.message, 'task-created');
       }
     } catch (err) {

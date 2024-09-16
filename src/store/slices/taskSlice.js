@@ -10,13 +10,24 @@ const taskSlice = createSlice({
         loading: false,
     },
     reducers: {
-        clearTasks: (state) => {
-            state.tasks = [];
-            state.metaData = {};
+        clearTasks: (state, action) => {
+            state.tasks = action.payload || [];
+            state.metaData = action.payload || {};
+            state.loaded = false;
         },
         addTask: (state, action) => {
             state.tasks = [action.payload, ...state.tasks];
         },
+        setTasks: (state, action) => {
+            console.log('insided the delete slice', action.payload);
+            state.tasks = action.payload;
+            // state.metaData.total = state.metaData.total - 1
+        },
+        setMetaData: (state, action) => {
+            console.log('insided the delete slice', action.payload);
+            state.metaData = action.payload;
+            // state.metaData.total = state.metaData.total - 1
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -38,5 +49,5 @@ const taskSlice = createSlice({
     },
 });
 
-export const { clearTasks, addTask } = taskSlice.actions;
+export const { clearTasks, addTask, setTasks, setMetaData } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;

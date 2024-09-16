@@ -11,7 +11,7 @@ import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
-import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
@@ -55,7 +55,7 @@ function Tasks() {
             console.log('tasks in the component', response.tasks);
             //     setTasks(response?.data);
             // setMetaData(response.metaData);
-            successToast('Tasks fetched Successful', 'task-created');
+            // successToast('Tasks fetched Successful', 'task-created');
 
 
         } catch (err) {
@@ -89,7 +89,7 @@ function Tasks() {
 
     return (
         <div className='task-page-div' >
-            {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+            {open && (<AddTask debouncedGetAllTasks={debouncedGetAllTasks} limit={limit} open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>

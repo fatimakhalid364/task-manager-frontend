@@ -4,10 +4,12 @@ import './App.css';
 import { CalendarComponent } from './components/calendar/Calendar';
 import Dashboard from './components/dashboard';
 // import Notes from './components/notes';
-import GeneralPage from 'src/pages/settings/GeneralPage';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Settings from 'src/components/settings/settings';
 import Notes from '../src/components/notes/Notes';
 import UpdateNote from '../src/components/notes/sub_components/update_notes/UpdateNote';
-import RouteGuard from './components/RouteGuard;';
+import RouteGuard from './components/RouteGuard';
 import Tasks from './components/tasks/tasks';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './pages/authentication/ForgotPassword';
@@ -17,10 +19,6 @@ import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
 import { persistor } from './store/index';
-import MainDiv from 'src/components/maindiv/maindiv';
-import Settings from 'src/components/settings/settings';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 function App() {
     const accentColor = useSelector((state) => state.appearance.color)
