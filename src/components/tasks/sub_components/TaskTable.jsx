@@ -72,6 +72,7 @@ const StyledAction = styled(TableCell)(({ theme }) => ({
 const TaskTable = ({
   tasks = [],
   setLimit,
+  debouncedGetAllTasks,
   limit,
   total,
   page,
@@ -323,6 +324,7 @@ const TaskTable = ({
           nextPage={nextPage}
           metaData={metaData}
           previousPage={previousPage}
+          debouncedGetAllTasks={debouncedGetAllTasks}
         />
       </Paper>
     </div>
