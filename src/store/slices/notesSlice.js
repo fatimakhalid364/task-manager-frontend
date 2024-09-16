@@ -6,8 +6,8 @@ import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 const getAllNotesSlice = createSlice({
     name: 'getAllNotes',
     initialState: {
-        access_token: localStorage.getItem('access_token'),
-        allNotes: null,
+        notes: [],
+        metaData: {},
         status: 'idle',
         error: null,
         isLoading: false,
@@ -30,6 +30,8 @@ const getAllNotesSlice = createSlice({
             })
             .addCase(getAllNotesThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.notes = action.payload.data;
+                state.metaData = action.payload.metaData; 
                 state.successMsg = 'task details retrieved successful!ly';
                 state.errorMsg = '';
                 console.log('Fulfilled: action.payload =', state.allNotes);
@@ -47,4 +49,4 @@ const getAllNotesSlice = createSlice({
 
 export const { setGetAllNotes } = getAllNotesSlice.actions;
 
-export const getAllNotesReducer = getAllNotesSlice.reducer;
+export const notesReducer = getAllNotesSlice.reducer;

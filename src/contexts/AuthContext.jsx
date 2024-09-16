@@ -16,12 +16,13 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
-        if (token) {
-            setIsLoading(false);
-        } else {
-            dispatch(logoutAction());
-            setIsLoading(false);
-        }
+        // if (token) {
+        //     setIsLoading(false);
+        // } else {
+        //     dispatch(logoutAction());
+        //     setIsLoading(false);
+        // }
+        setIsLoading(false);
     }, [dispatch]);
 
     const login = async (credentials) => {
@@ -35,7 +36,9 @@ export const AuthProvider = ({ children }) => {
                 const privateKey = fetchKeyResponse.data.privateKey;
                 localStorage.setItem('privateKey', privateKey);
                 const decryptedUser = decryptObjectValues(user, privateKey);
+                console.log('dispatching the user', decryptedUser);
                 dispatch(setUser(decryptedUser));
+                console.log('User is set')
             }
         } catch (error) {
             console.log('Something went wrong', error);
