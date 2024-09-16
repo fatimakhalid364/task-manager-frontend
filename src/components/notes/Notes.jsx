@@ -250,7 +250,7 @@ const Notes = () => {
                                             onMouseLeave={handleMouseLeave('pinned-notes')}
                                         
                                       >
-                                          Pinned Notes
+                                        Filtered Notes
                                       </div>
                                   </div>
                               </div>

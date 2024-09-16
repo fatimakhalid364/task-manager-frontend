@@ -46,7 +46,7 @@
 
 .add-filter-div {
     position: relative;
-    height: 386px;
+    height: 410px;
     width: 440px;
     top: 50%;
     left: 52%;
@@ -63,6 +63,15 @@
     border: none;
 }
 
+.filter-search-date-input:hover,
+.filter-search-date-input:focus {
+    border: none;
+    outline: 1px solid var(--primary-background-color);
+}
+
+.filter-search-date-input::placeholder {
+    font-size: 13px
+}
 
 
 

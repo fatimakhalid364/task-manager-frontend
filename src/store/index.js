@@ -9,7 +9,7 @@ import { authReducer } from "./slices/authSlice";
 // import { getAllTasksReducer } from './slices/get_all_tasks_slice';
 import { taskReducer } from './slices/taskSlice';
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
-import { checkboxReducer } from './slices/checkboxSlice';
+
 
 
 
@@ -25,7 +25,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReducer );
 const persistedFilterByStatusReducer = persistReducer(persistConfig, filterByStatusReducer );
 const persistedFormatReducer = persistReducer(persistConfig, formatReducer);
-const persistedCheckboxReducer = persistReducer(persistConfig, checkboxReducer);
+
 const persistedReducer = persistReducer(persistConfig, taskReducer);
 
 export const store = configureStore({
@@ -36,7 +36,7 @@ export const store = configureStore({
         format: persistedFormatReducer,
         tasks: persistedReducer,
         filterByStatus: persistedFilterByStatusReducer,
-        checkbox: persistedCheckboxReducer
+        // checkbox: persistedCheckboxReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
