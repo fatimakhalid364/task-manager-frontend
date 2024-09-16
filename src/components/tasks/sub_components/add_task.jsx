@@ -194,7 +194,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             if (response.status === 201) {
                 successToast(response.message, 'task-created');
                 resetTaskDetails();
-                getAllTasks(); // Get all tasks
+                getAllTasks(); 
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();

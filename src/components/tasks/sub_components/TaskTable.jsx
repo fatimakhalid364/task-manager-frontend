@@ -20,12 +20,12 @@ import edit from 'src/assets/edit.svg';
 import redTrash from 'src/assets/red-trash.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { useResponsive } from "src/constants/media_queries";
 import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
-import { useResponsive } from "src/constants/media_queries";
 
 
 const calculateCellWidth = () => {
@@ -74,8 +74,6 @@ const TaskTable = ({
   setLimit,
   limit,
   total,
-  setMetaData,
-  setTasks,
   page,
   setPage,
   previousPage,
@@ -174,11 +172,6 @@ const TaskTable = ({
           }
           filteredTasks.push(closestTask);
         }
-        setTasks(filteredTasks);
-        setMetaData((prevMetaData) => ({
-          ...prevMetaData,
-          total: prevMetaData.total - 1,
-        }));
         successToast(response.message, 'task-created');
       }
     } catch (err) {
