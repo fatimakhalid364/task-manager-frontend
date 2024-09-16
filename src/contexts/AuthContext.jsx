@@ -16,12 +16,13 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
-        if (token) {
-            setIsLoading(false);
-        } else {
-            dispatch(logoutAction());
-            setIsLoading(false);
-        }
+        // if (token) {
+        //     setIsLoading(false);
+        // } else {
+        //     dispatch(logoutAction());
+        //     setIsLoading(false);
+        // }
+        setIsLoading(false);
     }, [dispatch]);
 
     const login = async (credentials) => {

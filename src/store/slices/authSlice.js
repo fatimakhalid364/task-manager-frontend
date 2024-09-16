@@ -6,7 +6,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         access_token: localStorage.getItem('access_token'),
-        user: null,
+        user: {},
         status: 'idle',
         error: null,
         isLoading: false,
