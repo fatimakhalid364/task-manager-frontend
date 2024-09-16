@@ -79,11 +79,11 @@ function Tasks() {
         []
     );
     useEffect(() => {   
-        // if (!tasks.loaded) {
-        //     getAllTasks(page, limit, search);
-        // } else {
-        //     debouncedGetAllTasks(page, limit, search); // Fetch on filter change
-        // }
+        if (!tasks.loaded) {
+            getAllTasks(page, limit, search);
+        } else {
+            debouncedGetAllTasks(page, limit, search); // Fetch on filter change
+        }
         // getAllTasks(page, limit, search);
     }, [page, limit, search]);
 
