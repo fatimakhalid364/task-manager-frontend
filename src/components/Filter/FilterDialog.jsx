@@ -10,9 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setValue, setCheckboxState } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import SearchGlass from 'src/components/icons/SearchGlass';
+import { useLocation } from 'react-router-dom';
 
 
-const FilterDialog = ({filterOpen, handleFilterClose}) => {
+const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
+    const location = useLocation();
+
+    const pathname = location.pathname;
    
     const dispatch = useDispatch();
 
@@ -24,9 +28,10 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
 
    
 
-    const [isStatusClicked, setIsStatusClicked] = useState(true);
+    const [isStatusClicked, setIsStatusClicked] = useState(pathname == '/tasks' ? true : false);
     const [isDueDateClicked, setIsDueDateClicked] = useState(false);
     const [isCreationDateClicked, setIsCreationDateClicked] = useState(false);
+    const [isTagsClicked, setIsTagsClicked] = useState(true);
 
   
 
@@ -34,18 +39,27 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
         setIsStatusClicked(true);
         setIsDueDateClicked(false);
         setIsCreationDateClicked(false);
+       
+    }
+
+    const handleTagsClick = () => {
+        setIsTagsClicked(true);
+        setIsCreationDateClicked(false);
+        setIsStatusClicked(false);
     }
 
     const handleDueDateClick = () => {
         setIsStatusClicked(false);
         setIsDueDateClicked(true);
         setIsCreationDateClicked(false);
+        setIsTagsClicked(false);
     }
 
     const handleCreationDateClick = () => {
         setIsStatusClicked(false);
         setIsDueDateClicked(false);
         setIsCreationDateClicked(true);
+        setIsTagsClicked(false);
     }
 
     // const [checkedCount, setCheckedCount] = useState(0);
@@ -123,8 +137,8 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                 </div>
                 <div className='add-filter-content'>
                     <div className='filter-portion-1'>
-                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleStatusClick }>
-                            <div>Status</div>
+                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { pathname == '/tasks' ? handleStatusClick : handleTagsClick}>
+                            <div>{pathname == '/tasks' ? 'Status' : 'Tags'}</div>
                             <div style={{
                                 height: '20px',
                                 width: '20px',
@@ -138,10 +152,10 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                             }}>{ filterByStatusValue}</div>
                             <img src={fwdArrow} alt='forward-arrow' />
                         </div>
-                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleDueDateClick }> 
+                        { pathname == '/tasks' && (<div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleDueDateClick }> 
                             <div>Due Date</div>
                             <img src={fwdArrow} alt='forward-arrow' />
-                        </div>
+                        </div>)}
                         <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleCreationDateClick}>
                             <div>Creation Date</div>
                             <img src={fwdArrow} alt='forward-arrow' />
@@ -169,8 +183,36 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                                         </div>
                                     </div>
                                 ))}
-                        </div>) : isDueDateClicked ? 
-                                    <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        </div>) :
+                        isTagsClicked ? (
+                            <div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                        <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                            <input 
+                                            type='text' 
+                                            placeholder='Search tags'
+                                            className='filter-search-date-input'
+                                            style={{
+                                                marginTop: '15px', 
+                                                width: '85%', 
+                                                padding: '10px',
+                                                borderRadius: '8px', 
+                                                height: '35px',
+                                                border: '1px solid var(--field-border-color)', 
+
+                                            }}/>
+                                            <div style={{position: 'absolute', top: '21px', left: '78%', cursor: 'pointer'}}>
+                                                <SearchGlass color='var(--primary-background-color)'  />
+                                            </div>
+                                        </div>
+                                        <div style={{width: '100%'}}>
+                                            {
+                                                notesArray?.map((note, index) => {})
+                                            }
+                                        </div>
+                                    </div>
+                        )
+                        : isDueDateClicked ? 
+                                    (<div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                                         <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
                                             <input 
                                             type='text' 
@@ -192,9 +234,9 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                                         <div>
 
                                         </div>
-                                    </div> 
+                                    </div>) 
                                     : 
-                                    <div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                    (<div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                                         <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
                                             <input 
                                             type='text' 
@@ -214,7 +256,7 @@ const FilterDialog = ({filterOpen, handleFilterClose}) => {
                                             </div>
                                         </div>
 
-                                    </div>}
+                                    </div>)}
                     </div>
                 </div>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px'}}>

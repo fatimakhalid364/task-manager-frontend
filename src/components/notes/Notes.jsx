@@ -16,6 +16,7 @@ import NoteCard from "./sub_components/NoteCard";
 import { useSelector } from "react-redux";
 import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
 import PlusIcon from 'src/components/icons/PlusIcon';
+import FilterDialog from 'src/components//Filter/FilterDialog';
 
 const Notes = () => {
     const dispatch = useDispatch();
@@ -32,6 +33,9 @@ const Notes = () => {
     const accentColor = useSelector((state) => state.appearance.color);
     const [allNotesHovered, setAllNotesHovered] = useState(false);
     const [pinnedNotesHovered, setPinnedNotesHovered] = useState(false);
+    const [notesFilterOpen, setNotesFilterOpen] = useState(false);
+    const handleNotesFilterOpen = () => setNotesFilterOpen(true);
+    const handleNotesFilterClose = () => setNotesFilterOpen(false);
 
     const handleMouseEnter = (type) => () => {
         switch (type) {
@@ -137,7 +141,7 @@ const Notes = () => {
         }, 300),
         [page, limit, pinned]
     );
-    const filterDiv = <FilterButton />;
+    const filterDiv = <FilterButton   handleFilterOpen={handleNotesFilterOpen} />;
 
     const [isAllNotesClicked, setIsAllNotesClicked] = useState(false);
     const [isPinnedNotesClicked, setIsPinnedNotesClicked] = useState(false);
@@ -173,6 +177,7 @@ const Notes = () => {
     return (
         <>
           <MainDiv>
+          {notesFilterOpen && (<FilterDialog filterOpen={notesFilterOpen} handleFilterClose={handleNotesFilterClose} notesArray={notesArray}/>)}
               <div className='notes-page' >
                   {createNotesClicked ? (
                       <CreateNotes
@@ -191,6 +196,7 @@ const Notes = () => {
                                   object='Notes'
                                   filterDiv={filterDiv}
                                   handleOpen={handleCreateNotesClick}
+                                
                               />
                               <div className='notes-collection-div'>
                                   <div className='notes-collection'>
