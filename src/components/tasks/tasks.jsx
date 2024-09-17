@@ -11,7 +11,7 @@ import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
-import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
@@ -55,7 +55,7 @@ function Tasks() {
             console.log('tasks in the component', response.tasks);
             //     setTasks(response?.data);
             // setMetaData(response.metaData);
-            successToast('Tasks fetched Successful', 'task-created');
+            // successToast('Tasks fetched Successful', 'task-created');
 
 
         } catch (err) {
@@ -78,20 +78,18 @@ function Tasks() {
         }, 300),
         []
     );
-    useEffect(() => {   
+    useEffect(() => {
+        // Load tasks only if not loaded before
         if (!tasks.loaded) {
             getAllTasks(page, limit, search);
-        } else {
-            debouncedGetAllTasks(page, limit, search); // Fetch on filter change
         }
-        // getAllTasks(page, limit, search);
-    }, [page, limit, search]);
+    }, []);
 
     
 
     return (
         <div className='task-page-div' >
-            {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+            {open && (<AddTask debouncedGetAllTasks={debouncedGetAllTasks} limit={limit} open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
@@ -100,7 +98,7 @@ function Tasks() {
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks.metaData.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks.metaData.hasNextPage} hasPreviousPage={tasks.metaData.hasPrevPage} nextPage={tasks.metaData.nextPage} metaData={tasks.metaData} previousPage={tasks.metaData.previousPage} totalPages={tasks.metaData.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks.metaData.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks.metaData.hasNextPage} hasPreviousPage={tasks.metaData.hasPrevPage} nextPage={tasks.metaData.nextPage} metaData={tasks.metaData} previousPage={tasks.metaData.previousPage} totalPages={tasks.metaData.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>

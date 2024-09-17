@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'src/components/LoadingScreens/CSSLoader';
 import { errorToast } from 'src/components/toasters/toast.js';
+import { clearStore } from "src/store/index.js";
+import { clearTasks } from "src/store/slices/taskSlice";
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
 import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
@@ -13,15 +15,27 @@ export const AuthProvider = ({ children }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const { isAuthenticated, user, access_token } = useSelector((state) => state.auth);
-
+    const handleLogout = async () => {
+        try {
+            await dispatch(logoutAction()); // Dispatch logout action
+            await dispatch(clearTasks());  // Dispatch clearTasks action
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('privateKey');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     useEffect(() => {
         const token = localStorage.getItem('access_token');
-        // if (token) {
-        //     setIsLoading(false);
-        // } else {
-        //     dispatch(logoutAction());
-        //     setIsLoading(false);
-        // }
+        if (token) {
+            setIsLoading(false);
+        } else {
+            dispatch(logoutAction());
+            dispatch(clearTasks());
+            setIsLoading(false);
+        }
         setIsLoading(false);
     }, [dispatch]);
 
@@ -48,11 +62,15 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
+    const logout = async () => {
         setIsLoading(true); 
+        await dispatch(clearTasks());
+
         dispatch(logoutAction());
+        clearStore();
         localStorage.removeItem('access_token');
         localStorage.removeItem('privateKey');
+
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);

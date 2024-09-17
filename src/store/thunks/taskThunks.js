@@ -43,10 +43,11 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
     }
 });
 
-const deleteTaskThunk = createAsyncThunk("changePinned", async (_id, thunkAPI) => {
+const deleteTaskThunk = createAsyncThunk("changePinned", async ({ _id, tasksIds }, thunkAPI) => {
     console.log("inside delete tasks thunk");
+    const queryString = tasksIds.map(id => `tasksIds=${id}`).join('&');
     try {
-        const response = await APIS.delete(`/task/${_id}`, {
+        const response = await APIS.delete(`/task/${_id}?${queryString}`, {
             headers: {
                 "Content-Type": "application/json",
                 access_token: `Bearer ${localStorage.getItem("access_token")}`,

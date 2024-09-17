@@ -1,6 +1,6 @@
 // src/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer, persistStore, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
 import { formatReducer } from './slices//formatSlice';
@@ -41,6 +41,11 @@ export const store = configureStore({
             serializableCheck: false,
         }).concat(thunk),
 });
+
+
+export const clearStore = () => {
+    persistor.purge();
+};
 
 export const persistor = persistStore(store);
 

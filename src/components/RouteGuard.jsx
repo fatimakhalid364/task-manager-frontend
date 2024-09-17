@@ -8,10 +8,10 @@ const RouteGuard = ({ element: Component, ...rest }) => {
     const location = useLocation();
     const isAuthRoute =
         location.pathname.startsWith('/authentication');
-    if (access_token && isAuthRoute) {
+    if (isAuthenticated && isAuthRoute) {
         return <Navigate to={defaultRedirect} replace />;
     }
-    if (!access_token && !isAuthRoute) {
+    if (!isAuthenticated && !isAuthRoute) {
         return <Navigate to="/authentication/signin" replace />;
     }
     return <Component {...rest} />;

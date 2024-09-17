@@ -93,7 +93,7 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
 
 }));
 
-const AddTask = ({ open, handleClose, getAllTasks }) => {
+const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -194,7 +194,7 @@ const AddTask = ({ open, handleClose, getAllTasks }) => {
             if (response.status === 201) {
                 successToast(response.message, 'task-created');
                 resetTaskDetails();
-                getAllTasks(); 
+                debouncedGetAllTasks(0, limit); 
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
