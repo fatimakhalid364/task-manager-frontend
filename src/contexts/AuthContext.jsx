@@ -7,6 +7,7 @@ import { clearTasks } from "src/store/slices/taskSlice";
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
 import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
+import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 
 const AuthContext = createContext();
@@ -18,7 +19,8 @@ export const AuthProvider = ({ children }) => {
     const handleLogout = async () => {
         try {
             await dispatch(logoutAction()); // Dispatch logout action
-            await dispatch(clearTasks());  // Dispatch clearTasks action
+            await dispatch(clearTasks()); 
+            await dispatch(clearNotes()); // Dispatch clearTasks action
             localStorage.removeItem('access_token');
             localStorage.removeItem('privateKey');
         } catch (error) {
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         } else {
             dispatch(logoutAction());
             dispatch(clearTasks());
+            dispatch(clearNotes());
             setIsLoading(false);
         }
         setIsLoading(false);
@@ -65,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         setIsLoading(true); 
         await dispatch(clearTasks());
-
+        await dispatch(clearNotes());
         dispatch(logoutAction());
         clearStore();
         localStorage.removeItem('access_token');

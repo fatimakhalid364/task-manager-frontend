@@ -19,6 +19,7 @@ import PinIcon from "src/components/icons/PinIcon";
 import { useSelector } from "react-redux";
 import TrashIcon from 'src/components/icons/TrashIcon';
 import EyeIcon from 'src/components/icons/EyeIcon';
+import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 const NoteCard = ({
     title,
@@ -31,6 +32,7 @@ const NoteCard = ({
     _id,
     notesArray,
     setNotesArray,
+    metaData
 }) => {
     const accentColor = useSelector((state) => state.appearance.color);
     
@@ -151,9 +153,11 @@ const NoteCard = ({
       try {
           const response = await dispatch(deleteNoteThunk(_id)).unwrap();
         console.log(response);
-        if (response.status === 200) {
+        if (response.status == 200) {
           const filteredNotes = notesArray.filter((note) => note._id !== _id);
-          setNotesArray(filteredNotes);
+          const updMeta = { ...metaData, total: metaData.total - 1 }
+        dispatch(setNotes(filteredNotes));
+        dispatch(setMetaData(updMeta));
           successToast(response.message, "note-deleted");
       } else {
             errorToast("Note deletion failed", "note-delete-error");
@@ -236,7 +240,7 @@ const NoteCard = ({
                       <div className='note-ref-links'>{links.join(" , ")}</div>
                   </div>
                   <div className='note-footer'>
-                      <div className='note-date'>{date.toLocaleDateString()}</div>
+                      {/* <div className='note-date'>{date.toLocaleDateString()}</div>  */}
                       <div className='note-icons-div'>
                           <div
                               className='note-icons'

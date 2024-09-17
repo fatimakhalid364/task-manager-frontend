@@ -24,12 +24,12 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const [notesArrayFilled, setNotesArrayFilled] = useState(false);
         
-    useEffect(() => {
-        notesArray.map((note) =>{
+    // useEffect(() => {
+    //     notesArray.map((note) =>{
 
-        });
-        console.log('Notes Array:', notesArray);
-    }, [notesArray]);
+    //     });
+    //     console.log('Notes Array:', notesArray);
+    // }, [notesArray]);
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 

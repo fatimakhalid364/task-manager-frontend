@@ -19,12 +19,12 @@ const taskSlice = createSlice({
             state.tasks = [action.payload, ...state.tasks];
         },
         setTasks: (state, action) => {
-            console.log('insided the delete slice', action.payload);
+            console.log('insided the taskslice', action.payload);
             state.tasks = action.payload;
             // state.metaData.total = state.metaData.total - 1
         },
         setMetaData: (state, action) => {
-            console.log('insided the delete slice', action.payload);
+            console.log('insided the taskslice', action.payload);
             state.metaData = action.payload;
             // state.metaData.total = state.metaData.total - 1
         }

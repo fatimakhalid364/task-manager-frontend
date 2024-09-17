@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 
 const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI) => {
     console.log("inside getAllNotes thunk",);
     const { page, limit, search, pinned } = params
     console.log('...................', page, limit, search, pinned)
+    const privateKey = localStorage.getItem("privateKey");
     try {
         const response = await APIS.get(`/notes`, {
             params: {
@@ -17,9 +19,21 @@ const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI
             },
         });
         console.log("response is in thunk,====================>", response);
-        return response.data;
+        response.data.data.forEach(note => {
+            note.title = decryptSingleValues(note.title, privateKey);
+            note.desc = decryptSingleValues(note.desc, privateKey);
+                if (Array.isArray(note.desc)) {
+                    note.desc = note.desc.join('');
+                }
+        });
+        console.log('After decryption in getAllNotesThunk, response.data.data is', response.data.data)
+        return {
+            data: response.data.data,
+            metaData: response.data.metaData,
+        };
     } catch (error) {
         if (!error.response) {
+            console.log('Error is in the getAllNotesThunk++++++++++++++++++++++++++++')
             throw error;
         }
         return HandleAuthError(error, thunkAPI);

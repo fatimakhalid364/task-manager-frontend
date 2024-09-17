@@ -9,6 +9,7 @@ import { authReducer } from "./slices/authSlice";
 // import { getAllTasksReducer } from './slices/get_all_tasks_slice';
 import { taskReducer } from './slices/taskSlice';
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
+import { notesReducer } from './slices/notesSlice';
 
 
 
@@ -25,6 +26,7 @@ const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReduc
 const persistedFilterByStatusReducer = persistReducer(persistConfig, filterByStatusReducer);
 const persistedFormatReducer = persistReducer(persistConfig, formatReducer);
 const persistedReducer = persistReducer(persistConfig, taskReducer);
+const persistedNotesReducer = persistReducer(persistConfig, notesReducer);
 
 
 export const store = configureStore({
@@ -35,6 +37,7 @@ export const store = configureStore({
         format: persistedFormatReducer,
         tasks: persistedReducer,
         filterByStatus: persistedFilterByStatusReducer,
+        notes: persistedNotesReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
