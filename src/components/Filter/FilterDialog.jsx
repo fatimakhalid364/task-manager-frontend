@@ -21,8 +21,15 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
     const dispatch = useDispatch();
 
     const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates);
+
+    const [notesArrayFilled, setNotesArrayFilled] = useState(false);
         
-   
+    useEffect(() => {
+        notesArray.map((note) =>{
+
+        });
+        console.log('Notes Array:', notesArray);
+    }, [notesArray]);
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 
@@ -129,7 +136,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                         <div className='add-filter'>
                             <img src={filter} alt='filter-sign' /> Filter
                         </div>
-                        <a onClick={ promptFilterResetAndClose }><img src={cross} alt='cross' className='add-task-cross' /></a>
+                        <a onClick={ handleFilterClose }><img src={cross} alt='cross' className='add-task-cross' /></a>
                     </div>
                     <div style={{fontFamily: 'var(--primary-font-family)', color: 'var(--tertiary-font-color)', fontSize: '14px'}}>
                     Select from the list of filters below
@@ -163,7 +170,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                     </div>
                     <div className='filter-portion-2'>
                         { isStatusClicked ? (<div style={{width: '100%'}}>
-                            {/* {Object.keys(checkboxStates).map((checkboxId) => (
+                            {Object.keys(checkboxStates).map((checkboxId) => (
                                     <div key={checkboxId} className={`${checkboxId}-filter`} style={{ width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px' }}>
                                         <label className="checkbox-wrapper">
                                             <input
@@ -182,7 +189,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                             
                                         </div>
                                     </div>
-                                ))} */}
+                                ))}
                         </div>) :
                         isTagsClicked ? (
                             <div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -205,11 +212,39 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                             </div>
                                         </div>
                                         <div style={{ width: '100%' }}>
-                                            {notesArray?.map((note, index) => (
+                                            {/* Check if all notes have empty tags */}
+                                            {notesArray?.every(note => note.tags.length === 0) ? (
+                                            <div style={{marginTop: '20px', width: '63%', fontFamily: 'var(--primary-font-family)', fontSize: '15px', color: 'var(--quinary-font-color)'}} >No tags added yet</div>
+                                            ) : (
+                                            notesArray?.map((note, index) => (
                                                 <div key={index}>
-                                                    {note?.tags}
+                                                    {/* Render tags only if they exist */}
+                                                    {note.tags.length > 0 ? (
+                                                     note.tags.map((tag) => (
+                                                        <div style={{marginLeft: '30px'}}>
+                                                            <label className="checkbox-wrapper">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    className="checkbox-input"
+                                                                    // id={checkboxId}
+                                                                    // checked={checkboxStates[checkboxId]}
+                                                                    // onChange={(event) => handleCheckboxChange(checkboxId, event)}
+                                                                />
+                                                                <span className="checkbox-custom">
+                                                                    <img src={whiteTick} alt='white-tick' />
+                                                                </span>
+                                                            </label>
+                                                            <div style={{marginTop: '20px', marginLeft: '30px', fontFamily: 'var(--primary-font-family)', fontSize: '15px', color: 'var(--quinary-font-color)'}} >
+                                                                {tag}
+                                                            </div>
+                                                        </div>
+                                                     ))
+                           
+                                                        
+                                                    ) : null}
                                                 </div>
-                                            ))}
+                                                ))
+                                            )}
                                         </div>
                                     </div>
                         )
