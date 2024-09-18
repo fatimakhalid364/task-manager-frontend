@@ -43,21 +43,7 @@ function Tasks() {
             setSkeletonLoader(true);
             const params = { page, limit, search }
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            // response?.data?.forEach(task => {
-            //     task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
-            //     task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-            //     if (Array.isArray(task.taskDescription)) {
-            //         task.taskDescription = task.taskDescription.join('');
-            //     }
-            // });
-            // setTasks(response?.data);
-            // setMetaData(response?.metaData);
             console.log('tasks in the component', response.tasks);
-            //     setTasks(response?.data);
-            // setMetaData(response.metaData);
-            // successToast('Tasks fetched Successful', 'task-created');
-
-
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
             console.log('error in tasks', err)
@@ -79,7 +65,6 @@ function Tasks() {
         []
     );
     useEffect(() => {
-        // Load tasks only if not loaded before
         if (!tasks.loaded) {
             getAllTasks(page, limit, search);
         }

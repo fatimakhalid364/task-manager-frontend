@@ -54,7 +54,7 @@ const notesSlice = createSlice({
                 return {
                     ...state,
                     isLoading: false,
-                    notes: action?.payload?.data || [],
+                    notes: [...state.notes, ...(action.payload?.data || [])],
                     metaData: action?.payload?.metaData || {},
                     successMsg: 'Task details retrieved successfully!',
                     errorMsg: '',

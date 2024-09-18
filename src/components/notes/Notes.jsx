@@ -27,10 +27,7 @@ const Notes = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const { isAdaptableScreen, isMicroScreen } = useResponsive();
-    // const [metaData, setMetaData] = useState();
-    const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
-    const handleDoubleArrowClicked = () =>
-        setDoubleArrowClicked((prevValue) => !prevValue);
+    const [loading, setLoading] = useState(false);
     const accentColor = useSelector((state) => state.appearance.color);
     const [allNotesHovered, setAllNotesHovered] = useState(false);
     const [pinnedNotesHovered, setPinnedNotesHovered] = useState(false);
@@ -107,26 +104,30 @@ const Notes = () => {
   </div>
  </div>
 
-    const getAllNotes = async (page = 0, limit = 5, pinned = "") => {
+    const getAllNotes = async (page = 0, limit = 5, pinned = "", loading = true) => {
         try {
-        setSkeletonLoader(true);
+            setSkeletonLoader(loading);
+            setLoading(true);
         const params = { page, limit, pinned };
         const response = await dispatch(getAllNotesThunk(params)).unwrap();
         const notes = response?.data || [];
             console.log('the response named notes in the getAllNotes function is', notes);
             console.log('notes in the component', response);
             setSkeletonLoader(false);
+            setLoading(false);
+
     } catch (err) {
             errorToast("Something went wrong here", "getNotes-pages-error",);
             console.log('err', err)
             setSkeletonLoader(false);
+            setLoading(false);
         } finally {
-            // setSkeletonLoader(false);
+            setLoading(false);
         }
     };
     const debouncedGetAllNotes = useCallback(
         debounce((page, limit, pinned) => {
-            getAllNotes(page, limit, pinned);
+            getAllNotes(page, limit, pinned, false);
         }, 300),
         [page, limit, pinned]
     );
@@ -144,34 +145,26 @@ const Notes = () => {
         setIsPinnedNotesClicked(true);
         setIsAllNotesClicked(false);
     };
-
-//     useEffect(() => {
-//       debouncedGetAllNotes(page, limit, pinned);
-//   }, [page, limit, pinned, debouncedGetAllNotes]);
-
-  useEffect(() => {
-    // Load tasks only if not loaded before
-      //   console.log('the value of notes.loaded is', notes.notesLoaded);
-      if (!notes.notesLoaded) {
-        getAllNotes(page, limit, pinned);
-   }
-  
-}, []);
+    const handleScroll = useCallback(() => {
+        const scrollableHeight = document.documentElement.scrollHeight;
+        const scrolledHeight = window.innerHeight + window.scrollY;
+        if (scrolledHeight + 200 >= scrollableHeight && !loading && notes.metaData?.hasNextPage) {
+            const newPage = page + 1
+            debouncedGetAllNotes(newPage, limit, pinned);
+            setPage(page + 1);
+        }
+    }, [loading, notes.metaData, pinned, limit, debouncedGetAllNotes]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollableHeight = document.documentElement.scrollHeight;
-            const scrolledHeight = window.innerHeight + window.scrollY;
-            if (scrolledHeight + 200 >= scrollableHeight) {
-                if (notes.metaData?.hasNextPage) {
-                    setPage((prevPage) => prevPage + 1);
-                }
-            }
-        };
+        if (!notes.notesLoaded) {
+            getAllNotes(page, limit, pinned);
+        }
+    }, [notes.notesLoaded, page, limit, pinned]);
 
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [notes.metaData]);
+    }, [handleScroll]);
     return (
         <>
           <MainDiv>
