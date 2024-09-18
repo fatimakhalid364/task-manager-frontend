@@ -1,23 +1,19 @@
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomBar from "src/components/BottomBar/BottomBar";
 import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
 import PageHeader from "src/components/PageHeader";
+import PlusIcon from 'src/components/icons/PlusIcon';
 import MainDiv from "src/components/maindiv/maindiv";
 import "src/components/notes/Notes.css";
 import CreateNotes from "src/components/notes/sub_components/create_notes/CreateNotes";
 import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
-import { decryptSingleValues } from "src/utils/encryptionUtil";
 import NoteCard from "./sub_components/NoteCard";
-import { useSelector } from "react-redux";
-import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
-import PlusIcon from 'src/components/icons/PlusIcon';
-import FilterDialog from 'src/components//Filter/FilterDialog';
-import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 const Notes = () => {
     const dispatch = useDispatch();
@@ -117,26 +113,12 @@ const Notes = () => {
         const params = { page, limit, pinned };
         const response = await dispatch(getAllNotesThunk(params)).unwrap();
         const notes = response?.data || [];
-        console.log('the response named notes in the getAllNotes function is',  notes);
-    //     notes?.forEach((note) => {
-    //         console.log(note.title);
-
-    //       note.title = decryptSingleValues(note.title, privateKey);
-    //       note.desc = decryptSingleValues(note.desc, privateKey);
-    //         if (Array.isArray(note.desc)) {
-    //             note.desc = note.desc.join('');
-    //         }
-    //   });
-        const formattedNotes = notes.map((note) => ({
-            ...note,
-          date: new Date(note.createdAt),
-        }));
-            dispatch(setNotes(formattedNotes));
-            // setMetaData(response?.metaData);
+            console.log('the response named notes in the getAllNotes function is', notes);
             console.log('notes in the component', response);
             setSkeletonLoader(false);
     } catch (err) {
             errorToast("Something went wrong here", "getNotes-pages-error",);
+            console.log('err', err)
             setSkeletonLoader(false);
         } finally {
             // setSkeletonLoader(false);
@@ -169,8 +151,8 @@ const Notes = () => {
 
   useEffect(() => {
     // Load tasks only if not loaded before
-    console.log('the value of notes.loaded is', notes.loaded);
-   if(!notes.loaded) {
+      //   console.log('the value of notes.loaded is', notes.notesLoaded);
+      if (!notes.notesLoaded) {
         getAllNotes(page, limit, pinned);
    }
   

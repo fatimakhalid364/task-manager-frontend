@@ -1,25 +1,21 @@
 import DOMPurify from "dompurify";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Delete_Icon from "src/assets/Delete_Icon.svg";
-import visibility from "src/assets/eye.svg";
 import paperClip from "src/assets/paper-clip.svg";
-import pin from "src/assets/pin.svg";
-import trash from "src/assets/trash.svg";
+import EyeIcon from 'src/components/icons/EyeIcon';
+import PinIcon from "src/components/icons/PinIcon";
+import TrashIcon from 'src/components/icons/TrashIcon';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import "src/components/notes/sub_components/NoteCard.css";
+import { setMetaData, setNotes } from 'src/store/slices/notesSlice';
 import {
     changePinnedStatus,
     deleteNoteThunk,
 } from "src/store/thunks/notesThunk";
 import NotificationModal from "../../notifications/NotificationModal";
 import { errorToast, successToast } from "../../toasters/toast";
-import PinIcon from "src/components/icons/PinIcon";
-import { useSelector } from "react-redux";
-import TrashIcon from 'src/components/icons/TrashIcon';
-import EyeIcon from 'src/components/icons/EyeIcon';
-import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 const NoteCard = ({
     title,

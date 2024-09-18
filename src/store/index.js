@@ -1,44 +1,38 @@
-// src/store.js
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { persistReducer, persistStore, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
 import { formatReducer } from './slices//formatSlice';
 import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
-// import { getAllTasksReducer } from './slices/get_all_tasks_slice';
-import { taskReducer } from './slices/taskSlice';
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
 import { notesReducer } from './slices/notesSlice';
+import { resetReducer, resetState } from './slices/resetSlice';
+import { taskReducer } from './slices/taskSlice';
 
 
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    appearance: appearanceReducer,
+    format: formatReducer,
+    tasks: taskReducer,
+    filterByStatus: filterByStatusReducer,
+    notes: notesReducer,
+    reset: resetReducer
+});
 
 const persistConfig = {
     key: 'root',
     storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-// const persistedUserReducer = persistReducer(persistConfig, authReducer);
-// const persistedCreateTaskReducer = persistReducer(persistConfig, createTaskReducer);
-// const persistedGetAllTasksReducer = persistReducer(persistConfig, getAllTasksReducer);
-const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReducer);
-const persistedFilterByStatusReducer = persistReducer(persistConfig, filterByStatusReducer);
-const persistedFormatReducer = persistReducer(persistConfig, formatReducer);
-const persistedReducer = persistReducer(persistConfig, taskReducer);
-const persistedNotesReducer = persistReducer(persistConfig, notesReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
-    reducer: {
-        auth: persistedAuthReducer,
-        // createTask: persistedCreateTaskReducer,
-        appearance: persistedAppearanceReducer,
-        format: persistedFormatReducer,
-        tasks: persistedReducer,
-        filterByStatus: persistedFilterByStatusReducer,
-        notes: persistedNotesReducer
-    },
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
@@ -47,6 +41,7 @@ export const store = configureStore({
 
 
 export const clearStore = () => {
+    store.dispatch(resetState());
     persistor.purge();
 };
 
