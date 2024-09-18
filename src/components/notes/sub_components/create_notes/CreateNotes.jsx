@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import plus from "src/assets/add-notes.svg";
 import AttachFileIcon from "src/components/icons/AttachFileIcon";
@@ -9,12 +9,10 @@ import "src/components/notes/sub_components/create_notes/CreateNotes.css";
 import RichTextEditor from "src/components/notes/sub_components/create_notes/subComponents/RichTextEditor";
 import TagsInput from "src/components/notes/sub_components/create_notes/subComponents/TagsInput";
 import { errorToast, successToast } from "src/components/toasters/toast.js";
+import { useResponsive } from 'src/constants/media_queries';
+import { addNotes, setNotes } from 'src/store/slices/notesSlice';
 import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useResponsive } from 'src/constants/media_queries';
-import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 
 const CreateNotes = ({
@@ -31,6 +29,7 @@ const CreateNotes = ({
     } = useResponsive();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const notes = useSelector((state) => state.notes);
     const [spinner, setSpinner] = useState(false);
     const [attachLinkClicked, setAttachLinkClicked] = useState(false);
     const [showLinkPopup, setShowLinkPopup] = useState(false);
@@ -134,12 +133,21 @@ const CreateNotes = ({
             ? updateNoteThunk(updatedTaskDetails)
             : createNoteThunk(updatedTaskDetails);
             const response = await dispatch(thunkToDispatch).unwrap();
-        if (response.status === 201) {
-            updatedTaskDetails._id = response?.data?._id;
-          const obj = { ...noteDetails, links: uniqueLinks };
-          {
-              !update && dispatch(addNotes(obj));
-          }
+            noteDetails._id = response?.data?._id;
+            if (response.status === 201 || response.status == 200) {
+                let filteredNotes;
+                if (update) {
+                    filteredNotes = notes.notes.filter((note) => note._id !== response?.data?._id);
+                    const updatedArray = [noteDetails, ...filteredNotes];
+                    dispatch(setNotes(updatedArray));
+                } else if (!update) {
+                    const obj = { ...noteDetails, links: uniqueLinks };
+                    {
+                        !update && dispatch(addNotes(obj));
+                    }
+                }
+
+
           successToast(response.message, "task-created");
           {
               update ? navigate(-1) : setCreateNotesClicked(false);
