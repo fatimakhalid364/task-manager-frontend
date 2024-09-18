@@ -1,6 +1,6 @@
 // src/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer, persistStore, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { thunk } from 'redux-thunk';
 import { formatReducer } from './slices//formatSlice';
@@ -8,6 +8,8 @@ import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
 // import { getAllTasksReducer } from './slices/get_all_tasks_slice';
 import { taskReducer } from './slices/taskSlice';
+import { filterByStatusReducer } from './slices/filterByStatusSlice';
+import { notesReducer } from './slices/notesSlice';
 
 
 
@@ -20,9 +22,12 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 // const persistedUserReducer = persistReducer(persistConfig, authReducer);
 // const persistedCreateTaskReducer = persistReducer(persistConfig, createTaskReducer);
 // const persistedGetAllTasksReducer = persistReducer(persistConfig, getAllTasksReducer);
-const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReducer )
+const persistedAppearanceReducer = persistReducer(persistConfig, appearanceReducer);
+const persistedFilterByStatusReducer = persistReducer(persistConfig, filterByStatusReducer);
 const persistedFormatReducer = persistReducer(persistConfig, formatReducer);
 const persistedReducer = persistReducer(persistConfig, taskReducer);
+const persistedNotesReducer = persistReducer(persistConfig, notesReducer);
+
 
 export const store = configureStore({
     reducer: {
@@ -31,12 +36,19 @@ export const store = configureStore({
         appearance: persistedAppearanceReducer,
         format: persistedFormatReducer,
         tasks: persistedReducer,
+        filterByStatus: persistedFilterByStatusReducer,
+        notes: persistedNotesReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
         }).concat(thunk),
 });
+
+
+export const clearStore = () => {
+    persistor.purge();
+};
 
 export const persistor = persistStore(store);
 

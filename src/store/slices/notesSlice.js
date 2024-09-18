@@ -3,21 +3,37 @@ import { getAllNotesThunk } from 'src/store/thunks/notesThunk';
 
 
 
-const getAllNotesSlice = createSlice({
-    name: 'getAllNotes',
+const notesSlice = createSlice({
+    name: 'notes',
     initialState: {
-        access_token: localStorage.getItem('access_token'),
-        allNotes: null,
+        notes: [],
+        metaData: {},
         status: 'idle',
         error: null,
         isLoading: false,
         successMsg: '',
         errorMsg: '',
+        loaded: false
     },
     reducers: {
-        setAllNotes: (state, action) => {
-            state.allNotes = action.payload;
+        clearNotes: (state, action) => {
+            state.notes = action.payload || [];
+            state.metaData = action.payload || {};
+            state.loaded = false;
         },
+        addNotes: (state, action) => {
+            state.notes = [action.payload, ...state.notes];
+        },
+        setNotes: (state, action) => {
+            console.log('insided the notesslice', action.payload);
+            state.notes = action.payload;
+            // state.metaData.total = state.metaData.total - 1
+        },
+        setMetaData: (state, action) => {
+            console.log('insided the notesslice', action.payload);
+            state.metaData = action.payload;
+            // state.metaData.total = state.metaData.total - 1
+        }
     },
 
     extraReducers: (builder) => {
@@ -30,14 +46,18 @@ const getAllNotesSlice = createSlice({
             })
             .addCase(getAllNotesThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.notes = action.payload.data;
+                state.metaData = action.payload.metaData; 
                 state.successMsg = 'task details retrieved successful!ly';
                 state.errorMsg = '';
-                console.log('Fulfilled: action.payload =', state.allNotes);
+                console.log('Fulfilled: action.payload =', state.notes);
+                
+                state.loaded = true;
             })
             .addCase(getAllNotesThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error;
-                state.errorMsg = 'Error occured while retrieving task details!';
+                state.errorMsg = 'Error occured while retrieving note details!';
             })
             
     },
@@ -45,6 +65,6 @@ const getAllNotesSlice = createSlice({
 
 
 
-export const { setGetAllNotes } = getAllNotesSlice.actions;
+export const { clearNotes, addNotes, setNotes, setMetaData } = notesSlice.actions;
 
-export const getAllNotesReducer = getAllNotesSlice.reducer;
+export const notesReducer = notesSlice.reducer;

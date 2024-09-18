@@ -107,8 +107,8 @@ function LogoutComp() {
     const { logout } = useAuth();
 
     return (
-        <div className='logout-button' style={{ bottom: 0 }}>
-            <div style={{ display: 'flex', justifyContent: 'right' }}>
+        <div className='logout-button' style={{ bottom: 0, zIndex: '999' }}>
+            <div style={{ display: 'flex', justifyContent: 'right', zIndex: '999' }}>
                 <CloseRoundedIcon className='cancel-button' />
             </div>
             <div className='logout-text'>

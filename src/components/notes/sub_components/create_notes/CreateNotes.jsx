@@ -14,11 +14,12 @@ import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUti
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useResponsive } from 'src/constants/media_queries';
+import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 
 const CreateNotes = ({
     setCreateNotesClicked,
-    setNotesArray,
+    // setNotesArray,
     noteDetails,
     setNoteDetails,
     update = false,
@@ -137,7 +138,7 @@ const CreateNotes = ({
             updatedTaskDetails._id = response?.data?._id;
           const obj = { ...noteDetails, links: uniqueLinks };
           {
-              !update && setNotesArray((prev) => [obj, ...prev]);
+              !update && dispatch(addNotes(obj));
           }
           successToast(response.message, "task-created");
           {

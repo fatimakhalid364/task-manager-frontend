@@ -16,22 +16,31 @@ import NoteCard from "./sub_components/NoteCard";
 import { useSelector } from "react-redux";
 import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
 import PlusIcon from 'src/components/icons/PlusIcon';
+import FilterDialog from 'src/components//Filter/FilterDialog';
+import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 const Notes = () => {
     const dispatch = useDispatch();
     const privateKey = localStorage.getItem("privateKey");
+    const notes = useSelector((state) => state.notes);
+    useEffect(() => {
+        console.log('notes picked up using useSelector are ', notes)
+    }, []);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [pinned, setPinned] = useState("");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const { isAdaptableScreen, isMicroScreen } = useResponsive();
-    const [metaData, setMetaData] = useState();
+    // const [metaData, setMetaData] = useState();
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () =>
         setDoubleArrowClicked((prevValue) => !prevValue);
     const accentColor = useSelector((state) => state.appearance.color);
     const [allNotesHovered, setAllNotesHovered] = useState(false);
     const [pinnedNotesHovered, setPinnedNotesHovered] = useState(false);
+    const [notesFilterOpen, setNotesFilterOpen] = useState(false);
+    const handleNotesFilterOpen = () => setNotesFilterOpen(true);
+    const handleNotesFilterClose = () => setNotesFilterOpen(false);
 
     const handleMouseEnter = (type) => () => {
         switch (type) {
@@ -57,7 +66,7 @@ const Notes = () => {
         }
     };
 
-    const [notesArray, setNotesArray] = useState([]);
+    // const [notesArray, setNotesArray] = useState([]);
     const [createNotesClicked, setCreateNotesClicked] = useState(false);
 
     const handleCreateNotesClick = () =>
@@ -108,24 +117,26 @@ const Notes = () => {
         const params = { page, limit, pinned };
         const response = await dispatch(getAllNotesThunk(params)).unwrap();
         const notes = response?.data || [];
-        notes?.forEach((note) => {
-            console.log(note.title);
+        console.log('the response named notes in the getAllNotes function is',  notes);
+    //     notes?.forEach((note) => {
+    //         console.log(note.title);
 
-          note.title = decryptSingleValues(note.title, privateKey);
-          note.desc = decryptSingleValues(note.desc, privateKey);
-            if (Array.isArray(note.desc)) {
-                note.desc = note.desc.join('');
-            }
-      });
+    //       note.title = decryptSingleValues(note.title, privateKey);
+    //       note.desc = decryptSingleValues(note.desc, privateKey);
+    //         if (Array.isArray(note.desc)) {
+    //             note.desc = note.desc.join('');
+    //         }
+    //   });
         const formattedNotes = notes.map((note) => ({
             ...note,
           date: new Date(note.createdAt),
         }));
-            setNotesArray((prevNotes) => [...prevNotes, ...formattedNotes]);
-            setMetaData(response?.metaData);
+            dispatch(setNotes(formattedNotes));
+            // setMetaData(response?.metaData);
+            console.log('notes in the component', response);
             setSkeletonLoader(false);
     } catch (err) {
-            errorToast("Something went wrong", "getNotes-pages-error");
+            errorToast("Something went wrong here", "getNotes-pages-error",);
             setSkeletonLoader(false);
         } finally {
             // setSkeletonLoader(false);
@@ -137,7 +148,7 @@ const Notes = () => {
         }, 300),
         [page, limit, pinned]
     );
-    const filterDiv = <FilterButton />;
+    const filterDiv = <FilterButton   handleFilterOpen={handleNotesFilterOpen} />;
 
     const [isAllNotesClicked, setIsAllNotesClicked] = useState(false);
     const [isPinnedNotesClicked, setIsPinnedNotesClicked] = useState(false);
@@ -152,16 +163,25 @@ const Notes = () => {
         setIsAllNotesClicked(false);
     };
 
-    useEffect(() => {
-      debouncedGetAllNotes(page, limit, pinned);
-  }, [page, limit, pinned, debouncedGetAllNotes]);
+//     useEffect(() => {
+//       debouncedGetAllNotes(page, limit, pinned);
+//   }, [page, limit, pinned, debouncedGetAllNotes]);
+
+  useEffect(() => {
+    // Load tasks only if not loaded before
+    console.log('the value of notes.loaded is', notes.loaded);
+   if(!notes.loaded) {
+        getAllNotes(page, limit, pinned);
+   }
+  
+}, []);
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollableHeight = document.documentElement.scrollHeight;
             const scrolledHeight = window.innerHeight + window.scrollY;
             if (scrolledHeight + 200 >= scrollableHeight) {
-                if (metaData?.hasNextPage) {
+                if (notes.metaData?.hasNextPage) {
                     setPage((prevPage) => prevPage + 1);
                 }
             }
@@ -169,18 +189,19 @@ const Notes = () => {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [metaData]);
+    }, [notes.metaData]);
     return (
         <>
           <MainDiv>
+          {notesFilterOpen && (<FilterDialog filterOpen={notesFilterOpen} handleFilterClose={handleNotesFilterClose} notesArray={notes.notes}/>)}
               <div className='notes-page' >
                   {createNotesClicked ? (
                       <CreateNotes
                           noteDetails={noteDetails}
                           setNoteDetails={setNoteDetails}
                           setCreateNotesClicked={setCreateNotesClicked}
-                          notesArray={notesArray}
-                          setNotesArray={setNotesArray}
+                          notesArray={notes.notes}
+                        //   setNotesArray={setNotesArray}
                           handleCreateNotesClick={handleCreateNotesClick}
                       />
                   ) : (
@@ -191,6 +212,7 @@ const Notes = () => {
                                   object='Notes'
                                   filterDiv={filterDiv}
                                   handleOpen={handleCreateNotesClick}
+                                
                               />
                               <div className='notes-collection-div'>
                                   <div className='notes-collection'>
@@ -250,7 +272,7 @@ const Notes = () => {
                                             onMouseLeave={handleMouseLeave('pinned-notes')}
                                         
                                       >
-                                          Pinned Notes
+                                        Filtered Notes
                                       </div>
                                   </div>
                               </div>
@@ -263,7 +285,7 @@ const Notes = () => {
                                    </div>
 
                                 ) : (
-                                    notesArray?.map((note, index) => (
+                                    notes.notes?.map((note, index) => (
                                         <NoteCard
                                             key={note._id}
                                             title={note.title}
@@ -274,8 +296,9 @@ const Notes = () => {
                                             hide={note.hide}
                                             _id={note._id}
                                             tags={note.tags}
-                                            notesArray={notesArray}
-                                            setNotesArray={setNotesArray}
+                                            notesArray={notes.notes}
+                                            // setNotesArray={setNotesArray}
+                                            metaData={notes.metaData}
                                          
                                         />
                                     ))

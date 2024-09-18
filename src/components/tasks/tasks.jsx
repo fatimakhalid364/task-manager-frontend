@@ -11,10 +11,9 @@ import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
-import { errorToast, successToast } from 'src/components/toasters/toast.js';
+import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
-import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import TaskTable from './sub_components/TaskTable';
 
 
@@ -28,9 +27,8 @@ function Tasks() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
-    const [tasks, setTasks] = useState(useSelector((state) => state.tasks?.tasks));
+    const tasks = useSelector((state) => state.tasks);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
-    const [metaData, setMetaData] = useState(useSelector((state) => state.tasks.metaData));
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
     const handleFilterClose = () => setFilterOpen(false);
@@ -41,21 +39,24 @@ function Tasks() {
 
     const getAllTasks = async (page=0, limit=5) => {
         try {
-            if (tasks.length === 0) {
-                setSkeletonLoader(true);
-                const params = { page, limit, search }
-                const response = await dispatch(getAllTasksThunk(params)).unwrap();
-                response?.data?.forEach(task => {
-                    task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
-                    task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
-                    if (Array.isArray(task.taskDescription)) {
-                        task.taskDescription = task.taskDescription.join('');
-                    }
-                });
-                setTasks(response?.data);
-                setMetaData(response?.metaData);
-                successToast(response.message, 'task-created');
-            }
+
+            setSkeletonLoader(true);
+            const params = { page, limit, search }
+            const response = await dispatch(getAllTasksThunk(params)).unwrap();
+            // response?.data?.forEach(task => {
+            //     task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+            //     task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+            //     if (Array.isArray(task.taskDescription)) {
+            //         task.taskDescription = task.taskDescription.join('');
+            //     }
+            // });
+            // setTasks(response?.data);
+            // setMetaData(response?.metaData);
+            console.log('tasks in the component', response.tasks);
+            //     setTasks(response?.data);
+            // setMetaData(response.metaData);
+            // successToast('Tasks fetched Successful', 'task-created');
+
 
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
@@ -78,23 +79,26 @@ function Tasks() {
         []
     );
     useEffect(() => {
-        debouncedGetAllTasks(page, limit);
-    }, [page, limit, debouncedGetAllTasks, tasks]);
+        // Load tasks only if not loaded before
+        if (!tasks.loaded) {
+            getAllTasks(page, limit, search);
+        }
+    }, []);
 
     
 
     return (
         <div className='task-page-div' >
-            {open && (<AddTask open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+            {open && (<AddTask debouncedGetAllTasks={debouncedGetAllTasks} limit={limit} open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader handleOpen={ handleOpen } total={ metaData?.total } text='All Tasks' object='Task'/>
+                    <PageHeader handleOpen={handleOpen} total={tasks.metaData.total} text='All Tasks' object='Task' />
                     <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable tasks={tasks} limit={limit} privateKey={privateKey} setTasks={setTasks} page={metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={metaData?.hasNextPage} hasPreviousPage={metaData?.hasPrevPage} nextPage={metaData?.nextPage} setMetaData={setMetaData} metaData={metaData} previousPage={metaData?.previousPage} totalPages={metaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks.metaData.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks.metaData.hasNextPage} hasPreviousPage={tasks.metaData.hasPrevPage} nextPage={tasks.metaData.nextPage} metaData={tasks.metaData} previousPage={tasks.metaData.previousPage} totalPages={tasks.metaData.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>

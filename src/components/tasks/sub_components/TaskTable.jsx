@@ -20,12 +20,13 @@ import edit from 'src/assets/edit.svg';
 import redTrash from 'src/assets/red-trash.svg';
 import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+import { useResponsive } from "src/constants/media_queries";
+import { setMetaData, setTasks } from "src/store/slices/taskSlice";
 import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
-import { useResponsive } from "src/constants/media_queries";
 
 
 const calculateCellWidth = () => {
@@ -72,10 +73,9 @@ const StyledAction = styled(TableCell)(({ theme }) => ({
 const TaskTable = ({
   tasks = [],
   setLimit,
+  debouncedGetAllTasks,
   limit,
   total,
-  setMetaData,
-  setTasks,
   page,
   setPage,
   previousPage,
@@ -84,7 +84,6 @@ const TaskTable = ({
   hasNextPage,
   nextPage,
   skeletonLoader,
-  privateKey,
   metaData
 }) => {
   const accentColor = useSelector((state) => state.appearance.color)
@@ -112,6 +111,7 @@ const TaskTable = ({
   });
   
   
+  const privateKey = localStorage.getItem("privateKey");
   
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -161,7 +161,9 @@ const TaskTable = ({
     setSpinner(true);
 
     try {
-      const response = await dispatch(deleteTaskThunk(_id)).unwrap();
+      const tasksIds = tasks.map(task => task._id);
+      const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
+
       if (response?.status === 200) {
         const filteredTasks = tasks.filter((task) => task._id !== selectedTaskId);
         const closestTask = response?.data?.closestTask
@@ -174,11 +176,9 @@ const TaskTable = ({
           }
           filteredTasks.push(closestTask);
         }
-        setTasks(filteredTasks);
-        setMetaData((prevMetaData) => ({
-          ...prevMetaData,
-          total: prevMetaData.total - 1,
-        }));
+        const updMeta = { ...metaData, total: metaData.total - 1 }
+        dispatch(setTasks(filteredTasks));
+        dispatch(setMetaData(updMeta));
         successToast(response.message, 'task-created');
       }
     } catch (err) {
@@ -330,6 +330,7 @@ const TaskTable = ({
           nextPage={nextPage}
           metaData={metaData}
           previousPage={previousPage}
+          debouncedGetAllTasks={debouncedGetAllTasks}
         />
       </Paper>
     </div>

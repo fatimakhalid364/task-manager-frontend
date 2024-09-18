@@ -80,7 +80,7 @@ const CalendarComponent = () => {
 
     return (
         <MainDiv>
-            <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box', marginBottom: isMicroScreen && '50px' }}>
+            <div style={{ height: '100vh', width: '100%', padding: '20px', boxSizing: 'border-box', marginBottom: isMicroScreen && '50px', zIndex: '1' }}>
                 <Calendar
                     localizer={localizer}
                     events={events}

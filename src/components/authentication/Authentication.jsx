@@ -18,7 +18,7 @@ function AuthenticationPages({ currentScreen, pictureURL }) {
                         backgroundImage: pictureURL ? `url(${pictureURL})` : `url(${pictureURL})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover',
-                        borderRadius: '8px',
+                      
                     }}
                 />
             </Grid>

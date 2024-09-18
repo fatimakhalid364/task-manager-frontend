@@ -2,9 +2,12 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'src/components/LoadingScreens/CSSLoader';
 import { errorToast } from 'src/components/toasters/toast.js';
+import { clearStore } from "src/store/index.js";
+import { clearTasks } from "src/store/slices/taskSlice";
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
 import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
+import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 
 const AuthContext = createContext();
@@ -13,15 +16,30 @@ export const AuthProvider = ({ children }) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const { isAuthenticated, user, access_token } = useSelector((state) => state.auth);
-
+    const handleLogout = async () => {
+        try {
+            await dispatch(logoutAction()); // Dispatch logout action
+            await dispatch(clearTasks()); 
+            await dispatch(clearNotes()); // Dispatch clearTasks action
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('privateKey');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     useEffect(() => {
         const token = localStorage.getItem('access_token');
         if (token) {
             setIsLoading(false);
         } else {
             dispatch(logoutAction());
+            dispatch(clearTasks());
+            dispatch(clearNotes());
             setIsLoading(false);
         }
+        setIsLoading(false);
     }, [dispatch]);
 
     const login = async (credentials) => {
@@ -35,7 +53,9 @@ export const AuthProvider = ({ children }) => {
                 const privateKey = fetchKeyResponse.data.privateKey;
                 localStorage.setItem('privateKey', privateKey);
                 const decryptedUser = decryptObjectValues(user, privateKey);
+                console.log('dispatching the user', decryptedUser);
                 dispatch(setUser(decryptedUser));
+                console.log('User is set')
             }
         } catch (error) {
             console.log('Something went wrong', error);
@@ -45,11 +65,15 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
+    const logout = async () => {
         setIsLoading(true); 
+        await dispatch(clearTasks());
+        await dispatch(clearNotes());
         dispatch(logoutAction());
+        clearStore();
         localStorage.removeItem('access_token');
         localStorage.removeItem('privateKey');
+
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
