@@ -83,7 +83,7 @@ function Tasks() {
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks.metaData.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks.metaData.hasNextPage} hasPreviousPage={tasks.metaData.hasPrevPage} nextPage={tasks.metaData.nextPage} metaData={tasks.metaData} previousPage={tasks.metaData.previousPage} totalPages={tasks.metaData.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks?.metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks?.metaData?.hasNextPage} hasPreviousPage={tasks?.metaData?.hasPrevPage} nextPage={tasks?.metaData?.nextPage} metaData={tasks?.metaData} previousPage={tasks?.metaData?.previousPage} totalPages={tasks?.metaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
