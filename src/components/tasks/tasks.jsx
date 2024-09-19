@@ -78,7 +78,7 @@ function Tasks() {
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader handleOpen={handleOpen} total={tasks.metaData.total} text='All Tasks' object='Task' />
+                    <PageHeader handleOpen={handleOpen} total={tasks?.metaData?.total} text='All Tasks' object='Task' />
                     <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
