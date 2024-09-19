@@ -211,13 +211,13 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                                 <SearchGlass color='var(--primary-background-color)'  />
                                             </div>
                                         </div>
-                                        <div style={{ width: '100%' }}>
+                                        <div style={{ width: '100%', overflowY: 'scroll', height: '210px' }}>
                                             {/* Check if all notes have empty tags */}
                                             {notesArray?.every(note => note.tags.length === 0) ? (
                                             <div style={{marginTop: '20px', width: '63%', fontFamily: 'var(--primary-font-family)', fontSize: '15px', color: 'var(--quinary-font-color)'}} >No tags added yet</div>
                                             ) : (
                                             notesArray?.map((note, index) => (
-                                                <div key={index}>
+                                                <div key={index} >
                                                     {/* Render tags only if they exist */}
                                                     {note.tags.length > 0 ? (
                                                      note.tags.map((tag) => (

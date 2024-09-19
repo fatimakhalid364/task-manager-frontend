@@ -121,11 +121,11 @@ const CreateNotes = ({
         const forEncryption = {
             title: noteDetails.title,
         };
-        const encryptedTaskDetails = encryptObjectValues(forEncryption);
-        console.log("encrypted ones", encryptedTaskDetails);
+        const encryptedNoteDetails = encryptObjectValues(forEncryption);
+        console.log("encrypted ones", encryptedNoteDetails);
         const updatedTaskDetails = {
             ...noteDetails,
-          title: encryptedTaskDetails?.title,
+          title: encryptedNoteDetails?.title,
             desc: encryptedDesc,
           links: uniqueLinks,
         };
@@ -140,7 +140,7 @@ const CreateNotes = ({
           {
               !update && dispatch(addNotes(obj));
           }
-          successToast(response.message, "task-created");
+          successToast(response.message, "note-created");
           {
               update ? navigate(-1) : setCreateNotesClicked(false);
           }

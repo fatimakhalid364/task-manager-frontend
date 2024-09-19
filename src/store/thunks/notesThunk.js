@@ -73,7 +73,7 @@ const updateNoteThunk = createAsyncThunk("updateNote", async (body, thunkAPI) =>
                 access_token: `Bearer ${localStorage.getItem("access_token")}`,
             },
         });
-        console.log("response is,", response);
+        console.log("response in update-note-thunk is,", response);
         return response.data;
     } catch (error) {
         if (!error.response) {
