@@ -27,6 +27,7 @@ import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
+import { markTaskStatusThunk } from 'src/store/thunks/taskThunks';
 
 
 const calculateCellWidth = () => {
@@ -86,7 +87,7 @@ const TaskTable = ({
   skeletonLoader,
   metaData
 }) => {
-  const accentColor = useSelector((state) => state.appearance.color)
+ 
   const { isAdaptableScreen, isMicroScreen } = useResponsive();
 
   const timeFormat = useSelector((state) => state.format.timeFormat)
@@ -188,16 +189,41 @@ const TaskTable = ({
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete =  () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);
     deleteTask(selectedTaskId);
     handleMenuClose();
   };
 
-  const handleChangeStatus = () => {
-    console.log(`Change status for task with ID: ${selectedTaskId}`);
+  const changeTaskStatus = async (_id, taskStatus) => {
+    setSpinner(true);
+    try {
+      // console.log(`Change status for task with ID: ${selectedTaskId}`);
+    const thunkToDispatch = markTaskStatusThunk;
+    const response = await dispatch(thunkToDispatch({_id, taskStatus})).unwrap();
+    if (response.status == 200) {
+      // const filteredTaskObject = tasks.filter(task => task._id == _id);
+      // const updatedTaskObject = {...filteredTaskObject, status: taskStatus}
+
+       const updatedTasksArray = tasks.map((task) => task._id == _id ? {...task, status: taskStatus} : task);
+       dispatch(setTasks(updatedTasksArray));
+    }
+
+    } catch (err) {
+      errorToast('Something went wrong while changing task status', 'getTask-pages-error');
+    } finally {
+      setSpinner(false)
+    }
+    
    
   };
+
+  const handleChangeTaskStatus = (_id, taskStatus) => {
+    console.log(`Change task status with ID: ${_id}`);
+    changeTaskStatus(_id, taskStatus);
+    handleMenuClose();
+
+  }
 
   const handleComplete = () => {
     console.log(`Complete task with ID: ${selectedTaskId}`);
@@ -302,11 +328,12 @@ const TaskTable = ({
                               <img src={edit} alt='edit-icon' />
                               <div style={{marginTop: '2px'}}>View or Edit</div>
                             </MenuItem>
-                            { (task.status !== 'COMPLETED' && task.status !== 'PENDING')  && (<MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
+                            { (task.status !== 'COMPLETED' && task.status !== 'PENDING')  && (
+                              <MenuItem onClick={changeTaskStatus(task._id, 'COMPLETED')} sx={{gap: '12px'}}>
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Completed</div>
                             </MenuItem>) }
-                            { task.status == 'NOT_STARTED' && (<MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
+                            { task.status == 'NOT_STARTED' && (<MenuItem onClick={changeTaskStatus(task._id, 'IN_PROGRESS')} sx={{gap: '12px'}}>
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Progressing</div>
                             </MenuItem>) }

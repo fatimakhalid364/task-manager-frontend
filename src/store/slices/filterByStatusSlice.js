@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: '0', 
+  value: '0',
+  notesFilterValue: '0', 
   checkboxStates: {
     'checkbox-not-started': false,
     'checkbox-pending': false,
@@ -17,6 +18,9 @@ const filterByStatusSlice = createSlice({
     setValue: (state, action) => {
       state.value = action.payload;
     },
+    setNotesFilterValue: (state, action) => {
+      state.value = action.payload;
+    },
     setCheckboxState: (state, action) => {
         const checkboxId = action.payload?.checkboxId;
         const isChecked = action.payload?.isChecked;
@@ -26,5 +30,5 @@ const filterByStatusSlice = createSlice({
   },
 });
 
-export const { setValue, setCheckboxState } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

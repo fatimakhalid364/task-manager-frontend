@@ -19,7 +19,8 @@
     
 }
 
-.checkbox-input {
+.checkbox-input,
+.checkbox-notes-filter-input {
     display: none;
 }
 

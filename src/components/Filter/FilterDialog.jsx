@@ -7,7 +7,7 @@ import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue, setCheckboxState } from 'src/store/slices/filterByStatusSlice';
+import { setValue, setCheckboxState, setNotesFilterValue } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { useLocation } from 'react-router-dom';
@@ -33,7 +33,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 
-   
+    const notesFilterByStatusValue = useSelector((state) => state.filterByStatus.notesFilterValue);
 
     const [isStatusClicked, setIsStatusClicked] = useState(pathname == '/tasks' ? true : false);
     const [isDueDateClicked, setIsDueDateClicked] = useState(false);
@@ -76,6 +76,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
     const handleIncrement = () => {
        
         const checkboxes = document.querySelectorAll('.checkbox-input');
+
         
         
         const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
@@ -100,6 +101,30 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
     
         
       
+    };
+
+    const handleNotesFilterIncrement = () => {
+        const checkboxes = document.querySelectorAll('.checkbox-notes-filter-input');
+
+        const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+        switch (checkedCount) {
+            case 0:
+                dispatch(setNotesFilterValue('0'));
+                break;
+            case 1:
+                dispatch(setNotesFilterValue('1'));
+                break;
+            case 2:
+                dispatch(setNotesFilterValue('2'));
+                break;
+            case 3:
+                dispatch(setNotesFilterValue('3'));
+                break;
+            case 4:
+                dispatch(setNotesFilterValue('4'));
+                break;
+        }
     };
 
     const promptFilterResetAndClose = () => {
@@ -156,7 +181,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 marginTop: '2px'
-                            }}>{ filterByStatusValue}</div>
+                            }}>{ pathname == '/tasks' ? filterByStatusValue : notesFilterByStatusValue}</div>
                             <img src={fwdArrow} alt='forward-arrow' />
                         </div>
                         { pathname == '/tasks' && (<div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleDueDateClick }> 
@@ -225,7 +250,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                                             <label className="checkbox-wrapper">
                                                                 <input
                                                                     type="checkbox"
-                                                                    className="checkbox-input"
+                                                                    className="checkbox-input checkbox-notes-filter-input"
                                                                     // id={checkboxId}
                                                                     // checked={checkboxStates[checkboxId]}
                                                                     // onChange={(event) => handleCheckboxChange(checkboxId, event)}
