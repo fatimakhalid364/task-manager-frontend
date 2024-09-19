@@ -1,23 +1,19 @@
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import FilterDialog from 'src/components//Filter/FilterDialog';
 import BottomBar from "src/components/BottomBar/BottomBar";
 import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
 import PageHeader from "src/components/PageHeader";
+import PlusIcon from 'src/components/icons/PlusIcon';
 import MainDiv from "src/components/maindiv/maindiv";
 import "src/components/notes/Notes.css";
 import CreateNotes from "src/components/notes/sub_components/create_notes/CreateNotes";
 import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
-import { decryptSingleValues } from "src/utils/encryptionUtil";
 import NoteCard from "./sub_components/NoteCard";
-import { useSelector } from "react-redux";
-import { MobileBottomBar } from 'src/components/MobileBottomBar/MobileBottomBar';
-import PlusIcon from 'src/components/icons/PlusIcon';
-import FilterDialog from 'src/components//Filter/FilterDialog';
-import { clearNotes, addNotes, setNotes, setMetaData } from 'src/store/slices/notesSlice'
 
 const Notes = () => {
     const dispatch = useDispatch();
@@ -31,10 +27,7 @@ const Notes = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const { isAdaptableScreen, isMicroScreen } = useResponsive();
-    // const [metaData, setMetaData] = useState();
-    const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
-    const handleDoubleArrowClicked = () =>
-        setDoubleArrowClicked((prevValue) => !prevValue);
+    const [loading, setLoading] = useState(false);
     const accentColor = useSelector((state) => state.appearance.color);
     const [allNotesHovered, setAllNotesHovered] = useState(false);
     const [pinnedNotesHovered, setPinnedNotesHovered] = useState(false);
@@ -111,40 +104,30 @@ const Notes = () => {
   </div>
  </div>
 
-    const getAllNotes = async (page = 0, limit = 5, pinned = "") => {
+    const getAllNotes = async (page = 0, limit = 5, pinned = "", loading = true) => {
         try {
-        setSkeletonLoader(true);
+            setSkeletonLoader(loading);
+            setLoading(true);
         const params = { page, limit, pinned };
         const response = await dispatch(getAllNotesThunk(params)).unwrap();
         const notes = response?.data || [];
-        console.log('the response named notes in the getAllNotes function is',  notes);
-    //     notes?.forEach((note) => {
-    //         console.log(note.title);
-
-    //       note.title = decryptSingleValues(note.title, privateKey);
-    //       note.desc = decryptSingleValues(note.desc, privateKey);
-    //         if (Array.isArray(note.desc)) {
-    //             note.desc = note.desc.join('');
-    //         }
-    //   });
-        const formattedNotes = notes.map((note) => ({
-            ...note,
-          date: new Date(note.createdAt),
-        }));
-            dispatch(setNotes(formattedNotes));
-            // setMetaData(response?.metaData);
+            console.log('the response named notes in the getAllNotes function is', notes);
             console.log('notes in the component', response);
             setSkeletonLoader(false);
+            setLoading(false);
+
     } catch (err) {
             errorToast("Something went wrong here", "getNotes-pages-error",);
+            console.log('err', err)
             setSkeletonLoader(false);
+            setLoading(false);
         } finally {
-            // setSkeletonLoader(false);
+            setLoading(false);
         }
     };
     const debouncedGetAllNotes = useCallback(
         debounce((page, limit, pinned) => {
-            getAllNotes(page, limit, pinned);
+            getAllNotes(page, limit, pinned, false);
         }, 300),
         [page, limit, pinned]
     );
@@ -162,34 +145,26 @@ const Notes = () => {
         setIsPinnedNotesClicked(true);
         setIsAllNotesClicked(false);
     };
-
-//     useEffect(() => {
-//       debouncedGetAllNotes(page, limit, pinned);
-//   }, [page, limit, pinned, debouncedGetAllNotes]);
-
-  useEffect(() => {
-    // Load tasks only if not loaded before
-    console.log('the value of notes.loaded is', notes.loaded);
-   if(!notes.loaded) {
-        getAllNotes(page, limit, pinned);
-   }
-  
-}, []);
+    const handleScroll = useCallback(() => {
+        const scrollableHeight = document.documentElement.scrollHeight;
+        const scrolledHeight = window.innerHeight + window.scrollY;
+        if (scrolledHeight + 200 >= scrollableHeight && !loading && notes.metaData?.hasNextPage) {
+            const newPage = page + 1
+            debouncedGetAllNotes(newPage, limit, pinned);
+            setPage(page + 1);
+        }
+    }, [loading, notes.metaData, pinned, limit, debouncedGetAllNotes]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollableHeight = document.documentElement.scrollHeight;
-            const scrolledHeight = window.innerHeight + window.scrollY;
-            if (scrolledHeight + 200 >= scrollableHeight) {
-                if (notes.metaData?.hasNextPage) {
-                    setPage((prevPage) => prevPage + 1);
-                }
-            }
-        };
+        if (!notes.notesLoaded) {
+            getAllNotes(page, limit, pinned);
+        }
+    }, [notes.notesLoaded, page, limit, pinned]);
 
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [notes.metaData]);
+    }, [handleScroll]);
     return (
         <>
           <MainDiv>

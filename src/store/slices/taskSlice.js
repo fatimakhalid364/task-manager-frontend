@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllTasksThunk } from '../thunks/taskThunks';
+import { resetState } from './resetSlice';
 
 const taskSlice = createSlice({
     name: 'tasks',
@@ -11,40 +12,44 @@ const taskSlice = createSlice({
     },
     reducers: {
         clearTasks: (state, action) => {
-            state.tasks = action.payload || [];
-            state.metaData = action.payload || {};
-            state.loaded = false;
+            state.tasks = action.payload?.tasks || [];
+            state.metaData = action.payload?.metaData || {};
+            state.loaded = action.payload?.loaded || false;
+            state.loading = action.payload?.loading || false;
         },
         addTask: (state, action) => {
             state.tasks = [action.payload, ...state.tasks];
         },
         setTasks: (state, action) => {
-            console.log('insided the taskslice', action.payload);
+            console.log('inside the taskslice', action.payload);
             state.tasks = action.payload;
-            // state.metaData.total = state.metaData.total - 1
         },
         setMetaData: (state, action) => {
-            console.log('insided the taskslice', action.payload);
+            console.log('inside the taskslice', action.payload);
             state.metaData = action.payload;
-            // state.metaData.total = state.metaData.total - 1
         }
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(createTaskThunk.fulfilled, (state, action) => {
-            //     state.tasks.push(action.payload.data);
-            // })
             .addCase(getAllTasksThunk.pending, (state) => {
                 state.loading = true;
             })
             .addCase(getAllTasksThunk.fulfilled, (state, action) => {
-                state.tasks = action.payload.data; // Store tasks in Redux
-                state.metaData = action.payload.metaData; // Store meta data in Redux
+                state.tasks = action.payload.data;
+                state.metaData = action.payload.metaData; 
                 state.loading = false;
                 state.loaded = true;
             })
             .addCase(getAllTasksThunk.rejected, (state) => {
                 state.loading = false;
+            })
+            .addCase(resetState, (state) => {
+                return {
+                    tasks: [],
+                    metaData: {},
+                    loaded: false,
+                    loading: false,
+                };
             });
     },
 });
