@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { HandleAuthError } from '../../utils/AuthErrorHandler.js';
 import { APIS } from "../axiosConfig";
-import { decryptSingleValues } from 'src/utils/encryptionUtil';
 
 const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI) => {
     console.log("inside getAllNotes thunk",);
@@ -19,12 +19,14 @@ const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI
             },
         });
         console.log("response is in thunk,====================>", response);
-        response.data.data.forEach(note => {
-            note.title = decryptSingleValues(note.title, privateKey);
-            note.desc = decryptSingleValues(note.desc, privateKey);
-                if (Array.isArray(note.desc)) {
-                    note.desc = note.desc.join('');
+        response?.data?.data.forEach(note => {
+            note.date = new Date(note?.createdAt),
+                note.title = decryptSingleValues(note?.title, privateKey);
+            note.desc = decryptSingleValues(note?.desc, privateKey);
+            if (Array.isArray(note?.desc)) {
+                note.desc = note?.desc.join('');
                 }
+
         });
         console.log('After decryption in getAllNotesThunk, response.data.data is', response.data.data)
         return {
@@ -33,7 +35,7 @@ const getAllNotesThunk = createAsyncThunk("getAllNotes", async (params, thunkAPI
         };
     } catch (error) {
         if (!error.response) {
-            console.log('Error is in the getAllNotesThunk++++++++++++++++++++++++++++')
+            console.log('Error is in the getAllNotesThunk++++++++++++++++++++++++++++', error)
             throw error;
         }
         return HandleAuthError(error, thunkAPI);
