@@ -292,15 +292,25 @@ const TaskTable = ({
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl) && selectedTaskId === task._id}
                             onClose={handleMenuClose}
+                            sx={{height: (
+                              task.status == 'PENDING' 
+                              || task.status == 'COMPLETED') 
+                              ? '210px' : task.status == 'IN_PROGRESS' ? '259px' : '450px',
+                              width: (task.status == 'COMPLETED' || task.status == 'PENDING') ? '199px' : '250px'}}
                           >
                             <MenuItem onClick={handleComplete} sx={{gap: '12px'}}>
                               <img src={edit} alt='edit-icon' />
                               <div style={{marginTop: '2px'}}>View or Edit</div>
                             </MenuItem>
-                            <MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
+                            { (task.status !== 'COMPLETED' && task.status !== 'PENDING')  && (<MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
                               <img src={tickInCircle} alt='tick-in-circle' />
-                              <div style={{marginTop: '2px'}}>Mark as Complete</div>
-                            </MenuItem>
+                              <div style={{marginTop: '2px'}}>Mark as Completed</div>
+                            </MenuItem>) }
+                            { task.status == 'NOT_STARTED' && (<MenuItem onClick={handleChangeStatus} sx={{gap: '12px'}}>
+                              <img src={tickInCircle} alt='tick-in-circle' />
+                              <div style={{marginTop: '2px'}}>Mark as Progressing</div>
+                            </MenuItem>) }
+
                             <MenuItem onClick={handleDelete} sx={{color: 'var(--logout-color)', gap: '12px'}}>
                               <img src={redTrash} alt='red-trash-icon' />
                               <div style={{marginTop: '2px'}}>Delete</div>
