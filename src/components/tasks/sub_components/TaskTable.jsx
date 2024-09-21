@@ -22,12 +22,11 @@ import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
 import { setMetaData, setTasks } from "src/store/slices/taskSlice";
-import { deleteTaskThunk } from 'src/store/thunks/taskThunks';
+import { deleteTaskThunk, markTaskStatusThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
-import { markTaskStatusThunk } from 'src/store/thunks/taskThunks';
 
 
 const calculateCellWidth = () => {
@@ -318,9 +317,8 @@ const TaskTable = ({
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl) && selectedTaskId === task._id}
                             onClose={handleMenuClose}
-                            sx={{height: (
-                              task.status == 'PENDING' 
-                              || task.status == 'COMPLETED') 
+                            sx={{
+                              height: (task.status == 'COMPLETED') 
                               ? '210px' : task.status == 'IN_PROGRESS' ? '259px' : '450px',
                               width: (task.status == 'COMPLETED' || task.status == 'PENDING') ? '199px' : '250px'}}
                           >
@@ -328,12 +326,12 @@ const TaskTable = ({
                               <img src={edit} alt='edit-icon' />
                               <div style={{marginTop: '2px'}}>View or Edit</div>
                             </MenuItem>
-                            { (task.status !== 'COMPLETED' && task.status !== 'PENDING')  && (
-                              <MenuItem onClick={changeTaskStatus(task._id, 'COMPLETED')} sx={{gap: '12px'}}>
+                            {(task.status !== 'COMPLETED') && (
+                              <MenuItem onClick={() => { handleChangeTaskStatus(task._id, 'COMPLETED') }} sx={{ gap: '12px' }}>
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Completed</div>
                             </MenuItem>) }
-                            { task.status == 'NOT_STARTED' && (<MenuItem onClick={changeTaskStatus(task._id, 'IN_PROGRESS')} sx={{gap: '12px'}}>
+                            {(task.status !== 'COMPLETED' && task.status !== 'IN_PROGRESS') && (<MenuItem onClick={() => { handleChangeTaskStatus(task._id, 'IN_PROGRESS') }} sx={{ gap: '12px' }}>
                               <img src={tickInCircle} alt='tick-in-circle' />
                               <div style={{marginTop: '2px'}}>Mark as Progressing</div>
                             </MenuItem>) }
