@@ -94,8 +94,7 @@ const markTaskStatusThunk = createAsyncThunk(
         console.log("inside markTaskThunk", _id, taskStatus);
 
         try {
-            // Fetch tasks from the API with the view and date as query parameters
-            const response = await APIS.post(`/status/${_id}`, {
+            const response = await APIS.put(`/task/status/${_id}?status=${taskStatus}`, {}, {
                 params: { taskStatus },
                 headers: {
                     "Content-Type": "application/json",
