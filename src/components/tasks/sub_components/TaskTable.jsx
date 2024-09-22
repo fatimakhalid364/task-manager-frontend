@@ -320,7 +320,7 @@ const TaskTable = ({
                             sx={{
                               height: (task.status == 'COMPLETED') 
                               ? '210px' : task.status == 'IN_PROGRESS' ? '259px' : '450px',
-                              width: (task.status == 'COMPLETED' || task.status == 'PENDING') ? '199px' : '250px'}}
+                              width: (task.status == 'COMPLETED' ) ? '199px' : '250px'}}
                           >
                             <MenuItem onClick={handleComplete} sx={{gap: '12px'}}>
                               <img src={edit} alt='edit-icon' />
