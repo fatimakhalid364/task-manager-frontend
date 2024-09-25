@@ -7,10 +7,37 @@ import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue, setCheckboxState, setNotesFilterValue } from 'src/store/slices/filterByStatusSlice';
+import { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { useLocation } from 'react-router-dom';
+import { setTagsFilterList } from 'src/store/slices/notesSlice';
+import { formatLocalDateTime } from 'src/utils/basicUtils';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+
+const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
+    '& .MuiInputBase-root': {
+        borderRadius: '8px',
+
+        '&:hover fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '&.Mui-focused fieldset': {
+            border: '1px solid var(--primary-background-color)',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: '1px solid #D1D5DB',
+        },
+    },
+    '& .MuiInputBase-input': {
+        border: 'none',
+    },
+    borderRadius: '8px',
+
+}));
 
 
 const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
@@ -20,20 +47,23 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
    
     const dispatch = useDispatch();
 
-    const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates);
+    const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates); 
 
-    const [notesArrayFilled, setNotesArrayFilled] = useState(false);
-        
-    // useEffect(() => {
-    //     notesArray.map((note) =>{
-
-    //     });
-    //     console.log('Notes Array:', notesArray);
-    // }, [notesArray]);
+    const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 
     const notesFilterByStatusValue = useSelector((state) => state.filterByStatus.notesFilterValue);
+    const tasksArray = useSelector((state) => state.tasks.tasks);
+
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const timeFormat = useSelector((state) => state.format.timeFormat)
+    const dateFormat = useSelector((state) => state.format.dateFormat)
+
+    useEffect(() => {
+        console.log('the notesFilterByStatusValue is =================', notesFilterByStatusValue)
+    }, []);
 
     const [isStatusClicked, setIsStatusClicked] = useState(pathname == '/tasks' ? true : false);
     const [isDueDateClicked, setIsDueDateClicked] = useState(false);
@@ -69,35 +99,18 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
         setIsTagsClicked(false);
     }
 
-    // const [checkedCount, setCheckedCount] = useState(0);
 
     
    
     const handleIncrement = () => {
        
-        const checkboxes = document.querySelectorAll('.checkbox-input');
+        const checkboxes = document.querySelectorAll('.checkbox-status-input');
 
         
         
         const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
 
-        switch (checkedCount) {
-            case 0:
-                dispatch(setValue('0'));
-                break;
-            case 1:
-                dispatch(setValue('1'));
-                break;
-            case 2:
-                dispatch(setValue('2'));
-                break;
-            case 3:
-                dispatch(setValue('3'));
-                break;
-            case 4:
-                dispatch(setValue('4'));
-                break;
-        }
+        dispatch(setValue(checkedCount > 0 ? checkedCount.toString() : '0'));
     
         
       
@@ -108,24 +121,10 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
         const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
 
-        switch (checkedCount) {
-            case 0:
-                dispatch(setNotesFilterValue('0'));
-                break;
-            case 1:
-                dispatch(setNotesFilterValue('1'));
-                break;
-            case 2:
-                dispatch(setNotesFilterValue('2'));
-                break;
-            case 3:
-                dispatch(setNotesFilterValue('3'));
-                break;
-            case 4:
-                dispatch(setNotesFilterValue('4'));
-                break;
-        }
+        dispatch(setNotesFilterValue(checkedCount > 0 ? checkedCount.toString() : '0'));
     };
+
+   
 
     const promptFilterResetAndClose = () => {
         dispatch(setValue('0'));
@@ -133,13 +132,18 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
         handleFilterClose();
     }
 
+    const promptNotesFilterResetAndClose = () => {
+        dispatch(setNotesFilterValue('0'));
+        Object.keys(tagsFilterList).forEach(checkboxId => dispatch(setTagsFilterList({tag: checkboxId, checked: false})));
+        handleFilterClose();
+    }
    
 
     const handleCheckboxChange = (checkboxId, event) => {
-      
+        
         const isChecked = event.target.checked;
 
-       
+        
     
        
         dispatch(setCheckboxState({checkboxId, isChecked}));
@@ -150,6 +154,12 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
        
         handleIncrement();
     };
+
+    const handleNotesCheckboxChange = (event) => {
+        const { id, checked } = event.target; 
+        dispatch(setTagsFilterList({ tag: id, checked }));
+        handleNotesFilterIncrement();
+    }
    
     return (
         <Modal
@@ -169,7 +179,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                 </div>
                 <div className='add-filter-content'>
                     <div className='filter-portion-1'>
-                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { pathname == '/tasks' ? handleStatusClick : handleTagsClick}>
+                        <div className='filter-portion-1-menu' >
                             <div>{pathname == '/tasks' ? 'Status' : 'Tags'}</div>
                             <div style={{
                                 height: '20px',
@@ -182,15 +192,21 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                 alignItems: 'center',
                                 marginTop: '2px'
                             }}>{ pathname == '/tasks' ? filterByStatusValue : notesFilterByStatusValue}</div>
-                            <img src={fwdArrow} alt='forward-arrow' />
+                             <div className='fwd-arrow-circle' style={{backgroundColor: (isStatusClicked || isTagsClicked) && 'var(--active-background-color)', cursor: 'pointer'}} onClick = { pathname == '/tasks' ? handleStatusClick : handleTagsClick}>
+                            <img src={fwdArrow} alt='forward-arrow'   />
+                            </div>
                         </div>
-                        { pathname == '/tasks' && (<div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleDueDateClick }> 
+                        { pathname == '/tasks' && (<div className='filter-portion-1-menu'  > 
                             <div>Due Date</div>
+                            <div className='fwd-arrow-circle'  style={{backgroundColor: isDueDateClicked && 'var(--active-background-color)', cursor: 'pointer'}}  onClick = { handleDueDateClick }>
                             <img src={fwdArrow} alt='forward-arrow' />
+                            </div>
                         </div>)}
-                        <div className='filter-portion-1-menu' style={{cursor: 'pointer'}} onClick = { handleCreationDateClick}>
+                        <div className='filter-portion-1-menu' >
                             <div>Creation Date</div>
-                            <img src={fwdArrow} alt='forward-arrow' />
+                            <div className='fwd-arrow-circle' style={{backgroundColor: isCreationDateClicked && 'var(--active-background-color)', cursor: 'pointer'}} onClick = { handleCreationDateClick}>
+                            <img src={fwdArrow} alt='forward-arrow'    />
+                            </div>
                         </div>
                     </div>
                     <div className='filter-portion-2'>
@@ -200,7 +216,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                         <label className="checkbox-wrapper">
                                             <input
                                                 type="checkbox"
-                                                className="checkbox-input"
+                                                className="checkbox-input checkbox-status-input"
                                                 id={checkboxId}
                                                 checked={checkboxStates[checkboxId]}
                                                 onChange={(event) => handleCheckboxChange(checkboxId, event)}
@@ -243,17 +259,17 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                             ) : (
                                             notesArray?.map((note, index) => (
                                                 <div key={index} >
-                                                    {/* Render tags only if they exist */}
+                                        
                                                     {note.tags.length > 0 ? (
-                                                     note.tags.map((tag) => (
+                                                    note.tags.map((tag) => (
                                                         <div style={{marginLeft: '30px'}}>
                                                             <label className="checkbox-wrapper">
                                                                 <input
                                                                     type="checkbox"
                                                                     className="checkbox-input checkbox-notes-filter-input"
-                                                                    // id={checkboxId}
-                                                                    // checked={checkboxStates[checkboxId]}
-                                                                    // onChange={(event) => handleCheckboxChange(checkboxId, event)}
+                                                                    id={tag}
+                                                                    checked={tagsFilterList[tag]}
+                                                                    onChange={(event) => handleNotesCheckboxChange(event)}
                                                                 />
                                                                 <span className="checkbox-custom">
                                                                     <img src={whiteTick} alt='white-tick' />
@@ -275,54 +291,40 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                         )
                         : isDueDateClicked ? 
                                     (<div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                                        <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
-                                            <input 
-                                            type='text' 
-                                            placeholder='Search due date'
-                                            className='filter-search-date-input'
-                                            style={{
-                                                marginTop: '15px', 
-                                                width: '85%', 
-                                                padding: '10px',
-                                                borderRadius: '8px', 
-                                                height: '35px',
-                                                border: '1px solid var(--field-border-color)', 
-
-                                            }}/>
-                                            <div style={{position: 'absolute', top: '21px', left: '78%', cursor: 'pointer'}}>
-                                                <SearchGlass color='var(--primary-background-color)'  />
-                                            </div>
-                                        </div>
-                                        <div>
-
-                                        </div>
+                                        
+                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none' , marginLeft: '0', marginTop: '10px' }}>
+                                      
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <CssDateField
+                                                        value={dayjs().startOf('day')}
+                                                        // onChange={handleDateChange}
+                                                        slotProps={{ textField: { fullWidth: true } }}
+                                                    />
+                                                </LocalizationProvider>
+                                           
+                                         </div>  
+                                        
                                     </div>) 
                                     : 
                                     (<div  style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                                        <div style={{position: 'relative', width: '100%', display: 'flex', justifyContent: 'center'}}>
-                                            <input 
-                                            type='text' 
-                                            placeholder='Search creation date'
-                                            className='filter-search-date-input'
-                                            style={{
-                                                marginTop: '15px', 
-                                                width: '85%', 
-                                                padding: '10px',
-                                                borderRadius: '8px', 
-                                                height: '35px',
-                                                border: '1px solid var(--field-border-color)', 
-
-                                            }}/>
-                                            <div style={{position: 'absolute', top: '21px', left: '78%', cursor: 'pointer'}}>
-                                                <SearchGlass color='var(--primary-background-color)'  />
-                                            </div>
-                                        </div>
+                                       <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none' , marginLeft: '0', marginTop: '10px' }}>
+                                      
+                                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                          <CssDateField
+                                              value={dayjs().startOf('day')}
+                                              // onChange={handleDateChange}
+                                              slotProps={{ textField: { fullWidth: true } }}
+                                          />
+                                      </LocalizationProvider>
+                                 
+                               </div>  
+                              
 
                                     </div>)}
                     </div>
                 </div>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px'}}>
-                    <div className='filter-button' style={{width: '100px'}} onClick ={promptFilterResetAndClose}>
+                    <div className='filter-button' style={{width: '100px'}} onClick ={ pathname == '/tasks' ? promptFilterResetAndClose : promptNotesFilterResetAndClose}>
                         Reset
                     </div>
                     <div className='primary-button' onClick = { handleFilterClose } style={{width: '100px', fontFamily: 'var(--primary-font-family)'}}>

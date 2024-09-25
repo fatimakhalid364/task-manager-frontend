@@ -13,6 +13,7 @@ const notesSlice = createSlice({
         successMsg: '',
         errorMsg: '',
         notesLoaded: false,
+        tagsFilterList: {}
     },
     reducers: {
         addNotes: (state, action) => {
@@ -34,7 +35,18 @@ const notesSlice = createSlice({
                 ...state,
                 metaData: action.payload,
             };
-        }
+        },
+        setTagsFilterList: (state, action) => {
+            const { tag, checked } = action.payload;
+            return {
+                ...state,
+                tagsFilterList: {
+                    ...state.tagsFilterList,
+                    [tag]: checked, // Update or add the tag
+                },
+            };
+           
+        },
     },
 
     extraReducers: (builder) => {
@@ -85,6 +97,6 @@ const notesSlice = createSlice({
     },
 });
 
-export const { addNotes, setNotes, setMetaData } = notesSlice.actions;
+export const { addNotes, setNotes, setMetaData,  setTagsFilterList } = notesSlice.actions;
 
 export const notesReducer = notesSlice.reducer;

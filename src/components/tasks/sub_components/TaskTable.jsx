@@ -33,9 +33,10 @@ const calculateCellWidth = () => {
  
   const containerWidth = document.getElementById('table-container')?.offsetWidth || 0;
   const numColumns = 7; // Updated number of columns
-  const padding = 16;
+  
 
-  const cellWidth = (containerWidth - padding) / numColumns;
+  const cellWidth = (containerWidth) / numColumns;
+  console.log('this is the cell width at present >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.', cellWidth);
   return `${cellWidth}px`;
 };
 
@@ -45,6 +46,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   textAlign: 'center',
   whiteSpace: 'nowrap',
   maxWidth: calculateCellWidth(),
+  minWidth: calculateCellWidth(),
   color: 'var(--secondary-font-color)',
   fontFamily: 'var(--primary-font-family)',
 }));

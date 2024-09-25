@@ -8,7 +8,8 @@ const initialState = {
     'checkbox-pending': false,
     'checkbox-in-progress': false,
     'checkbox-complete': false,
-}
+},
+notesCheckboxState: false,
 };
 
 const filterByStatusSlice = createSlice({
@@ -19,16 +20,20 @@ const filterByStatusSlice = createSlice({
       state.value = action.payload;
     },
     setNotesFilterValue: (state, action) => {
-      state.value = action.payload;
+      state.notesFilterValue = action.payload;
+      console.log('state.notesFilterValue coming from the filterByStatusSlice is', state.notesFilterValue);
     },
     setCheckboxState: (state, action) => {
         const checkboxId = action.payload?.checkboxId;
         const isChecked = action.payload?.isChecked;
         state.checkboxStates[checkboxId] = isChecked;
         console.log('boolean value of the checkbox being clicked with the id ' + checkboxId + ' is ' + state.checkboxStates[checkboxId]);
+    },
+    setNotesCheckboxState: (state, action) => { 
+      state.notesCheckboxState = action.payload
     }
   },
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;
