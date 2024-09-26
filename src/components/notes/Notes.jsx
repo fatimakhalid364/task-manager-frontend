@@ -22,6 +22,12 @@ const Notes = () => {
     useEffect(() => {
         console.log('notes picked up using useSelector are ', notes)
     }, []);
+
+    const notesSlice = useSelector((state) => state.notes);
+
+    useEffect(() => {
+        console.log('here is the notes slice', notesSlice)
+    }, [])
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [pinned, setPinned] = useState("");
     const [page, setPage] = useState(1);

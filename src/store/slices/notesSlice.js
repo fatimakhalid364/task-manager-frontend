@@ -37,13 +37,19 @@ const notesSlice = createSlice({
             };
         },
         setTagsFilterList: (state, action) => {
+            console.log('Setting tags filter list with action:', action);
             const { tag, checked } = action.payload;
+            const updatedTagsFilterList = {
+                ...state.tagsFilterList,
+                [tag]: checked, // Update or add the tag
+            };
+        
+            // Log the updated tagsFilterList
+            console.log('Updated tagsFilterList:', updatedTagsFilterList);
+        
             return {
                 ...state,
-                tagsFilterList: {
-                    ...state.tagsFilterList,
-                    [tag]: checked, // Update or add the tag
-                },
+                tagsFilterList: updatedTagsFilterList,
             };
            
         },
@@ -84,6 +90,7 @@ const notesSlice = createSlice({
             })
             .addCase(resetState, () => {
                 return {
+                   
                     notes: [],
                     metaData: {},
                     status: 'idle',
@@ -91,7 +98,9 @@ const notesSlice = createSlice({
                     isLoading: false,
                     successMsg: '',
                     errorMsg: '',
-                    notesLoaded: false
+                    notesLoaded: false,
+                    tagsFilterList: {}
+                   
                 };
             });
     },

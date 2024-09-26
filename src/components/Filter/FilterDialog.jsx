@@ -51,6 +51,10 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
+    useEffect(() => {
+        console.log('here is the tagsFilterListOBJ', tagsFilterList)
+    }, [])
+
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 
     const notesFilterByStatusValue = useSelector((state) => state.filterByStatus.notesFilterValue);
@@ -324,7 +328,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                     </div>
                 </div>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px'}}>
-                    <div className='filter-button' style={{width: '100px'}} onClick ={ pathname == '/tasks' ? promptFilterResetAndClose : promptNotesFilterResetAndClose}>
+                    <div className='filter-button' style={{width: '100px'}} onClick ={ pathname == '/tasks' ? promptFilterResetAndClose : promptNotesFilterResetAndClose }>
                         Reset
                     </div>
                     <div className='primary-button' onClick = { handleFilterClose } style={{width: '100px', fontFamily: 'var(--primary-font-family)'}}>
