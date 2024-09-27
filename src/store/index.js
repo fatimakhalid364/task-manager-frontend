@@ -27,26 +27,6 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    transforms: [
-        {
-            
-            in: (inboundState) => {
-                console.log('Inbound State:))))))))))))))))))))))))))))))))))))))))))))))))))):', inboundState);
-                return {
-                    ...inboundState,
-                    
-                };
-            },
-            out: (outboundState) => {
-                console.log('outboundState is **********************************************', outboundState);
-                return {
-                    ...outboundState,
-                    // dueDateValueForTasks: dayjs(outboundState.dueDateValueForTasks),
-                    // creationDateValueForTasks: dayjs(outboundState.creationDateValueForTasks)
-                };
-            },
-        },
-    ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -56,7 +36,7 @@ export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: false,
+            serializableCheck: true,
         }).concat(thunk),
 });
 

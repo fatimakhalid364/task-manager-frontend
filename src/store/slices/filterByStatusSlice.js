@@ -30,17 +30,40 @@ const filterByStatusSlice = createSlice({
     setCheckboxState: (state, action) => {
       const checkboxId = action.payload?.checkboxId;
       const isChecked = action.payload?.isChecked;
-      state.checkboxStates[checkboxId] = isChecked;
+      state.checkboxStates = {
+        ...state.checkboxStates,
+        [checkboxId]: isChecked, // Create a new object for checkboxStates
+      };
       console.log('boolean value of the checkbox being clicked with the id ' + checkboxId + ' is ' + state.checkboxStates[checkboxId]);
     },
     setNotesCheckboxState: (state, action) => { 
       state.notesCheckboxState = action.payload;
     },
     setDueDateValueForTasks: (state, action) => {
-      state.dueDateValueForTasks = action.payload;
+      return {
+        ...state,
+        // dueDateValueForTasks: action.payload.isValid() 
+        // ? action.payload 
+        // : state.filterByStatus.dueDateValueForTasks
+        dueDateValueForTasks: 
+         action.payload 
+        
+
+
+      }
     },
     setCreationDateValueForTasks: (state, action) => {
-      state.creationDateValueForTasks = action.payload;
+      return {
+        ...state,
+        // dueDateValueForTasks: action.payload.isValid() 
+        // ? action.payload 
+        // : state.filterByStatus.dueDateValueForTasks
+        creationDateValueForTasks: 
+         action.payload 
+        
+
+
+      }
     },
   },
   extraReducers: (builder) => {

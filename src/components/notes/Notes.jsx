@@ -23,7 +23,7 @@ const Notes = () => {
         console.log('notes picked up using useSelector are ', notes)
     }, []);
 
-    const entireSlice = useSelector((state) => state);
+    const entireSlice = useSelector((state) => state.filterByStatus.dueDateValueForTasks.parse);
 
     useEffect(() => {
         console.log('here is the entire slice }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}', entireSlice)

@@ -17,6 +17,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import * as _ from 'lodash'
 
 
 const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
@@ -130,9 +131,13 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
         dispatch(setDueDateValueForTasks(newValue)); 
       };
 
+      const dueDateValueForTasksObj = dayjs(dueDateValueForTasks)
+
     const handleCreationDateChange = (newValue) => {
        dispatch(setCreationDateValueForTasks(newValue));
     };
+
+    const creationDateValueForTasksObj = dayjs(creationDateValueForTasks); 
 
     const handleNotesFilterIncrement = () => {
         const checkboxes = document.querySelectorAll('.checkbox-notes-filter-input');
@@ -315,13 +320,17 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                       
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <CssDateField
-                                                        value={dueDateValueForTasks}
+                                                        value={dueDateValueForTasksObj}
                                                         onChange={handleDueDateChange}
                                                         slotProps={{ textField: { fullWidth: true } }}
                                                     />
                                                 </LocalizationProvider>
                                            
                                          </div>  
+
+                                         {/* <input placeholder= {daysjsobj}  onClick={() => handleDueDateChange(new Date())} style={{height: '20px', width: '100px', border: '1px solid black', cursor: 'pointer'}}/> */}
+                                           
+                                        
                                         
                                     </div>) 
                                     : 
@@ -330,7 +339,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                       
                                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                                           <CssDateField
-                                                value={creationDateValueForTasks}
+                                                value={creationDateValueForTasksObj}
                                                 onChange = {handleCreationDateChange}
                                                 slotProps={{ textField: { fullWidth: true } }}
                                           />
