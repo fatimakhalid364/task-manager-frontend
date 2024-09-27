@@ -10,6 +10,7 @@ import { filterByStatusReducer } from './slices/filterByStatusSlice';
 import { notesReducer } from './slices/notesSlice';
 import { resetReducer, resetState } from './slices/resetSlice';
 import { taskReducer } from './slices/taskSlice';
+import dayjs from 'dayjs';
 
 
 
@@ -26,6 +27,26 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
+    transforms: [
+        {
+            
+            in: (inboundState) => {
+                console.log('Inbound State:))))))))))))))))))))))))))))))))))))))))))))))))))):', inboundState);
+                return {
+                    ...inboundState,
+                    
+                };
+            },
+            out: (outboundState) => {
+                console.log('outboundState is **********************************************', outboundState);
+                return {
+                    ...outboundState,
+                    // dueDateValueForTasks: dayjs(outboundState.dueDateValueForTasks),
+                    // creationDateValueForTasks: dayjs(outboundState.creationDateValueForTasks)
+                };
+            },
+        },
+    ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

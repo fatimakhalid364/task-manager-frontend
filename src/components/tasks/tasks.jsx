@@ -37,6 +37,8 @@ function Tasks() {
     const privateKey = localStorage.getItem("privateKey");
     console.log('tasks in the component', tasks)
 
+   
+
     const getAllTasks = async (page=0, limit=5) => {
         try {
 

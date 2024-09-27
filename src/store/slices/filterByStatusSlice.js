@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { resetState } from './resetSlice';
+import dayjs from 'dayjs';
 
 const initialState = {
   value: '0',
-  notesFilterValue: '0', 
+  notesFilterValue: '0',
+  dueDateValueForTasks: dayjs(),
+  creationDateValueForTasks: dayjs(),
   checkboxStates: {
     'checkbox-not-started': false,
     'checkbox-pending': false,
@@ -32,7 +35,13 @@ const filterByStatusSlice = createSlice({
     },
     setNotesCheckboxState: (state, action) => { 
       state.notesCheckboxState = action.payload;
-    }
+    },
+    setDueDateValueForTasks: (state, action) => {
+      state.dueDateValueForTasks = action.payload;
+    },
+    setCreationDateValueForTasks: (state, action) => {
+      state.creationDateValueForTasks = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -42,5 +51,5 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks   } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

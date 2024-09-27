@@ -7,7 +7,7 @@ import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState } from 'src/store/slices/filterByStatusSlice';
+import { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState,  setDueDateValueForTasks, setCreationDateValueForTasks } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { useLocation } from 'react-router-dom';
@@ -17,6 +17,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+
 
 const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
     '& .MuiInputBase-root': {
@@ -47,12 +48,17 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
    
     const dispatch = useDispatch();
 
+
+
     const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates); 
 
     const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
+    const dueDateValueForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
+    const creationDateValueForTasks = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
+
     useEffect(() => {
-        console.log('here is the tagsFilterListOBJ', tagsFilterList)
+        console.log('here is the dueDateValueForTasks', dueDateValueForTasks  )
     }, [])
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
@@ -120,6 +126,14 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
       
     };
 
+    const handleDueDateChange = (newValue) => {
+        dispatch(setDueDateValueForTasks(newValue)); 
+      };
+
+    const handleCreationDateChange = (newValue) => {
+       dispatch(setCreationDateValueForTasks(newValue));
+    };
+
     const handleNotesFilterIncrement = () => {
         const checkboxes = document.querySelectorAll('.checkbox-notes-filter-input');
 
@@ -132,6 +146,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const promptFilterResetAndClose = () => {
         dispatch(setValue('0'));
+        dispatch(setDueDateValueForTasks(dayjs()));
         Object.keys(checkboxStates).forEach(checkboxId => dispatch(setCheckboxState({checkboxId, isChecked: false})));
         handleFilterClose();
     }
@@ -300,8 +315,8 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                       
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <CssDateField
-                                                        value={dayjs().startOf('day')}
-                                                        // onChange={handleDateChange}
+                                                        value={dueDateValueForTasks}
+                                                        onChange={handleDueDateChange}
                                                         slotProps={{ textField: { fullWidth: true } }}
                                                     />
                                                 </LocalizationProvider>
@@ -315,9 +330,9 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                       
                                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                                           <CssDateField
-                                              value={dayjs().startOf('day')}
-                                              // onChange={handleDateChange}
-                                              slotProps={{ textField: { fullWidth: true } }}
+                                                value={creationDateValueForTasks}
+                                                onChange = {handleCreationDateChange}
+                                                slotProps={{ textField: { fullWidth: true } }}
                                           />
                                       </LocalizationProvider>
                                  

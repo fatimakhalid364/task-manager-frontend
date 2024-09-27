@@ -23,10 +23,10 @@ const Notes = () => {
         console.log('notes picked up using useSelector are ', notes)
     }, []);
 
-    const notesSlice = useSelector((state) => state.notes);
+    const entireSlice = useSelector((state) => state);
 
     useEffect(() => {
-        console.log('here is the notes slice', notesSlice)
+        console.log('here is the entire slice }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}', entireSlice)
     }, [])
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [pinned, setPinned] = useState("");
