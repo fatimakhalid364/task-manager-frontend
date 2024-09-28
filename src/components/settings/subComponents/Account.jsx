@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { capitalizeFirstLetter } from "src/utils/basicUtils";
 import { useResponsive } from 'src/constants/media_queries';
+import { capitalizeFirstLetter } from "src/utils/basicUtils";
 
-const Account = () => {
+const Account = ({ handlePassInputChange, changePassObj }) => {
     const { isAdaptableScreen, isMicroScreen } = useResponsive();
     const user = useSelector(state => state.auth?.user);
     const svgData = user?.avatar?.data;
@@ -62,7 +62,11 @@ const Account = () => {
                     {  !isMicroScreen && (<div className="cp-text" >Current Password</div>)}
                     <div className="cp-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="cp-input-header">Current Password</div>
-                        <input type="text" className="cp-input" style={{width: isMicroScreen && '100%'}} />
+                        <input
+                            name="oldPassword"
+                            value={changePassObj.oldPassword}
+                            onChange={handlePassInputChange}
+                            type="text" className="cp-input" style={{ width: isMicroScreen && '100%' }} />
                         <a href='/authentication/forgot-password' style={{display: 'flex', justifyContent: 'flex-end', marginTop: '8px', color: 'var(--primary-background-color)', fontFamily: 'var(--secondary-font-family)', fontWeight: '500', fontSize: '14px'}}>Forgot Password?</a>
                     </div>
                   
@@ -72,14 +76,25 @@ const Account = () => {
                     {  !isMicroScreen && (<div className="np-text">New Password</div>)}
                     <div className="np-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="np-input-header">New Password</div>
-                        <input type="password" className="np-input" style={{width: isMicroScreen && '100%'}}/>
+                        <input
+                            name="newPassword"
+                            value={changePassObj.newPassword}
+                            onChange={handlePassInputChange}
+                            type="password"
+                            className="np-input"
+                            style={{ width: isMicroScreen && '100%' }}
+                        />
                     </div>
                 </div>
                 <div className="account-retype-password account-password">
                     {  !isMicroScreen && (<div className="rp-text">Retype Password</div>)}
                     <div className="rp-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="rp-input-header">Retype Password</div>
-                        <input type="password" className="rp-input" style={{width: isMicroScreen && '100%'}} />
+                        <input
+                            name="confPassword"
+                            value={changePassObj.confPassword}
+                            onChange={handlePassInputChange}
+                            type="password" className="rp-input" style={{ width: isMicroScreen && '100%' }} />
                     </div>
                 </div>
             </div>
@@ -87,4 +102,5 @@ const Account = () => {
     )
 }
 
-export { Account}
+export { Account };
+
