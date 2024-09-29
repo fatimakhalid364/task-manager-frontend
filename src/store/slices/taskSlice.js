@@ -32,7 +32,18 @@ const taskSlice = createSlice({
             state.metaData = action.payload;
         },
         setHighPriorityCount: (state, action) => {
-            state.highPriorityCount = action.payload;
+            if(action.payload <= 10) {
+                return {
+                    ...state,
+                    highPriorityCount: action.payload
+                }
+            } else if(action.payload > 10) {
+                return {
+                    ...state,
+                    highPriorityCount: '10+'
+                }
+            }
+            
         },
         setMediumPriorityCount: (state, action) => {
             state.mediumPriorityCount = action.payload;
