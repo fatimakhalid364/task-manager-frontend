@@ -42,6 +42,44 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
         return HandleAuthError(error, thunkAPI);
     }
 });
+const getPriorityTasksThunk = createAsyncThunk("getPriorityTasks", async (params, thunkAPI) => {
+    console.log("inside getAllTasks thunk",);
+    const { page, limit, search, priority } = params
+    const privateKey = localStorage.getItem("privateKey");
+
+    try {
+        const response = await APIS.get(`/task`, {
+            params: {
+                page, limit, search, priority
+            },
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("response is in thunk,====================>", response);
+        response.data.data.forEach(task => {
+            task.taskTitle = decryptSingleValues(task.taskTitle, privateKey);
+            task.taskDescription = decryptSingleValues(task.taskDescription, privateKey);
+
+            if (Array.isArray(task.taskDescription)) {
+                task.taskDescription = task.taskDescription.join('');
+            }
+        });
+
+        console.log("tasks", response)
+
+        return {
+            data: response.data.data,
+            metaData: response.data.metaData,
+        };
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return HandleAuthError(error, thunkAPI);
+    }
+});
 
 const deleteTaskThunk = createAsyncThunk("changePinned", async ({ _id, tasksIds }, thunkAPI) => {
     console.log("inside delete tasks thunk");
@@ -111,5 +149,5 @@ const markTaskStatusThunk = createAsyncThunk(
         }
     }
 );
-export { deleteTaskThunk, fetchCalendarTasksThunk, getAllTasksThunk, markTaskStatusThunk };
+export { deleteTaskThunk, fetchCalendarTasksThunk, getAllTasksThunk, getPriorityTasksThunk, markTaskStatusThunk };
 

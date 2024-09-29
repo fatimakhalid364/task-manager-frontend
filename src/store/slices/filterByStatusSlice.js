@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { resetState } from './resetSlice';
 import dayjs from 'dayjs';
+import { resetState } from './resetSlice';
 
 const initialState = {
   value: '0',
@@ -42,14 +42,10 @@ const filterByStatusSlice = createSlice({
     setDueDateValueForTasks: (state, action) => {
       return {
         ...state,
-        // dueDateValueForTasks: action.payload.isValid() 
-        // ? action.payload 
-        // : state.filterByStatus.dueDateValueForTasks
         dueDateValueForTasks: 
-         action.payload 
-        
-
-
+          action.payload instanceof Date && !isNaN(action.payload)
+            ? action.payload.toISOString()  // Convert Date to ISO string
+            : state.dueDateValueForTasks    // Keep the existing value if invalid
       }
     },
     setCreationDateValueForTasks: (state, action) => {
@@ -59,7 +55,9 @@ const filterByStatusSlice = createSlice({
         // ? action.payload 
         // : state.filterByStatus.dueDateValueForTasks
         creationDateValueForTasks: 
-         action.payload 
+          action.payload instanceof Date && !isNaN(action.payload)
+            ? action.payload.toISOString()
+            : state.creationDateValueForTasks   
         
 
 

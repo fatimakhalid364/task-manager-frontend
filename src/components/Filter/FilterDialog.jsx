@@ -1,23 +1,21 @@
 import Modal from '@mui/material/Modal';
-import cross from 'src/assets/cross.svg'    
-import filter from 'src/assets/filter.svg';
-import 'src/components/Filter/FilterDialog.css';
 import { styled } from "@mui/system";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import cross from 'src/assets/cross.svg';
+import filter from 'src/assets/filter.svg';
 import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState,  setDueDateValueForTasks, setCreationDateValueForTasks } from 'src/store/slices/filterByStatusSlice';
+import 'src/components/Filter/FilterDialog.css';
+import { setCheckboxState, setCreationDateValueForTasks, setDueDateValueForTasks, setNotesFilterValue, setValue } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
-import SearchGlass from 'src/components/icons/SearchGlass';
-import { useLocation } from 'react-router-dom';
-import { setTagsFilterList } from 'src/store/slices/notesSlice';
-import { formatLocalDateTime } from 'src/utils/basicUtils';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
-import * as _ from 'lodash'
+import { useLocation } from 'react-router-dom';
+import SearchGlass from 'src/components/icons/SearchGlass';
+import { setTagsFilterList } from 'src/store/slices/notesSlice';
 
 
 const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
@@ -55,8 +53,12 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
-    const dueDateValueForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
-    const creationDateValueForTasks = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
+    const dueDateDayjs = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
+    const dueDateValueForTasks = dueDateDayjs ? dayjs(dueDateDayjs) : null;
+
+
+    const creationDateDayjs = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
+    const creationDateValueForTasks = creationDateDayjs ? dayjs(creationDateDayjs) : null; 
 
     useEffect(() => {
         console.log('here is the dueDateValueForTasks', dueDateValueForTasks  )
@@ -128,13 +130,13 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
     };
 
     const handleDueDateChange = (newValue) => {
-        dispatch(setDueDateValueForTasks(newValue)); 
+        dispatch(setDueDateValueForTasks(newValue ? dayjs(newValue) : null));
       };
 
       const dueDateValueForTasksObj = dayjs(dueDateValueForTasks)
 
     const handleCreationDateChange = (newValue) => {
-       dispatch(setCreationDateValueForTasks(newValue));
+        dispatch(setCreationDateValueForTasks(newValue ? dayjs(newValue) : null)); 
     };
 
     const creationDateValueForTasksObj = dayjs(creationDateValueForTasks); 

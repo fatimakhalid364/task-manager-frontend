@@ -14,7 +14,10 @@ export const Screen = {
     SET_PASS: 'SET_PASS',
     LOADING: 'LOADING',
     PAGE_NOT_FOUND: 'PAGE_NOT_FOUND',
-    VERIFICATION_PAGE: 'VERIFICATION_PAGE'
+    VERIFICATION_PAGE: 'VERIFICATION_PAGE',
+    HIGH: 'HIGH',
+    LOW: 'LOW',
+    MEDIUM: 'MEDIUM',
 };
 
 export const RoutesObj = {

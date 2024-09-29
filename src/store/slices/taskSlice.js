@@ -6,7 +6,9 @@ const taskSlice = createSlice({
     name: 'tasks',
     initialState: {
         tasks: [],
+        priorityTasks: [],
         metaData: {},
+        priorityMetaData: {},
         loaded: false,
         loading: false,
     },

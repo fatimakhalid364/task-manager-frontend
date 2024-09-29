@@ -1,13 +1,11 @@
 import { useSelector } from 'react-redux';
-import { useResponsive } from 'src/constants/media_queries';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import plus from 'src/assets/plus.svg';
+import { useResponsive } from 'src/constants/media_queries';
 
 
 
 
-function PageHeader({ handleOpen, total, text, object, filterDiv}){
+function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true, titleHead = '' }) {
     // const [metaData, setMetaData] = useState([]);
     // const specificValue = useSelector(state => state);
     // useEffect(() => {
@@ -32,13 +30,13 @@ function PageHeader({ handleOpen, total, text, object, filterDiv}){
     <div className='task-page-top'>
         <div className="task-page-top-header" style={{ marginLeft: (onWholeScreen && isAdaptableScreen) ? '16px' : !isAdaptableScreen ? '10px' : '' }}>
             <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px', marginLeft: isMicroScreen && '5px' }}>
-                { text } 
+                    {titleHead ? titleHead + " Priority Tasks" : text} 
             </div>
             <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px' }}>
                 ({total})
             </div>
         </div>
-        { !onWholeScreen && (<div style={{display: 'flex', gap: '20px'}}>
+            {(!onWholeScreen && showAdd) && (<div style={{ display: 'flex', gap: '20px' }}>
             { (filterDiv && !onWholeScreen) && (<div>{filterDiv}</div>)}
             <a className='primary-button' onClick={handleOpen} style={{ backgroundColor: 'var(--primary-background-color)'}}>
                     <div style={{ display: 'flex', gap: '6px' }}>
