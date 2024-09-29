@@ -67,9 +67,9 @@ function App() {
                     <Route path="/notes" element={<RouteGuard element={Notes} />} />
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
-                    <Route path="/tasks/high" element={<RouteGuard element={HighTasks} />} />
-                    <Route path="/tasks/medium" element={<RouteGuard element={MediumTasks} />} />
-                    <Route path="/tasks/low" element={<RouteGuard element={LowTasks} />} />
+                    <Route path="/tasks_high" element={<RouteGuard element={HighTasks} />} />
+                    <Route path="/tasks_medium" element={<RouteGuard element={MediumTasks} />} />
+                    <Route path="/tasks_low" element={<RouteGuard element={LowTasks} />} />
                     <Route path="/calendar" element={<RouteGuard element={CalendarComponent} />} />
                     <Route path="/settings" element={<RouteGuard element={Settings} />} />
                 
