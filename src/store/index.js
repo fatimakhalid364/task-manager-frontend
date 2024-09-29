@@ -8,9 +8,9 @@ import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
 import { notesReducer } from './slices/notesSlice';
+import { priorityTaskReducer } from './slices/priorityTaskSlice';
 import { resetReducer, resetState } from './slices/resetSlice';
 import { taskReducer } from './slices/taskSlice';
-import dayjs from 'dayjs';
 
 
 
@@ -21,7 +21,8 @@ const rootReducer = combineReducers({
     tasks: taskReducer,
     filterByStatus: filterByStatusReducer,
     notes: notesReducer,
-    reset: resetReducer
+    reset: resetReducer,
+    priorityTask: priorityTaskReducer,
 });
 
 const persistConfig = {

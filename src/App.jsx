@@ -18,6 +18,9 @@ import SigninPage from './pages/authentication/SigninPage';
 import SignupPage from './pages/authentication/SignupPage';
 import ForgotVerificationWait from './pages/loading/forgotVerificationWait';
 import VerificationWait from './pages/loading/verificationWait';
+import HighTasks from './pages/tasks/HighTasks';
+import LowTasks from './pages/tasks/LowTasks';
+import MediumTasks from './pages/tasks/MediumTasks';
 import { persistor } from './store/index';
 
 function App() {
@@ -64,6 +67,9 @@ function App() {
                     <Route path="/notes" element={<RouteGuard element={Notes} />} />
                     <Route path="/dashboard" element={<RouteGuard element={Dashboard} />} />
                     <Route path="/tasks" element={<RouteGuard element={Tasks} />} />
+                    <Route path="/tasks/high" element={<RouteGuard element={HighTasks} />} />
+                    <Route path="/tasks/medium" element={<RouteGuard element={MediumTasks} />} />
+                    <Route path="/tasks/low" element={<RouteGuard element={LowTasks} />} />
                     <Route path="/calendar" element={<RouteGuard element={CalendarComponent} />} />
                     <Route path="/settings" element={<RouteGuard element={Settings} />} />
                 

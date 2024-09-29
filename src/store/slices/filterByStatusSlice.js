@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { resetState } from './resetSlice';
 import dayjs from 'dayjs';
+import { resetState } from './resetSlice';
 
 const initialState = {
   value: '0',
@@ -37,27 +37,27 @@ const filterByStatusSlice = createSlice({
       };
       console.log('boolean value of the checkbox being clicked with the id ' + checkboxId + ' is ' + state.checkboxStates[checkboxId]);
     },
-    setNotesCheckboxState: (state, action) => { 
+    setNotesCheckboxState: (state, action) => {
       state.notesCheckboxState = action.payload;
     },
     setDueDateValueForTasks: (state, action) => {
       return {
         ...state,
-        
-        dueDateValueForTasks: 
-         action.payload 
-        
-
-
+        dueDateValueForTasks:
+          action.payload instanceof Date && !isNaN(action.payload)
+            ? action.payload.toISOString()  // Convert Date to ISO string
+            : state.dueDateValueForTasks    // Keep the existing value if invalid
       }
     },
     setCreationDateValueForTasks: (state, action) => {
       return {
         ...state,
-       
-        creationDateValueForTasks: 
-         action.payload 
-        
+
+        creationDateValueForTasks:
+          action.payload instanceof Date && !isNaN(action.payload)
+            ? action.payload.toISOString()
+            : state.creationDateValueForTasks
+
 
 
       }
@@ -65,9 +65,9 @@ const filterByStatusSlice = createSlice({
     setCreationDateValueForNotes: (state, action) => {
       return {
         ...state,
-       
-        creationDateValueForNotes: action.payload 
-        
+
+        creationDateValueForNotes: action.payload
+
 
 
       }
@@ -81,5 +81,5 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes   } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;
