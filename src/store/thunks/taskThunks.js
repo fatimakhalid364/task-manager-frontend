@@ -111,5 +111,28 @@ const markTaskStatusThunk = createAsyncThunk(
         }
     }
 );
-export { deleteTaskThunk, fetchCalendarTasksThunk, getAllTasksThunk, markTaskStatusThunk };
+
+const fetchPriorityCountsThunk = createAsyncThunk("fetchPriorityCounts", async (thunkAPI) => {
+    console.log("inside fetchPriorityCountsThunk",);
+
+    try {
+        const response = await APIS.get(`/task/counts`, {
+            headers: {
+                "Content-Type": "application/json",
+                access_token: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+        });
+        console.log("fetchPriorityCounts response is in thunk ..........................>", response);
+        
+        return {
+            data: response.data.data,
+        };
+    } catch (error) {
+        if (!error.response) {
+            throw error;
+        }
+        return HandleAuthError(error, thunkAPI);
+    }
+});
+export { deleteTaskThunk, fetchCalendarTasksThunk, getAllTasksThunk, markTaskStatusThunk, fetchPriorityCountsThunk };
 

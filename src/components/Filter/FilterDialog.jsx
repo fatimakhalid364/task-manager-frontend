@@ -7,7 +7,7 @@ import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState,  setDueDateValueForTasks, setCreationDateValueForTasks } from 'src/store/slices/filterByStatusSlice';
+import { setValue, setCheckboxState, setNotesFilterValue, setCreationDateValueForNotes,  setDueDateValueForTasks, setCreationDateValueForTasks } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { useLocation } from 'react-router-dom';
@@ -57,6 +57,7 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
 
     const dueDateValueForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
     const creationDateValueForTasks = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
+    const creationDateValueForNotes = useSelector((state) => state.filterByStatus.creationDateValueForNotes);
 
     useEffect(() => {
         console.log('here is the dueDateValueForTasks', dueDateValueForTasks  )
@@ -137,7 +138,15 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
        dispatch(setCreationDateValueForTasks(newValue));
     };
 
+   
+
     const creationDateValueForTasksObj = dayjs(creationDateValueForTasks); 
+
+    const handleCreationDateChangeForNotes = (newValue) => {
+        dispatch(setCreationDateValueForNotes(newValue));
+     };
+
+     const creationDateValueForNotesObj = dayjs(creationDateValueForNotes);
 
     const handleNotesFilterIncrement = () => {
         const checkboxes = document.querySelectorAll('.checkbox-notes-filter-input');
@@ -152,12 +161,15 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
     const promptFilterResetAndClose = () => {
         dispatch(setValue('0'));
         dispatch(setDueDateValueForTasks(dayjs()));
+       
+        dispatch(setCreationDateValueForTasks(dayjs()));
         Object.keys(checkboxStates).forEach(checkboxId => dispatch(setCheckboxState({checkboxId, isChecked: false})));
         handleFilterClose();
     }
 
     const promptNotesFilterResetAndClose = () => {
         dispatch(setNotesFilterValue('0'));
+        dispatch(setCreationDateValueForNotes(dayjs()));
         Object.keys(tagsFilterList).forEach(checkboxId => dispatch(setTagsFilterList({tag: checkboxId, checked: false})));
         handleFilterClose();
     }
@@ -339,8 +351,8 @@ const FilterDialog = ({filterOpen, handleFilterClose, notesArray}) => {
                                       
                                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                                           <CssDateField
-                                                value={creationDateValueForTasksObj}
-                                                onChange = {handleCreationDateChange}
+                                                value={pathname == '/tasks' ? creationDateValueForTasksObj : creationDateValueForNotesObj}
+                                                onChange = {pathname == '/tasks' ? handleCreationDateChange : handleCreationDateChangeForNotes}
                                                 slotProps={{ textField: { fullWidth: true } }}
                                           />
                                       </LocalizationProvider>

@@ -7,6 +7,7 @@ const initialState = {
   notesFilterValue: '0',
   dueDateValueForTasks: dayjs(),
   creationDateValueForTasks: dayjs(),
+  creationDateValueForNotes: dayjs(),
   checkboxStates: {
     'checkbox-not-started': false,
     'checkbox-pending': false,
@@ -42,9 +43,7 @@ const filterByStatusSlice = createSlice({
     setDueDateValueForTasks: (state, action) => {
       return {
         ...state,
-        // dueDateValueForTasks: action.payload.isValid() 
-        // ? action.payload 
-        // : state.filterByStatus.dueDateValueForTasks
+        
         dueDateValueForTasks: 
          action.payload 
         
@@ -55,11 +54,19 @@ const filterByStatusSlice = createSlice({
     setCreationDateValueForTasks: (state, action) => {
       return {
         ...state,
-        // dueDateValueForTasks: action.payload.isValid() 
-        // ? action.payload 
-        // : state.filterByStatus.dueDateValueForTasks
+       
         creationDateValueForTasks: 
          action.payload 
+        
+
+
+      }
+    },
+    setCreationDateValueForNotes: (state, action) => {
+      return {
+        ...state,
+       
+        creationDateValueForNotes: action.payload 
         
 
 
@@ -74,5 +81,5 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks   } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes   } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;
