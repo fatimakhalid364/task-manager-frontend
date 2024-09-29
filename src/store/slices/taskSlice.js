@@ -42,16 +42,36 @@ const taskSlice = createSlice({
             } else if(action.payload > 10) {
                 return {
                     ...state,
-                    highPriorityCount: '10+'
+                    highPriorityCount: '10..'
                 }
             }
             
         },
         setMediumPriorityCount: (state, action) => {
-            state.mediumPriorityCount = action.payload;
+            if(action.payload <= 10) {
+                return {
+                    ...state,
+                    mediumPriorityCount: action.payload
+                }
+            } else if(action.payload > 10) {
+                return {
+                    ...state,
+                    mediumPriorityCount: '10..'
+                }
+            }
         },
         setLowPriorityCount: (state, action) => {
-            state.lowPriorityCount = action.payload;
+            if(action.payload <= 10) {
+                return {
+                    ...state,
+                    lowPriorityCount: action.payload
+                }
+            } else if(action.payload > 10) {
+                return {
+                    ...state,
+                    lowPriorityCount: '10..'
+                }
+            }
         }
     },
     extraReducers: (builder) => {

@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { setTagsFilterList } from 'src/store/slices/notesSlice';
+import 'src/components/Filter/FilterDialog.css';
 
 
 const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
