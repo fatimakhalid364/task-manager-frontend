@@ -24,9 +24,9 @@ function Priority({ burgerMenuClicked }) {
     return (
         <div className='tasks-page-priority-div' style={{ display: (isMicroScreen && !burgerMenuClicked && !expandBar) && 'none' }}>
             {((expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked)) && (<div className='priority-header'>Priority</div>)}
-            <PriorityComponents url={"/tasks_high"} Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel='7' burgerMenuClicked={burgerMenuClicked} />
-            <PriorityComponents url={"/tasks_medium"} Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel='7' burgerMenuClicked={burgerMenuClicked} />
-            <PriorityComponents url={"/tasks_low"} Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel='7' burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents url={"/tasks_high"} Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel={highPriorityCount} burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents url={"/tasks_medium"} Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel={mediumPriorityCount} burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents url={"/tasks_low"} Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel={lowPriorityCount} burgerMenuClicked={burgerMenuClicked} />
 
 
         </div>
