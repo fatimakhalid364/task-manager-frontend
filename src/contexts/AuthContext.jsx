@@ -4,9 +4,10 @@ import Loader from 'src/components/LoadingScreens/CSSLoader';
 import { errorToast } from 'src/components/toasters/toast.js';
 import { clearStore } from "src/store/index.js";
 import { logout as logoutAction, setUser } from '../store/slices/authSlice';
-import { fetchKeyThunk, signinThunk } from '../store/thunks/authThunks';
+import { fetchKeyThunk, signinThunk,  } from 'src/store/thunks/authThunks';
 import { decryptObjectValues } from '../utils/encryptionUtil';
-
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
 
 const AuthContext = createContext();
 
@@ -42,6 +43,15 @@ export const AuthProvider = ({ children }) => {
                 console.log('dispatching the user', decryptedUser);
                 dispatch(setUser(decryptedUser));
                 console.log('User is set')
+                const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+                console.log('priorityCounts areeeeeeeee', priorityCounts);
+                dispatch(setHighPriorityCount(priorityCounts.data.high));
+                dispatch(setLowPriorityCount(priorityCounts.data.low));
+                
+                dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+                
+                
+                
             }
         } catch (error) {
             console.log('Something went wrong', error);

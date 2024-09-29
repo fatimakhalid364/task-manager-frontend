@@ -11,6 +11,9 @@ const taskSlice = createSlice({
         priorityMetaData: {},
         loaded: false,
         loading: false,
+        highPriorityCount: '',
+        lowPriorityCount: '',
+        mediumPriorityCount: '',
     },
     reducers: {
         clearTasks: (state, action) => {
@@ -29,6 +32,15 @@ const taskSlice = createSlice({
         setMetaData: (state, action) => {
             console.log('inside the taskslice', action.payload);
             state.metaData = action.payload;
+        },
+        setHighPriorityCount: (state, action) => {
+            state.highPriorityCount = action.payload;
+        },
+        setMediumPriorityCount: (state, action) => {
+            state.mediumPriorityCount = action.payload;
+        },
+        setLowPriorityCount: (state, action) => {
+            state.lowPriorityCount = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -46,15 +58,16 @@ const taskSlice = createSlice({
                 state.loading = false;
             })
             .addCase(resetState, (state) => {
-                return {
-                    tasks: [],
+                return { tasks: [],
                     metaData: {},
                     loaded: false,
                     loading: false,
-                };
+                    highPriorityCount: '',
+                    lowPriorityCount: '',
+                    mediumPriorityCount: '',};
             });
     },
 });
 
-export const { clearTasks, addTask, setTasks, setMetaData } = taskSlice.actions;
+export const { clearTasks, addTask, setTasks, setMetaData, setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;

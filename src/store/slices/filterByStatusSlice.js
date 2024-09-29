@@ -7,6 +7,7 @@ const initialState = {
   notesFilterValue: '0',
   dueDateValueForTasks: dayjs(),
   creationDateValueForTasks: dayjs(),
+  creationDateValueForNotes: dayjs(),
   checkboxStates: {
     'checkbox-not-started': false,
     'checkbox-pending': false,
@@ -36,13 +37,13 @@ const filterByStatusSlice = createSlice({
       };
       console.log('boolean value of the checkbox being clicked with the id ' + checkboxId + ' is ' + state.checkboxStates[checkboxId]);
     },
-    setNotesCheckboxState: (state, action) => { 
+    setNotesCheckboxState: (state, action) => {
       state.notesCheckboxState = action.payload;
     },
     setDueDateValueForTasks: (state, action) => {
       return {
         ...state,
-        dueDateValueForTasks: 
+        dueDateValueForTasks:
           action.payload instanceof Date && !isNaN(action.payload)
             ? action.payload.toISOString()  // Convert Date to ISO string
             : state.dueDateValueForTasks    // Keep the existing value if invalid
@@ -51,14 +52,22 @@ const filterByStatusSlice = createSlice({
     setCreationDateValueForTasks: (state, action) => {
       return {
         ...state,
-        // dueDateValueForTasks: action.payload.isValid() 
-        // ? action.payload 
-        // : state.filterByStatus.dueDateValueForTasks
-        creationDateValueForTasks: 
+
+        creationDateValueForTasks:
           action.payload instanceof Date && !isNaN(action.payload)
             ? action.payload.toISOString()
-            : state.creationDateValueForTasks   
-        
+            : state.creationDateValueForTasks
+
+
+
+      }
+    },
+    setCreationDateValueForNotes: (state, action) => {
+      return {
+        ...state,
+
+        creationDateValueForNotes: action.payload
+
 
 
       }
@@ -72,5 +81,5 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks   } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

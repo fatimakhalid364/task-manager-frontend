@@ -37,7 +37,7 @@ export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: true,
+            serializableCheck: false,
         }).concat(thunk),
 });
 
