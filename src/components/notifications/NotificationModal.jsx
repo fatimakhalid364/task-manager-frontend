@@ -1,13 +1,13 @@
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import {
     Box,
-    Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
     Typography,
     useMediaQuery,
-    useTheme,
+    useTheme
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -26,12 +26,13 @@ function NotificationModal({
     title,
     titleInfo,
     message,
+    icon,
     primaryButtonText,
     pirmaryButtonColor,
     secondaryButtonColor,
     secondaryButtonText,
     notificationType,
-    icon,
+    iconType,
     backgroundImage,
     buttonText,
     buttonColor,
@@ -70,7 +71,7 @@ function NotificationModal({
                 maxWidth={"731px"}
             >
                 <IconContainer sx={{ display: 'flex', justifyContent: 'center' }} mt={1}>
-                    <img src={icon} />
+                    {iconType ? (iconType === 'WARNING' ? <WarningAmberRoundedIcon color={'warning'} /> : <WarningAmberRoundedIcon />) : <img src={icon} />}
                 </IconContainer>
                 <DialogTitle mb={-1} sx={{ textAlign: "center", }}>
                     <Typography variant="h3" fontWeight={600} sx={{ fontSize: '20px', lineHeight: '28px' }} color="#495057">
@@ -85,12 +86,12 @@ function NotificationModal({
                 </DialogContent>
                 {/* <Box mt={6}></Box> */}
                 <DialogActions mt={6} mb={-6} sx={{ display: "flex", gap: '24px', justifyContent: "center", width: '100%', height: '90px', borderTop: '1px solid #D1D5DB' }}>
-                    {(notificationType && notificationType === 'DELETE') &&
+                    {(notificationType && (notificationType === 'DELETE' || notificationType === 'UPDATE')) &&
                         <div variant='outlined' className='filter-button' style={{ borderRadius: '28px', width: '100px', height: '40px', textTransform: 'capitalize' }} size="medium" mb={4} mt={3} onClick={onCancel} color="info">
                             {secondaryButtonText ? secondaryButtonText : 'Cancel'}
                         </div>
                     }
-                    <div variant='contained' className='primary-button' style={{ borderRadius: '28px', textTransform: 'none', width: notificationType && notificationType === 'DELETE' ? '100px' : '250px', height: '40px', backgroundColor: notificationType && notificationType === 'DELETE' && '#EF4444', fontFamily: 'var(--primary-font-family)'  }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
+                    <div variant='contained' className='primary-button' style={{ borderRadius: '28px', textTransform: 'none', width: notificationType && (notificationType === 'DELETE' || notificationType === 'UPDATE') ? '100px' : '250px', height: '40px', backgroundColor: notificationType && notificationType === 'DELETE' && '#EF4444', fontFamily: 'var(--primary-font-family)' }} size="medium" mb={4} mt={3} onClick={onOkay} color={primaryColor}>
                         {primaryButtonText}
                     </div>
 
