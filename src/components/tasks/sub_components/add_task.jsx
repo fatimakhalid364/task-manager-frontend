@@ -93,7 +93,9 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
 
 }));
 
-const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }) => {
+
+
+const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -114,7 +116,9 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
         padding: '15px',
     });
 
-
+    const handleTaskEditFalse = () => {
+        handleTaskEdit();
+    }
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: '',
         dueDate: dayjs(),
@@ -172,6 +176,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
     const handleCreateClick = async () => {
         try {
             handleClose();
+            // taskEdit && handleReverseTaskEdit();
             const splitDesc = taskDetails.taskDescription.match(/.{1,32}/g);
             const encryptedDesc = encryptArrayValues(splitDesc);
             const forEncryption = {
@@ -205,6 +210,8 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
             resetTaskDetails();
         }
     };
+
+    
     return (
         <Modal
             open={open}
@@ -216,7 +223,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                         <div className='add-case'>
                             <img src={plus} alt='plus sign' /> Add Case
                         </div>
-                        <a onClick={handleClose}><img src={cross} alt='cross' className='add-task-cross' /></a>
+                        <a onClick={handleClose}><img src={cross}  alt='cross' className='add-task-cross' /></a>
                     </div>
                     <div className='add-task-details-div'>
                         <form className='add-task-details'>
@@ -224,14 +231,14 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                             <input
                                 type="text"
                                 style= {{height: '40px', width: '100%'}}
-                                value={taskDetails.taskTitle}
+                                value={taskEdit ? taskDetailsToEdit.taskTitle : taskDetails.taskTitle}
                                 name="taskTitle"
                                 onChange={handleInputChange}
                             />
                             <div className='add-task-input-title'>Due Date</div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <CssDateField
-                                    value={taskDetails.dueDate}
+                                    value={ taskEdit ? dayjs(taskDetailsToEdit.dueDate) : taskDetails.dueDate}
                                     onChange={handleDateChange}
                                     slotProps={{ textField: { fullWidth: true } }}
                                 />
@@ -248,7 +255,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                             }
                                         }
                                     }}
-                                    value={taskDetails.priority}
+                                    value={ taskEdit ? taskDetailsToEdit.priority : taskDetails.priority}
                                     name='priority'
                                     onChange={handleInputChange}
                                 >
@@ -269,7 +276,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                             }
                                         }
                                     }}
-                                    value={taskDetails.status}
+                                    value={ taskEdit ? taskDetailsToEdit.status : taskDetails.status}
                                     name='status'
                                     onChange={handleInputChange}
                                 >
@@ -285,7 +292,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                 minRows={7}
                                 p={2}
                                 style={{ width: '100%', overflowY: 'scroll', border: hovered && '1px solid var(--primary-background-color)', padding: '5px'  }}
-                                value={taskDetails.taskDescription}
+                                value={ taskEdit ? taskDetailsToEdit.taskDescription : taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
                                 onMouseEnter={handleMouseEnter}
@@ -311,7 +318,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                         fontFamily: 'var(--primary-font-family)'
                                     }}
                                 >
-                                    Create Task
+                                    {taskEdit ? 'Update Task' : 'Create Task'}
                                 </div>
                             </Box>
                         </form>

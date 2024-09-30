@@ -5,7 +5,7 @@ import { useResponsive } from 'src/constants/media_queries';
 
 
 
-function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true, titleHead = '' }) {
+function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true, titleHead = '' , handleReverseTaskEdit}) {
     // const [metaData, setMetaData] = useState([]);
     // const specificValue = useSelector(state => state);
     // useEffect(() => {
@@ -25,6 +25,8 @@ function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true
         isBp8,
         isMicroScreen
     } = useResponsive();
+
+    
 
     return (
     <div className='task-page-top'>

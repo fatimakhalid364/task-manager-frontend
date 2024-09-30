@@ -93,7 +93,7 @@ function Settings({ currentSettingsScreen }) {
     }
     const handleOkayPass = async () => {
         if (changePassObj.newPassword !== changePassObj.confPassword) {
-            errorToast('New Password in both field is not same', 'pass-err')
+            errorToast('New Password should be the same in both fields.', 'pass-err')
         }
         const body = encryptObjectValues(changePassObj);
 
@@ -181,7 +181,7 @@ function Settings({ currentSettingsScreen }) {
                 onCancel={handleCancel}
                 title={"You are goin to update you Password"}
                 message={
-                    "Once Changed you will be logged out and will be required to relogin with new password, If you cancel your other changes will be saved."
+                    "Once you change the password, you will be logged out and required to relogin with the new password."
                 }
                 titleInfo={""}
                 icon={WarningAmberIcon}

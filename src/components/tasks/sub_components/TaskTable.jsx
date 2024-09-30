@@ -22,11 +22,12 @@ import tickInCircle from 'src/assets/tick-in-circle.svg';
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
 import { setMetaData, setTasks } from "src/store/slices/taskSlice";
-import { deleteTaskThunk, markTaskStatusThunk } from 'src/store/thunks/taskThunks';
+import { deleteTaskThunk, markTaskStatusThunk, updateTaskThunk } from 'src/store/thunks/taskThunks';
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from './CustomPagination';
+import { useEffect } from 'react';
 
 
 const calculateCellWidth = () => {
@@ -86,7 +87,12 @@ const TaskTable = ({
   hasNextPage,
   nextPage,
   skeletonLoader,
-  metaData
+  metaData,
+  taskEdit,
+  handleTaskEdit,
+  handleOpen,
+  setTaskDetailsToEdit,
+  handleReverseTaskEdit
 }) => {
  
   const { isAdaptableScreen, isMicroScreen } = useResponsive();
@@ -111,6 +117,11 @@ const TaskTable = ({
     color: 'var(--secondary-font-color)',
     backgroundColor:  'var(--active-background-color)',
   });
+
+  useEffect(() => {
+       handleReverseTaskEdit();
+       
+    }, []);
   
   
   const privateKey = localStorage.getItem("privateKey");
@@ -219,6 +230,20 @@ const TaskTable = ({
    
   };
 
+  const hadnleTaskViewOrEdit = async (taskId) => {
+      
+      handleTaskEdit();
+      handleOpen();
+      handleMenuClose();
+      const foundTask = tasks.reduce((accumulator, task) => {
+        if (task._id == taskId) {
+            accumulator = task; 
+        }
+        return accumulator; 
+    }, null);
+    setTaskDetailsToEdit(foundTask);
+  }
+
   const handleChangeTaskStatus = (_id, taskStatus) => {
     console.log(`Change task status with ID: ${_id}`);
     changeTaskStatus(_id, taskStatus);
@@ -324,7 +349,7 @@ const TaskTable = ({
                               ? '210px' : task.status == 'IN_PROGRESS' ? '259px' : '450px',
                               width: (task.status == 'COMPLETED' ) ? '199px' : '250px'}}
                           >
-                            <MenuItem onClick={handleComplete} sx={{gap: '12px'}}>
+                            <MenuItem onClick={() => {hadnleTaskViewOrEdit(task._id)}} sx={{gap: '12px'}}>
                               <img src={edit} alt='edit-icon' />
                               <div style={{marginTop: '2px'}}>View or Edit</div>
                             </MenuItem>

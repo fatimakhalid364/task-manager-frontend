@@ -15,6 +15,7 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
+import dayjs from 'dayjs';
 
 
 
@@ -35,6 +36,14 @@ function Tasks() {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
+    const [taskEdit, setTaskEdit] = useState(false);
+    const handleTaskEdit = () => {
+        setTaskEdit(true);
+    }
+
+    const handleReverseTaskEdit = () => {
+        setTaskEdit(false);
+    }
     console.log('tasks in the component', tasks)
 
    
@@ -72,20 +81,69 @@ function Tasks() {
         }
     }, []);
 
+   
+
+    useEffect(() => {
+        console.log('value of taskEdit is....................', taskEdit);
+        
+     }, [handleTaskEdit]);
+
+    const [taskDetailsToEdit, setTaskDetailsToEdit] = useState({
+        taskTitle: '',
+        dueDate: dayjs(),
+        priority: 'HIGH',
+        status: 'NOT_STARTED',
+        taskDescription: ''
+    });
+
+    const handleAddTaskOpen = () => {
+        handleReverseTaskEdit();
+        handleOpen();
+    }
+
     
 
     return (
         <div className='task-page-div' >
-            {open && (<AddTask debouncedGetAllTasks={debouncedGetAllTasks} limit={limit} open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
+            {open && (<AddTask 
+            debouncedGetAllTasks={debouncedGetAllTasks} 
+            limit={limit} 
+            open={open} 
+            handleClose={handleClose} 
+            getAllTasks={getAllTasks}
+            taskDetailsToEdit={taskDetailsToEdit}
+            taskEdit={taskEdit}
+            handleTaskEdit ={handleTaskEdit }
+            />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader handleOpen={handleOpen} total={tasks.metaData.total} text='All Tasks' object='Task' />
+                    <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />
                     <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks.metaData.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks.metaData.hasNextPage} hasPreviousPage={tasks.metaData.hasPrevPage} nextPage={tasks.metaData.nextPage} metaData={tasks.metaData} previousPage={tasks.metaData.previousPage} totalPages={tasks.metaData.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable 
+                        debouncedGetAllTasks={debouncedGetAllTasks} 
+                        tasks={tasks.tasks} 
+                        limit={limit} 
+                        privateKey={privateKey} 
+                        page={tasks.metaData.page} 
+                        setLimit={setLimit} 
+                        setPage={setPage} 
+                        getAllTasks={getAllTasks} 
+                        hasNextPage={tasks.metaData.hasNextPage} 
+                        hasPreviousPage={tasks.metaData.hasPrevPage} 
+                        nextPage={tasks.metaData.nextPage} 
+                        metaData={tasks.metaData} 
+                        previousPage={tasks.metaData.previousPage} 
+                        totalPages={tasks.metaData.totalPages} 
+                        skeletonLoader={skeletonLoader} 
+                        taskEdit={taskEdit}
+                        handleTaskEdit={handleTaskEdit}
+                        handleOpen={handleOpen}
+                        setTaskDetailsToEdit={setTaskDetailsToEdit}
+                        handleReverseTaskEdit={handleReverseTaskEdit}/>
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
@@ -103,5 +161,5 @@ function Tasks() {
     );
 }
 
-export default Tasks;
+export {Tasks};
 
