@@ -14,13 +14,14 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import edit from "src/assets/edit.svg";
 import redTrash from "src/assets/red-trash.svg";
 import tickInCircle from "src/assets/tick-in-circle.svg";
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
+import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
 import { setMetaData, setTasks } from "src/store/slices/taskSlice";
 import {
   deleteTaskThunk,
@@ -228,7 +229,13 @@ const TaskTable = ({
         const updatedTasksArray = tasks.map((task) =>
           task._id == _id ? { ...task, status: taskStatus } : task
         );
-        dispatch(setTasks(updatedTasksArray));
+        if (priority) {
+          dispatch(setPriorityTasks(updatedTasksArray))
+
+        } else {
+  dispatch(setTasks(updatedTasksArray));
+
+}
       }
     } catch (err) {
       errorToast(

@@ -54,5 +54,5 @@ const priorityTaskSlice = createSlice({
     },
 });
 
-export const { clearTasks, addTask, setTasks, setMetaData } = priorityTaskSlice.actions;
+export const { clearPriorityTasks, addPriorityTask, setPriorityTasks, setPriorityMetaData } = priorityTaskSlice.actions;
 export const priorityTaskReducer = priorityTaskSlice.reducer;
