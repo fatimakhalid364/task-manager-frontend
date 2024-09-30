@@ -1,11 +1,13 @@
 
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomButtons from "src/components/BottomButtons";
 import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
+import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
 import TaskTable from 'src/components/tasks/sub_components/TaskTable';
 import { errorToast } from 'src/components/toasters/toast.js';
@@ -26,7 +28,27 @@ function PriorityTasks({ priority }) {
     const handleFilterOpen = () => setFilterOpen(true);
     const privateKey = localStorage.getItem("privateKey");
     console.log('priorityTasks in the component', priorityTasks)
+    const [taskEdit, setTaskEdit] = useState(false);
+    const handleTaskEdit = () => {
+        setTaskEdit(true);
+    }
 
+    const handleReverseTaskEdit = () => {
+        setTaskEdit(false);
+    }
+
+    const handleAddTaskOpen = () => {
+        handleReverseTaskEdit();
+        handleOpen();
+    }
+
+    const [taskDetailsToEdit, setTaskDetailsToEdit] = useState({
+        taskTitle: '',
+        dueDate: dayjs(),
+        priority: 'HIGH',
+        status: 'NOT_STARTED',
+        taskDescription: ''
+    });
 
 
     const getAllTasks = async (page = 0, limit = 5) => {
@@ -61,14 +83,24 @@ function PriorityTasks({ priority }) {
     }, []);
     return (
         <div className='task-page-div' >
+            {open && (<AddTask
+                debouncedGetAllTasks={debouncedGetAllTasks}
+                limit={limit}
+                open={open}
+                handleClose={handleClose}
+                getAllTasks={getAllTasks}
+                taskDetailsToEdit={taskDetailsToEdit}
+                taskEdit={taskEdit}
+                handleTaskEdit={handleTaskEdit}
+            />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader showAdd={false} titleHead={priority} handleOpen={handleOpen} total={priorityTasks?.priorityMetaData?.total} text='All Tasks' object='Task' />
+                    <PageHeader handleOpen={handleAddTaskOpen} handleReverseTaskEdit={handleReverseTaskEdit} showAdd={false} titleHead={priority} total={priorityTasks?.priorityMetaData?.total} text='All Tasks' object='Task' />
                     <div>
                         {/* <FilterButton handleFilterOpen={handleFilterOpen} /> */}
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={priorityTasks?.priorityTasks} limit={limit} privateKey={privateKey} page={priorityTasks?.priorityMetaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={priorityTasks?.priorityMetaData?.hasNextPage} hasPreviousPage={priorityTasks?.priorityMetaData?.hasPrevPage} nextPage={priorityTasks?.priorityMetaData?.nextPage} priorityMetaData={priorityTasks?.priorityMetaData} previousPage={priorityTasks?.priorityMetaData?.previousPage} totalPages={priorityTasks?.priorityMetaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable priority={true} handleOpen={handleAddTaskOpen} handleTaskEdit={handleTaskEdit} setTaskDetailsToEdit={setTaskDetailsToEdit} handleReverseTaskEdit={handleReverseTaskEdit} debouncedGetAllTasks={debouncedGetAllTasks} tasks={priorityTasks?.priorityTasks} limit={limit} privateKey={privateKey} page={priorityTasks?.priorityMetaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={priorityTasks?.priorityMetaData?.hasNextPage} hasPreviousPage={priorityTasks?.priorityMetaData?.hasPrevPage} nextPage={priorityTasks?.priorityMetaData?.nextPage} priorityMetaData={priorityTasks?.priorityMetaData} previousPage={priorityTasks?.priorityMetaData?.previousPage} totalPages={priorityTasks?.priorityMetaData?.totalPages} skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={handleOpen} handleFilterOpen={handleFilterOpen} />
