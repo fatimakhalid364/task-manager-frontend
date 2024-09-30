@@ -28,13 +28,13 @@ function PriorityTasks({ priority }) {
     const handleFilterOpen = () => setFilterOpen(true);
     const privateKey = localStorage.getItem("privateKey");
     console.log('priorityTasks in the component', priorityTasks)
-    const [taskEdit, setTaskEdit] = useState(false);
-    const handleTaskEdit = () => {
-        setTaskEdit(true);
+    const [priorityTaskEdit, setPriorityTaskEdit] = useState(true);
+    const handlePriorityTaskEdit = () => {
+        setPriorityTaskEdit(false);
     }
 
     const handleReverseTaskEdit = () => {
-        setTaskEdit(false);
+        setPriorityTaskEdit(true);
     }
 
     const handleAddTaskOpen = () => {
@@ -81,6 +81,11 @@ function PriorityTasks({ priority }) {
     useEffect(() => {
         getAllTasks(page, limit, search);
     }, []);
+
+    useEffect(() => {
+        console.log('value of taskEdit in priority is....................', priorityTaskEdit);
+        
+     }, [handlePriorityTaskEdit]);
     return (
         <div className='task-page-div' >
             {open && (<AddTask
@@ -90,8 +95,8 @@ function PriorityTasks({ priority }) {
                 handleClose={handleClose}
                 getAllTasks={getAllTasks}
                 taskDetailsToEdit={taskDetailsToEdit}
-                taskEdit={taskEdit}
-                handleTaskEdit={handleTaskEdit}
+                taskEdit={priorityTaskEdit}
+                handleTaskEdit={handlePriorityTaskEdit}
             />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
@@ -100,7 +105,27 @@ function PriorityTasks({ priority }) {
                         {/* <FilterButton handleFilterOpen={handleFilterOpen} /> */}
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable priority={true} handleOpen={handleAddTaskOpen} handleTaskEdit={handleTaskEdit} setTaskDetailsToEdit={setTaskDetailsToEdit} handleReverseTaskEdit={handleReverseTaskEdit} debouncedGetAllTasks={debouncedGetAllTasks} tasks={priorityTasks?.priorityTasks} limit={limit} privateKey={privateKey} page={priorityTasks?.priorityMetaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={priorityTasks?.priorityMetaData?.hasNextPage} hasPreviousPage={priorityTasks?.priorityMetaData?.hasPrevPage} nextPage={priorityTasks?.priorityMetaData?.nextPage} priorityMetaData={priorityTasks?.priorityMetaData} previousPage={priorityTasks?.priorityMetaData?.previousPage} totalPages={priorityTasks?.priorityMetaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable 
+                        priority={true} 
+                        handleOpen={handleAddTaskOpen} 
+                        handleTaskEdit={handlePriorityTaskEdit} 
+                        setTaskDetailsToEdit={setTaskDetailsToEdit} 
+                        handleReverseTaskEdit={handleReverseTaskEdit} 
+                        debouncedGetAllTasks={debouncedGetAllTasks} 
+                        tasks={priorityTasks?.priorityTasks} 
+                        limit={limit} 
+                        privateKey={privateKey} 
+                        page={priorityTasks?.priorityMetaData?.page} 
+                        setLimit={setLimit} 
+                        setPage={setPage} 
+                        getAllTasks={getAllTasks} 
+                        hasNextPage={priorityTasks?.priorityMetaData?.hasNextPage} 
+                        hasPreviousPage={priorityTasks?.priorityMetaData?.hasPrevPage} 
+                        nextPage={priorityTasks?.priorityMetaData?.nextPage} 
+                        priorityMetaData={priorityTasks?.priorityMetaData} 
+                        previousPage={priorityTasks?.priorityMetaData?.previousPage} 
+                        totalPages={priorityTasks?.priorityMetaData?.totalPages} 
+                        skeletonLoader={skeletonLoader} />
                     </Box>
                 </div>
                 <BottomButtons handleOpen={handleOpen} handleFilterOpen={handleFilterOpen} />

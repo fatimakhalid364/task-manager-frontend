@@ -231,7 +231,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
                             <input
                                 type="text"
                                 style= {{height: '40px', width: '100%'}}
-                                value={taskEdit ? taskDetailsToEdit.taskTitle : taskDetails.taskTitle}
+                                value={taskEdit ? taskDetailsToEdit.taskTitle : taskDetails.taskTitle }
                                 name="taskTitle"
                                 onChange={handleInputChange}
                             />

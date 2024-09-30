@@ -118,9 +118,7 @@ const TaskTable = ({
     backgroundColor: "var(--active-background-color)",
   });
 
-  useEffect(() => {
-    handleReverseTaskEdit();
-  }, []);
+  
 
   const privateKey = localStorage.getItem("privateKey");
 
@@ -256,7 +254,7 @@ const TaskTable = ({
       }, null);
     } else {
       foundTask = tasks.find((task) => task._id === taskId);
-      console.log(foundTask);
+      console.log('foundTask is...........', foundTask);
     }
 
     handleOpen();
