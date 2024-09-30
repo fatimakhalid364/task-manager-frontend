@@ -25,6 +25,7 @@ import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
 import { setMetaData, setTasks } from "src/store/slices/taskSlice";
 import {
   deleteTaskThunk,
+  getAllTasksThunk,
   markTaskStatusThunk,
 } from "src/store/thunks/taskThunks";
 import {
@@ -34,6 +35,7 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
+
 
 const calculateCellWidth = () => {
   const containerWidth =
@@ -166,7 +168,16 @@ const TaskTable = ({
     setAnchorEl(null);
     setSelectedTaskId(null);
   };
-
+  const getAllTasks = async (page = 0, limit = 5) => {
+    try {
+      const params = { page, limit, search: "" }
+      const response = await dispatch(getAllTasksThunk(params)).unwrap();
+      console.log('tasks in the component', response.tasks);
+    } catch (err) {
+      errorToast('Something went wrong', 'getTask-pages-error');
+      console.log('error in tasks', err)
+    }
+  };
   const deleteTask = async (_id) => {
     setSpinner(true);
 
@@ -197,12 +208,19 @@ const TaskTable = ({
           filteredTasks.push(closestTask);
         }
         const updMeta = { ...metaData, total: metaData.total - 1 };
-        dispatch(setTasks(filteredTasks));
+        if (priority) {
+          getAllTasks();
+          dispatch(setPriorityTasks(filteredTasks)); //Not Working
+
+        } else {
+          dispatch(setTasks(filteredTasks));
         dispatch(setMetaData(updMeta));
+        }
         successToast(response.message, "task-created");
       }
     } catch (err) {
       errorToast("Something went wrong", "getTask-pages-error");
+      console.log("Errrrrrrrrrrrrrrrrrrrrr", err)
     } finally {
       setSpinner(false);
     }
@@ -231,6 +249,7 @@ const TaskTable = ({
         );
         if (priority) {
           dispatch(setPriorityTasks(updatedTasksArray))
+          getAllTasks();
 
         } else {
   dispatch(setTasks(updatedTasksArray));
