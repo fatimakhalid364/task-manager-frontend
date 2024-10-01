@@ -5,7 +5,10 @@ import { resetState } from './resetSlice';
 const initialState = {
   value: '0',
   notesFilterValue: '0',
-  dueDateValueForTasks: dayjs(),
+  dueDateValueForTasks: {
+    'startDate': dayjs().toISOString(),
+    'endDate': dayjs().toISOString(),
+  },
   creationDateValueForTasks: dayjs(),
   creationDateValueForNotes: dayjs(),
   checkboxStates: {
@@ -41,22 +44,25 @@ const filterByStatusSlice = createSlice({
       state.notesCheckboxState = action.payload;
     },
     setDueDateValueForTasks: (state, action) => {
+      const {indicator, date} = action.payload;
+      const stringDate = date.toISOString();
       return {
         ...state,
-        dueDateValueForTasks:
-          action.payload instanceof Date && !isNaN(action.payload)
-            ? action.payload.toISOString()  // Convert Date to ISO string
-            : state.dueDateValueForTasks    // Keep the existing value if invalid
+        dueDateValueForTasks: {
+          ...state.dueDateValueForTasks,
+          [indicator]: stringDate, 
+        }
+          // action.payload instanceof Date && !isNaN(action.payload)
+          //   ? action.payload.toISOString()  // Convert Date to ISO string
+          //   : state.dueDateValueForTasks    // Keep the existing value if invalid
       }
     },
     setCreationDateValueForTasks: (state, action) => {
       return {
         ...state,
 
-        creationDateValueForTasks:
-          action.payload instanceof Date && !isNaN(action.payload)
-            ? action.payload.toISOString()
-            : state.creationDateValueForTasks
+        creationDateValueForTasks: action.payload.toISOString()
+  
 
 
 
@@ -66,7 +72,7 @@ const filterByStatusSlice = createSlice({
       return {
         ...state,
 
-        creationDateValueForNotes: action.payload
+        creationDateValueForNotes: action.payload.toISOString()
 
 
 

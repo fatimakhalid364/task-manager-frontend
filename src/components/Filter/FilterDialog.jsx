@@ -1,6 +1,6 @@
 import Modal from '@mui/material/Modal';
 import { styled } from "@mui/system";
-import { useEffect, useState } from 'react';
+import { useEffect, useState,  useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cross from 'src/assets/cross.svg';
 import filter from 'src/assets/filter.svg';
@@ -16,6 +16,8 @@ import { useLocation } from 'react-router-dom';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { setTagsFilterList } from 'src/store/slices/notesSlice';
 import 'src/components/Filter/FilterDialog.css';
+import debounce from 'lodash.debounce';
+
 
 
 const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ theme }) => ({
@@ -34,13 +36,15 @@ const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ t
     },
     '& .MuiInputBase-input': {
         border: 'none',
+        height: '10px',
+    
     },
     borderRadius: '8px',
 
 }));
 
 
-const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
+const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, debouncedGetAllTasks,  limit }) => {
     const location = useLocation();
 
     const pathname = location.pathname;
@@ -53,12 +57,22 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
 
     const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
-    const dueDateValueForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
+    const startDateForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks.startDate);
+    
+    const endDateForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks.endDate);
     const creationDateValueForTasks = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
     const creationDateValueForNotes = useSelector((state) => state.filterByStatus.creationDateValueForNotes);
 
+    const statusArrayForDispatch = Object.keys(checkboxStates)
+    .filter(key => checkboxStates[key]) 
+    .map(key => key
+        .replace('checkbox-', '') 
+        .replace(/-/g, '_') 
+        .toUpperCase() 
+    );
+
     useEffect(() => {
-        console.log('here is the dueDateValueForTasks', dueDateValueForTasks)
+        console.log('here is the dueDateValueForTasks', startDateForTasks, 'and', endDateForTasks)
     }, [])
 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
@@ -126,14 +140,16 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
 
     };
 
-    const handleDueDateChange = (newValue) => {
-        dispatch(setDueDateValueForTasks(newValue ? dayjs(newValue) : null));
+    const handleDueDateChange = (newValue, indicator) => {
+        console.log('newValue and indicator are', newValue, indicator);
+        dispatch(setDueDateValueForTasks({ date: newValue, indicator }));
     };
 
-    const dueDateValueForTasksObj = dayjs(dueDateValueForTasks)
+    const startDateValueForTasksObj = dayjs(startDateForTasks)
+    const endDateValueForTasksObj = dayjs(endDateForTasks)
 
     const handleCreationDateChange = (newValue) => {
-        dispatch(setCreationDateValueForTasks(newValue ? dayjs(newValue) : null));
+        dispatch(setCreationDateValueForTasks(newValue));
     };
 
 
@@ -158,7 +174,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
 
     const promptFilterResetAndClose = () => {
         dispatch(setValue('0'));
-        dispatch(setDueDateValueForTasks(dayjs()));
+        // dispatch(setDueDateValueForTasks(dayjs()));
 
         dispatch(setCreationDateValueForTasks(dayjs()));
         Object.keys(checkboxStates).forEach(checkboxId => dispatch(setCheckboxState({ checkboxId, isChecked: false })));
@@ -194,6 +210,43 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
         dispatch(setTagsFilterList({ tag: id, checked }));
         handleNotesFilterIncrement();
     }
+
+   
+
+    // const debouncedApplyClick = useCallback(
+    //     debounce((page, limit, status) => {
+    //         getAllTasks(page, limit, status);
+    //     }, 300),
+    //     []
+    // );
+
+    const handleApplyClick =  (page=0, limit, status) => {
+        debouncedGetAllTasks(0, limit, status);
+        handleFilterClose(); 
+    }
+
+    const dueDateClearClick = () => {
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startPoint'}));
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endPoint'}));
+    }
+
+    const creationDateClearClick = () => {
+        pathname == '/tasks' ?
+        dispatch(setCreationDateValueForTasks(dayjs())) : dispatch(setCreationDateValueForNotes(dayjs())) ;
+    }
+
+    
+
+    useEffect(() => {
+        console.log('statusArrayForDispatch is......', statusArrayForDispatch);
+    }, [handleApplyClick])
+
+    // const debouncedGetAllTasks = useCallback(
+    //     debounce((page, limit) => {
+    //         getAllTasks(page, limit);
+    //     }, 300),
+    //     []
+    // );
 
     return (
         <Modal
@@ -324,14 +377,27 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
                                 </div>
                             )
                                 : isDueDateClicked ?
-                                    (<div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    (<div style={{ width: '100%', display: 'flex', flexDirection: 'column',  }}>
 
-                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '0', marginTop: '10px' }}>
+                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '14px', marginTop: '10px' }}>
+                                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', marginBottom: '20px'}}>
+                                                <div style={{fontSize: '14px', color: 'var(--tertiary-font-color)', fontFamily: 'var(--primary-font-family)'}}>Select Range</div>
+                                                <div onClick={() => dueDateClearClick}  style={{color: 'var(--quinary-font-color)', fontSize: '14px', fontFamily: 'var(--secondary-font-family)', textDecoration: 'underline', cursor: 'pointer'}}>Clear</div>
+                                            </div>
+                                            <div style={{marginBottom: '25px'}}>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <CssDateField
+                                                    value={startDateValueForTasksObj}
+                                                    onChange={ (newValue) => handleDueDateChange (newValue, 'startDate')}
+                                                    slotProps={{ textField: { fullWidth: true } }}
+                                                />
+                                            </LocalizationProvider>
+                                            </div>
 
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <CssDateField
-                                                    value={dueDateValueForTasksObj}
-                                                    onChange={handleDueDateChange}
+                                                    value={endDateValueForTasksObj}
+                                                    onChange={ (newValue) => handleDueDateChange (newValue, 'endDate')}
                                                     slotProps={{ textField: { fullWidth: true } }}
                                                 />
                                             </LocalizationProvider>
@@ -344,9 +410,12 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
 
                                     </div>)
                                     :
-                                    (<div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '0', marginTop: '10px' }}>
-
+                                    (<div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '14px', marginTop: '10px' }}>
+                                        <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', marginBottom: '20px'}}>
+                                                <div style={{fontSize: '14px', color: 'var(--tertiary-font-color)', fontFamily: 'var(--primary-font-family)'}}>Select Range</div>
+                                                <div onClick={creationDateClearClick} style={{color: 'var(--quinary-font-color)', fontSize: '14px', fontFamily: 'var(--secondary-font-family)', textDecoration: 'underline', cursor: 'pointer'}}>Clear</div>
+                                        </div>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <CssDateField
                                                     value={pathname == '/tasks' ? creationDateValueForTasksObj : creationDateValueForNotesObj}
@@ -365,7 +434,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray }) => {
                     <div className='filter-button' style={{ width: '100px' }} onClick={pathname == '/tasks' ? promptFilterResetAndClose : promptNotesFilterResetAndClose}>
                         Reset
                     </div>
-                    <div className='primary-button' onClick={handleFilterClose} style={{ width: '100px', fontFamily: 'var(--primary-font-family)' }}>
+                    <div className='primary-button' onClick={() => {handleApplyClick(0, limit, statusArrayForDispatch)}} style={{ width: '100px', fontFamily: 'var(--primary-font-family)' }}>
                         Apply
                     </div>
 

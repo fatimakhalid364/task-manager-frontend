@@ -6,13 +6,13 @@ import { APIS } from "../axiosConfig";
 
 const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
-    const { page, limit, search } = params
+    const { page, limit, search, status } = params
     const privateKey = localStorage.getItem("privateKey");
 
     try {
         const response = await APIS.get(`/task`, {
             params: {
-                page, limit, search
+                page, limit, search, status
             },
             headers: {
                 "Content-Type": "application/json",
@@ -205,5 +205,9 @@ const updateTaskThunk = createAsyncThunk("createTask", async (_id, thunkAPI) => 
         });
     }
 });
-export { deleteTaskThunk, fetchCalendarTasksThunk, fetchPriorityCountsThunk, getAllTasksThunk, getPriorityTasksThunk, markTaskStatusThunk, updateTaskThunk };
+
+
+
+
+export { deleteTaskThunk, fetchCalendarTasksThunk,  fetchPriorityCountsThunk, getAllTasksThunk, getPriorityTasksThunk, markTaskStatusThunk, updateTaskThunk };
 

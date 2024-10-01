@@ -52,11 +52,11 @@ function Tasks() {
 
    
 
-    const getAllTasks = async (page=0, limit=5) => {
+    const getAllTasks = async (page=0, limit=5, status) => {
         try {
 
             setSkeletonLoader(true);
-            const params = { page, limit, search }
+            const params = { page, limit, search, status }
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
             console.log('tasks in the component', response.tasks);
         } catch (err) {
@@ -75,8 +75,8 @@ function Tasks() {
     } = useResponsive();
 
     const debouncedGetAllTasks = useCallback(
-        debounce((page, limit) => {
-            getAllTasks(page, limit);
+        debounce((page, limit, status) => {
+            getAllTasks(page, limit, status);
         }, 300),
         []
     );
@@ -121,7 +121,12 @@ function Tasks() {
             handleTaskEdit ={handleTaskEdit }
             setTaskDetailsToEdit={setTaskDetailsToEdit}
             />)}
-            {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
+            {filterOpen && (<FilterDialog 
+            filterOpen={filterOpen} 
+            handleFilterClose={handleFilterClose} 
+            getAllTasks={getAllTasks} 
+            debouncedGetAllTasks={debouncedGetAllTasks}
+            limit={limit} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
                     <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />
