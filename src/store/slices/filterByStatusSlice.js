@@ -18,6 +18,12 @@ const initialState = {
     'checkbox-complete': false,
   },
   notesCheckboxState: false,
+  priorityCheckboxStates: {
+    'checkbox-high': false,
+    'checkbox-medium': false,
+    'checkbox-low': false,
+ 
+  },
 };
 
 const filterByStatusSlice = createSlice({
@@ -78,6 +84,16 @@ const filterByStatusSlice = createSlice({
 
       }
     },
+
+    setPriorityCheckboxState: (state, action) => {
+      const checkboxId = action.payload?.checkboxId;
+      const isChecked = action.payload?.isChecked;
+      state.priorityCheckboxStates = {
+        ...state.priorityCheckboxStates,
+        [checkboxId]: isChecked, // Create a new object for checkboxStates
+      };
+      console.log('boolean value of the PRIORITY checkbox being clicked with the id ' + checkboxId + ' is ' + state.priorityCheckboxStates[checkboxId]);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -87,5 +103,5 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes } = filterByStatusSlice.actions;
+export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setPriorityCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes } = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

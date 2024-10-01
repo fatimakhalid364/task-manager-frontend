@@ -170,9 +170,9 @@ const TaskTable = ({
     setAnchorEl(null);
     setSelectedTaskId(null);
   };
-  const getAllTasks = async (page = 0, limit = 5) => {
+  const getAllTasks = async (page = 0, limit = 5, status=[]) => {
     try {
-      const params = { page, limit, search: "" }
+      const params = { page, limit, search: "", status: [] }
       const response = await dispatch(getAllTasksThunk(params)).unwrap();
       console.log('tasks in the component', response.tasks);
     } catch (err) {

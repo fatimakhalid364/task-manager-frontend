@@ -52,7 +52,7 @@ function Tasks() {
 
    
 
-    const getAllTasks = async (page=0, limit=5, status) => {
+    const getAllTasks = async (page=0, limit=5, status=['NOT_STARTED']) => {
         try {
 
             setSkeletonLoader(true);
@@ -80,6 +80,7 @@ function Tasks() {
         }, 300),
         []
     );
+
     useEffect(() => {
         if (!tasks.loaded) {
             getAllTasks(page, limit, search);

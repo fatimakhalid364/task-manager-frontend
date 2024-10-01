@@ -6,7 +6,7 @@ import cross from 'src/assets/cross.svg';
 import filter from 'src/assets/filter.svg';
 import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
-import { setCheckboxState, setCreationDateValueForNotes, setCreationDateValueForTasks, setDueDateValueForTasks, setNotesFilterValue, setValue } from 'src/store/slices/filterByStatusSlice';
+import { setCheckboxState, setCreationDateValueForNotes, setCreationDateValueForTasks, setDueDateValueForTasks, setNotesFilterValue, setValue, setPriorityCheckboxState } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -37,6 +37,8 @@ const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ t
     '& .MuiInputBase-input': {
         border: 'none',
         height: '10px',
+        color: 'var(--quinary-font-color)',
+        fontSize: '16px'
     
     },
     borderRadius: '8px',
@@ -58,6 +60,8 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     const tagsFilterList = useSelector((state) => state.notes.tagsFilterList);
 
     const startDateForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks.startDate);
+
+    const priorityCheckboxes = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
     
     const endDateForTasks = useSelector((state) => state.filterByStatus.dueDateValueForTasks.endDate);
     const creationDateValueForTasks = useSelector((state) => state.filterByStatus.creationDateValueForTasks);
@@ -93,6 +97,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     const [isDueDateClicked, setIsDueDateClicked] = useState(false);
     const [isCreationDateClicked, setIsCreationDateClicked] = useState(false);
     const [isTagsClicked, setIsTagsClicked] = useState(true);
+    const [isPriorityClicked, setIsPriorityClicked] = useState(false);
 
 
 
@@ -100,6 +105,8 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         setIsStatusClicked(true);
         setIsDueDateClicked(false);
         setIsCreationDateClicked(false);
+        setIsPriorityClicked(false);
+
 
     }
 
@@ -107,6 +114,8 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         setIsTagsClicked(true);
         setIsCreationDateClicked(false);
         setIsStatusClicked(false);
+        setIsPriorityClicked(false);
+
     }
 
     const handleDueDateClick = () => {
@@ -114,6 +123,16 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         setIsDueDateClicked(true);
         setIsCreationDateClicked(false);
         setIsTagsClicked(false);
+        setIsPriorityClicked(false);
+
+    }
+
+    const handlePriorityClick = () => {
+        setIsStatusClicked(false);
+        setIsDueDateClicked(false);
+        setIsCreationDateClicked(false);
+        setIsTagsClicked(false);
+        setIsPriorityClicked(true);
     }
 
     const handleCreationDateClick = () => {
@@ -225,9 +244,14 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         handleFilterClose(); 
     }
 
-    const dueDateClearClick = () => {
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startPoint'}));
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endPoint'}));
+    const startDateClearClick = () => {
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startDate'}));
+       
+    }
+
+    const endDateClearClick = () => {
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endDate'}));
+       
     }
 
     const creationDateClearClick = () => {
@@ -238,8 +262,8 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     
 
     useEffect(() => {
-        console.log('statusArrayForDispatch is......', statusArrayForDispatch);
-    }, [handleApplyClick])
+        console.log('priorityCheckboxesObj is......', priorityCheckboxes);
+    }, [])
 
     // const debouncedGetAllTasks = useCallback(
     //     debounce((page, limit) => {
@@ -284,17 +308,29 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                             </div>
                         </div>
                         {pathname == '/tasks' && (<div className='filter-portion-1-menu'  >
+                            <div>Priority</div>
+                            <div style={{
+                                height: '20px',
+                                width: '20px',
+                                borderRadius: '50px',
+                                backgroundColor: 'var(--primary-background-color)',
+                                color: 'white',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: '2px'
+                            }}>0</div>
+                            <div className='fwd-arrow-circle' style={{ backgroundColor: isPriorityClicked && 'var(--active-background-color)', cursor: 'pointer' }} onClick={handlePriorityClick}>
+                                <img src={fwdArrow} alt='forward-arrow' />
+                            </div>
+                        </div>)}
+                        {pathname == '/tasks' && (<div className='filter-portion-1-menu'  >
                             <div>Due Date</div>
                             <div className='fwd-arrow-circle' style={{ backgroundColor: isDueDateClicked && 'var(--active-background-color)', cursor: 'pointer' }} onClick={handleDueDateClick}>
                                 <img src={fwdArrow} alt='forward-arrow' />
                             </div>
                         </div>)}
-                        <div className='filter-portion-1-menu' >
-                            <div>Creation Date</div>
-                            <div className='fwd-arrow-circle' style={{ backgroundColor: isCreationDateClicked && 'var(--active-background-color)', cursor: 'pointer' }} onClick={handleCreationDateClick}>
-                                <img src={fwdArrow} alt='forward-arrow' />
-                            </div>
-                        </div>
+                        
                     </div>
                     <div className='filter-portion-2'>
                         {isStatusClicked ? (<div style={{ width: '100%' }}>
@@ -380,19 +416,49 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                                     (<div style={{ width: '100%', display: 'flex', flexDirection: 'column',  }}>
 
                                         <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '14px', marginTop: '10px' }}>
-                                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', marginBottom: '20px'}}>
-                                                <div style={{fontSize: '14px', color: 'var(--tertiary-font-color)', fontFamily: 'var(--primary-font-family)'}}>Select Range</div>
-                                                <div onClick={() => dueDateClearClick}  style={{color: 'var(--quinary-font-color)', fontSize: '14px', fontFamily: 'var(--secondary-font-family)', textDecoration: 'underline', cursor: 'pointer'}}>Clear</div>
+                                            
+                                            <div style={{marginBottom: '30px'}}>
+                                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                <div style={{fontSize: '14px', 
+                                                        color: 'var(--tertiary-font-color)', 
+                                                        fontFamily: 'var(--primary-font-family)', 
+                                                        marginBottom: '4px',
+                                                       }}>Starting Date</div>
+                                                    <div
+                                                    onClick={startDateClearClick}
+                                                    style={{
+                                                        color: 'var(--quinary-font-color)', 
+                                                        fontSize: '14px', 
+                                                        fontFamily: 'var(--secondary-font-family)', 
+                                                        textDecoration: 'underline', 
+                                                        cursor: 'pointer'}}>Clear</div>
+                                                   
+                                                </div>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <CssDateField
+                                                        value={startDateValueForTasksObj}
+                                                        onChange={ (newValue) => handleDueDateChange (newValue, 'startDate')}
+                                                        slotProps={{ textField: { fullWidth: true }, placeholder: 'Select the start date for your range...'  }}
+                                                    />
+                                                </LocalizationProvider>
                                             </div>
-                                            <div style={{marginBottom: '25px'}}>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <CssDateField
-                                                    value={startDateValueForTasksObj}
-                                                    onChange={ (newValue) => handleDueDateChange (newValue, 'startDate')}
-                                                    slotProps={{ textField: { fullWidth: true } }}
-                                                />
-                                            </LocalizationProvider>
-                                            </div>
+
+                                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                            <div style={{fontSize: '14px', 
+                                                        color: 'var(--tertiary-font-color)', 
+                                                        fontFamily: 'var(--primary-font-family)', 
+                                                        marginBottom: '4px',
+                                                       }}>Ending Date</div>
+                                                    <div
+                                                     onClick={endDateClearClick}
+                                                    style={{
+                                                        color: 'var(--quinary-font-color)', 
+                                                        fontSize: '14px', 
+                                                        fontFamily: 'var(--secondary-font-family)', 
+                                                        textDecoration: 'underline', 
+                                                        cursor: 'pointer'}}>Clear</div>
+                                                   
+                                                </div>
 
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <CssDateField
@@ -408,26 +474,29 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
 
 
 
-                                    </div>)
-                                    :
-                                    (<div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-                                        <div style={{ width: '84%', height: '210px', overflowY: 'auto', scrollbarWidth: 'none', marginLeft: '14px', marginTop: '10px' }}>
-                                        <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', marginBottom: '20px'}}>
-                                                <div style={{fontSize: '14px', color: 'var(--tertiary-font-color)', fontFamily: 'var(--primary-font-family)'}}>Select Range</div>
-                                                <div onClick={creationDateClearClick} style={{color: 'var(--quinary-font-color)', fontSize: '14px', fontFamily: 'var(--secondary-font-family)', textDecoration: 'underline', cursor: 'pointer'}}>Clear</div>
-                                        </div>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <CssDateField
-                                                    value={pathname == '/tasks' ? creationDateValueForTasksObj : creationDateValueForNotesObj}
-                                                    onChange={pathname == '/tasks' ? handleCreationDateChange : handleCreationDateChangeForNotes}
-                                                    slotProps={{ textField: { fullWidth: true } }}
-                                                />
-                                            </LocalizationProvider>
+                                    </div>) : (<div style={{ width: '100%' }}>
+                            {Object.keys(priorityCheckboxes).map((checkboxId) => (
+                                <div key={checkboxId} className={`${checkboxId}-filter`} style={{ width: '100%', padding: '10px', marginBottom: '0', display: 'flex', gap: '30px' }}>
+                                    <label className="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox-input checkbox-status-input"
+                                            id={checkboxId}
+                                            checked={checkboxStates[checkboxId]}
+                                            onChange={(event) => handleCheckboxChange(checkboxId, event)}
+                                        />
+                                        <span className="checkbox-custom">
+                                            <img src={whiteTick} alt='white-tick' />
+                                        </span>
+                                    </label>
+                                    <div style={{ fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '2px' }}>
+                                        {checkboxId.replace('checkbox-', '').replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
 
-                                        </div>
-
-
-                                    </div>)}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>)
+                                   }
                     </div>
                 </div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px' }}>
