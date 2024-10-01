@@ -124,6 +124,7 @@ function Tasks() {
             taskDetailsToEdit={taskDetailsToEdit}
             taskEdit={taskEdit}
             handleTaskEdit ={handleTaskEdit }
+            setTaskDetailsToEdit={setTaskDetailsToEdit}
             />)}
             {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
             <MainDiv>

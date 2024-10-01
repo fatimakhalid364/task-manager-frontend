@@ -95,7 +95,7 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
 
 
 
-const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit }) => {
+const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit, setTaskDetailsToEdit }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -151,11 +151,19 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setTaskDetails((prevDetails) => ({
-            ...prevDetails,
-            [name]: value
-        }));
+        if (taskEdit) {
+            const { name, value } = e.target;
+            setTaskDetailsToEdit((prevDetails) => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        } else {
+            const { name, value } = e.target;
+            setTaskDetails((prevDetails) => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        }
     };
 
     const handleDateChange = (date) => {
