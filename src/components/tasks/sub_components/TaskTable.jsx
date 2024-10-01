@@ -35,6 +35,8 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
 
 
 const calculateCellWidth = () => {
@@ -188,6 +190,8 @@ const TaskTable = ({
       ).unwrap();
 
       if (response?.status === 200) {
+        const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+       
         const filteredTasks = tasks.filter(
           (task) => task._id !== selectedTaskId
         );
@@ -216,7 +220,11 @@ const TaskTable = ({
           dispatch(setTasks(filteredTasks));
         dispatch(setMetaData(updMeta));
         }
-        successToast(response.message, "task-created");
+        dispatch(setHighPriorityCount(priorityCounts.data.high));
+        dispatch(setLowPriorityCount(priorityCounts.data.low));
+        
+        dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+        successToast(response.message, "task-deleted");
       }
     } catch (err) {
       errorToast("Something went wrong", "getTask-pages-error");
@@ -226,9 +234,11 @@ const TaskTable = ({
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);
     deleteTask(selectedTaskId);
+    
+    
     handleMenuClose();
   };
 

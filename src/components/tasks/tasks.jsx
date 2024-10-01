@@ -16,6 +16,10 @@ import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
 import dayjs from 'dayjs';
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+
+
 
 
 
@@ -54,12 +58,18 @@ function Tasks() {
             setSkeletonLoader(true);
             const params = { page, limit, search }
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
+            const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+            dispatch(setHighPriorityCount(priorityCounts.data.high));
+            dispatch(setLowPriorityCount(priorityCounts.data.low));
+            
+            dispatch(setMediumPriorityCount(priorityCounts.data.medium));
             console.log('tasks in the component', response.tasks);
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
             console.log('error in tasks', err)
         } finally {
             setSkeletonLoader(false);
+            
         }
     };
 
