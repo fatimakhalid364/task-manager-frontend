@@ -58,11 +58,6 @@ function Tasks() {
             setSkeletonLoader(true);
             const params = { page, limit, search }
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
-            dispatch(setHighPriorityCount(priorityCounts.data.high));
-            dispatch(setLowPriorityCount(priorityCounts.data.low));
-            
-            dispatch(setMediumPriorityCount(priorityCounts.data.medium));
             console.log('tasks in the component', response.tasks);
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');

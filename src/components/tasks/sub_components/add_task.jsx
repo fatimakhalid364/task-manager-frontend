@@ -13,6 +13,10 @@ import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
+import { setMetaData, addTask } from "src/store/slices/taskSlice";
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+
 
 
 const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
@@ -204,10 +208,18 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
 
             const thunkToDispatch = createTaskThunk(updatedTaskDetails);
             const response = await dispatch(thunkToDispatch).unwrap();
+            console.log('response in the AddTask component is/////////////', response.data);
             if (response.status === 201) {
                 successToast(response.message, 'task-created');
                 resetTaskDetails();
-                debouncedGetAllTasks(0, limit); 
+                const addedTask = response.data;
+                // debouncedGetAllTasks(0, limit); 
+                dispatch(addTask(addedTask));
+                const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+                dispatch(setHighPriorityCount(priorityCounts.data.high));
+                dispatch(setLowPriorityCount(priorityCounts.data.low));
+                
+                dispatch(setMediumPriorityCount(priorityCounts.data.medium));
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
