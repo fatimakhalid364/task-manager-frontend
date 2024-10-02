@@ -6,13 +6,14 @@ import { APIS } from "../axiosConfig";
 
 const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
-    const { page, limit, search, status } = params
+    const { page, limit, search, status, priority } = params
+    console.log("params areeeeeeeeeeeeeeeeee......", { page, limit, search, status, priority }  );
     const privateKey = localStorage.getItem("privateKey");
 
     try {
         const response = await APIS.get(`/task`, {
             params: {
-                page, limit, search, status
+                page, limit, search, status, priority
             },
             headers: {
                 "Content-Type": "application/json",

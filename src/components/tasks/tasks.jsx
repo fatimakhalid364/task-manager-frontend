@@ -18,6 +18,7 @@ import TaskTable from './sub_components/TaskTable';
 import dayjs from 'dayjs';
 import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
 import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+import PriorityTasks from '../../pages/tasks/PriorityTasks';
 
 
 
@@ -40,10 +41,33 @@ function Tasks() {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
+    const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates);
+    const priorityCheckboxes = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
     const [taskEdit, setTaskEdit] = useState(false);
+    const statusArrayForDispatch = Object.values(checkboxStates).every(value => !value)
+    ? [] 
+    : Object.keys(checkboxStates)
+        .filter(key => checkboxStates[key])
+        .map(key => key
+            .replace('checkbox-', '')
+            .replace(/-/g, '_')
+            .toUpperCase()
+        );
+
+        const priorityArrayForDispatch = Object.values(priorityCheckboxes).every(value => !value)
+        ? [] 
+        : Object.keys(priorityCheckboxes)
+            .filter(key => priorityCheckboxes[key])
+            .map(key => key
+                .replace('checkbox-', '')
+                .replace(/-/g, '_')
+                .toUpperCase()
+            );
     const handleTaskEdit = () => {
         setTaskEdit(true);
     }
+
+   
 
     const handleReverseTaskEdit = () => {
         setTaskEdit(false);
@@ -52,13 +76,17 @@ function Tasks() {
 
    
 
-    const getAllTasks = async (page=0, limit=5, status=['NOT_STARTED']) => {
+    const getAllTasks = async (page=0, limit=5) => {
         try {
 
             setSkeletonLoader(true);
-            const params = { page, limit, search, status }
+            const status = statusArrayForDispatch;
+            const priority = priorityArrayForDispatch;
+            const params = { page, limit, search, status, priority };
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            console.log('tasks in the component', response.tasks);
+            console.log('tasks in the component', response.tasks,
+                'status in the tasks areee/////', status
+            );
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
             console.log('error in tasks', err)
@@ -68,6 +96,12 @@ function Tasks() {
         }
     };
 
+    useEffect(() => {
+        console.log('priorityArrayforDispatch in tasks is......', priorityArrayForDispatch,
+             'statusArrayfordispatch is in tasks', statusArrayForDispatch,
+           );
+    }, [getAllTasks])
+
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -75,12 +109,12 @@ function Tasks() {
     } = useResponsive();
 
     const debouncedGetAllTasks = useCallback(
-        debounce((page, limit, status) => {
-            getAllTasks(page, limit, status);
+        debounce((page, limit) => {
+            getAllTasks(page, limit);
         }, 300),
         []
     );
-
+   
     useEffect(() => {
         if (!tasks.loaded) {
             getAllTasks(page, limit, search);

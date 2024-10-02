@@ -5,6 +5,7 @@ import { resetState } from './resetSlice';
 const initialState = {
   value: '0',
   notesFilterValue: '0',
+  priorityFilterValue: '0',
   dueDateValueForTasks: {
     'startDate': dayjs().toISOString(),
     'endDate': dayjs().toISOString(),
@@ -15,7 +16,7 @@ const initialState = {
     'checkbox-not-started': false,
     'checkbox-pending': false,
     'checkbox-in-progress': false,
-    'checkbox-complete': false,
+    'checkbox-completed': false,
   },
   notesCheckboxState: false,
   priorityCheckboxStates: {
@@ -36,6 +37,10 @@ const filterByStatusSlice = createSlice({
     setNotesFilterValue: (state, action) => {
       state.notesFilterValue = action.payload;
       console.log('state.notesFilterValue coming from the filterByStatusSlice is', state.notesFilterValue);
+    },
+    setPriorityFilterValue: (state, action) => {
+      state.priorityFilterValue = action.payload;
+      console.log('state.PriorityFilterValue coming from the filterByStatusSlice is', state.priorityFilterValue);
     },
     setCheckboxState: (state, action) => {
       const checkboxId = action.payload?.checkboxId;
@@ -103,5 +108,13 @@ const filterByStatusSlice = createSlice({
   }
 });
 
-export const { setValue, setCheckboxState, setNotesFilterValue, setNotesCheckboxState, setPriorityCheckboxState, setDueDateValueForTasks, setCreationDateValueForTasks, setCreationDateValueForNotes } = filterByStatusSlice.actions;
+export const { setValue, 
+  setCheckboxState, 
+  setNotesFilterValue, 
+  setNotesCheckboxState, 
+  setPriorityCheckboxState, 
+  setDueDateValueForTasks, 
+  setCreationDateValueForTasks, 
+  setCreationDateValueForNotes,
+  setPriorityFilterValue} = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

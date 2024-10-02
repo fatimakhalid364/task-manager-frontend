@@ -6,7 +6,15 @@ import cross from 'src/assets/cross.svg';
 import filter from 'src/assets/filter.svg';
 import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
-import { setCheckboxState, setCreationDateValueForNotes, setCreationDateValueForTasks, setDueDateValueForTasks, setNotesFilterValue, setValue, setPriorityCheckboxState } from 'src/store/slices/filterByStatusSlice';
+import { 
+    setCheckboxState, 
+    setCreationDateValueForNotes, 
+    setCreationDateValueForTasks, 
+    setDueDateValueForTasks, 
+    setNotesFilterValue, 
+    setValue, 
+    setPriorityCheckboxState, 
+    setPriorityFilterValue } from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -75,6 +83,17 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         .toUpperCase() 
     );
 
+    const priorityArrayForDispatch = Object.keys(priorityCheckboxes )
+    .filter(key => priorityCheckboxes [key]) 
+    .map(key => key
+        .replace('checkbox-', '') 
+        .replace(/-/g, '_') 
+        .toUpperCase() 
+    );
+
+    let dueDateArrayForDispatch = [];
+    dueDateArrayForDispatch.push(startDateForTasks);
+
     useEffect(() => {
         console.log('here is the dueDateValueForTasks', startDateForTasks, 'and', endDateForTasks)
     }, [])
@@ -82,6 +101,8 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     const filterByStatusValue = useSelector((state) => state.filterByStatus.value);
 
     const notesFilterByStatusValue = useSelector((state) => state.filterByStatus.notesFilterValue);
+
+    const priorityFilterValue = useSelector((state) => state.filterByStatus.priorityFilterValue);
     const tasksArray = useSelector((state) => state.tasks.tasks);
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -159,6 +180,22 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
 
     };
 
+    
+
+    const handlePriorityIncrement = () => {
+
+        const checkboxes = document.querySelectorAll('.checkbox-priority-input');
+
+
+
+        const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+        dispatch(setPriorityFilterValue(checkedCount > 0 ? checkedCount.toString() : '0'));
+
+
+
+    };
+
     const handleDueDateChange = (newValue, indicator) => {
         console.log('newValue and indicator are', newValue, indicator);
         dispatch(setDueDateValueForTasks({ date: newValue, indicator }));
@@ -191,18 +228,23 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
 
 
 
-    const promptFilterResetAndClose = () => {
+    const promptFilterResetAndClose = (page=0, limit, status) => {
         dispatch(setValue('0'));
         // dispatch(setDueDateValueForTasks(dayjs()));
-
+        dispatch(setPriorityFilterValue('0'));
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startDate'}));
+        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endDate'}));
         dispatch(setCreationDateValueForTasks(dayjs()));
         Object.keys(checkboxStates).forEach(checkboxId => dispatch(setCheckboxState({ checkboxId, isChecked: false })));
+        Object.keys(priorityCheckboxes).forEach(checkboxId => dispatch(setPriorityCheckboxState({ checkboxId, isChecked: false })));
+       
         handleFilterClose();
+        debouncedGetAllTasks(0, limit, status);
     }
 
     const promptNotesFilterResetAndClose = () => {
         dispatch(setNotesFilterValue('0'));
-        dispatch(setCreationDateValueForNotes(dayjs()));
+    
         Object.keys(tagsFilterList).forEach(checkboxId => dispatch(setTagsFilterList({ tag: checkboxId, checked: false })));
         handleFilterClose();
     }
@@ -224,6 +266,22 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         handleIncrement();
     };
 
+    const handlePriorityCheckboxChange = (checkboxId, event) => {
+
+        const isChecked = event.target.checked;
+
+
+
+
+        dispatch(setPriorityCheckboxState({ checkboxId, isChecked }));
+
+
+        console.log('Checkbox ID:', checkboxId, 'Checked:', isChecked);
+
+
+        handlePriorityIncrement();
+    };
+
     const handleNotesCheckboxChange = (event) => {
         const { id, checked } = event.target;
         dispatch(setTagsFilterList({ tag: id, checked }));
@@ -239,8 +297,13 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     //     []
     // );
 
-    const handleApplyClick =  (page=0, limit, status) => {
-        debouncedGetAllTasks(0, limit, status);
+    const handleApplyClick =  (page=0, limit) => {
+        debouncedGetAllTasks(0, limit);
+        handleFilterClose(); 
+    }
+
+    const handleResetClick =  (page=0, limit) => {
+        debouncedGetAllTasks(0, limit);
         handleFilterClose(); 
     }
 
@@ -262,8 +325,10 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     
 
     useEffect(() => {
-        console.log('priorityCheckboxesObj is......', priorityCheckboxes);
-    }, [])
+        console.log('priorityArrayforDispatch is......', priorityArrayForDispatch,
+             'statusArrayfordispatch is', statusArrayForDispatch,
+            'dueDateArrayforDispatch is', dueDateArrayForDispatch);
+    }, [handleApplyClick])
 
     // const debouncedGetAllTasks = useCallback(
     //     debounce((page, limit) => {
@@ -319,7 +384,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 marginTop: '2px'
-                            }}>0</div>
+                            }}>{priorityFilterValue}</div>
                             <div className='fwd-arrow-circle' style={{ backgroundColor: isPriorityClicked && 'var(--active-background-color)', cursor: 'pointer' }} onClick={handlePriorityClick}>
                                 <img src={fwdArrow} alt='forward-arrow' />
                             </div>
@@ -480,10 +545,10 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                                     <label className="checkbox-wrapper">
                                         <input
                                             type="checkbox"
-                                            className="checkbox-input checkbox-status-input"
+                                            className="checkbox-input checkbox-priority-input"
                                             id={checkboxId}
-                                            checked={checkboxStates[checkboxId]}
-                                            onChange={(event) => handleCheckboxChange(checkboxId, event)}
+                                            checked={priorityCheckboxes[checkboxId]}
+                                            onChange={(event) => handlePriorityCheckboxChange(checkboxId, event)}
                                         />
                                         <span className="checkbox-custom">
                                             <img src={whiteTick} alt='white-tick' />
@@ -500,10 +565,10 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                     </div>
                 </div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <div className='filter-button' style={{ width: '100px' }} onClick={pathname == '/tasks' ? promptFilterResetAndClose : promptNotesFilterResetAndClose}>
+                    <div  className='filter-button' style={{ width: '100px' }} onClick={pathname == '/tasks' ? () => promptFilterResetAndClose(0, limit, []) : promptNotesFilterResetAndClose}>
                         Reset
                     </div>
-                    <div className='primary-button' onClick={() => {handleApplyClick(0, limit, statusArrayForDispatch)}} style={{ width: '100px', fontFamily: 'var(--primary-font-family)' }}>
+                    <div className='primary-button' onClick={() => {handleApplyClick(0, limit)}} style={{ width: '100px', fontFamily: 'var(--primary-font-family)' }}>
                         Apply
                     </div>
 
