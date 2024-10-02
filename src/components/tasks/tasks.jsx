@@ -41,7 +41,6 @@ function Tasks() {
     const priorityObj = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
     const dueDate = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
     const [taskEdit, setTaskEdit] = useState(false);
-    const [reseting, setReseting] = useState(false);
     const handleTaskEdit = () => {
         setTaskEdit(true);
     }
@@ -90,7 +89,7 @@ function Tasks() {
         debounce((page, limit) => {
             getAllTasks(page, limit);
         }, 300),
-        [statusObj, priorityObj, page, limit, dueDate, search, reseting]
+        [statusObj, priorityObj, page, limit, dueDate, search]
     );
    
     useEffect(() => {
