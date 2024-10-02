@@ -49,13 +49,17 @@ function Tasks() {
     }
     console.log('tasks in the component', tasks)
 
-   
+    const extractCheckedValues = (obj) => {
+        return Object.keys(obj).filter(key => obj[key] === true);
+    };
 
     const getAllTasks = async (page=0, limit=5) => {
         try {
 
             setSkeletonLoader(true);
-            const params = { page, limit, search, statusObj, priorityObj };
+            const status = extractCheckedValues(statusObj);
+            const priority = extractCheckedValues(priorityObj);
+            const params = { page, limit, search, status, priority, priorityObj, statusObj };
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
             console.log('tasks in the component', response.tasks,
                 'statusObj in the tasks areee/////', statusObj
@@ -85,7 +89,7 @@ function Tasks() {
         debounce((page, limit) => {
             getAllTasks(page, limit);
         }, 300),
-        []
+        [statusObj, priorityObj, page, limit, search]
     );
    
     useEffect(() => {
