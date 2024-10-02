@@ -7,8 +7,8 @@ const initialState = {
   notesFilterValue: '0',
   priorityFilterValue: '0',
   dueDateValueForTasks: {
-    'startDate': dayjs().toISOString(),
-    'endDate': dayjs().toISOString(),
+    'startDate': null,
+    'endDate': null
   },
   creationDateValueForTasks: dayjs(),
   creationDateValueForNotes: dayjs(),
@@ -99,6 +99,17 @@ const filterByStatusSlice = createSlice({
       };
       console.log('boolean value of the PRIORITY checkbox being clicked with the id ' + checkboxId + ' is ' + state.priorityCheckboxStates[checkboxId]);
     },
+    clearStartDate: (state) => {
+      state.dueDateValueForTasks.startDate = null;
+    },
+    clearEndDate: (state) => {
+      state.dueDateValueForTasks.endDate = null;
+    },
+
+    // Reset action for resetting the state to initialState
+    reset: (state) => {
+      return initialState;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -116,5 +127,9 @@ export const { setValue,
   setDueDateValueForTasks, 
   setCreationDateValueForTasks, 
   setCreationDateValueForNotes,
-  setPriorityFilterValue} = filterByStatusSlice.actions;
+  setPriorityFilterValue,
+  clearStartDate,
+  clearEndDate,
+  reset
+} = filterByStatusSlice.actions;
 export const filterByStatusReducer = filterByStatusSlice.reducer;

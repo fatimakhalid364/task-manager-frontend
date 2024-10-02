@@ -1,30 +1,33 @@
 import Modal from '@mui/material/Modal';
 import { styled } from "@mui/system";
-import { useEffect, useState,  useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cross from 'src/assets/cross.svg';
 import filter from 'src/assets/filter.svg';
 import fwdArrow from 'src/assets/fwd-arrow.svg';
 import whiteTick from 'src/assets/white-tick.svg';
-import { 
-    setCheckboxState, 
-    setCreationDateValueForNotes, 
-    setCreationDateValueForTasks, 
-    setDueDateValueForTasks, 
-    setNotesFilterValue, 
-    setValue, 
-    setPriorityCheckboxState, 
-    setPriorityFilterValue } from 'src/store/slices/filterByStatusSlice';
+import {
+    clearEndDate,
+    clearStartDate,
+    reset,
+    setCheckboxState,
+    setDueDateValueForTasks,
+    setNotesFilterValue,
+    setPriorityCheckboxState,
+    setPriorityFilterValue,
+    setValue
+} from 'src/store/slices/filterByStatusSlice';
 // import { setCheckboxState } from 'src/store/slices/checkboxSlice';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
-import SearchGlass from 'src/components/icons/SearchGlass';
-import { setTagsFilterList } from 'src/store/slices/notesSlice';
 import 'src/components/Filter/FilterDialog.css';
-import debounce from 'lodash.debounce';
+import SearchGlass from 'src/components/icons/SearchGlass';
+import { errorToast } from 'src/components/toasters/toast.js';
+import { setTagsFilterList } from 'src/store/slices/notesSlice';
+import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 
 
 
@@ -54,7 +57,7 @@ const CssDateField = styled((props) => <MobileDateTimePicker {...props} />)(({ t
 }));
 
 
-const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, debouncedGetAllTasks,  limit }) => {
+const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesArray, getAllTasks, debouncedGetAllTasks, limit }) => {
     const location = useLocation();
 
     const pathname = location.pathname;
@@ -103,12 +106,6 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     const notesFilterByStatusValue = useSelector((state) => state.filterByStatus.notesFilterValue);
 
     const priorityFilterValue = useSelector((state) => state.filterByStatus.priorityFilterValue);
-    const tasksArray = useSelector((state) => state.tasks.tasks);
-
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    const timeFormat = useSelector((state) => state.format.timeFormat)
-    const dateFormat = useSelector((state) => state.format.dateFormat)
 
     useEffect(() => {
         console.log('the notesFilterByStatusValue is =================', notesFilterByStatusValue)
@@ -204,20 +201,6 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
     const startDateValueForTasksObj = dayjs(startDateForTasks)
     const endDateValueForTasksObj = dayjs(endDateForTasks)
 
-    const handleCreationDateChange = (newValue) => {
-        dispatch(setCreationDateValueForTasks(newValue));
-    };
-
-
-
-    const creationDateValueForTasksObj = dayjs(creationDateValueForTasks);
-
-    const handleCreationDateChangeForNotes = (newValue) => {
-        dispatch(setCreationDateValueForNotes(newValue));
-    };
-
-    const creationDateValueForNotesObj = dayjs(creationDateValueForNotes);
-
     const handleNotesFilterIncrement = () => {
         const checkboxes = document.querySelectorAll('.checkbox-notes-filter-input');
 
@@ -226,20 +209,19 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         dispatch(setNotesFilterValue(checkedCount > 0 ? checkedCount.toString() : '0'));
     };
 
-
-
-    const promptFilterResetAndClose = (page=0, limit, status) => {
-        dispatch(setValue('0'));
-        // dispatch(setDueDateValueForTasks(dayjs()));
-        dispatch(setPriorityFilterValue('0'));
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startDate'}));
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endDate'}));
-        dispatch(setCreationDateValueForTasks(dayjs()));
-        Object.keys(checkboxStates).forEach(checkboxId => dispatch(setCheckboxState({ checkboxId, isChecked: false })));
-        Object.keys(priorityCheckboxes).forEach(checkboxId => dispatch(setPriorityCheckboxState({ checkboxId, isChecked: false })));
-       
+    const promptFilterResetAndClose = async (limit) => {
+        await dispatch(reset());
         handleFilterClose();
-        debouncedGetAllTasks(0, limit, status);
+        try {
+            setSkeletonLoader(true);
+            await dispatch(getAllTasksThunk({ page: 0, limit })).unwrap();
+        } catch (err) {
+            errorToast('Something went wrong', 'getTask-pages-error');
+            console.log('error in tasks', err)
+        } finally {
+            setSkeletonLoader(false);
+
+        }
     }
 
     const promptNotesFilterResetAndClose = () => {
@@ -288,41 +270,21 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
         handleNotesFilterIncrement();
     }
 
-   
-
-    // const debouncedApplyClick = useCallback(
-    //     debounce((page, limit, status) => {
-    //         getAllTasks(page, limit, status);
-    //     }, 300),
-    //     []
-    // );
-
     const handleApplyClick =  (page=0, limit) => {
         debouncedGetAllTasks(0, limit);
         handleFilterClose(); 
     }
 
-    const handleResetClick =  (page=0, limit) => {
-        debouncedGetAllTasks(0, limit);
-        handleFilterClose(); 
-    }
-
     const startDateClearClick = () => {
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'startDate'}));
+        dispatch(clearStartDate());
        
     }
 
     const endDateClearClick = () => {
-        dispatch(setDueDateValueForTasks({date: dayjs(), indicator: 'endDate'}));
-       
+        dispatch(clearEndDate());
+
     }
 
-    const creationDateClearClick = () => {
-        pathname == '/tasks' ?
-        dispatch(setCreationDateValueForTasks(dayjs())) : dispatch(setCreationDateValueForNotes(dayjs())) ;
-    }
-
-    
 
     useEffect(() => {
         console.log('priorityArrayforDispatch is......', priorityArrayForDispatch,
@@ -330,12 +292,6 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
             'dueDateArrayforDispatch is', dueDateArrayForDispatch);
     }, [handleApplyClick])
 
-    // const debouncedGetAllTasks = useCallback(
-    //     debounce((page, limit) => {
-    //         getAllTasks(page, limit);
-    //     }, 300),
-    //     []
-    // );
 
     return (
         <Modal
@@ -450,7 +406,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
 
                                                     {note.tags.length > 0 ? (
                                                         note.tags.map((tag) => (
-                                                            <div style={{ marginLeft: '30px' }}>
+                                                            <div key={tag} style={{ marginLeft: '30px' }}>
                                                                 <label className="checkbox-wrapper">
                                                                     <input
                                                                         type="checkbox"
@@ -504,6 +460,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                                                         value={startDateValueForTasksObj}
                                                         onChange={ (newValue) => handleDueDateChange (newValue, 'startDate')}
                                                         slotProps={{ textField: { fullWidth: true }, placeholder: 'Select the start date for your range...'  }}
+                                                        maxDate={endDateValueForTasksObj !== null ? endDateValueForTasksObj : null}
                                                     />
                                                 </LocalizationProvider>
                                             </div>
@@ -528,8 +485,10 @@ const FilterDialog = ({ filterOpen, handleFilterClose, notesArray, getAllTasks, 
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <CssDateField
                                                     value={endDateValueForTasksObj}
+                                                    disabled={startDateValueForTasksObj === null ? true : false} 
                                                     onChange={ (newValue) => handleDueDateChange (newValue, 'endDate')}
                                                     slotProps={{ textField: { fullWidth: true } }}
+                                                    minDate={startDateValueForTasksObj || null}
                                                 />
                                             </LocalizationProvider>
 
