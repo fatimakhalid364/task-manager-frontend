@@ -6,8 +6,23 @@ import { APIS } from "../axiosConfig";
 
 const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
-    const { page, limit, search, status, priority } = params
-    console.log("params areeeeeeeeeeeeeeeeee......", { page, limit, search, status, priority }  );
+    const { page, limit, search, statusObj, priorityObj } = params
+    const status = []
+    const priority = []
+    //Go through each key value pair of object statusObj and priorityObj and if a key's value is true then add the key to new array 
+    Object.entries(statusObj).forEach(([key, value]) => {
+        if (value === true) {
+            status.push(key);
+        }
+    });
+
+    Object.entries(priorityObj).forEach(([key, value]) => {
+        if (value === true) {
+            priority.push(key);
+        }
+    });
+    console.log("params areeeeeeeeeeeeeeeeee......", { page, limit, search, statusObj, priorityObj, status, priority });
+
     const privateKey = localStorage.getItem("privateKey");
 
     try {
@@ -46,6 +61,7 @@ const getAllTasksThunk = createAsyncThunk("getAllTasks", async (params, thunkAPI
 const getPriorityTasksThunk = createAsyncThunk("getPriorityTasks", async (params, thunkAPI) => {
     console.log("inside getAllTasks thunk",);
     const { page, limit, search, priority } = params
+
     const privateKey = localStorage.getItem("privateKey");
 
     try {
@@ -210,5 +226,5 @@ const updateTaskThunk = createAsyncThunk("createTask", async (_id, thunkAPI) => 
 
 
 
-export { deleteTaskThunk, fetchCalendarTasksThunk,  fetchPriorityCountsThunk, getAllTasksThunk, getPriorityTasksThunk, markTaskStatusThunk, updateTaskThunk };
+export { deleteTaskThunk, fetchCalendarTasksThunk, fetchPriorityCountsThunk, getAllTasksThunk, getPriorityTasksThunk, markTaskStatusThunk, updateTaskThunk };
 

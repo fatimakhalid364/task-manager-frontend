@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,10 +16,6 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
-import dayjs from 'dayjs';
-import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
-import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
-import PriorityTasks from '../../pages/tasks/PriorityTasks';
 
 
 
@@ -41,34 +38,12 @@ function Tasks() {
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
-    const checkboxStates = useSelector((state) => state.filterByStatus.checkboxStates);
-    const priorityCheckboxes = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
+    const statusObj = useSelector((state) => state.filterByStatus.checkboxStates);
+    const priorityObj = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
     const [taskEdit, setTaskEdit] = useState(false);
-    const statusArrayForDispatch = Object.values(checkboxStates).every(value => !value)
-    ? [] 
-    : Object.keys(checkboxStates)
-        .filter(key => checkboxStates[key])
-        .map(key => key
-            .replace('checkbox-', '')
-            .replace(/-/g, '_')
-            .toUpperCase()
-        );
-
-        const priorityArrayForDispatch = Object.values(priorityCheckboxes).every(value => !value)
-        ? [] 
-        : Object.keys(priorityCheckboxes)
-            .filter(key => priorityCheckboxes[key])
-            .map(key => key
-                .replace('checkbox-', '')
-                .replace(/-/g, '_')
-                .toUpperCase()
-            );
     const handleTaskEdit = () => {
         setTaskEdit(true);
     }
-
-   
-
     const handleReverseTaskEdit = () => {
         setTaskEdit(false);
     }
@@ -80,12 +55,10 @@ function Tasks() {
         try {
 
             setSkeletonLoader(true);
-            const status = statusArrayForDispatch;
-            const priority = priorityArrayForDispatch;
-            const params = { page, limit, search, status, priority };
+            const params = { page, limit, search, statusObj, priorityObj };
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
             console.log('tasks in the component', response.tasks,
-                'status in the tasks areee/////', status
+                'statusObj in the tasks areee/////', statusObj
             );
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
@@ -97,8 +70,8 @@ function Tasks() {
     };
 
     useEffect(() => {
-        console.log('priorityArrayforDispatch in tasks is......', priorityArrayForDispatch,
-             'statusArrayfordispatch is in tasks', statusArrayForDispatch,
+        console.log('priorityObjArrayforDispatch in tasks is......', statusObj,
+            'statusArrayfordispatch is in tasks', priorityObj,
            );
     }, [getAllTasks])
 
@@ -207,5 +180,5 @@ function Tasks() {
     );
 }
 
-export {Tasks};
+export { Tasks };
 

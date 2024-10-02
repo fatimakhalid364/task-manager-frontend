@@ -13,16 +13,16 @@ const initialState = {
   creationDateValueForTasks: dayjs(),
   creationDateValueForNotes: dayjs(),
   checkboxStates: {
-    'checkbox-not-started': false,
-    'checkbox-pending': false,
-    'checkbox-in-progress': false,
-    'checkbox-completed': false,
+    'NOT_STARTED': false,
+    'PENDING': false,
+    'IN_PROGRESS': false,
+    'COMPLETED': false,
   },
   notesCheckboxState: false,
   priorityCheckboxStates: {
-    'checkbox-high': false,
-    'checkbox-medium': false,
-    'checkbox-low': false,
+    'HIGH': false,
+    'MEDIUM': false,
+    'LOW': false,
  
   },
 };
