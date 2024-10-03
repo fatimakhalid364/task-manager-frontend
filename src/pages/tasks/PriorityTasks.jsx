@@ -13,6 +13,8 @@ import TaskTable from 'src/components/tasks/sub_components/TaskTable';
 import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getPriorityTasksThunk } from 'src/store/thunks/taskThunks';
+import { setPriorityTasks } from 'src/store/slices/priorityTaskSlice';
+
 
 function PriorityTasks({ priority }) {
     const [open, setOpen] = useState(false);
@@ -23,6 +25,15 @@ function PriorityTasks({ priority }) {
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
     const priorityTasks = useSelector((state) => state.priorityTask);
+    const highClickCount = useSelector((state) => state.clickCount.highClickCount);
+    const mediumClickCount = useSelector((state) => state.clickCount.mediumClickCount);
+    const lowClickCount = useSelector((state) => state.clickCount.lowClickCount);
+   useEffect(() =>{
+    console.log('highClickCount in priorityTasks is', highClickCount,
+        'mediumClickCount in priorityTasks is', mediumClickCount,
+        'lowClickCount in priorityTasks is', lowClickCount,
+    );
+   }, [])
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
@@ -57,7 +68,7 @@ function PriorityTasks({ priority }) {
             setSkeletonLoader(true);
             const params = { page, limit, search, priority }
             const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
-            console.log('tasks in the component', response);
+            console.log('priority tasks in the component', response);
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
             console.log('error in tasks', err)
@@ -79,7 +90,10 @@ function PriorityTasks({ priority }) {
         []
     );
     useEffect(() => {
-        getAllTasks(page, limit, search);
+        if(!priorityTasks?.loaded ) {
+            getAllTasks(page, limit, search);
+        }
+     
     }, []);
 
     useEffect(() => {
@@ -88,19 +102,15 @@ function PriorityTasks({ priority }) {
      }, [handlePriorityTaskEdit]);
     return (
         <div className='task-page-div' >
-            {open && (<AddTask
-                debouncedGetAllTasks={debouncedGetAllTasks}
-                limit={limit}
-                open={open}
-                handleClose={handleClose}
-                getAllTasks={getAllTasks}
-                taskDetailsToEdit={taskDetailsToEdit}
-                taskEdit={priorityTaskEdit}
-                handleTaskEdit={handlePriorityTaskEdit}
-            />)}
+           
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader handleOpen={handleAddTaskOpen} handleReverseTaskEdit={handleReverseTaskEdit} showAdd={false} titleHead={priority} total={priorityTasks?.priorityMetaData?.total} text='All Tasks' object='Task' />
+                    <PageHeader 
+                    handleOpen={handleAddTaskOpen} 
+                    handleReverseTaskEdit={handleReverseTaskEdit} 
+                    showAdd={false} 
+                    titleHead={priority == 'HIGH' ? 'Urgent' : priority == 'MEDIUM' ? 'Important' : 'Deferred'} 
+                    total={priorityTasks?.priorityMetaData?.total} />
                     <div>
                         {/* <FilterButton handleFilterOpen={handleFilterOpen} /> */}
                     </div>

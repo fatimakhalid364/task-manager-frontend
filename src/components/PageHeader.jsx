@@ -32,7 +32,7 @@ function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true
     <div className='task-page-top'>
         <div className="task-page-top-header" style={{ marginLeft: (onWholeScreen && isAdaptableScreen) ? '16px' : !isAdaptableScreen ? '10px' : '' }}>
             <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px', marginLeft: isMicroScreen && '5px' }}>
-                    {titleHead ? titleHead + " Priority Tasks" : text} 
+                    {titleHead ? titleHead + " Tasks" : text} 
             </div>
             <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px' }}>
                 ({total})

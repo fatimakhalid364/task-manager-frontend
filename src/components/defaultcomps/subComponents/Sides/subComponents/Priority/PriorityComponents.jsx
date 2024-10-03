@@ -3,14 +3,20 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResponsive } from 'src/constants/media_queries';
 
-function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked, url }) {
+
+
+function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked, url,  }) {
     const navigate = useNavigate();
+   
     const {
         expandBar,
         isMicroScreen
     } = useResponsive();
 
-    
+   
+
+   
+ 
 
     const priorityColor = PriorityLevel === 'High' ? '#EF4444' : PriorityLevel === 'Medium' ? '#F59E0B' : '#1FDE43'
 

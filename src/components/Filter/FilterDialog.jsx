@@ -370,7 +370,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                                         </span>
                                     </label>
                                     <div style={{ fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)', marginTop: '2px' }}>
-                                        {checkboxId.replace('checkbox-', '').replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                                        {checkboxId.replace('checkbox-', '').replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
 
                                     </div>
                                 </div>

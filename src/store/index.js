@@ -14,6 +14,7 @@ import { taskReducer } from './slices/taskSlice';
 
 
 
+
 const rootReducer = combineReducers({
     auth: authReducer,
     appearance: appearanceReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     notes: notesReducer,
     reset: resetReducer,
     priorityTask: priorityTaskReducer,
+
 });
 
 const persistConfig = {

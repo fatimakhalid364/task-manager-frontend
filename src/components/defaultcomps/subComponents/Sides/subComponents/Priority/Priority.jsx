@@ -5,6 +5,8 @@ import RedDot from "src/assets/Ellipse red.svg";
 import PriorityComponents from "src/components/defaultcomps/subComponents/Sides/subComponents/Priority/PriorityComponents";
 import { useResponsive } from 'src/constants/media_queries';
 
+import { useEffect } from "react";
+
 function Priority({ burgerMenuClicked }) {
     const {
         isAdaptableScreen,
@@ -18,15 +20,15 @@ function Priority({ burgerMenuClicked }) {
     const mediumPriorityCount = useSelector((state) => state.tasks.mediumPriorityCount);
     const lowPriorityCount = useSelector((state) => state.tasks.lowPriorityCount);
 
-
-
+    
+  
 
     return (
         <div className='tasks-page-priority-div' style={{ display: (isMicroScreen && !burgerMenuClicked && !expandBar) && 'none' }}>
             {((expandBar && burgerMenuClicked) || (isMicroScreen && burgerMenuClicked)) && (<div className='priority-header'>Priority</div>)}
-            <PriorityComponents url={"/tasks_high"} Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel={highPriorityCount} burgerMenuClicked={burgerMenuClicked} />
-            <PriorityComponents url={"/tasks_medium"} Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel={mediumPriorityCount} burgerMenuClicked={burgerMenuClicked} />
-            <PriorityComponents url={"/tasks_low"} Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel={lowPriorityCount} burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents    url={"/tasks_high"} Dot={RedDot} PriorityLevel='High' TasksAtPriorityLevel={highPriorityCount} burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents    url={"/tasks_medium"} Dot={OrangeDot} PriorityLevel='Medium' TasksAtPriorityLevel={mediumPriorityCount} burgerMenuClicked={burgerMenuClicked} />
+            <PriorityComponents   url={"/tasks_low"} Dot={GreenDot} PriorityLevel='Low' TasksAtPriorityLevel={lowPriorityCount} burgerMenuClicked={burgerMenuClicked} />
 
 
         </div>
