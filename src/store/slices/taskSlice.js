@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import createTaskThunk from '../thunks/create_task_thunk';
 import { getAllTasksThunk } from '../thunks/taskThunks';
 import { resetState } from './resetSlice';
 
@@ -88,6 +89,28 @@ const taskSlice = createSlice({
             .addCase(getAllTasksThunk.rejected, (state) => {
                 state.loading = false;
             })
+            .addCase(createTaskThunk.fulfilled, (state, action) => {
+                state.metaData.total = (state.metaData.total || 0) + 1;
+                if (state.metaData.range && typeof state.metaData.range.end === 'number') {
+                    state.metaData.range.end += 1;
+                } else {
+                    state.metaData.range = {
+                        ...state.metaData.range,
+                        end: 1,
+                    };
+                }
+            })
+            // .addCase(deleteTaskThunk.fulfilled, (state, action) => {
+            //     state.metaData.count = (state.metaData.count || 0) - 1;
+            //     if (state.metaData.range && typeof state.metaData.range.end === 'number') {
+            //         state.metaData.range.end -= 1;
+            //     } else {
+            //         state.metaData.range = {
+            //             ...state.metaData.range,
+            //             end: 0,
+            //         };
+            //     }
+            // })
             .addCase(resetState, (state) => {
                 return { tasks: [],
                     metaData: {},
