@@ -22,9 +22,10 @@ import tickInCircle from "src/assets/tick-in-circle.svg";
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
 import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
-import { setMetaData, setTasks } from "src/store/slices/taskSlice";
+import { setHighPriorityCount, setLowPriorityCount, setMediumPriorityCount, setMetaData, setTasks } from "src/store/slices/taskSlice";
 import {
   deleteTaskThunk,
+  fetchPriorityCountsThunk,
   getAllTasksThunk,
   markTaskStatusThunk,
 } from "src/store/thunks/taskThunks";
@@ -35,8 +36,6 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
-import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
-import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
 
 
 const calculateCellWidth = () => {
@@ -197,6 +196,7 @@ const TaskTable = ({
         );
         const closestTask = response?.data?.closestTask;
         console.log(closestTask);
+        let updMeta;
         if (closestTask) {
           closestTask.taskTitle = decryptSingleValues(
             closestTask?.taskTitle,
@@ -210,8 +210,19 @@ const TaskTable = ({
             closestTask.taskDescription = closestTask.taskDescription.join("");
           }
           filteredTasks.push(closestTask);
+          updMeta = { ...metaData, total: metaData.total - 1 };
+        } else {
+          // If no closestTask is found, reduce the total and decrement range.end
+          updMeta = {
+            ...metaData,
+            total: metaData.total - 1,
+            range: {
+              ...metaData.range,  // Ensure you're spreading the range from metaData
+              end: metaData.range?.end ? metaData.range.end - 1 : 0,  // Check if end exists, then decrement it
+              }
+          };
         }
-        const updMeta = { ...metaData, total: metaData.total - 1 };
+
         if (priority) {
           getAllTasks();
           dispatch(setPriorityTasks(filteredTasks)); //Not Working
