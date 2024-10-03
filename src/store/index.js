@@ -7,13 +7,13 @@ import { formatReducer } from './slices//formatSlice';
 import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
+import { highPriorityTasksReducer } from './slices/highPrioritySlice.js';
+import { lowPriorityTasksReducer } from './slices/lowPrioritySlice.js';
+import { mediumPriorityTasksReducer } from './slices/mediumPrioritySLice.js';
 import { notesReducer } from './slices/notesSlice';
 import { priorityTaskReducer } from './slices/priorityTaskSlice';
 import { resetReducer, resetState } from './slices/resetSlice';
 import { taskReducer } from './slices/taskSlice';
-import { highPriorityTasksReducer } from './slices/highPriorityTasks';
-import { mediumPriorityTasksReducer } from './slices/mediumPriorityTasks';
-import { lowPriorityTasksReducer } from './slices/lowPriorityTasks';
 
 
 

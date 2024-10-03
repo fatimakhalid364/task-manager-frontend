@@ -322,9 +322,9 @@ const TaskTable = ({
   };
 
   // Ensure tasks are correctly sliced based on page and limit
-  const startIndex = page * limit;
-  const endIndex = startIndex + limit;
-  const paginatedTasks = tasks.slice(startIndex, endIndex);
+  // const startIndex = page * limit;
+  // const endIndex = startIndex + limit;
+  // const paginatedTasks = tasks.slice(startIndex, endIndex);
 
   return (
     <div>
