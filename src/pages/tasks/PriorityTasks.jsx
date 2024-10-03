@@ -143,12 +143,12 @@ function PriorityTasks({ priority }) {
                             setLimit={setLimit}
                             setPage={setPage}
                             getAllTasks={getAllTasks}
-                            hasNextPage={priorityTasks?.priorityMetaData?.hasNextPage}
-                            hasPreviousPage={priorityTasks?.priorityMetaData?.hasPrevPage}
-                            nextPage={priorityTasks?.priorityMetaData?.nextPage}
-                            priorityMetaData={priorityTasks?.priorityMetaData}
-                            previousPage={priorityTasks?.priorityMetaData?.previousPage}
-                            totalPages={priorityTasks?.priorityMetaData?.totalPages}
+                            hasNextPage={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData.hasNextPage : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.hasNextPage : mediumPriorityTasks.mediumPriorityMetaData.hasNextPage}
+                            hasPreviousPage={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData.hasPrevPage : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.hasPrevPage : mediumPriorityTasks.mediumPriorityMetaData.hasPrevPage}
+                            nextPage={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData.nextPage : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.nextPage : mediumPriorityTasks.mediumPriorityMetaData.nextPage}
+                            metaData={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData : mediumPriorityTasks.mediumPriorityMetaData}
+                            previousPage={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData.previousPage : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.previousPage : mediumPriorityTasks.mediumPriorityMetaData.previousPage}
+                            totalPages={priority === 'LOW' ? highPriorityTasks.highPriorityMetaData.totalPages : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.totalPages : mediumPriorityTasks.mediumPriorityMetaData.totalPages}
                             skeletonLoader={skeletonLoader}
                         />
                     </Box>
