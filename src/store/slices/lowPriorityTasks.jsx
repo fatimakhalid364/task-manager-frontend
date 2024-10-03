@@ -2,31 +2,31 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getPriorityTasksThunk } from '../thunks/taskThunks';
 import { resetState } from './resetSlice';
 
-const highPriorityTasksSlice = createSlice({
-    name: 'highPriorityTasks',
+const lowPriorityTasksSlice = createSlice({
+    name: 'lowPriorityTasks',
     initialState: {
-        highPriorityTasks: [],
-        highPriorityMetaData: {},
+        lowPriorityTasks: [],
+        lowPriorityMetaData: {},
         loaded: false,
         loading: false,
     },
     reducers: {
-        clearHighPriorityTasks: (state, action) => {
-            state.highPriorityTasks = action.payload?.tasks || [];
-            state.highPriorityMetaData = action.payload?.metaData || {};
+        clearLowPriorityTasks: (state, action) => {
+            state.lowPriorityTasks = action.payload?.tasks || [];
+            state.lowPriorityMetaData = action.payload?.metaData || {};
             state.loaded = action.payload?.loaded || false;
             state.loading = action.payload?.loading || false;
         },
-        addHighPriorityTasks: (state, action) => {
-            state.highPriorityTasks = [action.payload, ...state.tasks];
+        addLowPriorityTasks: (state, action) => {
+            state.lowPriorityTasks = [action.payload, ...state.tasks];
         },
-        setHighPriorityTasks: (state, action) => {
+        setLowPriorityTasks: (state, action) => {
             console.log('inside the priorityTaskSlice', action.payload);
-            state.highPriorityTasks = action.payload;
+            state.lowPriorityTasks = action.payload;
         },
-        setHighPriorityMetaData: (state, action) => {
+        setLowPriorityMetaData: (state, action) => {
             console.log('inside the priorityTaskSlice', action.payload);
-            state.highPriorityMetaData = action.payload;
+            state.lowPriorityMetaData = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -35,8 +35,8 @@ const highPriorityTasksSlice = createSlice({
             //     state.loading = true;
             // })
             // .addCase(getPriorityTasksThunk.fulfilled, (state, action) => {
-            //     state.highPriorityTasks = action.payload.data;
-            //     state.highPriorityMetaData = action.payload.metaData;
+            //     state.lowPriorityTasks = action.payload.data;
+            //     state.lowPriorityMetaData = action.payload.metaData;
             //     state.loading = false;
             //     state.loaded = true;
             // })
@@ -45,8 +45,8 @@ const highPriorityTasksSlice = createSlice({
             // })
             .addCase(resetState, (state) => {
                 return {
-                    highPriorityTasks: [],
-                    highPriorityMetaData: {},
+                    lowPriorityTasks: [],
+                    lowPriorityMetaData: {},
                     loaded: false,
                     loading: false,
                 };
@@ -54,5 +54,5 @@ const highPriorityTasksSlice = createSlice({
     },
 });
 
-export const { clearHighPriorityTasks, addHighPriorityTasks, setHighPriorityTasks, setHighPriorityMetaData } = highPriorityTasksSlice.actions;
-export const highPriorityTasksReducer = highPriorityTasksSlice.reducer;
+export const { clearLowPriorityTasks, addLowPriorityTasks, setLowPriorityTasks, setLowPriorityMetaData } = lowPriorityTasksSlice.actions;
+export const lowPriorityTasksReducer = lowPriorityTasksSlice.reducer;

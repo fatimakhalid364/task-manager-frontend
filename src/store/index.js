@@ -11,6 +11,9 @@ import { notesReducer } from './slices/notesSlice';
 import { priorityTaskReducer } from './slices/priorityTaskSlice';
 import { resetReducer, resetState } from './slices/resetSlice';
 import { taskReducer } from './slices/taskSlice';
+import { highPriorityTasksReducer } from './slices/highPriorityTasks';
+import { mediumPriorityTasksReducer } from './slices/mediumPriorityTasks';
+import { lowPriorityTasksReducer } from './slices/lowPriorityTasks';
 
 
 
@@ -24,6 +27,9 @@ const rootReducer = combineReducers({
     notes: notesReducer,
     reset: resetReducer,
     priorityTask: priorityTaskReducer,
+    highPriorityTasks: highPriorityTasksReducer,
+    mediumPriorityTasks: mediumPriorityTasksReducer,
+    lowPriorityTasks: lowPriorityTasksReducer,
 
 });
 

@@ -14,9 +14,13 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getPriorityTasksThunk } from 'src/store/thunks/taskThunks';
 import { setPriorityTasks } from 'src/store/slices/priorityTaskSlice';
+import { setHighPriorityTasks } from 'src/store/slices/highPriorityTasks';
+import { setMediumPriorityTasks } from 'src/store/slices/mediumPriorityTasks';
+import { setLowPriorityTasks } from 'src/store/slices/lowPriorityTasks';
+import { useLocation } from 'react-router-dom';
 
 
-function PriorityTasks({ priority }) {
+function PriorityTasks() {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -24,16 +28,15 @@ function PriorityTasks({ priority }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useDispatch();
+    const location = useLocation();
+    const pathname = location.pathname;
     const priorityTasks = useSelector((state) => state.priorityTask);
-    const highClickCount = useSelector((state) => state.clickCount.highClickCount);
-    const mediumClickCount = useSelector((state) => state.clickCount.mediumClickCount);
-    const lowClickCount = useSelector((state) => state.clickCount.lowClickCount);
-   useEffect(() =>{
-    console.log('highClickCount in priorityTasks is', highClickCount,
-        'mediumClickCount in priorityTasks is', mediumClickCount,
-        'lowClickCount in priorityTasks is', lowClickCount,
-    );
-   }, [])
+    const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
+    const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
+    const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
+    
+  
+
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
@@ -62,12 +65,63 @@ function PriorityTasks({ priority }) {
     });
 
 
-    const getAllTasks = async (page = 0, limit = 5) => {
+    // const getAllTasks = async (page = 0, limit = 5) => {
+    //     try {
+
+    //         setSkeletonLoader(true);
+    //         const params = { page, limit, search, priority }
+    //         const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
+    //         pathname == '/tasks_high' ? dispatch(setHighPriorityTasks(response.data)) : 
+    //         pathname == '/tasks_low' ? dispatch(setLowPriorityTasks(response.data)) :
+    //         dispatch(setMediumPriorityTasks(response.data)); 
+    //         console.log('priority tasks in the component', response);
+    //     } catch (err) {
+    //         errorToast('Something went wrong', 'getTask-pages-error');
+    //         console.log('error in tasks', err)
+    //     } finally {
+    //         setSkeletonLoader(false);
+    //     }
+    // };
+
+    const getHighTasks = async (page = 0, limit = 5) => {
         try {
 
             setSkeletonLoader(true);
-            const params = { page, limit, search, priority }
+            const params = { page, limit, search, priority: 'HIGH' }
             const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
+            dispatch(setHighPriorityTasks(response.data));  
+            console.log('priority tasks in the component', response);
+        } catch (err) {
+            errorToast('Something went wrong', 'getTask-pages-error');
+            console.log('error in tasks', err)
+        } finally {
+            setSkeletonLoader(false);
+        }
+    };
+
+    const getMediumTasks = async (page = 0, limit = 5) => {
+        try {
+
+            setSkeletonLoader(true);
+            const params = { page, limit, search, priority: 'MEDIUM' }
+            const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
+            dispatch(setMediumPriorityTasks(response.data)); 
+            console.log('priority tasks in the component', response);
+        } catch (err) {
+            errorToast('Something went wrong', 'getTask-pages-error');
+            console.log('error in tasks', err)
+        } finally {
+            setSkeletonLoader(false);
+        }
+    };
+
+    const getLowTasks = async (page = 0, limit = 5) => {
+        try {
+
+            setSkeletonLoader(true);
+            const params = { page, limit, search, priority: 'LOW' }
+            const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
+           dispatch(setLowPriorityTasks(response.data));
             console.log('priority tasks in the component', response);
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
@@ -122,7 +176,12 @@ function PriorityTasks({ priority }) {
                         setTaskDetailsToEdit={setTaskDetailsToEdit} 
                         handleReverseTaskEdit={handleReverseTaskEdit} 
                         debouncedGetAllTasks={debouncedGetAllTasks} 
-                        tasks={priorityTasks?.priorityTasks} 
+                        tasks={
+                            pathname == '/tasks_high' ?
+                            highPriorityTasks :
+                            pathname == '/tasks_low' ?
+                            lowPriorityTasks :
+                            mediumPriorityTasks} 
                         limit={limit} 
                         privateKey={privateKey} 
                         page={priorityTasks?.priorityMetaData?.page} 
