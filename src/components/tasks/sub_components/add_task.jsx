@@ -16,6 +16,9 @@ import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUti
 import { setMetaData, addTask } from "src/store/slices/taskSlice";
 import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
 import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+import { addMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
+import { addHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
+import { addLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
 
 
 
@@ -213,8 +216,15 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
                 successToast(response.message, 'task-created');
                 resetTaskDetails();
                 const addedTask = response.data;
-                // debouncedGetAllTasks(0, limit); 
+               
                 dispatch(addTask(addedTask));
+                if (addedTask.priority == 'MEDIUM') {
+                    dispatch(addMediumPriorityTasks(addedTask)); 
+                } else if (addedTask.priority == 'LOW') {
+                    dispatch(addLowPriorityTasks(addedTask));
+                } else if (addedTask.priority == 'HIGH'){
+                    dispatch(addHighPriorityTasks(addedTask));
+                }
                 const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
                 dispatch(setHighPriorityCount(priorityCounts.data.high));
                 dispatch(setLowPriorityCount(priorityCounts.data.low));

@@ -35,42 +35,42 @@ const taskSlice = createSlice({
             state.metaData = action.payload;
         },
         setHighPriorityCount: (state, action) => {
-            if(action.payload <= 10) {
+            if(action.payload <= 99) {
                 return {
                     ...state,
                     highPriorityCount: action.payload
                 }
-            } else if(action.payload > 10) {
+            } else if(action.payload > 99) {
                 return {
                     ...state,
-                    highPriorityCount: '10..'
+                    highPriorityCount: '99..'
                 }
             }
             
         },
         setMediumPriorityCount: (state, action) => {
-            if(action.payload <= 10) {
+            if(action.payload <= 99) {
                 return {
                     ...state,
                     mediumPriorityCount: action.payload
                 }
-            } else if(action.payload > 10) {
+            } else if(action.payload > 99) {
                 return {
                     ...state,
-                    mediumPriorityCount: '10..'
+                    mediumPriorityCount: '99..'
                 }
             }
         },
         setLowPriorityCount: (state, action) => {
-            if(action.payload <= 10) {
+            if(action.payload <= 99) {
                 return {
                     ...state,
                     lowPriorityCount: action.payload
                 }
-            } else if(action.payload > 10) {
+            } else if(action.payload > 99) {
                 return {
                     ...state,
-                    lowPriorityCount: '10..'
+                    lowPriorityCount: '99..'
                 }
             }
         }
