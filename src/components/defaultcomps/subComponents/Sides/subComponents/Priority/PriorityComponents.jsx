@@ -32,7 +32,10 @@ function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMe
                 <img src={Dot} alt='colored-dots' />
 
             </div>
-                <div onClick={() => { navigate(url) }} className='tasks-page-priority-level'>
+                <div 
+                onClick={() => { navigate(url) }} 
+                className='tasks-page-priority-level'
+                >
                     {PriorityLevel}
             </div>
             <div className='tasks-page-number' style={{backgroundColor: 'var(--active-background-color)'}}>
