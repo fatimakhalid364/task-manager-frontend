@@ -15,6 +15,45 @@ import CustomBarChart from './subComponents/BarChart';
 
 function Dashboard() {
     const user = useSelector(state => state.auth?.user);
+    const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
+    const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
+    const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
+    const tasks = useSelector(state => state.tasks.tasks);
+    console.log('highPriorityTasks areeee....', highPriorityTasks)
+
+    // const priorityTasksInStatus = (status, priority) => {
+    //     const statusHighTasks = tasks.filter(task => task.status == status && task.priority == priority);
+    //     const statusHighTasksCount = statusHighTasks.length;
+    //     const statusMediumTasks = mediumPriorityTasks.filter(task => task.status == status);
+    //     const statusMediumTasksCount = statusMediumTasks.length;
+    //     const statusLowTasks = lowPriorityTasks.filter(task => task.status == status);
+    //     const statusLowTasksCount = statusLowTasks.length;
+    //     return ({
+    //         statusHighTasksCount,
+    //         statusLowTasksCount,
+    //         statusMediumTasksCount
+    //     })
+    // }
+
+    // const prioritiesInNotStarted = priorityTasksInStatus('NOT_STARTED');
+    // const highNotStartedCount = prioritiesInNotStarted.statusHighTasksCount;
+    // const mediumNotStartedCount = prioritiesInNotStarted.statusMediumTasksCount;
+    // const lowNotStartedCount = prioritiesInNotStarted.statusLowTasksCount;
+    // const prioritiesInPending = priorityTasksInStatus('PENDING');
+    // const highPendingCount = prioritiesInPending.statusHighTasksCount;
+    // const mediumPendingCount = prioritiesInPending.statusMediumTasksCount;
+    // const lowPendingCount = prioritiesInPending.statusLowTasksCount;
+    // const prioritiesInProgressing = priorityTasksInStatus('IN_PROGRESS');
+    // const highProgressingCount = prioritiesInProgressing.statusHighTasksCount;
+    // const mediumProgressingCount = prioritiesInProgressing.statusMediumTasksCount;
+    // const lowProgressingCount = prioritiesInProgressing.statusLowTasksCount;
+    // const prioritiesInCompleted = priorityTasksInStatus('COMPLETED');
+    // const highCompletedCount = prioritiesInCompleted.statusHighTasksCount;
+    // const mediumCompletedCount = prioritiesInCompleted.statusMediumTasksCount;
+    // const lowCompletedCount = prioritiesInCompleted.statusLowTasksCount;
+
+
+
 
     const formatUserName = () => {
         if (user) {
@@ -59,7 +98,20 @@ function Dashboard() {
                         Tasks by Priority
                         </div>
                         <div style={{marginTop: '45px'}}>
-                            <CustomBarChart />
+                            <CustomBarChart 
+                            // highNotStartedCount={highNotStartedCount}
+                            // mediumNotStartedCount={mediumNotStartedCount}
+                            // lowNotStartedCount={ lowNotStartedCount}
+                            // highPendingCount={highPendingCount}
+                            // mediumPendingCount={mediumPendingCount}
+                            // lowPendingCount={lowPendingCount}
+                            // highProgressingCount={highProgressingCount}
+                            // mediumProgressingCount={mediumProgressingCount}
+                            // lowProgressingCount={lowProgressingCount}
+                            // highCompletedCount={highCompletedCount}
+                            // mediumCompletedCount={mediumCompletedCount}
+                            // lowCompletedCount={lowCompletedCount}
+                            />
                         </div>
                     </div>
                 </div>
