@@ -22,6 +22,12 @@ const mediumPriorityTasksSlice = createSlice({
                 ...state,
                 mediumPriorityTasks: [action.payload, ...state.mediumPriorityTasks]
             }
+        },
+        updateMediumPriorityTasks: (state, action) => {
+            return {
+                ...state,
+                mediumPriorityTasks: action.payload
+            }
         }
     },
     extraReducers: (builder) => {
@@ -37,5 +43,5 @@ const mediumPriorityTasksSlice = createSlice({
     },
 });
 
-export const { setMediumPriorityTasks,  addMediumPriorityTasks } = mediumPriorityTasksSlice.actions;
+export const { setMediumPriorityTasks,  addMediumPriorityTasks, updateMediumPriorityTasks } = mediumPriorityTasksSlice.actions;
 export const mediumPriorityTasksReducer = mediumPriorityTasksSlice.reducer;

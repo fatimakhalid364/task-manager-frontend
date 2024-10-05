@@ -139,7 +139,7 @@ function PriorityTasks({ priority }) {
                             }
                             limit={limit}
                             privateKey={privateKey}
-                            page={priorityTasks?.priorityMetaData?.page}
+                            page={priority === 'HIGH' ? highPriorityTasks.highPriorityMetaData.page : priority === 'LOW' ? lowPriorityTasks.lowPriorityMetaData.page : mediumPriorityTasks.mediumPriorityMetaData.page}
                             setLimit={setLimit}
                             setPage={setPage}
                             getAllTasks={getAllTasks}

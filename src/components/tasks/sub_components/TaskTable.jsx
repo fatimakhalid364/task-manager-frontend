@@ -36,6 +36,11 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
+import dayjs from "dayjs";
+import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
+import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
+import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
+import { setMediumPriorityTasks } from "../../../store/slices/mediumPrioritySLice";
 
 
 const calculateCellWidth = () => {
@@ -101,6 +106,9 @@ const TaskTable = ({
   priority = false,
 }) => {
   const { isAdaptableScreen, isMicroScreen } = useResponsive();
+  const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
+  const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
+  const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
 
   const timeFormat = useSelector((state) => state.format.timeFormat);
   const dateFormat = useSelector((state) => state.format.dateFormat);
@@ -253,7 +261,7 @@ const TaskTable = ({
     handleMenuClose();
   };
 
-  const changeTaskStatus = async (_id, taskStatus) => {
+  const changeTaskStatus = async (_id, taskStatus, taskPriority) => {
     setSpinner(true);
     try {
       // console.log(`Change status for task with ID: ${selectedTaskId}`);
@@ -272,10 +280,29 @@ const TaskTable = ({
           dispatch(setPriorityTasks(updatedTasksArray))
           getAllTasks();
 
-        } else {
-  dispatch(setTasks(updatedTasksArray));
+        } else if (!priority && taskPriority === 'MEDIUM') {
+          const updatedMediumTasksArray = mediumPriorityTasks.map((task) =>
+            task._id == _id ? { ...task, status: taskStatus } : task
+          );
+          dispatch(updateMediumPriorityTasks(updatedMediumTasksArray));
+          dispatch(setTasks(updatedTasksArray));
+        }else if (!priority && taskPriority === 'HIGH') {
+          const updatedHighTasksArray = highPriorityTasks.map((task) =>
+            task._id == _id ? { ...task, status: taskStatus } : task
+          );
+          dispatch(updateHighPriorityTasks(updatedHighTasksArray));
+          dispatch(setTasks(updatedTasksArray));
+        } else if (!priority && taskPriority === 'LOW') {
+          const updatedLowTasksArray = lowPriorityTasks.map((task) =>
+            task._id == _id ? { ...task, status: taskStatus } : task
+          );
+          dispatch(updateLowPriorityTasks(updatedLowTasksArray));
+          dispatch(setTasks(updatedTasksArray));
+        }
+//         } else  {
+//   dispatch(setTasks(updatedTasksArray));
 
-}
+// }
       }
     } catch (err) {
       errorToast(
@@ -299,6 +326,7 @@ const TaskTable = ({
         }
         return accumulator;
       }, null);
+      console.log('foundTask normally is.....', foundTask);
     } else {
       foundTask = tasks.find((task) => task._id === taskId);
       console.log('foundTask is...........', foundTask);
@@ -307,12 +335,12 @@ const TaskTable = ({
     handleOpen();
     handleMenuClose();
 
-    setTaskDetailsToEdit(foundTask);
+    setTaskDetailsToEdit({...foundTask, dueDate: dayjs(foundTask.dueDate)});
   };
 
-  const handleChangeTaskStatus = (_id, taskStatus) => {
+  const handleChangeTaskStatus = (_id, taskStatus, taskPriority) => {
     console.log(`Change task status with ID: ${_id}`);
-    changeTaskStatus(_id, taskStatus);
+    changeTaskStatus(_id, taskStatus, taskPriority);
     handleMenuClose();
   };
 
@@ -501,7 +529,7 @@ const TaskTable = ({
                             {task.status !== "COMPLETED" && (
                               <MenuItem
                                 onClick={() => {
-                                  handleChangeTaskStatus(task._id, "COMPLETED");
+                                  handleChangeTaskStatus(task._id, "COMPLETED", task.priority);
                                 }}
                                 sx={{ gap: "12px" }}
                               >
@@ -517,7 +545,8 @@ const TaskTable = ({
                                   onClick={() => {
                                     handleChangeTaskStatus(
                                       task._id,
-                                      "IN_PROGRESS"
+                                      "IN_PROGRESS",
+                                      task.priority
                                     );
                                   }}
                                   sx={{ gap: "12px" }}

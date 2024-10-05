@@ -1,13 +1,13 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
+import { useSelector } from 'react-redux';
+
+
 
 const data = [
-    { day: 'Mon', High: 4, Medium: 2, Low: 1 },
-    { day: 'Tue', High: 5, Medium: 1, Low: 3 },
-    { day: 'Wed', High: 6, Medium: 3, Low: 2 },
-    { day: 'Thurs', High: 3, Medium: 2, Low: 4 },
-    { day: 'Fri', High: 2, Medium: 1, Low: 5 },
-    { day: 'Sat', High: 1, Medium: 0, Low: 2 },
-    { day: 'Sun', High: 0, Medium: 1, Low: 1 },
+    { status: 'Not Started', High: 4, Medium: 2, Low: 1 },
+    { status: 'In Progress', High: 5, Medium: 1, Low: 3 },
+    { status: 'Completed', High: 6, Medium: 3, Low: 2 },
+    { status: 'Pending', High: 3, Medium: 2, Low: 4 },
   ];
 
   const CustomLegend = (props) => {
@@ -25,7 +25,7 @@ const data = [
 
   const CustomBarChart = () => (
     <BarChart width={636} height={350} data={data}>
-      <XAxis dataKey="day" tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
+      <XAxis dataKey="status" tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
       <YAxis ticks={[0, 2, 4, 6, 8, 10, 12, 14]} domain={[0, 14]}  tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
       <Tooltip />
       <Legend content={<CustomLegend />} />

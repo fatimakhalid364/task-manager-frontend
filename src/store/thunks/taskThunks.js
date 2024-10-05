@@ -176,12 +176,12 @@ const fetchPriorityCountsThunk = createAsyncThunk("fetchPriorityCounts", async (
     }
 });
 
-const updateTaskThunk = createAsyncThunk("createTask", async (_id, thunkAPI) => {
-    console.log("inside updateTask thunk", body);
+const updateTaskThunk = createAsyncThunk("createTask", async ({_id, updatedTaskDetails}, thunkAPI) => {
+    console.log("inside updateTask thunk", _id, updatedTaskDetails);
     const privateKey = localStorage.getItem("privateKey");
 
     try {
-        const response = await APIS.put(`/task/update`, {
+        const response = await APIS.put(`/task/${_id}`, updatedTaskDetails, {
             params: { _id },
             headers: {
                 "Content-Type": "application/json",
@@ -195,7 +195,7 @@ const updateTaskThunk = createAsyncThunk("createTask", async (_id, thunkAPI) => 
             response.data.data.taskDescription = response.data.data.taskDescription.join('');
         }
 
-        console.log("response is,", response);
+        console.log("response in updateTaskThunk is", response);
 
         return response.data;
     } catch (error) {
