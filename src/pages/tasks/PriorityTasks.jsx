@@ -85,9 +85,8 @@ function PriorityTasks({ priority }) {
         }
     };
     const getAllTasks = async () => {
-        if (priority === "HIGH" && highPriorityTasks?.loaded) return;
-        if (priority === "MEDIUM" && mediumPriorityTasks?.loaded) return;
-        if (priority === "LOW" && lowPriorityTasks?.loaded) return;
+        console.log("Inside all task comp")
+
 
         await getTasks(priority);
     };
@@ -100,8 +99,18 @@ function PriorityTasks({ priority }) {
     );
 
     useEffect(() => {
-        debouncedGetAllTasks(page, limit);
-    }, [page, limit, debouncedGetAllTasks]);
+        if (priority === "HIGH" && !highPriorityTasks.loaded) {
+            getAllTasks("HIGH")
+        } else if (priority === "MEDIUM" && !mediumPriorityTasks.loaded) {
+            getAllTasks("MEDIUM")
+
+        } else if (priority === "LOW" && !lowPriorityTasks.loaded) {
+            getAllTasks("LOW")
+
+        } else {
+            return
+        }
+    }, [page, limit]);
 
     const { onWholeScreen } = useResponsive();
     return (

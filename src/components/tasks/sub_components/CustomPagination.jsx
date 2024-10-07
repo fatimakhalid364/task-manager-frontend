@@ -15,6 +15,7 @@ const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, s
     };
 
     const handlePageChange = (newPage) => {
+        console.log(newPage);
         setPage(newPage);
         debouncedGetAllTasks(newPage, limit); // Fetch tasks for the selected page with the current limit
     };
