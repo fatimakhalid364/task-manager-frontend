@@ -7,6 +7,7 @@ export const defaultRedirect = `/tasks`;
 export const LIVE_API = 'https://task-manager-backend-roan.vercel.app/api'
 export const LOCAL_API = 'http://localhost:3000/api';
 export const BACKEND_APIS = LIVE_API;
+//just for deployment
 export const Screen = {
     SIGNUP: 'SIGNUP',
     SIGNIN: 'SIGNIN',
