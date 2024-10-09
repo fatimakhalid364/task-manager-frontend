@@ -36,7 +36,7 @@ import { updateMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice"
 import {
   setMediumPriorityMetaData,
   setMediumPriorityMetaDecri,
-} from "src/store/slices/mediumPrioritySlice";
+} from "src/store/slices/mediumPrioritySLice";
 import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
 import {
   setHighPriorityCount,
