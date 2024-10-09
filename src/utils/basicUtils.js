@@ -68,14 +68,19 @@ export const capitalizeFirstLetter = (str) => {
     }
 };
 
-export const formatLocalDateTime = (dateString, timeZone, timeFormat, dateFormat) => {
-    const format = dateFormat + " " + timeFormat 
+export const formatLocalDateTime = (dateString, timeZone = 'local', timeFormat = '', dateFormat) => {
     const date = DateTime.fromISO(dateString, { zone: 'utc' });
+    if (timeFormat && timeZone) {
+        const format = dateFormat + " " + timeFormat 
+        const localDateTime = date.setZone(timeZone).toFormat(format);
+        return localDateTime;
+    } else {
+        const format = dateFormat
+        const localDateTime = date.toFormat(format);
+        return localDateTime;
+    }
 
-    // Convert to the specified time zone
-    const localDateTime = date.setZone(timeZone).toFormat(format); // Format: day month year hour:minute AM/PM
-
-    return localDateTime;
+    
 };
 
 export const getCurrentTimeZone = () => {

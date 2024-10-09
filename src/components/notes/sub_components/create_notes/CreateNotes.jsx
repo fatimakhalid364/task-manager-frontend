@@ -13,6 +13,7 @@ import { useResponsive } from 'src/constants/media_queries';
 import { addNotes, setNotes } from 'src/store/slices/notesSlice';
 import { createNoteThunk, updateNoteThunk } from "src/store/thunks/notesThunk";
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
+import { setNotesFilterValue } from "../../../../store/slices/filterByStatusSlice";
 
 
 const CreateNotes = ({
@@ -35,6 +36,7 @@ const CreateNotes = ({
     const [showLinkPopup, setShowLinkPopup] = useState(false);
     const handleShowLinkPopup = () => setShowLinkPopup(true);
     const accentColor = useSelector((state) => state.appearance.color);
+    const notesFilterValue = useSelector((state) => state.filterByStatus.notesFilterValue);
 
     const [addLinkHovered, setAddLinkHovered] = useState(false);
     const [addTagHovered, setAddTagHovered] = useState(false);
@@ -120,11 +122,11 @@ const CreateNotes = ({
         const forEncryption = {
             title: noteDetails.title,
         };
-        const encryptedTaskDetails = encryptObjectValues(forEncryption);
-        console.log("encrypted ones", encryptedTaskDetails);
+        const encryptedNoteDetails = encryptObjectValues(forEncryption);
+        console.log("encrypted ones", encryptedNoteDetails);
         const updatedTaskDetails = {
             ...noteDetails,
-          title: encryptedTaskDetails?.title,
+          title: encryptedNoteDetails?.title,
             desc: encryptedDesc,
           links: uniqueLinks,
         };
@@ -146,7 +148,6 @@ const CreateNotes = ({
                         !update && dispatch(addNotes(obj));
                     }
                 }
-
 
           successToast(response.message, "task-created");
           {

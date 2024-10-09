@@ -50,6 +50,7 @@
     font-family: var(--primary-font-family);
     font-size: var(--tertiary-font-size);
     color: var(--quinary-font-color);
+    cursor: pointer;
    
 }
 
@@ -58,8 +59,8 @@
     position: absolute;
     font-family: var(--primary-font-family);
     font-size: var(--secondary-font-size);
-    height: 20px;
-    width: 20px;
+    height: 26px;
+    width: 26px;
     background-color: var(--active-background-color);
     border-radius: 5px;
     display: flex;

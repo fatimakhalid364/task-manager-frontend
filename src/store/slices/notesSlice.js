@@ -13,6 +13,7 @@ const notesSlice = createSlice({
         successMsg: '',
         errorMsg: '',
         notesLoaded: false,
+        tagsFilterList: {}
     },
     reducers: {
         addNotes: (state, action) => {
@@ -34,7 +35,24 @@ const notesSlice = createSlice({
                 ...state,
                 metaData: action.payload,
             };
-        }
+        },
+        setTagsFilterList: (state, action) => {
+            console.log('Setting tags filter list with action:', action);
+            const { tag, checked } = action.payload;
+            const updatedTagsFilterList = {
+                ...state.tagsFilterList,
+                [tag]: checked, // Update or add the tag
+            };
+        
+            // Log the updated tagsFilterList
+            console.log('Updated tagsFilterList:', updatedTagsFilterList);
+        
+            return {
+                ...state,
+                tagsFilterList: updatedTagsFilterList,
+            };
+           
+        },
     },
 
     extraReducers: (builder) => {
@@ -72,6 +90,7 @@ const notesSlice = createSlice({
             })
             .addCase(resetState, () => {
                 return {
+                   
                     notes: [],
                     metaData: {},
                     status: 'idle',
@@ -79,12 +98,14 @@ const notesSlice = createSlice({
                     isLoading: false,
                     successMsg: '',
                     errorMsg: '',
-                    notesLoaded: false
+                    notesLoaded: false,
+                    tagsFilterList: {}
+                   
                 };
             });
     },
 });
 
-export const { addNotes, setNotes, setMetaData } = notesSlice.actions;
+export const { addNotes, setNotes, setMetaData,  setTagsFilterList } = notesSlice.actions;
 
 export const notesReducer = notesSlice.reducer;

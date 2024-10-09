@@ -8,7 +8,7 @@ const Logout = () => {
             display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '20px',
             padding: '10px', borderRadius: '12px'}}>
             <div style={{fontSize: '20px', fontFamily: 'var(--primary-font-family)', color: 'var(--quinary-font-color)' }}>Log-Out</div>
-            <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--tertiary-font-color)'}}>Are you sure you want to log-out? Your current session will end and any un-saved progress will be lost.</div>
+            <div style={{fontSize: '14px', fontFamily: 'var(--primary-font-family)', color: 'var(--tertiary-font-color)'}}>Are you sure you want to log-out? Your current session will end and any un-saved progress will be lost. Your filters will reset as well.</div>
             <div className='primary-button' onClick={() => logout()} style={{backgroundColor: '#EF4444', fontFamily: 'var(--secondary-font-family)', width: '130px'}}>Log-out</div>
            </div>
         </div>

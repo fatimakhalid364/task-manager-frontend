@@ -290,9 +290,9 @@
     box-shadow: 0px 10px 16px 1px #0C0C0D0D !important;
     border: 1px solid var(--light-border-color) !important;
     border-radius: 12px !important;
-    height: 158px !important;
-    width: 199px !important;
-    overflow-y: hidden !important;
+    height: 210px !important;
+    width: 210px !important;
+    /* overflow-y: auto !important; */
 
 }
 

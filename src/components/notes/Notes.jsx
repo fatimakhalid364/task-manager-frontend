@@ -22,6 +22,12 @@ const Notes = () => {
     useEffect(() => {
         console.log('notes picked up using useSelector are ', notes)
     }, []);
+
+    const entireSlice = useSelector((state) => state.filterByStatus.dueDateValueForTasks.parse);
+
+    useEffect(() => {
+        console.log('here is the entire slice }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}', entireSlice)
+    }, [])
     const [skeletonLoader, setSkeletonLoader] = useState(false);
     const [pinned, setPinned] = useState("");
     const [page, setPage] = useState(1);

@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +16,8 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
+
 
 
 
@@ -29,28 +32,54 @@ function Tasks() {
     const dispatch = useDispatch();
     const tasks = useSelector((state) => state.tasks);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
+    const [spinner, setSpinner] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
     const handleFilterClose = () => setFilterOpen(false);
     const [doubleArrowClicked, setDoubleArrowClicked] = useState(false);
     const handleDoubleArrowClicked = () => setDoubleArrowClicked(prevValue => !prevValue);
     const privateKey = localStorage.getItem("privateKey");
+    const statusObj = useSelector((state) => state.filterByStatus.checkboxStates);
+    const priorityObj = useSelector((state) => state.filterByStatus.priorityCheckboxStates);
+    const dueDate = useSelector((state) => state.filterByStatus.dueDateValueForTasks);
+    const [taskEdit, setTaskEdit] = useState(false);
+    const handleTaskEdit = () => {
+        setTaskEdit(true);
+    }
+    const handleReverseTaskEdit = () => {
+        setTaskEdit(false);
+    }
     console.log('tasks in the component', tasks)
+
+    const extractCheckedValues = (obj) => {
+        return Object.keys(obj).filter(key => obj[key] === true);
+    };
 
     const getAllTasks = async (page=0, limit=5) => {
         try {
 
             setSkeletonLoader(true);
-            const params = { page, limit, search }
+            const status = extractCheckedValues(statusObj);
+            const priority = extractCheckedValues(priorityObj);
+            const params = { page, limit, search, status, priority, priorityObj, statusObj, dueDate };
             const response = await dispatch(getAllTasksThunk(params)).unwrap();
-            console.log('tasks in the component', response.tasks);
+            console.log('tasks in the component', response.tasks,
+                'statusObj in the tasks areee/////', statusObj
+            );
         } catch (err) {
             errorToast('Something went wrong', 'getTask-pages-error');
             console.log('error in tasks', err)
         } finally {
             setSkeletonLoader(false);
+            
         }
     };
+
+    useEffect(() => {
+        console.log('priorityObjArrayforDispatch in tasks is......', statusObj,
+            'statusArrayfordispatch is in tasks', priorityObj,
+           );
+    }, [getAllTasks])
 
     const {
         isAdaptableScreen,
@@ -62,28 +91,86 @@ function Tasks() {
         debounce((page, limit) => {
             getAllTasks(page, limit);
         }, 300),
-        []
+        [statusObj, priorityObj, page, limit, dueDate, search]
     );
+   
     useEffect(() => {
         if (!tasks.loaded) {
             getAllTasks(page, limit, search);
         }
     }, []);
 
+   
+
+    useEffect(() => {
+        console.log('value of taskEdit is....................', taskEdit);
+        
+     }, [handleTaskEdit]);
+
+    const [taskDetailsToEdit, setTaskDetailsToEdit] = useState({
+        taskTitle: '',
+        dueDate: dayjs(),
+        priority: 'HIGH',
+        status: 'NOT_STARTED',
+        taskDescription: ''
+    });
+
+    const handleAddTaskOpen = () => {
+        handleReverseTaskEdit();
+        handleOpen();
+    }
+
     
 
     return (
         <div className='task-page-div' >
-            {open && (<AddTask debouncedGetAllTasks={debouncedGetAllTasks} limit={limit} open={open} handleClose={handleClose} getAllTasks={getAllTasks} />)}
-            {filterOpen && (<FilterDialog filterOpen={filterOpen} handleFilterClose={handleFilterClose} />)}
+            {open && (<AddTask 
+            debouncedGetAllTasks={debouncedGetAllTasks} 
+            limit={limit} 
+            open={open} 
+            handleClose={handleClose} 
+            getAllTasks={getAllTasks}
+            taskDetailsToEdit={taskDetailsToEdit}
+            taskEdit={taskEdit}
+            handleTaskEdit ={handleTaskEdit }
+            setTaskDetailsToEdit={setTaskDetailsToEdit}
+            setSpinner={setSpinner}
+            />)}
+            {filterOpen && (<FilterDialog 
+                setSkeletonLoader={setSkeletonLoader}
+            filterOpen={filterOpen} 
+            handleFilterClose={handleFilterClose} 
+            getAllTasks={getAllTasks} 
+            debouncedGetAllTasks={debouncedGetAllTasks}
+            limit={limit} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                    <PageHeader handleOpen={handleOpen} total={tasks?.metaData?.total} text='All Tasks' object='Task' />
-                    <div>
+                <SpinnerLoader showSpinner={spinner} />
+                    <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />                    <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
-                        <TaskTable debouncedGetAllTasks={debouncedGetAllTasks} tasks={tasks.tasks} limit={limit} privateKey={privateKey} page={tasks?.metaData?.page} setLimit={setLimit} setPage={setPage} getAllTasks={getAllTasks} hasNextPage={tasks?.metaData?.hasNextPage} hasPreviousPage={tasks?.metaData?.hasPrevPage} nextPage={tasks?.metaData?.nextPage} metaData={tasks?.metaData} previousPage={tasks?.metaData?.previousPage} totalPages={tasks?.metaData?.totalPages} skeletonLoader={skeletonLoader} />
+                        <TaskTable 
+                        debouncedGetAllTasks={debouncedGetAllTasks} 
+                        tasks={tasks.tasks} 
+                        limit={limit} 
+                        privateKey={privateKey} 
+                        page={tasks.metaData.page} 
+                        setLimit={setLimit} 
+                        setPage={setPage} 
+                        getAllTasks={getAllTasks} 
+                        hasNextPage={tasks.metaData.hasNextPage} 
+                        hasPreviousPage={tasks.metaData.hasPrevPage} 
+                        nextPage={tasks.metaData.nextPage} 
+                        metaData={tasks.metaData} 
+                        previousPage={tasks.metaData.previousPage} 
+                        totalPages={tasks.metaData.totalPages} 
+                        skeletonLoader={skeletonLoader} 
+                        taskEdit={taskEdit}
+                        handleTaskEdit={handleTaskEdit}
+                        handleOpen={handleOpen}
+                        setTaskDetailsToEdit={setTaskDetailsToEdit}
+                        handleReverseTaskEdit={handleReverseTaskEdit}/>
                     </Box>
                 </div>
                 <BottomButtons handleOpen={ handleOpen } handleFilterOpen = { handleFilterOpen }/>
@@ -101,5 +188,5 @@ function Tasks() {
     );
 }
 
-export default Tasks;
+export { Tasks };
 

@@ -13,6 +13,18 @@ import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
+import { setMetaData, addTask, setTasks } from "src/store/slices/taskSlice";
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
+import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
+import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
+import { updateTaskThunk } from 'src/store/thunks/taskThunks';
+import { useEffect } from 'react';
+import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
+import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
+
 
 
 const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
@@ -93,7 +105,9 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
 
 }));
 
-const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }) => {
+
+
+const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit, setTaskDetailsToEdit, setSpinner }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -114,7 +128,11 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
         padding: '15px',
     });
 
+    const tasks = useSelector(state => state.tasks.tasks);
 
+    const handleTaskEditFalse = () => {
+        handleTaskEdit();
+    }
     const [taskDetails, setTaskDetails] = useState({
         taskTitle: '',
         dueDate: dayjs(),
@@ -147,14 +165,26 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setTaskDetails((prevDetails) => ({
-            ...prevDetails,
-            [name]: value
-        }));
+        if (taskEdit) {
+            const { name, value } = e.target;
+            setTaskDetailsToEdit((prevDetails) => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        } else {
+            const { name, value } = e.target;
+            setTaskDetails((prevDetails) => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        }
     };
 
     const handleDateChange = (date) => {
+        taskEdit ?  setTaskDetailsToEdit((prevDetails) => ({
+            ...prevDetails,
+            dueDate: date
+        })) : 
         setTaskDetails((prevDetails) => ({
             ...prevDetails,
             dueDate: date
@@ -167,20 +197,52 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
 
     const dispatch = useDispatch();
 
+    const _id = taskDetailsToEdit._id;
+
+    function updatePriorityTasks(taskAfterUpdate, priorityTasks, dispatch, updateAction, cleanupUtilsArray) {
+        const filteredTasksArray = priorityTasks.filter(task => task._id !== taskAfterUpdate._id);
+        const tasksArrayAfterUpdate = [taskAfterUpdate, ...filteredTasksArray];
+        dispatch(updateAction(tasksArrayAfterUpdate));
+        const [cleanupUtils1, cleanupUtils2] = cleanupUtilsArray;
+        const [array1, setFunc1 ] = cleanupUtils1;
+
+        console.log('cleanupUtilsArray is....', cleanupUtilsArray, ' and cleanupUtils1 is....', cleanupUtils1,  ' and array1 is.......', array1);
+        const [array2, setFunc2] = cleanupUtils2;
+        const cleanedArray1 = array1.filter(task => task._id !== taskAfterUpdate._id );
+        dispatch (setFunc1(cleanedArray1));
+        const cleanedArray2 = array2.filter(task => task._id !== taskAfterUpdate._id );
+        dispatch (setFunc2(cleanedArray2));
+
+    }
+
+    const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
+    const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
+    const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
+    const highPriorityMetaData = useSelector((state) => state.highPriorityTasks.highPriorityMetaData);
+    const mediumPriorityMetaData = useSelector((state) => state.mediumPriorityTasks.mediumPriorityMetaData);
+    const lowPriorityMetaData = useSelector((state) => state.lowPriorityTasks.lowPriorityMetaData);
     
 
     const handleCreateClick = async () => {
         try {
             handleClose();
-            const splitDesc = taskDetails.taskDescription.match(/.{1,32}/g);
+            // taskEdit && handleReverseTaskEdit();
+            setSpinner(true);
+            const splitDesc = taskEdit ? taskDetailsToEdit.taskDescription.match(/.{1,32}/g) : taskDetails.taskDescription.match(/.{1,32}/g) ;
             const encryptedDesc = encryptArrayValues(splitDesc);
             const forEncryption = {
-                taskTitle: taskDetails.taskTitle,
+                taskTitle: taskEdit ? taskDetailsToEdit.taskTitle : taskDetails.taskTitle ,
                 // taskDescription: taskDetails.taskDescription
             };
             const encryptedTaskDetails = encryptObjectValues(forEncryption);
+            // const {id, ...taskDetailsToEditMinusId} = taskDetailsToEdit;
 
-            const updatedTaskDetails = {
+            const updatedTaskDetails = taskEdit ? {
+                ...taskDetailsToEdit,
+                taskTitle: encryptedTaskDetails.taskTitle,
+                taskDescription: encryptedDesc,
+                dueDate: convertToUTC(taskDetailsToEdit.dueDate)
+            } : {
                 ...taskDetails,
                 taskTitle: encryptedTaskDetails.taskTitle,
                 taskDescription: encryptedDesc,
@@ -188,23 +250,95 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
             };
 
             console.log('updated-task-details-------------------> ', updatedTaskDetails);
-
-            const thunkToDispatch = createTaskThunk(updatedTaskDetails);
+           
+            const thunkToDispatch = taskEdit ? updateTaskThunk({_id, updatedTaskDetails}) : createTaskThunk(updatedTaskDetails);
             const response = await dispatch(thunkToDispatch).unwrap();
-            if (response.status === 201) {
+            console.log('response in the AddTask component is/////////////', response.data);
+            if (response.status === 201 || response.status === 200) {
                 successToast(response.message, 'task-created');
                 resetTaskDetails();
-                debouncedGetAllTasks(0, limit); 
+                const addedTask = response.data;
+                const taskAfterUpdate = {...taskDetailsToEdit, dueDate:taskDetailsToEdit.dueDate.toISOString() };
+                if (taskEdit) {
+                    const filteredTasksArray = tasks.filter(task => task._id !== _id);
+                    console.log('INVALID DATE TIME IS BCZ', taskDetailsToEdit)
+                    const tasksArrayAfterUpdate = [ taskAfterUpdate , ...filteredTasksArray];
+                    dispatch(setTasks(tasksArrayAfterUpdate));
+                    switch (taskAfterUpdate.priority) {
+                        case 'HIGH':
+                            updatePriorityTasks(
+                                taskAfterUpdate, 
+                                highPriorityTasks, 
+                                dispatch, 
+                                updateHighPriorityTasks,
+                                [[mediumPriorityTasks, updateMediumPriorityTasks], [lowPriorityTasks, updateLowPriorityTasks]]);
+                            break;
+                        case 'MEDIUM':
+                            updatePriorityTasks(
+                                taskAfterUpdate, 
+                                mediumPriorityTasks, 
+                                dispatch, 
+                                updateMediumPriorityTasks,
+                                [[highPriorityTasks, updateHighPriorityTasks], [lowPriorityTasks, updateLowPriorityTasks]]);
+                            break;
+                        case 'LOW':
+                            updatePriorityTasks(
+                                taskAfterUpdate, 
+                                lowPriorityTasks, 
+                                dispatch, 
+                                updateLowPriorityTasks,
+                                [[mediumPriorityTasks, updateMediumPriorityTasks], [highPriorityTasks, updateHighPriorityTasks]]);
+                            break;
+                    }
+                } else if (!taskEdit) {
+                    dispatch(addTask(addedTask));
+                    if (addedTask.priority == 'MEDIUM') {
+                        dispatch(addMediumPriorityTasks(addedTask));
+                        dispatch(setMediumPriorityMetaData({
+                            ...mediumPriorityMetaData,
+                            total: mediumPriorityMetaData.total + 1
+                        })) 
+                    } else if (addedTask.priority == 'LOW') {
+                        dispatch(addLowPriorityTasks(addedTask));
+                        dispatch(setLowPriorityMetaData({
+                            ...lowPriorityMetaData,
+                            total: lowPriorityMetaData.total + 1
+                        })) 
+                    } else if (addedTask.priority == 'HIGH'){
+                        dispatch(addHighPriorityTasks(addedTask));
+                        dispatch(setHighPriorityMetaData({
+                            ...highPriorityMetaData,
+                            total: highPriorityMetaData.total + 1
+                        })) 
+                    }
+                }
+               
+                const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+                dispatch(setHighPriorityCount(priorityCounts.data.high));
+                dispatch(setLowPriorityCount(priorityCounts.data.low));
+                
+                dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+                setSpinner(false);
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
+                setSpinner(false);
             }
+          
         } catch (error) {
             console.error('Error occurred while dispatching thunk:', error);
             errorToast(error.message, 'authentication-pages-error');
+            setSpinner(false);
             resetTaskDetails();
         }
     };
+
+    useEffect(() => {
+        console.log('taskDetailsToEdit.dueDate has the value of....', taskDetailsToEdit.dueDate, 
+            'taskDetails.dueDate has the value of ========', taskDetails.dueDate);
+    }, [handleCreateClick]);
+
+    
     return (
         <Modal
             open={open}
@@ -216,7 +350,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                         <div className='add-case'>
                             <img src={plus} alt='plus sign' /> Add Case
                         </div>
-                        <a onClick={handleClose}><img src={cross} alt='cross' className='add-task-cross' /></a>
+                        <a onClick={handleClose}><img src={cross}  alt='cross' className='add-task-cross' /></a>
                     </div>
                     <div className='add-task-details-div'>
                         <form className='add-task-details'>
@@ -224,14 +358,14 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                             <input
                                 type="text"
                                 style= {{height: '40px', width: '100%'}}
-                                value={taskDetails.taskTitle}
+                                value={taskEdit ? taskDetailsToEdit.taskTitle : taskDetails.taskTitle }
                                 name="taskTitle"
                                 onChange={handleInputChange}
                             />
                             <div className='add-task-input-title'>Due Date</div>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <CssDateField
-                                    value={taskDetails.dueDate}
+                                    value={ taskEdit ? dayjs(taskDetailsToEdit.dueDate) : taskDetails.dueDate}
                                     onChange={handleDateChange}
                                     slotProps={{ textField: { fullWidth: true } }}
                                 />
@@ -248,7 +382,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                             }
                                         }
                                     }}
-                                    value={taskDetails.priority}
+                                    value={ taskEdit ? taskDetailsToEdit.priority : taskDetails.priority}
                                     name='priority'
                                     onChange={handleInputChange}
                                 >
@@ -269,7 +403,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                             }
                                         }
                                     }}
-                                    value={taskDetails.status}
+                                    value={ taskEdit ? taskDetailsToEdit.status : taskDetails.status}
                                     name='status'
                                     onChange={handleInputChange}
                                 >
@@ -285,7 +419,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                 minRows={7}
                                 p={2}
                                 style={{ width: '100%', overflowY: 'scroll', border: hovered && '1px solid var(--primary-background-color)', padding: '5px'  }}
-                                value={taskDetails.taskDescription}
+                                value={ taskEdit ? taskDetailsToEdit.taskDescription : taskDetails.taskDescription}
                                 name='taskDescription'
                                 onChange={handleInputChange}
                                 onMouseEnter={handleMouseEnter}
@@ -311,7 +445,7 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit }
                                         fontFamily: 'var(--primary-font-family)'
                                     }}
                                 >
-                                    Create Task
+                                    {taskEdit ? 'Update Task' : 'Create Task'}
                                 </div>
                             </Box>
                         </form>
