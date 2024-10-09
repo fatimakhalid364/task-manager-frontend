@@ -15,9 +15,6 @@ import { setHighPriorityTasks } from "src/store/slices/highPrioritySlice.js";
 import { setLowPriorityTasks } from "src/store/slices/lowPrioritySlice.js";
 import { setMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice.js";
 import { getPriorityTasksThunk } from "src/store/thunks/taskThunks";
-import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
-import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
-import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
 
 function PriorityTasks({ priority }) {
     const [open, setOpen] = useState(false);

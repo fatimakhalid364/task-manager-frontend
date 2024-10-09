@@ -23,6 +23,11 @@ const mediumPriorityTasksSlice = createSlice({
                 mediumPriorityMetaData: action.payload
             }
         },
+        setMediumPriorityMetaDecri: (state, action) => {
+            if (state.mediumPriorityTasks?.range?.end !== undefined) {
+                state.mediumPriorityTasks.range.end -= 1;
+            }
+        },
         addMediumPriorityTasks: (state, action) => {
             return {
                 ...state,
@@ -56,5 +61,5 @@ const mediumPriorityTasksSlice = createSlice({
     },
 });
 
-export const { setMediumPriorityTasks,  addMediumPriorityTasks, updateMediumPriorityTasks,  clearMediumPriorityTasks,  setMediumPriorityMetaData } = mediumPriorityTasksSlice.actions;
+export const { setMediumPriorityTasks, setMediumPriorityMetaDecri, addMediumPriorityTasks, updateMediumPriorityTasks, clearMediumPriorityTasks, setMediumPriorityMetaData } = mediumPriorityTasksSlice.actions;
 export const mediumPriorityTasksReducer = mediumPriorityTasksSlice.reducer;

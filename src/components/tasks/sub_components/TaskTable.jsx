@@ -14,15 +14,37 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useState } from "react";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import edit from "src/assets/edit.svg";
 import redTrash from "src/assets/red-trash.svg";
 import tickInCircle from "src/assets/tick-in-circle.svg";
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
+import {
+  setHighPriorityMetaData,
+  setHighPriorityMetaDecri,
+  updateHighPriorityTasks,
+} from "src/store/slices/highPrioritySlice";
+import {
+  setLowPriorityMetaData,
+  setLowPriorityMetaDecri,
+  updateLowPriorityTasks
+} from "src/store/slices/lowPrioritySlice";
+import { updateMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice";
+import {
+  setMediumPriorityMetaData,
+  setMediumPriorityMetaDecri,
+} from "src/store/slices/mediumPrioritySlice";
 import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
-import { setHighPriorityCount, setLowPriorityCount, setMediumPriorityCount, setMetaData, setTasks } from "src/store/slices/taskSlice";
+import {
+  setHighPriorityCount,
+  setLowPriorityCount,
+  setMediumPriorityCount,
+  setMetaData,
+  setTasks,
+} from "src/store/slices/taskSlice";
 import {
   deleteTaskThunk,
   fetchPriorityCountsThunk,
@@ -36,16 +58,6 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
-import dayjs from "dayjs";
-import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
-import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
-import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
-import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
-import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
-import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
-import { useEffect } from "react";
-
-
 
 const calculateCellWidth = () => {
   const containerWidth =
@@ -108,15 +120,27 @@ const TaskTable = ({
   setTaskDetailsToEdit,
   handleReverseTaskEdit,
   priority = false,
-  priorityType
+  priorityType,
 }) => {
   const { isAdaptableScreen, isMicroScreen } = useResponsive();
-  const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
-  const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
-  const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
-  const highPriorityMetaData = useSelector((state) => state.highPriorityTasks.highPriorityMetaData);
-  const mediumPriorityMetaData = useSelector((state) => state.mediumPriorityTasks.mediumPriorityMetaData);
-  const lowPriorityMetaData = useSelector((state) => state.lowPriorityTasks.lowPriorityMetaData);
+  const highPriorityTasks = useSelector(
+    (state) => state.highPriorityTasks.highPriorityTasks
+  );
+  const mediumPriorityTasks = useSelector(
+    (state) => state.mediumPriorityTasks.mediumPriorityTasks
+  );
+  const lowPriorityTasks = useSelector(
+    (state) => state.lowPriorityTasks.lowPriorityTasks
+  );
+  const highPriorityMetaData = useSelector(
+    (state) => state.highPriorityTasks.highPriorityMetaData
+  );
+  const mediumPriorityMetaData = useSelector(
+    (state) => state.mediumPriorityTasks.mediumPriorityMetaData
+  );
+  const lowPriorityMetaData = useSelector(
+    (state) => state.lowPriorityTasks.lowPriorityMetaData
+  );
 
   const timeFormat = useSelector((state) => state.format.timeFormat);
   const dateFormat = useSelector((state) => state.format.dateFormat);
@@ -137,8 +161,6 @@ const TaskTable = ({
     color: "var(--secondary-font-color)",
     backgroundColor: "var(--active-background-color)",
   });
-
-  
 
   const privateKey = localStorage.getItem("privateKey");
 
@@ -185,261 +207,251 @@ const TaskTable = ({
     setAnchorEl(null);
     setSelectedTaskId(null);
   };
-  const getAllTasks = async (page = 0, limit = 5, status=[]) => {
+  const getAllTasks = async (page = 0, limit = 5, status = []) => {
     try {
-      const params = { page, limit, search: "", status: [] }
+      const params = { page, limit, search: "", status: [] };
       const response = await dispatch(getAllTasksThunk(params)).unwrap();
-      console.log('tasks in the component', response.tasks);
+      console.log("tasks in the component", response.tasks);
     } catch (err) {
-      errorToast('Something went wrong', 'getTask-pages-error');
-      console.log('error in tasks', err)
+      errorToast("Something went wrong", "getTask-pages-error");
+      console.log("error in tasks", err);
     }
   };
-//   const deleteTask = async (_id) => {
-//     setSpinner(true);
+  //   const deleteTask = async (_id) => {
+  //     setSpinner(true);
 
-//     try {
-//         const tasksIds = tasks.map((task) => task._id);
-//         const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
-//         let updtMeta;
+  //     try {
+  //         const tasksIds = tasks.map((task) => task._id);
+  //         const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
+  //         let updtMeta;
 
-//         if (response?.status === 200) {
-//             const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+  //         if (response?.status === 200) {
+  //             const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
 
-//             const filteredTasks = tasks.filter((task) => task._id !== _id);
-//             const closestTask = response?.data?.closestTask;
+  //             const filteredTasks = tasks.filter((task) => task._id !== _id);
+  //             const closestTask = response?.data?.closestTask;
 
-//             if (closestTask) {
-//                 closestTask.taskTitle = decryptSingleValues(closestTask?.taskTitle, privateKey);
-//                 closestTask.taskDescription = decryptSingleValues(closestTask?.taskDescription, privateKey);
-//                 if (Array.isArray(closestTask.taskDescription)) {
-//                     closestTask.taskDescription = closestTask.taskDescription.join("");
-//                 }
-//                 filteredTasks.push(closestTask);
-//                 updtMeta = { ...metaData, total: metaData.total - 1 };
-//             } else {
-//                 updtMeta = {
-//                     ...metaData,
-//                     total: metaData.total - 1,
-//                     range: {
-//                         ...metaData.range,
-//                         end: metaData.range?.end ? metaData.range.end - 1 : 0,
-//                     },
-//                 };
-//             }
+  //             if (closestTask) {
+  //                 closestTask.taskTitle = decryptSingleValues(closestTask?.taskTitle, privateKey);
+  //                 closestTask.taskDescription = decryptSingleValues(closestTask?.taskDescription, privateKey);
+  //                 if (Array.isArray(closestTask.taskDescription)) {
+  //                     closestTask.taskDescription = closestTask.taskDescription.join("");
+  //                 }
+  //                 filteredTasks.push(closestTask);
+  //                 updtMeta = { ...metaData, total: metaData.total - 1 };
+  //             } else {
+  //                 updtMeta = {
+  //                     ...metaData,
+  //                     total: metaData.total - 1,
+  //                     range: {
+  //                         ...metaData.range,
+  //                         end: metaData.range?.end ? metaData.range.end - 1 : 0,
+  //                     },
+  //                 };
+  //             }
 
-//             dispatch(setTasks(filteredTasks));
-//             dispatch(setMetaData(updtMeta));
-            
-//             if (priorityType == 'HIGH') {
-//               dispatch (setHighPriorityMetaData(updtMeta));
-//             } else if (priorityType == 'LOW') {
-//               dispatch (setLowPriorityMetaData(updtMeta));
-//             } else if (priorityType == 'MEDIUM') {
-//               dispatch (setMediumPriorityMetaData(updtMeta));
-//             }
+  //             dispatch(setTasks(filteredTasks));
+  //             dispatch(setMetaData(updtMeta));
 
-//             const priorityTasks = {
-//                 HIGH: filteredTasks.filter(task => task.priority === 'HIGH'),
-//                 MEDIUM: filteredTasks.filter(task => task.priority === 'MEDIUM'),
-//                 LOW: filteredTasks.filter(task => task.priority === 'LOW'),
-//             };
+  //             if (priorityType == 'HIGH') {
+  //               dispatch (setHighPriorityMetaData(updtMeta));
+  //             } else if (priorityType == 'LOW') {
+  //               dispatch (setLowPriorityMetaData(updtMeta));
+  //             } else if (priorityType == 'MEDIUM') {
+  //               dispatch (setMediumPriorityMetaData(updtMeta));
+  //             }
 
-//             dispatch(updateHighPriorityTasks(priorityTasks.HIGH));
-//             dispatch(updateMediumPriorityTasks(priorityTasks.MEDIUM));
-//             dispatch(updateLowPriorityTasks(priorityTasks.LOW));
+  //             const priorityTasks = {
+  //                 HIGH: filteredTasks.filter(task => task.priority === 'HIGH'),
+  //                 MEDIUM: filteredTasks.filter(task => task.priority === 'MEDIUM'),
+  //                 LOW: filteredTasks.filter(task => task.priority === 'LOW'),
+  //             };
 
-//             dispatch(setHighPriorityCount(priorityCounts.data.high));
-//             dispatch(setMediumPriorityCount(priorityCounts.data.medium));
-//             dispatch(setLowPriorityCount(priorityCounts.data.low));
+  //             dispatch(updateHighPriorityTasks(priorityTasks.HIGH));
+  //             dispatch(updateMediumPriorityTasks(priorityTasks.MEDIUM));
+  //             dispatch(updateLowPriorityTasks(priorityTasks.LOW));
 
-//             successToast(response.message, "task-deleted");
-//         }
-//     } catch (err) {
-//         errorToast("Something went wrong", "getTask-pages-error");
-//         console.log("Error:", err);
-//     } finally {
-//         setSpinner(false);
-//     }
-// };
+  //             dispatch(setHighPriorityCount(priorityCounts.data.high));
+  //             dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+  //             dispatch(setLowPriorityCount(priorityCounts.data.low));
 
-useEffect(() => {
-  console.log('metaData being passed to high tasks is,,,,,,,,,,,,', metaData,
-    'and mediumPriorityMetaData.range.end is...', mediumPriorityMetaData.range?.end 
-  );
-})
+  //             successToast(response.message, "task-deleted");
+  //         }
+  //     } catch (err) {
+  //         errorToast("Something went wrong", "getTask-pages-error");
+  //         console.log("Error:", err);
+  //     } finally {
+  //         setSpinner(false);
+  //     }
+  // };
 
-const deleteTask = async (_id) => {
-  setSpinner(true);
+  useEffect(() => {
+    console.log(
+      "metaData being passed to high tasks is,,,,,,,,,,,,",
+      metaData,
+      "and mediumPriorityMetaData.range.end is...",
+      mediumPriorityMetaData.range?.end
+    );
+  });
 
-  try {
-    const tasksIds = tasks.map((task) => task._id);
-    const response = await dispatch(
-      deleteTaskThunk({ _id, tasksIds })
-    ).unwrap();
-    console.log('response.status you look for is....', response?.status);
+  const deleteTask = async (_id) => {
+    setSpinner(true);
 
-    if (response?.status === 200) {
-      const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
-     
-      const filteredTasks = tasks.filter(
-        (task) => task._id !== selectedTaskId
-      );
-      const closestTask = response?.data?.closestTask;
-      console.log(closestTask);
-      let updMeta;
-      let updHighPriorityMeta;
-      let updLowPriorityMeta;
-      let updMediumPriorityMeta;
-     
-      if (closestTask) {
-        closestTask.taskTitle = decryptSingleValues(
-          closestTask?.taskTitle,
-          privateKey
+    try {
+      const tasksIds = tasks.map((task) => task._id);
+      const response = await dispatch(
+        deleteTaskThunk({ _id, tasksIds })
+      ).unwrap();
+      console.log("response.status you look for is....", response?.status);
+
+      if (response?.status === 200) {
+        const priorityCounts = await dispatch(
+          fetchPriorityCountsThunk()
+        ).unwrap();
+
+        const filteredTasks = tasks.filter(
+          (task) => task._id !== selectedTaskId
         );
-        closestTask.taskDescription = decryptSingleValues(
-          closestTask?.taskDescription,
-          privateKey
-        );
-        if (Array.isArray(closestTask.taskDescription)) {
-          closestTask.taskDescription = closestTask.taskDescription.join("");
-        }
-        filteredTasks.push(closestTask);
+        const closestTask = response?.data?.closestTask;
+        console.log(closestTask);
+        let updMeta;
+        let updHighPriorityMeta;
+        let updLowPriorityMeta;
+        let updMediumPriorityMeta;
+
+        if (closestTask) {
+          closestTask.taskTitle = decryptSingleValues(
+            closestTask?.taskTitle,
+            privateKey
+          );
+          closestTask.taskDescription = decryptSingleValues(
+            closestTask?.taskDescription,
+            privateKey
+          );
+          if (Array.isArray(closestTask.taskDescription)) {
+            closestTask.taskDescription = closestTask.taskDescription.join("");
+          }
+          filteredTasks.push(closestTask);
           updMeta = { ...metaData, total: metaData.total - 1 };
-          updHighPriorityMeta = {...highPriorityMetaData, total: highPriorityMetaData.total - 1 };
-          updLowPriorityMeta = {...lowPriorityMetaData, total: lowPriorityMetaData.total - 1 };
-          updMediumPriorityMeta = {...mediumPriorityMetaData, total: mediumPriorityMetaData.total - 1 };
-          console.log('updHighPriorityMetaData issss', updHighPriorityMeta);
+          updHighPriorityMeta = {
+            ...highPriorityMetaData,
+            total: highPriorityMetaData.total - 1,
+          };
+          updLowPriorityMeta = {
+            ...lowPriorityMetaData,
+            total: lowPriorityMetaData.total - 1,
+          };
+          updMediumPriorityMeta = {
+            ...mediumPriorityMetaData,
+            total: mediumPriorityMetaData.total - 1,
+          };
+          console.log("updHighPriorityMetaData issss", updHighPriorityMeta);
+        } else {
+          updMeta = {
+            ...metaData,
+            total: metaData.total - 1,
+            range: {
+              ...metaData.range,
+              end: metaData.range?.end ? metaData.range.end - 1 : 0,
+            },
+          };
+          updHighPriorityMeta = {
+            ...highPriorityMetaData,
+            total: highPriorityMetaData.total - 1,
+          };
+          updLowPriorityMeta = {
+            ...lowPriorityMetaData,
+            total: lowPriorityMetaData.total - 1,
+          };
+          updMediumPriorityMeta = {
+            ...mediumPriorityMetaData,
+            total: mediumPriorityMetaData.total - 1,
+          };
 
-  
-        
-    
-      } else {
-        // If no closestTask is found, reduce the total and decrement range.end
-        updMeta = {
-          ...metaData,
-          total: metaData.total - 1,
-          range: {
-            ...metaData.range,  // Ensure you're spreading the range from metaData
-            end: metaData.range?.end ? metaData.range.end - 1 : 0,  // Check if end exists, then decrement it
-            }
-        };
-        updHighPriorityMeta = {
-          ...highPriorityMetaData, 
-          total: highPriorityMetaData.total - 1,
-          range: {
-            ...highPriorityMetaData.range,  // Ensure you're spreading the range from metaData
-            end: highPriorityMetaData.range?.end ? highPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
-            }};
-        updLowPriorityMeta = {
-          ...lowPriorityMetaData, 
-          total: lowPriorityMetaData.total - 1,
-          range: {
-            ...lowPriorityMetaData.range,  // Ensure you're spreading the range from metaData
-            end: lowPriorityMetaData.range?.end ? lowPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
-            } };
-        updMediumPriorityMeta = {
-          ...mediumPriorityMetaData, 
-          total: mediumPriorityMetaData.total - 1,
-          range: {
-            ...mediumPriorityMetaData.range,  // Ensure you're spreading the range from metaData
-            end: mediumPriorityMetaData.range?.end ? mediumPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
-            } };
+          console.log("else is here");
+        }
 
-        console.log('else is here')
+        console.log("updMetaData is......", updMeta);
+        dispatch(setTasks(filteredTasks));
+        dispatch(setMetaData(updMeta));
+        const deletedTask = tasks.find((task) => task._id === selectedTaskId);
+
+        if (deletedTask.priority === "HIGH") {
+          const filteredHighPriorityTasks = highPriorityTasks.filter(
+            (task) => task._id !== selectedTaskId
+          );
+          await dispatch(updateHighPriorityTasks(filteredHighPriorityTasks));
+          await dispatch(setHighPriorityMetaData(updHighPriorityMeta));
+          await dispatch(setHighPriorityMetaDecri());
+          await dispatch(setHighPriorityCount(priorityCounts.data.high));
+        } else if (deletedTask.priority === "LOW") {
+          const filteredLowPriorityTasks = lowPriorityTasks.length > 0 ? lowPriorityTasks.filter(
+            (task) => task._id !== selectedTaskId
+          ) : [];
+          await dispatch(setLowPriorityMetaData(updLowPriorityMeta));
+          await dispatch(updateLowPriorityTasks(filteredLowPriorityTasks));
+          await dispatch(setLowPriorityMetaDecri());
+          await dispatch(setLowPriorityCount(priorityCounts.data.low));
+        } else if (deletedTask.priority === "MEDIUM") {
+          const filteredMediumPriorityTasks = mediumPriorityTasks.filter(
+            (task) => task._id !== selectedTaskId
+          );
+          await dispatch(setMediumPriorityMetaData(updMediumPriorityMeta));
+          await dispatch(updateMediumPriorityTasks(filteredMediumPriorityTasks));
+          await dispatch(setMediumPriorityMetaDecri());
+          await dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+        }
+        successToast(response.message, "task-deleted");
       }
-
-      console.log('updMetaData is......', updMeta);
-      dispatch(setTasks(filteredTasks));
-      dispatch(setMetaData(updMeta));
-        const filteredHighPriorityTasks = highPriorityTasks.filter(task => task._id !== selectedTaskId);
-        console.log('highPriorityTasks to be set after delete are.....', filteredHighPriorityTasks)
-        dispatch(updateHighPriorityTasks(filteredHighPriorityTasks));
-        
-    
-        const filteredMediumPriorityTasks = mediumPriorityTasks.filter(task => task._id !== selectedTaskId);
-        dispatch(updateMediumPriorityTasks(filteredMediumPriorityTasks));
-        
-    
-        const filteredLowPriorityTasks = lowPriorityTasks.filter(task => task._id !== selectedTaskId);
-        dispatch(updateLowPriorityTasks(filteredLowPriorityTasks));
-        const deletedTask = tasks.find(task => task._id === selectedTaskId)
-        
-      if (deletedTask.priority === 'HIGH') {
-        dispatch (setHighPriorityMetaData(updHighPriorityMeta));
-      } else if (deletedTask.priority === 'LOW') {
-    
-        dispatch (setLowPriorityMetaData(updLowPriorityMeta));
-      } else if (deletedTask.priority === 'MEDIUM') {
-    
-        dispatch (setMediumPriorityMetaData(updMediumPriorityMeta));
-      }
-
-
-      dispatch(setHighPriorityCount(priorityCounts.data.high));
-      dispatch(setLowPriorityCount(priorityCounts.data.low));
-      
-      dispatch(setMediumPriorityCount(priorityCounts.data.medium));
-      successToast(response.message, "task-deleted");
+    } catch (err) {
+      errorToast("Delete! Something went wrong", "getTask-pages-error");
+      console.log("Error During Delete", err);
+    } finally {
+      setSpinner(false);
     }
-  } catch (err) {
-    errorToast("Something went wrong", "getTask-pages-error");
-    console.log("Errrrrrrrrrrrrrrrrrrrrr", err)
-  } finally {
-    setSpinner(false);
-  }
-}; 
+  };
 
   const handleDelete = async () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);
     deleteTask(selectedTaskId);
-    
-    
+
     handleMenuClose();
   };
 
   const changeTaskStatus = async (_id, taskStatus, taskPriority) => {
     setSpinner(true);
     try {
-      // console.log(`Change status for task with ID: ${selectedTaskId}`);
       const thunkToDispatch = markTaskStatusThunk;
       const response = await dispatch(
         thunkToDispatch({ _id, taskStatus })
       ).unwrap();
       if (response.status == 200) {
-      // const filteredTaskObject = tasks.filter(task => task._id == _id);
-      // const updatedTaskObject = {...filteredTaskObject, status: taskStatus}
 
         const updatedTasksArray = tasks.map((task) =>
           task._id == _id ? { ...task, status: taskStatus } : task
         );
         if (priority) {
-          dispatch(setPriorityTasks(updatedTasksArray))
+          dispatch(setPriorityTasks(updatedTasksArray));
           getAllTasks();
-
-        } else if (!priority && taskPriority === 'MEDIUM') {
+        } else if (!priority && taskPriority === "MEDIUM") {
           const updatedMediumTasksArray = mediumPriorityTasks.map((task) =>
             task._id == _id ? { ...task, status: taskStatus } : task
           );
           dispatch(updateMediumPriorityTasks(updatedMediumTasksArray));
           dispatch(setTasks(updatedTasksArray));
-        }else if (!priority && taskPriority === 'HIGH') {
+        } else if (!priority && taskPriority === "HIGH") {
           const updatedHighTasksArray = highPriorityTasks.map((task) =>
             task._id == _id ? { ...task, status: taskStatus } : task
           );
           dispatch(updateHighPriorityTasks(updatedHighTasksArray));
           dispatch(setTasks(updatedTasksArray));
-        } else if (!priority && taskPriority === 'LOW') {
+        } else if (!priority && taskPriority === "LOW") {
           const updatedLowTasksArray = lowPriorityTasks.map((task) =>
             task._id == _id ? { ...task, status: taskStatus } : task
           );
           dispatch(updateLowPriorityTasks(updatedLowTasksArray));
           dispatch(setTasks(updatedTasksArray));
         }
-//         } else  {
-//   dispatch(setTasks(updatedTasksArray));
-
-// }
       }
     } catch (err) {
       errorToast(
@@ -463,16 +475,16 @@ const deleteTask = async (_id) => {
         }
         return accumulator;
       }, null);
-      console.log('foundTask normally is.....', foundTask);
+      console.log("foundTask normally is.....", foundTask);
     } else {
       foundTask = tasks.find((task) => task._id === taskId);
-      console.log('foundTask is...........', foundTask);
+      console.log("foundTask is...........", foundTask);
     }
 
     handleOpen();
     handleMenuClose();
 
-    setTaskDetailsToEdit({...foundTask, dueDate: dayjs(foundTask.dueDate)});
+    setTaskDetailsToEdit({ ...foundTask, dueDate: dayjs(foundTask.dueDate) });
   };
 
   const handleChangeTaskStatus = (_id, taskStatus, taskPriority) => {
@@ -666,7 +678,11 @@ const deleteTask = async (_id) => {
                             {task.status !== "COMPLETED" && (
                               <MenuItem
                                 onClick={() => {
-                                  handleChangeTaskStatus(task._id, "COMPLETED", task.priority);
+                                  handleChangeTaskStatus(
+                                    task._id,
+                                    "COMPLETED",
+                                    task.priority
+                                  );
                                 }}
                                 sx={{ gap: "12px" }}
                               >
