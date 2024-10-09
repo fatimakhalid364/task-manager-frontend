@@ -21,6 +21,9 @@ import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/
 import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
 import { updateTaskThunk } from 'src/store/thunks/taskThunks';
 import { useEffect } from 'react';
+import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
+import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
 
 
 
@@ -104,7 +107,7 @@ const CssSelectField = styled((props) => <Select {...props} />)(({ theme }) => (
 
 
 
-const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit, setTaskDetailsToEdit }) => {
+const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit,  taskDetailsToEdit, taskEdit,  handleTaskEdit, setTaskDetailsToEdit, setSpinner }) => {
     const {
         isAdaptableScreen,
         onWholeScreen,
@@ -215,11 +218,16 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
     const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
     const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
     const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
+    const highPriorityMetaData = useSelector((state) => state.highPriorityTasks.highPriorityMetaData);
+    const mediumPriorityMetaData = useSelector((state) => state.mediumPriorityTasks.mediumPriorityMetaData);
+    const lowPriorityMetaData = useSelector((state) => state.lowPriorityTasks.lowPriorityMetaData);
+    
 
     const handleCreateClick = async () => {
         try {
             handleClose();
             // taskEdit && handleReverseTaskEdit();
+            setSpinner(true);
             const splitDesc = taskEdit ? taskDetailsToEdit.taskDescription.match(/.{1,32}/g) : taskDetails.taskDescription.match(/.{1,32}/g) ;
             const encryptedDesc = encryptArrayValues(splitDesc);
             const forEncryption = {
@@ -285,11 +293,23 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
                 } else if (!taskEdit) {
                     dispatch(addTask(addedTask));
                     if (addedTask.priority == 'MEDIUM') {
-                        dispatch(addMediumPriorityTasks(addedTask)); 
+                        dispatch(addMediumPriorityTasks(addedTask));
+                        dispatch(setMediumPriorityMetaData({
+                            ...mediumPriorityMetaData,
+                            total: mediumPriorityMetaData.total + 1
+                        })) 
                     } else if (addedTask.priority == 'LOW') {
                         dispatch(addLowPriorityTasks(addedTask));
+                        dispatch(setLowPriorityMetaData({
+                            ...lowPriorityMetaData,
+                            total: lowPriorityMetaData.total + 1
+                        })) 
                     } else if (addedTask.priority == 'HIGH'){
                         dispatch(addHighPriorityTasks(addedTask));
+                        dispatch(setHighPriorityMetaData({
+                            ...highPriorityMetaData,
+                            total: highPriorityMetaData.total + 1
+                        })) 
                     }
                 }
                
@@ -298,13 +318,17 @@ const AddTask = ({ open, handleClose, getAllTasks, debouncedGetAllTasks, limit, 
                 dispatch(setLowPriorityCount(priorityCounts.data.low));
                 
                 dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+                setSpinner(false);
             } else {
                 errorToast('Something went wrong', 'authentication-pages-error');
                 resetTaskDetails();
+                setSpinner(false);
             }
+          
         } catch (error) {
             console.error('Error occurred while dispatching thunk:', error);
             errorToast(error.message, 'authentication-pages-error');
+            setSpinner(false);
             resetTaskDetails();
         }
     };

@@ -5,7 +5,7 @@ import { useResponsive } from 'src/constants/media_queries';
 
 
 
-function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked, url,  }) {
+function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked, url, style  }) {
     const navigate = useNavigate();
    
     const {
@@ -35,6 +35,7 @@ function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMe
                 <div 
                 onClick={() => { navigate(url) }} 
                 className='tasks-page-priority-level'
+                style={style}
                 >
                     {PriorityLevel}
             </div>

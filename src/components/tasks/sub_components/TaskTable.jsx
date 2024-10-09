@@ -40,7 +40,11 @@ import dayjs from "dayjs";
 import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
 import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
 import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
-import { setMediumPriorityTasks } from "../../../store/slices/mediumPrioritySLice";
+import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
+import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
+import { useEffect } from "react";
+
 
 
 const calculateCellWidth = () => {
@@ -104,11 +108,15 @@ const TaskTable = ({
   setTaskDetailsToEdit,
   handleReverseTaskEdit,
   priority = false,
+  priorityType
 }) => {
   const { isAdaptableScreen, isMicroScreen } = useResponsive();
   const highPriorityTasks = useSelector((state) => state.highPriorityTasks.highPriorityTasks);
   const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
   const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
+  const highPriorityMetaData = useSelector((state) => state.highPriorityTasks.highPriorityMetaData);
+  const mediumPriorityMetaData = useSelector((state) => state.mediumPriorityTasks.mediumPriorityMetaData);
+  const lowPriorityMetaData = useSelector((state) => state.lowPriorityTasks.lowPriorityMetaData);
 
   const timeFormat = useSelector((state) => state.format.timeFormat);
   const dateFormat = useSelector((state) => state.format.dateFormat);
@@ -187,71 +195,200 @@ const TaskTable = ({
       console.log('error in tasks', err)
     }
   };
-  const deleteTask = async (_id) => {
-    setSpinner(true);
+//   const deleteTask = async (_id) => {
+//     setSpinner(true);
 
-    try {
-      const tasksIds = tasks.map((task) => task._id);
-      const response = await dispatch(
-        deleteTaskThunk({ _id, tasksIds })
-      ).unwrap();
+//     try {
+//         const tasksIds = tasks.map((task) => task._id);
+//         const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
+//         let updtMeta;
 
-      if (response?.status === 200) {
-        const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
-       
-        const filteredTasks = tasks.filter(
-          (task) => task._id !== selectedTaskId
+//         if (response?.status === 200) {
+//             const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+
+//             const filteredTasks = tasks.filter((task) => task._id !== _id);
+//             const closestTask = response?.data?.closestTask;
+
+//             if (closestTask) {
+//                 closestTask.taskTitle = decryptSingleValues(closestTask?.taskTitle, privateKey);
+//                 closestTask.taskDescription = decryptSingleValues(closestTask?.taskDescription, privateKey);
+//                 if (Array.isArray(closestTask.taskDescription)) {
+//                     closestTask.taskDescription = closestTask.taskDescription.join("");
+//                 }
+//                 filteredTasks.push(closestTask);
+//                 updtMeta = { ...metaData, total: metaData.total - 1 };
+//             } else {
+//                 updtMeta = {
+//                     ...metaData,
+//                     total: metaData.total - 1,
+//                     range: {
+//                         ...metaData.range,
+//                         end: metaData.range?.end ? metaData.range.end - 1 : 0,
+//                     },
+//                 };
+//             }
+
+//             dispatch(setTasks(filteredTasks));
+//             dispatch(setMetaData(updtMeta));
+            
+//             if (priorityType == 'HIGH') {
+//               dispatch (setHighPriorityMetaData(updtMeta));
+//             } else if (priorityType == 'LOW') {
+//               dispatch (setLowPriorityMetaData(updtMeta));
+//             } else if (priorityType == 'MEDIUM') {
+//               dispatch (setMediumPriorityMetaData(updtMeta));
+//             }
+
+//             const priorityTasks = {
+//                 HIGH: filteredTasks.filter(task => task.priority === 'HIGH'),
+//                 MEDIUM: filteredTasks.filter(task => task.priority === 'MEDIUM'),
+//                 LOW: filteredTasks.filter(task => task.priority === 'LOW'),
+//             };
+
+//             dispatch(updateHighPriorityTasks(priorityTasks.HIGH));
+//             dispatch(updateMediumPriorityTasks(priorityTasks.MEDIUM));
+//             dispatch(updateLowPriorityTasks(priorityTasks.LOW));
+
+//             dispatch(setHighPriorityCount(priorityCounts.data.high));
+//             dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+//             dispatch(setLowPriorityCount(priorityCounts.data.low));
+
+//             successToast(response.message, "task-deleted");
+//         }
+//     } catch (err) {
+//         errorToast("Something went wrong", "getTask-pages-error");
+//         console.log("Error:", err);
+//     } finally {
+//         setSpinner(false);
+//     }
+// };
+
+useEffect(() => {
+  console.log('metaData being passed to high tasks is,,,,,,,,,,,,', metaData,
+    'and mediumPriorityMetaData.range.end is...', mediumPriorityMetaData.range?.end 
+  );
+})
+
+const deleteTask = async (_id) => {
+  setSpinner(true);
+
+  try {
+    const tasksIds = tasks.map((task) => task._id);
+    const response = await dispatch(
+      deleteTaskThunk({ _id, tasksIds })
+    ).unwrap();
+    console.log('response.status you look for is....', response?.status);
+
+    if (response?.status === 200) {
+      const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
+     
+      const filteredTasks = tasks.filter(
+        (task) => task._id !== selectedTaskId
+      );
+      const closestTask = response?.data?.closestTask;
+      console.log(closestTask);
+      let updMeta;
+      let updHighPriorityMeta;
+      let updLowPriorityMeta;
+      let updMediumPriorityMeta;
+     
+      if (closestTask) {
+        closestTask.taskTitle = decryptSingleValues(
+          closestTask?.taskTitle,
+          privateKey
         );
-        const closestTask = response?.data?.closestTask;
-        console.log(closestTask);
-        let updMeta;
-        if (closestTask) {
-          closestTask.taskTitle = decryptSingleValues(
-            closestTask?.taskTitle,
-            privateKey
-          );
-          closestTask.taskDescription = decryptSingleValues(
-            closestTask?.taskDescription,
-            privateKey
-          );
-          if (Array.isArray(closestTask.taskDescription)) {
-            closestTask.taskDescription = closestTask.taskDescription.join("");
-          }
-          filteredTasks.push(closestTask);
+        closestTask.taskDescription = decryptSingleValues(
+          closestTask?.taskDescription,
+          privateKey
+        );
+        if (Array.isArray(closestTask.taskDescription)) {
+          closestTask.taskDescription = closestTask.taskDescription.join("");
+        }
+        filteredTasks.push(closestTask);
           updMeta = { ...metaData, total: metaData.total - 1 };
-        } else {
-          // If no closestTask is found, reduce the total and decrement range.end
-          updMeta = {
-            ...metaData,
-            total: metaData.total - 1,
-            range: {
-              ...metaData.range,  // Ensure you're spreading the range from metaData
-              end: metaData.range?.end ? metaData.range.end - 1 : 0,  // Check if end exists, then decrement it
-              }
-          };
-        }
+          updHighPriorityMeta = {...highPriorityMetaData, total: highPriorityMetaData.total - 1 };
+          updLowPriorityMeta = {...lowPriorityMetaData, total: lowPriorityMetaData.total - 1 };
+          updMediumPriorityMeta = {...mediumPriorityMetaData, total: mediumPriorityMetaData.total - 1 };
+          console.log('updHighPriorityMetaData issss', updHighPriorityMeta);
 
-        if (priority) {
-          getAllTasks();
-          dispatch(setPriorityTasks(filteredTasks)); //Not Working
-
-        } else {
-          dispatch(setTasks(filteredTasks));
-        dispatch(setMetaData(updMeta));
-        }
-        dispatch(setHighPriorityCount(priorityCounts.data.high));
-        dispatch(setLowPriorityCount(priorityCounts.data.low));
+  
         
-        dispatch(setMediumPriorityCount(priorityCounts.data.medium));
-        successToast(response.message, "task-deleted");
+    
+      } else {
+        // If no closestTask is found, reduce the total and decrement range.end
+        updMeta = {
+          ...metaData,
+          total: metaData.total - 1,
+          range: {
+            ...metaData.range,  // Ensure you're spreading the range from metaData
+            end: metaData.range?.end ? metaData.range.end - 1 : 0,  // Check if end exists, then decrement it
+            }
+        };
+        updHighPriorityMeta = {
+          ...highPriorityMetaData, 
+          total: highPriorityMetaData.total - 1,
+          range: {
+            ...highPriorityMetaData.range,  // Ensure you're spreading the range from metaData
+            end: highPriorityMetaData.range?.end ? highPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
+            }};
+        updLowPriorityMeta = {
+          ...lowPriorityMetaData, 
+          total: lowPriorityMetaData.total - 1,
+          range: {
+            ...lowPriorityMetaData.range,  // Ensure you're spreading the range from metaData
+            end: lowPriorityMetaData.range?.end ? lowPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
+            } };
+        updMediumPriorityMeta = {
+          ...mediumPriorityMetaData, 
+          total: mediumPriorityMetaData.total - 1,
+          range: {
+            ...mediumPriorityMetaData.range,  // Ensure you're spreading the range from metaData
+            end: mediumPriorityMetaData.range?.end ? mediumPriorityMetaData.range.end - 1 : 0,  // Check if end exists, then decrement it
+            } };
+
+        console.log('else is here')
       }
-    } catch (err) {
-      errorToast("Something went wrong", "getTask-pages-error");
-      console.log("Errrrrrrrrrrrrrrrrrrrrr", err)
-    } finally {
-      setSpinner(false);
+
+      console.log('updMetaData is......', updMeta);
+      dispatch(setTasks(filteredTasks));
+      dispatch(setMetaData(updMeta));
+        const filteredHighPriorityTasks = highPriorityTasks.filter(task => task._id !== selectedTaskId);
+        console.log('highPriorityTasks to be set after delete are.....', filteredHighPriorityTasks)
+        dispatch(updateHighPriorityTasks(filteredHighPriorityTasks));
+        
+    
+        const filteredMediumPriorityTasks = mediumPriorityTasks.filter(task => task._id !== selectedTaskId);
+        dispatch(updateMediumPriorityTasks(filteredMediumPriorityTasks));
+        
+    
+        const filteredLowPriorityTasks = lowPriorityTasks.filter(task => task._id !== selectedTaskId);
+        dispatch(updateLowPriorityTasks(filteredLowPriorityTasks));
+        const deletedTask = tasks.find(task => task._id === selectedTaskId)
+        
+      if (deletedTask.priority === 'HIGH') {
+        dispatch (setHighPriorityMetaData(updHighPriorityMeta));
+      } else if (deletedTask.priority === 'LOW') {
+    
+        dispatch (setLowPriorityMetaData(updLowPriorityMeta));
+      } else if (deletedTask.priority === 'MEDIUM') {
+    
+        dispatch (setMediumPriorityMetaData(updMediumPriorityMeta));
+      }
+
+
+      dispatch(setHighPriorityCount(priorityCounts.data.high));
+      dispatch(setLowPriorityCount(priorityCounts.data.low));
+      
+      dispatch(setMediumPriorityCount(priorityCounts.data.medium));
+      successToast(response.message, "task-deleted");
     }
-  };
+  } catch (err) {
+    errorToast("Something went wrong", "getTask-pages-error");
+    console.log("Errrrrrrrrrrrrrrrrrrrrr", err)
+  } finally {
+    setSpinner(false);
+  }
+}; 
 
   const handleDelete = async () => {
     console.log(`Delete task with ID: ${selectedTaskId}`);

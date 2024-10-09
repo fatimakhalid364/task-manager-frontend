@@ -9,6 +9,7 @@ const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, s
 
     const handleChangeRowsPerPage = (event) => {
         const newLimit = parseInt(event.target.value, 10);
+        console.log('newLimit has the value of...', newLimit);
         setLimit(newLimit);
         setPage(0); // Reset page to 1 for new limit
         debouncedGetAllTasks(0, newLimit); // Fetch tasks with new limit starting at page 0

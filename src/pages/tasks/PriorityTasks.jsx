@@ -15,6 +15,9 @@ import { setHighPriorityTasks } from "src/store/slices/highPrioritySlice.js";
 import { setLowPriorityTasks } from "src/store/slices/lowPrioritySlice.js";
 import { setMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice.js";
 import { getPriorityTasksThunk } from "src/store/thunks/taskThunks";
+import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
+import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
 
 function PriorityTasks({ priority }) {
     const [open, setOpen] = useState(false);
@@ -57,11 +60,13 @@ function PriorityTasks({ priority }) {
         taskDescription: "",
     });
 
-    const getTasks = async (priority) => {
+    const getTasks = async (priority, page, limit) => {
         try {
             setSkeletonLoader(true);
             const params = { page, limit, search, priority };
+            console.log('issue params aree...', params);
             const response = await dispatch(getPriorityTasksThunk(params)).unwrap();
+            console.log('issue response is...', response);
 
             switch (priority) {
                 case "HIGH":
@@ -76,7 +81,7 @@ function PriorityTasks({ priority }) {
                 default:
                     break;
             }
-            console.log(`Fetched ${priority} tasks:`, response.data);
+            console.log(`Fetched ${priority} tasks:`, response);
         } catch (err) {
             errorToast("Something went wrong", "getTask-pages-error");
             console.log("Error fetching tasks:", err);
@@ -84,15 +89,16 @@ function PriorityTasks({ priority }) {
             setSkeletonLoader(false);
         }
     };
-    const getAllTasks = async () => {
+    const getAllTasks = async (page, limit) => {
         console.log("Inside all task comp")
 
 
-        await getTasks(priority);
+        await getTasks(priority, page, limit);
     };
 
     const debouncedGetAllTasks = useCallback(
         debounce((page, limit) => {
+           
             getAllTasks(page, limit);
         }, 300),
         [page, limit, pathname]
@@ -128,12 +134,16 @@ function PriorityTasks({ priority }) {
                                     ? "Important"
                                     : "Deferred"
                         }
-                        total={priorityTasks?.priorityMetaData?.total}
+                        total={priority == "HIGH" ? highPriorityTasks.highPriorityMetaData.total : 
+                            priority == "MEDIUM" ? mediumPriorityTasks.mediumPriorityMetaData.total :
+                            priority == "LOW" ? lowPriorityTasks.lowPriorityMetaData.total : null
+                        }
                     />
                     <div></div>
                     <Box mt={3} mb={4}>
                         <TaskTable
                             priority={true}
+                            priorityType={priority}
                             handleOpen={handleAddTaskOpen}
                             handleTaskEdit={handlePriorityTaskEdit}
                             setTaskDetailsToEdit={setTaskDetailsToEdit}

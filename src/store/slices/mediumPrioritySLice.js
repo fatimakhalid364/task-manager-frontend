@@ -17,6 +17,12 @@ const mediumPriorityTasksSlice = createSlice({
             state.loaded = action.payload?.loaded || false;
             state.loading = action.payload?.loading || false;
         },
+        setMediumPriorityMetaData: (state, action) => {
+            return {
+                ...state,
+                mediumPriorityMetaData: action.payload
+            }
+        },
         addMediumPriorityTasks: (state, action) => {
             return {
                 ...state,
@@ -28,6 +34,13 @@ const mediumPriorityTasksSlice = createSlice({
                 ...state,
                 mediumPriorityTasks: action.payload
             }
+        },
+        clearMediumPriorityTasks: (state, action) => {
+            return {
+                ...state,
+                mediumPriorityTasks: action.payload
+            }
+           
         }
     },
     extraReducers: (builder) => {
@@ -43,5 +56,5 @@ const mediumPriorityTasksSlice = createSlice({
     },
 });
 
-export const { setMediumPriorityTasks,  addMediumPriorityTasks, updateMediumPriorityTasks } = mediumPriorityTasksSlice.actions;
+export const { setMediumPriorityTasks,  addMediumPriorityTasks, updateMediumPriorityTasks,  clearMediumPriorityTasks,  setMediumPriorityMetaData } = mediumPriorityTasksSlice.actions;
 export const mediumPriorityTasksReducer = mediumPriorityTasksSlice.reducer;

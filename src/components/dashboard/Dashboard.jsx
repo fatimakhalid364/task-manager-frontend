@@ -10,6 +10,8 @@ import blueTick from 'src/assets/blue-tick-circle.svg';
 import greenTick from 'src/assets/green-tick-circle.svg';
 import total from 'src/assets/total.svg';
 import CustomBarChart from './subComponents/BarChart';
+import TwoLevelPieChart from 'src/components/dashboard/subComponents/PieChart.jsx';
+// import MuiPieChart from './subComponents/MuiPieChart';
 
 
 
@@ -84,7 +86,7 @@ function Dashboard() {
                         <StatusBox img = {clock} statusCount = '12' statusName = 'Pending' />
                         <StatusBox img = {blueTick} statusCount = '12' statusName = 'In Progress' />
                         <StatusBox img = {greenTick} statusCount = '12' statusName = 'Completed' />
-                        <StatusBox img = {total} statusCount = '12' statusName = 'Total Tasks' />
+                        <StatusBox img = {total} statusCount = '12' statusName = 'Not Started' />
                 </div>
                 <div className = 'chart-and-pinned-div'>
                     <div className='bar-chart-div'>
@@ -95,23 +97,41 @@ function Dashboard() {
                             fontWeight: '600',
                             marginLeft: '11px'
                         }}>
-                        Tasks by Priority
+                        Daily Priorities
                         </div>
-                        <div style={{marginTop: '45px'}}>
+                        <div style={{marginTop: '45px'}} >
                             <CustomBarChart 
-                            // highNotStartedCount={highNotStartedCount}
-                            // mediumNotStartedCount={mediumNotStartedCount}
-                            // lowNotStartedCount={ lowNotStartedCount}
-                            // highPendingCount={highPendingCount}
-                            // mediumPendingCount={mediumPendingCount}
-                            // lowPendingCount={lowPendingCount}
-                            // highProgressingCount={highProgressingCount}
-                            // mediumProgressingCount={mediumProgressingCount}
-                            // lowProgressingCount={lowProgressingCount}
-                            // highCompletedCount={highCompletedCount}
-                            // mediumCompletedCount={mediumCompletedCount}
-                            // lowCompletedCount={lowCompletedCount}
+                           
                             />
+                           
+                        </div>
+                    </div>
+                    <div className="pie-chart-div">
+                    <div style ={{
+                            fontFamily: 'var(--primary-font-family)',
+                            color: 'var(--secondary-font-color)',
+                            fontSize: '22px',
+                            fontWeight: '600',
+                            marginLeft: '11px'
+                        }}>
+                        Priorities by Status
+                        </div>
+                        <div>
+                            <TwoLevelPieChart />
+                            <div style={{display: 'flex', width: '100%', justifyContent: 'center', gap: '20px',  marginLeft: '4px'}}>
+                                <div style={{display: 'flex',  alignItems: 'center', gap: '5px'}}>
+                                    <div style={{height: '4px', width: '20px', backgroundColor: '#EF4444'}}></div>
+                                    <div style={{fontFamily: 'var(--primary-font-family)', color: 'var(--secondary-font-color)'}}>High</div>
+                                </div>
+                                <div style={{display: 'flex',  alignItems: 'center', gap: '5px'}}>
+                                    <div style={{height: '4px', width: '20px', backgroundColor: '#F59E0B'}}></div>
+                                    <div style={{fontFamily: 'var(--primary-font-family)', color: 'var(--secondary-font-color)'}}>Medium</div>
+                                </div>
+                                <div style={{display: 'flex',  alignItems: 'center', gap: '5px'}}>
+                                    <div style={{height: '4px', width: '20px', backgroundColor: '#1FDE43'}}></div>
+                                    <div style={{fontFamily: 'var(--primary-font-family)', color: 'var(--secondary-font-color)'}}>Low</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

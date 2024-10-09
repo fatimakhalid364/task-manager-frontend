@@ -20,10 +20,13 @@ const CustomBarChart = ({
   lowCompletedCount
 }) => {
   const data = [
-    { status: 'Not Started', High: highNotStartedCount, Medium: mediumNotStartedCount, Low: lowNotStartedCount },
-    { status: 'In Progress', High: highProgressingCount, Medium: mediumProgressingCount, Low: lowProgressingCount },
-    { status: 'Completed', High: highCompletedCount, Medium: mediumCompletedCount, Low: lowCompletedCount },
-    { status: 'Pending', High:  highPendingCount, Medium:  mediumPendingCount, Low:  lowPendingCount },
+    { day: 'Mon', High: 10, Medium: 4, Low: 6 },
+    { day: 'Tue', High: 5, Medium:11, Low: 2 },
+    { day: 'Wed', High: 6, Medium: 9, Low: 5 },
+    { day: 'Thurs', High:  4, Medium:  3, Low:  2 },
+    { day: 'Fri', High:  16, Medium: 1, Low:  1 },
+    { day: 'Sat', High:  9, Medium: 2, Low: 2 },
+    { day: 'Sun', High:  4, Medium:  3, Low:  3 },
   ];
 
   const CustomLegend = (props) => {
@@ -40,8 +43,8 @@ const CustomBarChart = ({
   };
 
   return (
-    <BarChart width={636} height={350} data={data}>
-      <XAxis dataKey="status" tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
+    <BarChart width={630} height={350} data={data}>
+      <XAxis dataKey="day" tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
       <YAxis ticks={[0, 2, 4, 6, 8, 10, 12, 14]} domain={[0, 14]} tick={{ style: { fontFamily: 'var(--secondary-font-family)' } }} />
       <Tooltip />
       <Legend content={<CustomLegend />} />

@@ -16,6 +16,7 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 
 
 
@@ -31,6 +32,7 @@ function Tasks() {
     const dispatch = useDispatch();
     const tasks = useSelector((state) => state.tasks);
     const [skeletonLoader, setSkeletonLoader] = useState(false);
+    const [spinner, setSpinner] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
     const handleFilterOpen = () => setFilterOpen(true);
     const handleFilterClose = () => setFilterOpen(false);
@@ -132,6 +134,7 @@ function Tasks() {
             taskEdit={taskEdit}
             handleTaskEdit ={handleTaskEdit }
             setTaskDetailsToEdit={setTaskDetailsToEdit}
+            setSpinner={setSpinner}
             />)}
             {filterOpen && (<FilterDialog 
                 setSkeletonLoader={setSkeletonLoader}
@@ -142,6 +145,7 @@ function Tasks() {
             limit={limit} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
+                <SpinnerLoader showSpinner={spinner} />
                     <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />
                     <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
