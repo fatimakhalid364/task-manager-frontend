@@ -23,7 +23,7 @@ import { updateTaskThunk } from 'src/store/thunks/taskThunks';
 import { useEffect } from 'react';
 import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
 import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
-import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySLice";
 
 
 
