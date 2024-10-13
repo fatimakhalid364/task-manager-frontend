@@ -1,8 +1,6 @@
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 
-import { useEffect } from 'react';
-import { useDispatch, useSelector, } from 'react-redux';
-import { fetchDashboardData } from "src/store/thunks/dashboardThunk.js";
+import { useSelector } from 'react-redux';
 
 
 
@@ -33,12 +31,7 @@ const CustomBarChart = ({
   //   { day: 'Sun', High: 0, Medium: 0, Low: 0 },
   // ];
   // const { taskCounts, loading, error } = useSelector((state) => state.taskCounts);
-  const dispatch = useDispatch();
-  console.log("its is the data from the slice", data)
-  useEffect(() => {
-    // Fetch task counts on component mount
-    dispatch(fetchDashboardData());
-  }, [dispatch]);
+
   const CustomLegend = (props) => {
     return (
       <div style={{ padding: 0, fontFamily: 'var(--primary-font-family)', display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '25px' }}>

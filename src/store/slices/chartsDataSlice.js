@@ -1,15 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchDashboardData } from "src/store/thunks/dashboardThunk.js";
+import { resetState } from './resetSlice';
 
 const graphDataSlice = createSlice({
     name: 'graphData',
     initialState: {
-        graphData: '',
+        graphData: {
+            barGraph: {
+
+            },
+            pieGraph: {
+
+            },
+            statusGraph: {
+
+            }
+        },
         status: 'idle',
         successMsg: '',
         errorMsg: '',
         loading: false,
         error: null,
+        loaded: false,
     },
     reducers: {
         setGraphValue: (state, action) => {
@@ -25,10 +37,22 @@ const graphDataSlice = createSlice({
             .addCase(fetchDashboardData.fulfilled, (state, action) => {
                 state.loading = false;
                 state.graphData = action.payload.data;
+                state.loaded = true;
             })
             .addCase(fetchDashboardData.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            .addCase(resetState, (state) => {
+                return {
+                    graphData: '',
+                    status: 'idle',
+                    successMsg: '',
+                    errorMsg: '',
+                    loading: false,
+                    error: null,
+                    loaded: false,
+                };
             });
     },
 });

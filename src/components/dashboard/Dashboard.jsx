@@ -10,7 +10,9 @@ import MainDiv from "src/components/maindiv/maindiv";
 import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
 import CustomBarChart from './subComponents/BarChart';
 // import MuiPieChart from './subComponents/MuiPieChart';
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchDashboardData } from "src/store/thunks/dashboardThunk.js";
 
 
 function Dashboard() {
@@ -19,8 +21,10 @@ function Dashboard() {
     const mediumPriorityTasks = useSelector((state) => state.mediumPriorityTasks.mediumPriorityTasks);
     const lowPriorityTasks = useSelector((state) => state.lowPriorityTasks.lowPriorityTasks);
     const tasks = useSelector(state => state.tasks.tasks);
-    console.log('highPriorityTasks areeee....', highPriorityTasks)
+    const dispatch = useDispatch();
+    const totalCountData = useSelector((state) => state.chartsData?.graphData?.statusGraph);
 
+    console.log('here is the total count', totalCountData)
     // const priorityTasksInStatus = (status, priority) => {
     //     const statusHighTasks = tasks.filter(task => task.status == status && task.priority == priority);
     //     const statusHighTasksCount = statusHighTasks.length;
@@ -71,6 +75,11 @@ function Dashboard() {
     const timeFormat = useSelector((state) => state.format.timeFormat)
     const dateFormat = useSelector((state) => state.format.dateFormat);
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    useEffect(() => {
+        // Fetch task counts on component mount
+        dispatch(fetchDashboardData());
+    }, [dispatch]);
     return (
         <MainDiv>
             <div style={{width: '100%'}}>
@@ -81,10 +90,10 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className = 'status-boxes-div'>
-                        <StatusBox img = {clock} statusCount = '12' statusName = 'Pending' />
-                        <StatusBox img = {blueTick} statusCount = '12' statusName = 'In Progress' />
-                        <StatusBox img = {greenTick} statusCount = '12' statusName = 'Completed' />
-                        <StatusBox img = {total} statusCount = '12' statusName = 'Not Started' />
+                    <StatusBox img={clock} statusCount={totalCountData['PENDING']} statusName='Pending' />
+                    <StatusBox img={blueTick} statusCount={totalCountData['IN_PROGRESS']} statusName='In Progress' />
+                    <StatusBox img={greenTick} statusCount={totalCountData['COMPLETED']} statusName='Completed' />
+                    <StatusBox img={total} statusCount={totalCountData['NOT_STARTED']} statusName='Not Started' />
                 </div>
                 <div className = 'chart-and-pinned-div'>
                     <div className='bar-chart-div'>
