@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import dayjs from "dayjs";
 import debounce from "lodash.debounce";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import BottomButtons from "src/components/BottomButtons";
@@ -114,6 +114,34 @@ function PriorityTasks({ priority }) {
             return
         }
     }, [page, limit]);
+
+    const intervalRef = useRef(null);
+    let tasksT = priority === "HIGH" ? highPriorityTasks?.highPriorityTasks : priority === "MEDIUM" ? mediumPriorityTasks?.mediumPriorityTasks : priority === "MEDIUM" ? lowPriorityTasks?.lowPriorityTasks : [];
+    // useEffect(() => {
+
+    //     intervalRef.current = setInterval(() => {
+    //         const today = dayjs();
+    //         tasksT.forEach(task => {
+    //             const dueDate = dayjs(task.dueDate);
+    //             const minutesUntilDueDate = dueDate.diff(today, 'minutes');
+
+    //             // Check if the due date is within the last 10 minutes
+    //             if (minutesUntilDueDate < 0 &&
+    //                 task.status !== 'PENDING' && task.status !== 'COMPLETED') {
+    //                 console.log("Inside the loggginggggggggggg inner");
+    //                 if (priority === "HIGH") {
+    //                     dispatch(updateHighStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 } else if (priority === "MEDIUM") {
+    //                     dispatch(updateMediumStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 } else if (priority === "LOW") {
+    //                     dispatch(updateLowStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 }
+    //             }
+    //         });
+    //     }, 60000); // Run every 1 minute (60 * 1000 milliseconds)
+
+    //     return () => clearInterval(intervalRef.current); // Clear interval on unmount
+    // }, [tasksT]);
 
     const { onWholeScreen } = useResponsive();
     return (

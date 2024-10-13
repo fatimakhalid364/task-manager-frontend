@@ -32,10 +32,9 @@ import {
   setLowPriorityMetaDecri,
   updateLowPriorityTasks
 } from "src/store/slices/lowPrioritySlice";
-import { updateMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice";
 import {
   setMediumPriorityMetaData,
-  setMediumPriorityMetaDecri,
+  setMediumPriorityMetaDecri, updateMediumPriorityTasks
 } from "src/store/slices/mediumPrioritySLice";
 import { setPriorityTasks } from "src/store/slices/priorityTaskSlice";
 import {

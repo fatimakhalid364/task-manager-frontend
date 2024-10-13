@@ -41,7 +41,7 @@ function NotificationModal({
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     console.log(backgroundImage);
     const primaryColor = notificationType === 'DELETE' ? 'error' : 'info';
-
+    console.log(title, message, titleInfo)
     return (
         <Box>
             <Dialog
