@@ -19,6 +19,19 @@ import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { fetchPriorityCountsThunk, updateTaskThunk } from 'src/store/thunks/taskThunks';
 import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
 
+import { setMetaData, addTask, setTasks } from "src/store/slices/taskSlice";
+import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
+import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
+import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
+import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
+import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
+import { updateTaskThunk } from 'src/store/thunks/taskThunks';
+import { useEffect } from 'react';
+import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
+import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
+import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySLice";
+
+
 
 
 const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({

@@ -141,8 +141,7 @@ function Tasks() {
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
                 <SpinnerLoader showSpinner={spinner} />
-                    <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />
-                    <div>
+                    <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />                    <div>
                         <FilterButton handleFilterOpen={handleFilterOpen}/>
                     </div>
                     <Box mt={3} mb={4}>
