@@ -1,7 +1,8 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
-import { useSelector } from 'react-redux';
+import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector, } from 'react-redux';
+import { fetchDashboardData } from "src/store/thunks/dashboardThunk.js";
 
 
 
@@ -19,16 +20,25 @@ const CustomBarChart = ({
   mediumCompletedCount,
   lowCompletedCount
 }) => {
-  const data = [
-    { day: 'Mon', High: 10, Medium: 4, Low: 6 },
-    { day: 'Tue', High: 5, Medium:11, Low: 2 },
-    { day: 'Wed', High: 6, Medium: 9, Low: 5 },
-    { day: 'Thurs', High:  4, Medium:  3, Low:  2 },
-    { day: 'Fri', High:  16, Medium: 1, Low:  1 },
-    { day: 'Sat', High:  9, Medium: 2, Low: 2 },
-    { day: 'Sun', High:  4, Medium:  3, Low:  3 },
-  ];
+  // const graphData = useSelector((state) => state.chartsData);
+  const data = useSelector((state) => state.chartsData?.graphData?.barGraph?.taskCounts);
 
+  // [
+  //   { day: 'Mon', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Tue', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Wed', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Thurs', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Fri', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Sat', High: 0, Medium: 0, Low: 0 },
+  //   { day: 'Sun', High: 0, Medium: 0, Low: 0 },
+  // ];
+  // const { taskCounts, loading, error } = useSelector((state) => state.taskCounts);
+  const dispatch = useDispatch();
+  console.log("its is the data from the slice", data)
+  useEffect(() => {
+    // Fetch task counts on component mount
+    dispatch(fetchDashboardData());
+  }, [dispatch]);
   const CustomLegend = (props) => {
     return (
       <div style={{ padding: 0, fontFamily: 'var(--primary-font-family)', display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '25px' }}>
@@ -49,9 +59,9 @@ const CustomBarChart = ({
       <Tooltip />
       <Legend content={<CustomLegend />} />
       <CartesianGrid strokeDasharray="3 3" />
-      <Bar dataKey="High" fill="var(--logout-color)" />
-      <Bar dataKey="Medium" fill="#FBBF24" />
-      <Bar dataKey="Low" fill="#1FDE43" />
+      <Bar dataKey="HIGH" fill="var(--logout-color)" />
+      <Bar dataKey="MEDIUM" fill="#FBBF24" />
+      <Bar dataKey="LOW" fill="#1FDE43" />
     </BarChart>
   );
 };

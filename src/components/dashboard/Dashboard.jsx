@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import MainDiv from "src/components/maindiv/maindiv";
-import 'src/components/dashboard/subComponents/dashboard.css'
-import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
-import StatusBox from 'src/components/dashboard/subComponents/StatusBox';
-import clock from 'src/assets/clock.svg';
 import blueTick from 'src/assets/blue-tick-circle.svg';
+import clock from 'src/assets/clock.svg';
 import greenTick from 'src/assets/green-tick-circle.svg';
 import total from 'src/assets/total.svg';
-import CustomBarChart from './subComponents/BarChart';
+import 'src/components/dashboard/subComponents/dashboard.css';
 import TwoLevelPieChart from 'src/components/dashboard/subComponents/PieChart.jsx';
+import StatusBox from 'src/components/dashboard/subComponents/StatusBox';
+import MainDiv from "src/components/maindiv/maindiv";
+import { capitalizeFirstLetter, formatLocalDateTime } from 'src/utils/basicUtils';
+import CustomBarChart from './subComponents/BarChart';
 // import MuiPieChart from './subComponents/MuiPieChart';
 
 
@@ -97,7 +95,7 @@ function Dashboard() {
                             fontWeight: '600',
                             marginLeft: '11px'
                         }}>
-                        Daily Priorities
+                            Weekly Priorities
                         </div>
                         <div style={{marginTop: '45px'}} >
                             <CustomBarChart 
