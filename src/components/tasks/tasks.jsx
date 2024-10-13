@@ -8,6 +8,7 @@ import BottomBar from 'src/components/BottomBar/BottomBar';
 import BottomButtons from "src/components/BottomButtons";
 import FilterButton from "src/components/Filter/FilterButton";
 import PlusIcon from 'src/components/icons/PlusIcon';
+import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import MainDiv from "src/components/maindiv/maindiv";
 import PageHeader from 'src/components/PageHeader';
 import AddTask from "src/components/tasks/sub_components/add_task";
@@ -16,10 +17,6 @@ import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
-import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
-
-
-
 
 function Tasks() {
   
@@ -119,8 +116,6 @@ function Tasks() {
         handleReverseTaskEdit();
         handleOpen();
     }
-
-    
 
     return (
         <div className='task-page-div' >

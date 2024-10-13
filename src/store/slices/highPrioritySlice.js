@@ -45,6 +45,13 @@ const highPriorityTasksSlice = createSlice({
                 ...state,
                 highPriorityTasks: action.payload
             }
+        },
+        updateHighStatus: (state, action) => {
+            const { taskId, newStatus } = action.payload;
+            const task = state.highPriorityTasks.find(task => task._id === taskId);
+            if (task) {
+                task.status = newStatus;
+            }
         }
     },
     extraReducers: (builder) => {
@@ -60,5 +67,5 @@ const highPriorityTasksSlice = createSlice({
     },
 });
 
-export const { setHighPriorityTasks, setHighPriorityMetaDecri, addHighPriorityTasks, updateHighPriorityTasks, clearHighPriorityTasks, setHighPriorityMetaData } = highPriorityTasksSlice.actions;
+export const { setHighPriorityTasks, setHighPriorityMetaDecri, updateHighStatus, addHighPriorityTasks, updateHighPriorityTasks, clearHighPriorityTasks, setHighPriorityMetaData } = highPriorityTasksSlice.actions;
 export const highPriorityTasksReducer = highPriorityTasksSlice.reducer;

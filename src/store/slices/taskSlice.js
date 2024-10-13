@@ -73,6 +73,13 @@ const taskSlice = createSlice({
                     lowPriorityCount: '99..'
                 }
             }
+        },
+        updateTaskStatus: (state, action) => {
+            const { taskId, newStatus } = action.payload;
+            const task = state.tasks.find(task => task._id === taskId);
+            if (task) {
+                task.status = newStatus;
+            }
         }
     },
     extraReducers: (builder) => {
@@ -123,5 +130,5 @@ const taskSlice = createSlice({
     },
 });
 
-export const { clearTasks, addTask, setTasks, setMetaData, setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } = taskSlice.actions;
+export const { clearTasks, addTask, setTasks, setMetaData, setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount, updateTaskStatus } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;
