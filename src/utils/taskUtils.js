@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateHighStatus } from "src/store/slices/highPrioritySlice";
 import { updateLowStatus } from "src/store/slices/lowPrioritySlice";
-import { updateMediumStatus } from "src/store/slices/mediumPrioritySlice";
+import { updateMediumStatus } from "src/store/slices/mediumPrioritySLice";
 import { updateTaskStatus } from "src/store/slices/taskSlice";
 
 function UpdateTaskStatuses() {
