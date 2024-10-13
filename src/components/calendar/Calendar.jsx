@@ -4,6 +4,7 @@ import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import MainDiv from "src/components/maindiv/maindiv";
+import NotificationModal from 'src/components/notifications/NotificationModal.jsx';
 import { useResponsive } from "src/constants/media_queries";
 import { setCalendarValues } from 'src/store/slices/calendarSlice';
 import { decryptSingleValues } from 'src/utils/encryptionUtil';
@@ -18,6 +19,12 @@ const CalendarComponent = () => {
     const [globalView, setGlobalView] = useState('month')
     const _privateKey = localStorage.getItem("privateKey");
     const events = useSelector((state) => state.calendar);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalData, setModalData] = useState({});
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const dateFormat = useSelector((state) => state.format.dateFormat);
+    const timeFormat = useSelector((state) => state.format.timeFormat);
+
     const fetchTasks = async (view, startDate, endDate) => {
 
         try {
@@ -80,6 +87,19 @@ const CalendarComponent = () => {
         };
         return <div className="rbc-event" style={style}>{event.title}</div>;
     };
+    const handleEventSelect = (event) => {
+        const date = dayjs(event.end);
+        const formattedDate = date.format('MMMM D, YYYY');
+        const formattedTime = date.format('HH:mm a');
+        const endDate = formattedDate + " " + formattedTime
+        setModalData({
+            title: event.title,
+            start: dayjs(event.start).format('MMMM D, YYYY'),
+            end: endDate,
+            // Add any other properties as needed
+        });
+        setModalOpen(true);
+    };
 
     return (
         <MainDiv>
@@ -95,7 +115,7 @@ const CalendarComponent = () => {
                     popup
                     onView={handleViewChange}
                     onRangeChange={handleRangeChange}
-                    onSelectEvent={(event) => alert(event.title)}
+                    onSelectEvent={handleEventSelect}
                     onSelectSlot={(slotInfo) =>
                         alert(`Selected slot: \nStart: ${slotInfo.start}\nEnd: ${slotInfo.end}`)
                     }
@@ -104,6 +124,19 @@ const CalendarComponent = () => {
                     }}
                     style={{ height: '100%', width: '100%' }}
                 />
+                {modalOpen &&
+                    <NotificationModal
+                        open={modalOpen}
+                        onOkay={() => setModalOpen(false)}
+                        onCancel={() => setModalOpen(false)} // If needed, adjust logic for cancel action
+                        title={"Schedueled Task"}
+                        titleInfo={modalData.title}
+                        message={`Duedate - ${modalData.end}`}
+                        primaryButtonText={"Okay!"}
+                    // Pass other necessary props as needed
+                    />
+
+                }
             </div>
         </MainDiv>
     );

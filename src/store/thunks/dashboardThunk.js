@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { APIS } from "./../axiosConfig";
 
-
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export const fetchDashboardData = createAsyncThunk(
     'taskCounts/fetchTaskCounts',
     async (_, thunkAPI) => {
@@ -10,6 +10,7 @@ export const fetchDashboardData = createAsyncThunk(
                 headers: {
                     'Content-Type': 'application/json',
                     access_token: `Bearer ${localStorage.getItem('access_token')}`,
+                    'timezone': userTimeZone,
                 },
             });
             console.log('Response:', response);
