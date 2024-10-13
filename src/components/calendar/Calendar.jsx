@@ -128,12 +128,11 @@ const CalendarComponent = () => {
                     <NotificationModal
                         open={modalOpen}
                         onOkay={() => setModalOpen(false)}
-                        onCancel={() => setModalOpen(false)} // If needed, adjust logic for cancel action
+                    onCancel={() => setModalOpen(false)}
                         title={"Schedueled Task"}
                         titleInfo={modalData.title}
                         message={`Duedate - ${modalData.end}`}
-                        primaryButtonText={"Okay!"}
-                    // Pass other necessary props as needed
+                    primaryButtonText={"Okay!"}
                     />
 
                 }
