@@ -23,6 +23,7 @@ function Dashboard() {
     const tasks = useSelector(state => state.tasks.tasks);
     const dispatch = useDispatch();
     const totalCountData = useSelector((state) => state.chartsData?.graphData?.statusGraph);
+    const loaded = useSelector((state) => state.chartsData.loaded);
 
     console.log('here is the total count', totalCountData)
     // const priorityTasksInStatus = (status, priority) => {
@@ -78,7 +79,9 @@ function Dashboard() {
 
     useEffect(() => {
         // Fetch task counts on component mount
-        dispatch(fetchDashboardData());
+        if (!loaded) {
+            dispatch(fetchDashboardData());
+        }
     }, [dispatch]);
     return (
         <MainDiv>

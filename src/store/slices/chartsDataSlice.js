@@ -45,7 +45,17 @@ const graphDataSlice = createSlice({
             })
             .addCase(resetState, (state) => {
                 return {
-                    graphData: '',
+                    graphData: {
+                        barGraph: {
+
+                        },
+                        pieGraph: {
+
+                        },
+                        statusGraph: {
+
+                        }
+                    },
                     status: 'idle',
                     successMsg: '',
                     errorMsg: '',
