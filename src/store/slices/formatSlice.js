@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   dateFormat: 'dd MMM yyyy',
-  timeFormat: 'HH:mm a'
+  timeFormat: 'hh:mm a'
 };
 
 const formatSlice = createSlice({
