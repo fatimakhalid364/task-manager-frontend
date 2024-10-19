@@ -233,3 +233,41 @@ export const filter_t_obj = {
     FRENCH: "Filtrer",
     URDU: "فلٹر کریں"
 }
+
+export const selectStartDate_t_obj = {
+    ENGLISH: "Select the start date for your range...",
+    SPANISH: "Selecciona la fecha de inicio para tu rango...",
+    FRENCH: "Sélectionnez la date de début pour votre plage...",
+    URDU: "اپنی رینج کے لیے آغاز کی تاریخ منتخب کریں..."
+}
+export const selectFromFilters_t_obj = {
+    ENGLISH: "Select from the list of filters below",
+    SPANISH: "Selecciona de la lista de filtros a continuación",
+    FRENCH: "Sélectionnez dans la liste des filtres ci-dessous",
+    URDU: "نیچے دی گئی فلٹرز کی فہرست میں سے منتخب کریں"
+}
+export const apply_t_obj = {
+    ENGLISH: "Apply",
+    SPANISH: "Aplicar",
+    FRENCH: "Appliquer",
+    URDU: "نافذ کریں"
+}
+
+export const reset_t_obj = {
+    ENGLISH: "Reset",
+    SPANISH: "Restablecer",
+    FRENCH: "Réinitialiser",
+    URDU: "ری سیٹ کریں"
+}
+export const tags_t_obj = {
+    ENGLISH: "Tags",
+    SPANISH: "Etiquetas",
+    FRENCH: "Étiquettes",
+    URDU: "ٹیگ"
+}
+export const searchTags_t_obj = {
+    ENGLISH: "Search Tags",
+    SPANISH: "Buscar Etiquetas",
+    FRENCH: "Rechercher des Étiquettes",
+    URDU: "ٹیگ تلاش کریں"
+}
