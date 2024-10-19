@@ -220,3 +220,16 @@ export const noTasksAvailable_t_obj = {
     FRENCH: "Aucune tâche disponible",
     URDU: "کوئی کام دستیاب نہیں"
 }
+export const add_t_obj = {
+    ENGLISH: "Add",
+    SPANISH: "Agregar",
+    FRENCH: "Ajouter",
+    URDU: "شامل کریں"
+}
+
+export const filter_t_obj = {
+    ENGLISH: "Filter",
+    SPANISH: "Filtrar",
+    FRENCH: "Filtrer",
+    URDU: "فلٹر کریں"
+}

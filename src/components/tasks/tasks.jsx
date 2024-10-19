@@ -15,11 +15,13 @@ import AddTask from "src/components/tasks/sub_components/add_task";
 import 'src/components/tasks/sub_components/tasks.css';
 import { errorToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
+import { add_t_obj, allTasks_t_obj, filter_t_obj, task_t_obj } from "src/constants/translationObj";
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 import TaskTable from './sub_components/TaskTable';
 
 function Tasks() {
-  
+    const lang = useSelector((state) => state.format.language);
+
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -140,9 +142,9 @@ function Tasks() {
             limit={limit} />)}
             <MainDiv>
                 <div className='task-page' style={{ width: (onWholeScreen) && '98%' }}>
-                <SpinnerLoader showSpinner={spinner} />
-                    <PageHeader handleOpen={handleAddTaskOpen}  handleReverseTaskEdit={ handleReverseTaskEdit} total={tasks.metaData.total} text='All Tasks' object='Task' />                    <div>
-                        <FilterButton handleFilterOpen={handleFilterOpen}/>
+                    <SpinnerLoader showSpinner={spinner} />{ }
+                    <PageHeader handleOpen={handleAddTaskOpen} handleReverseTaskEdit={handleReverseTaskEdit} total={tasks.metaData.total} text={allTasks_t_obj[lang]} object={`${add_t_obj[lang]} ${task_t_obj[lang]}`} />                    <div>
+                        <FilterButton buttonText={filter_t_obj[lang]} handleFilterOpen={handleFilterOpen} />
                     </div>
                     <Box mt={3} mb={4}>
                         <TaskTable 

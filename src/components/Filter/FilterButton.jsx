@@ -2,7 +2,7 @@ import filter from 'src/assets/filter.svg';
 import 'src/components/Filter/FilterButton.css';
 import { useResponsive } from 'src/constants/media_queries';
 
-const FilterButton = ({ handleFilterOpen }) => {
+const FilterButton = ({ handleFilterOpen, buttonText }) => {
     const {
         isBp2,
         isBp3,
@@ -20,7 +20,7 @@ const FilterButton = ({ handleFilterOpen }) => {
 
                 {onWholeScreen ? (<img src={filter} alt='filter-sign' className='filter-sign' />) : (
                     <div style={{ display: 'flex', gap: '6px' }}>
-                        <img src={filter} alt='filter-btn' className='filter-sign' /> <div style={{ fontSize: '16px' }}>Filter</div>
+                        <img src={filter} alt='filter-btn' className='filter-sign' /> <div style={{ fontSize: '16px' }}>{buttonText}</div>
                     </div>)}
             </a>)}
         </div>

@@ -42,7 +42,7 @@ function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true
             { (filterDiv && !onWholeScreen) && (<div>{filterDiv}</div>)}
             <a className='primary-button' onClick={handleOpen} style={{ backgroundColor: 'var(--primary-background-color)'}}>
                     <div style={{ display: 'flex', gap: '6px' }}>
-                        <img src={plus} alt='plus-sign' className='plus-sign' /> <div style={{ fontSize: '16px' }}>Add {object}</div>
+                        <img src={plus} alt='plus-sign' className='plus-sign' /> <div style={{ fontSize: '16px' }}>{object}</div>
                     </div>
             </a>
         </div>)}
