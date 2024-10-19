@@ -271,3 +271,15 @@ export const searchTags_t_obj = {
     FRENCH: "Rechercher des Étiquettes",
     URDU: "ٹیگ تلاش کریں"
 }
+export const allNotes_t_obj = {
+    ENGLISH: "All Notes",
+    SPANISH: "Todas las Notas",
+    FRENCH: "Toutes les Notes",
+    URDU: "تمام نوٹس"
+}
+export const filteredNotes_t_obj = {
+    ENGLISH: "Filtered Notes",
+    SPANISH: "Notas Filtradas",
+    FRENCH: "Notes Filtrées",
+    URDU: "فلٹر شدہ نوٹس"
+}
