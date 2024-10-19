@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import plus from 'src/assets/plus.svg';
 import { useResponsive } from 'src/constants/media_queries';
+import { task_t_obj } from "src/constants/translationObj";
 
 
 
@@ -12,6 +13,7 @@ function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true
     //     console.log('state:', specificValue);
     // }, []);
     const accentColor = useSelector((state) => state.appearance.color);
+    const lang = useSelector((state) => state.format.language);
 
     const {
         isBp2,
@@ -32,7 +34,7 @@ function PageHeader({ handleOpen, total, text, object, filterDiv, showAdd = true
     <div className='task-page-top'>
         <div className="task-page-top-header" style={{ marginLeft: (onWholeScreen && isAdaptableScreen) ? '16px' : !isAdaptableScreen ? '10px' : '' }}>
             <div className='all-tasks' style={{ fontSize: !isAdaptableScreen && '20px', marginLeft: isMicroScreen && '5px' }}>
-                    {titleHead ? titleHead + " Tasks" : text} 
+                    {titleHead ? titleHead + " " + task_t_obj[lang] : text} 
             </div>
             <div className="number-of-tasks" style={{ fontSize: !isAdaptableScreen && '20px' }}>
                 ({total})
