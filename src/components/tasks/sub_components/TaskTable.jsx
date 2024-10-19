@@ -770,6 +770,7 @@ const TaskTable = ({
           metaData={metaData}
           previousPage={previousPage}
           debouncedGetAllTasks={debouncedGetAllTasks}
+          language={lang}
         />
       </Paper>
     </div>

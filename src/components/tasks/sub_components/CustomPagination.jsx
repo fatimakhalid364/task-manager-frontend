@@ -4,8 +4,9 @@ import FirstPageRoundedIcon from '@mui/icons-material/FirstPageRounded';
 import LastPageRoundedIcon from '@mui/icons-material/LastPageRounded';
 import { FormControl, IconButton, MenuItem, Select, Typography } from '@mui/material';
 import { useResponsive } from "src/constants/media_queries";
+import { of_t_obj, showingTasks_t_obj, tasksPerPage_t_obj } from "src/constants/translationObj";
 
-const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, setLimit, hasNextPage, metaData, hasPreviousPage, totalPages, nextPage, previousPage }) => {
+const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, language, setLimit, hasNextPage, metaData, hasPreviousPage, totalPages, nextPage, previousPage }) => {
 
     const handleChangeRowsPerPage = (event) => {
         const newLimit = parseInt(event.target.value, 10);
@@ -28,7 +29,7 @@ const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, s
             <div style={{display: 'flex', gap: '20px'}}>
                 {!isMicroScreen && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Typography>Tasks per page</Typography>
+                        <Typography>{tasksPerPage_t_obj[language]}</Typography>
                         <FormControl variant="outlined" size="small">
                             <Select
                                 labelId="rows-per-page-label"
@@ -48,7 +49,7 @@ const CustomPagination = ({ total, debouncedGetAllTasks, limit, page, setPage, s
                 {!isMicroScreen && (
                     <div className='pagination-text-div' style={{ backgroundColor: 'var(--active-background-color)' }}>
                         <Typography className='pagination-text'>
-                            Showing Tasks {metaData?.range?.start} - {metaData?.range?.end} of {metaData?.total}
+                            {showingTasks_t_obj[language]} {metaData?.range?.start} - {metaData?.range?.end} {of_t_obj[language]} {metaData?.total}
                         </Typography>
                     </div>
                 )}
