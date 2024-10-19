@@ -1,5 +1,6 @@
 import propTypes from 'prop-types';
 import { useEffect } from 'react';
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { useResponsive } from 'src/constants/media_queries';
 
@@ -7,18 +8,50 @@ import { useResponsive } from 'src/constants/media_queries';
 
 function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMenuClicked, url, style  }) {
     const navigate = useNavigate();
-   
+    const lang = useSelector((state) => state.format.language);
+
     const {
         expandBar,
         isMicroScreen
     } = useResponsive();
 
    
+    const priorityColorMap = {
+        ENGLISH: {
+            High: '#EF4444',
+            Medium: '#F59E0B',
+            Low: '#1FDE43'
+        },
+        SPANISH: {
+            Alto: '#EF4444', // High
+            Medio: '#F59E0B', // Medium
+            Bajo: '#1FDE43'   // Low
+        },
+        FRENCH: {
+            Élevé: '#EF4444', // High
+            Moyen: '#F59E0B', // Medium
+            Bas: '#1FDE43'    // Low
+        },
+        URDU: {
+            اعلی: '#EF4444', // High
+            درمیانہ: '#F59E0B', // Medium
+            کم: '#1FDE43'      // Low
+        }
+    };
 
-   
- 
+    // Example of how to use the priorityColorMap
+    const getPriorityColor = (PriorityLevel, selectedLanguage) => {
+        const priorityMap = priorityColorMap[selectedLanguage];
 
-    const priorityColor = PriorityLevel === 'High' ? '#EF4444' : PriorityLevel === 'Medium' ? '#F59E0B' : '#1FDE43'
+        return priorityMap[PriorityLevel] || '#000000'; // Fallback color if not found
+    };
+
+
+
+
+
+    const priorityColor = getPriorityColor(PriorityLevel, lang)
+    // const priorityColor = PriorityLevel === 'High' ? '#EF4444' : PriorityLevel === 'Medium' ? '#F59E0B' : '#1FDE43'
 
     useEffect(() => {
         console.log('burgerMenuClicked', burgerMenuClicked);

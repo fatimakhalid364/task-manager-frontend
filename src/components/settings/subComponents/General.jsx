@@ -3,12 +3,14 @@ import { styled } from "@mui/system";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import whiteTick from 'src/assets/white-tick.svg';
+import { useResponsive } from 'src/constants/media_queries';
 import { setColor } from 'src/store/slices/appearanceSlice';
 import { getCurrentTimeZone } from '../../../utils/basicUtils';
-import { useResponsive } from 'src/constants/media_queries';
 
 const General= ({
     allFalse,
+    language,
+    handleLanguage,
     handleTimeFormat,
     timeFormat,
     handleDateFormat,
@@ -114,6 +116,8 @@ const General= ({
             
                         <FormControl fullWidth>
                                 <CssSelectField
+                                value={language}
+                                onChange={(e) => handleLanguage(e.target.value)}
                                     sx={{
                                         height: '40px',
                                         marginTop: '8px',
