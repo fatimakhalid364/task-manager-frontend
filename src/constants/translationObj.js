@@ -214,3 +214,9 @@ export const markAsProgressing_t_obj = {
     FRENCH: "Marquer comme en cours",
     URDU: "ترقی کے طور پر نشان زد کریں"
 }
+export const noTasksAvailable_t_obj = {
+    ENGLISH: "No Tasks Available",
+    SPANISH: "No hay tareas disponibles",
+    FRENCH: "Aucune tâche disponible",
+    URDU: "کوئی کام دستیاب نہیں"
+}

@@ -23,27 +23,25 @@ function PriorityComponents({ Dot, PriorityLevel, TasksAtPriorityLevel, burgerMe
             Low: '#1FDE43'
         },
         SPANISH: {
-            Alto: '#EF4444', // High
-            Medio: '#F59E0B', // Medium
-            Bajo: '#1FDE43'   // Low
+            Alto: '#EF4444',
+            Medio: '#F59E0B',
+            Bajo: '#1FDE43' 
         },
         FRENCH: {
-            Élevé: '#EF4444', // High
-            Moyen: '#F59E0B', // Medium
-            Bas: '#1FDE43'    // Low
+            Élevé: '#EF4444',
+            Moyen: '#F59E0B',
+            Bas: '#1FDE43'  
         },
         URDU: {
-            اعلی: '#EF4444', // High
-            درمیانہ: '#F59E0B', // Medium
-            کم: '#1FDE43'      // Low
+            اعلی: '#EF4444',
+            درمیانہ: '#F59E0B',
+            کم: '#1FDE43' 
         }
     };
-
-    // Example of how to use the priorityColorMap
     const getPriorityColor = (PriorityLevel, selectedLanguage) => {
         const priorityMap = priorityColorMap[selectedLanguage];
 
-        return priorityMap[PriorityLevel] || '#000000'; // Fallback color if not found
+        return priorityMap[PriorityLevel] || '#000000';
     };
 
 
