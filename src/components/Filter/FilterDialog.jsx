@@ -26,6 +26,7 @@ import { useLocation } from 'react-router-dom';
 import 'src/components/Filter/FilterDialog.css';
 import SearchGlass from 'src/components/icons/SearchGlass';
 import { errorToast } from 'src/components/toasters/toast.js';
+import { apply_t_obj, dueDate_t_obj, filter_t_obj, priority_t_obj, reset_t_obj, searchTags_t_obj, selectFromFilters_t_obj, selectStartDate_t_obj, status_t_obj, tags_t_obj } from "src/constants/translationObj";
 import { setTagsFilterList } from 'src/store/slices/notesSlice';
 import { getAllTasksThunk } from 'src/store/thunks/taskThunks';
 
@@ -63,6 +64,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
     const pathname = location.pathname;
 
     const dispatch = useDispatch();
+    const lang = useSelector((state) => state.format.language);
 
 
 
@@ -301,18 +303,18 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                 <div className='add-filter-header-div'>
                     <div className='add-filter-header'>
                         <div className='add-filter'>
-                            <img src={filter} alt='filter-sign' /> Filter
+                            <img src={filter} alt='filter-sign' /> {filter_t_obj[lang]}
                         </div>
                         <a onClick={handleFilterClose}><img src={cross} alt='cross' className='add-task-cross' /></a>
                     </div>
                     <div style={{ fontFamily: 'var(--primary-font-family)', color: 'var(--tertiary-font-color)', fontSize: '14px' }}>
-                        Select from the list of filters below
+                        {selectFromFilters_t_obj[lang]}
                     </div>
                 </div>
                 <div className='add-filter-content'>
                     <div className='filter-portion-1'>
                         <div className='filter-portion-1-menu' >
-                            <div>{pathname == '/tasks' ? 'Status' : 'Tags'}</div>
+                            <div>{pathname == '/tasks' ? status_t_obj[lang] : tags_t_obj[lang]}</div>
                             <div style={{
                                 height: '20px',
                                 width: '20px',
@@ -329,7 +331,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                             </div>
                         </div>
                         {pathname == '/tasks' && (<div className='filter-portion-1-menu'  >
-                            <div>Priority</div>
+                            <div>{priority_t_obj[lang]}</div>
                             <div style={{
                                 height: '20px',
                                 width: '20px',
@@ -346,7 +348,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                             </div>
                         </div>)}
                         {pathname == '/tasks' && (<div className='filter-portion-1-menu'  >
-                            <div>Due Date</div>
+                            <div>{dueDate_t_obj[lang]}</div>
                             <div className='fwd-arrow-circle' style={{ backgroundColor: isDueDateClicked && 'var(--active-background-color)', cursor: 'pointer' }} onClick={handleDueDateClick}>
                                 <img src={fwdArrow} alt='forward-arrow' />
                             </div>
@@ -381,7 +383,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                                     <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
                                         <input
                                             type='text'
-                                            placeholder='Search tags'
+                                            placeholder={searchTags_t_obj[lang]}
                                             className='filter-search-date-input'
                                             style={{
                                                 marginTop: '15px',
@@ -459,7 +461,7 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                                                     <CssDateField
                                                         value={startDateValueForTasksObj}
                                                         onChange={ (newValue) => handleDueDateChange (newValue, 'startDate')}
-                                                        slotProps={{ textField: { fullWidth: true }, placeholder: 'Select the start date for your range...'  }}
+                                                        slotProps={{ textField: { fullWidth: true }, placeholder: selectStartDate_t_obj[lang] }}
                                                         maxDate={endDateValueForTasksObj !== null ? endDateValueForTasksObj : null}
                                                     />
                                                 </LocalizationProvider>
@@ -524,11 +526,11 @@ const FilterDialog = ({ filterOpen, handleFilterClose, setSkeletonLoader, notesA
                     </div>
                 </div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '15%', paddingLeft: '10px', paddingRight: '10px' }}>
-                    <div  className='filter-button' style={{ width: '100px' }} onClick={pathname == '/tasks' ? () => promptFilterResetAndClose(0, limit, []) : promptNotesFilterResetAndClose}>
-                        Reset
+                    <div className='filter-button' style={{ width: lang !== "ENGLISH" ? '120px' : '100px' }} onClick={pathname == '/tasks' ? () => promptFilterResetAndClose(0, limit, []) : promptNotesFilterResetAndClose}>
+                        {reset_t_obj[lang]}
                     </div>
                     <div className='primary-button' onClick={() => {handleApplyClick(0, limit)}} style={{ width: '100px', fontFamily: 'var(--primary-font-family)' }}>
-                        Apply
+                        {apply_t_obj[lang]}
                     </div>
 
                 </div>

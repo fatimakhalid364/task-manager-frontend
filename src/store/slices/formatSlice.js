@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   dateFormat: 'dd MMM yyyy',
-  timeFormat: 'hh:mm a'
+  timeFormat: 'hh:mm a',
+  language: "ENGLISH",
 };
 
 const formatSlice = createSlice({
@@ -18,8 +19,12 @@ const formatSlice = createSlice({
       console.log('Setting Time Format:', action.payload);
       state.timeFormat = action.payload;
     },
+    setLanguageFormat: (state, action) => {
+      console.log('Setting language Format:', action.payload);
+      state.language = action.payload;
+    },
   },
 });
 
-export const { setDateFormat, setTimeFormat } = formatSlice.actions;
+export const { setDateFormat, setTimeFormat, setLanguageFormat } = formatSlice.actions;
 export const formatReducer = formatSlice.reducer;

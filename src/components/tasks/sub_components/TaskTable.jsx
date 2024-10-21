@@ -22,6 +22,7 @@ import redTrash from "src/assets/red-trash.svg";
 import tickInCircle from "src/assets/tick-in-circle.svg";
 import SpinnerLoader from "src/components/LoadingScreens/SpinnerLoader";
 import { useResponsive } from "src/constants/media_queries";
+import { completed_t_obj, deleteText_t_obj, description_t_obj, dueDate_t_obj, high_t_obj, inProgress_t_obj, low_t_obj, markAsCompleted_t_obj, markAsProgressing_t_obj, medium_t_obj, noTasksAvailable_t_obj, notStarted_t_obj, pending_t_obj, priority_t_obj, status_t_obj, title_t_obj, viewOrEdit_t_obj } from "src/constants/translationObj";
 import {
   setHighPriorityMetaData,
   setHighPriorityMetaDecri,
@@ -51,8 +52,7 @@ import {
   markTaskStatusThunk,
 } from "src/store/thunks/taskThunks";
 import {
-  capitalizeFirstLetter,
-  formatLocalDateTime,
+  formatLocalDateTime
 } from "src/utils/basicUtils";
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
@@ -145,6 +145,31 @@ const TaskTable = ({
   const dateFormat = useSelector((state) => state.format.dateFormat);
   console.log("forrrrrrrrrrrrrrrrrrrrrr", timeFormat, dateFormat);
   // const dateFormat = useSelector((state) => state.format.dateFormat)
+  const lang = useSelector((state) => state.format.language);
+  const getTranslatedPriority = (reqPriority) => {
+    console.log(reqPriority)
+    if (reqPriority === "HIGH") {
+      return high_t_obj[lang]
+
+    } if (reqPriority === "MEDIUM") {
+      return medium_t_obj[lang]
+    } if (reqPriority === "LOW") {
+      return low_t_obj[lang]
+    }
+  }
+  const getTranslatedStatus = (reqStatus) => {
+    if (reqStatus === "PENDING") {
+      return pending_t_obj[lang]
+    } else if (reqStatus === "COMPLETED") {
+      return completed_t_obj[lang]
+    } else if (reqStatus === "IN_PROGRESS") {
+      return inProgress_t_obj[lang]
+    } else if (reqStatus === "NOT STARTED") {
+      return notStarted_t_obj[lang]
+    } else {
+      return reqStatus
+    }
+  }
   const StyledTableHeaders = styled(TableCell)({
     width: "17%",
     textAlign: "center",
@@ -510,16 +535,16 @@ const TaskTable = ({
           <Table>
             <TableHead>
               <TableRow>
-                <StyledTableHeaders>Title</StyledTableHeaders>
-                <StyledTableHeaders>Description</StyledTableHeaders>
+                <StyledTableHeaders>{title_t_obj[lang]}</StyledTableHeaders>
+                <StyledTableHeaders>{description_t_obj[lang]}</StyledTableHeaders>
                 {!isMicroScreen && (
-                  <StyledTableHeaders>Due Date</StyledTableHeaders>
+                  <StyledTableHeaders>{dueDate_t_obj[lang]}</StyledTableHeaders>
                 )}
                 {!isMicroScreen && (
-                  <StyledTableHeaders>Priority</StyledTableHeaders>
+                  <StyledTableHeaders>{priority_t_obj[lang]}</StyledTableHeaders>
                 )}
                 {!isMicroScreen && (
-                  <StyledTableHeaders>Status</StyledTableHeaders>
+                  <StyledTableHeaders>{status_t_obj[lang]}</StyledTableHeaders>
                 )}
                 <StyledTableHeadersA></StyledTableHeadersA>
               </TableRow>
@@ -623,7 +648,7 @@ const TaskTable = ({
                               color: handlePriorityColorChange(task.priority),
                             }}
                           >
-                          {capitalizeFirstLetter(task.priority)}
+                            {getTranslatedPriority(task.priority)}
                           </StyledTableCell>
                         )}
                         {!isMicroScreen && (
@@ -634,7 +659,7 @@ const TaskTable = ({
                               color: handleStatusColorChange(task.status),
                             }}
                           >
-                          {capitalizeFirstLetter(task.status)}
+                            {getTranslatedStatus(task.status)}
                           </StyledTableCell>
                         )}
                         <StyledAction sx={{ width: "1%" }}>
@@ -672,7 +697,7 @@ const TaskTable = ({
                               sx={{ gap: "12px" }}
                             >
                               <img src={edit} alt='edit-icon' />
-                              <div style={{ marginTop: "2px" }}>View or Edit</div>
+                              <div style={{ marginTop: "2px" }}>{viewOrEdit_t_obj[lang]}</div>
                             </MenuItem>
                             {task.status !== "COMPLETED" && (
                               <MenuItem
@@ -687,7 +712,7 @@ const TaskTable = ({
                               >
                               <img src={tickInCircle} alt='tick-in-circle' />
                                 <div style={{ marginTop: "2px" }}>
-                                  Mark as Completed
+                                  {markAsCompleted_t_obj[lang]}
                                 </div>
                               </MenuItem>
                             )}
@@ -705,7 +730,7 @@ const TaskTable = ({
                                 >
                                   <img src={tickInCircle} alt='tick-in-circle' />
                                   <div style={{ marginTop: "2px" }}>
-                                    Mark as Progressing
+                                  {markAsProgressing_t_obj[lang]}
                                   </div>
                                 </MenuItem>
                               )}
@@ -715,7 +740,7 @@ const TaskTable = ({
                               sx={{ color: "var(--logout-color)", gap: "12px" }}
                             >
                               <img src={redTrash} alt='red-trash-icon' />
-                              <div style={{ marginTop: "2px" }}>Delete</div>
+                              <div style={{ marginTop: "2px" }}>{deleteText_t_obj[lang]}</div>
                             </MenuItem>
                           </Menu>
                         </StyledAction>
@@ -724,7 +749,7 @@ const TaskTable = ({
                   ) : (
                     <TableRow>
                         <StyledTableCell colSpan={7} align='center'>
-                          No tasks available
+                          {noTasksAvailable_t_obj[lang]}
                         </StyledTableCell>
                     </TableRow>
                   )}
@@ -745,6 +770,7 @@ const TaskTable = ({
           metaData={metaData}
           previousPage={previousPage}
           debouncedGetAllTasks={debouncedGetAllTasks}
+          language={lang}
         />
       </Paper>
     </div>

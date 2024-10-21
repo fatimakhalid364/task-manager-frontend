@@ -12,10 +12,12 @@ import "src/components/notes/Notes.css";
 import CreateNotes from "src/components/notes/sub_components/create_notes/CreateNotes";
 import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
+import { add_t_obj, allNotes_t_obj, filteredNotes_t_obj, notes_t_obj } from "src/constants/translationObj";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
 import NoteCard from "./sub_components/NoteCard";
 
 const Notes = () => {
+    const lang = useSelector((state) => state.format.language);
     const dispatch = useDispatch();
     const privateKey = localStorage.getItem("privateKey");
     const notes = useSelector((state) => state.notes);
@@ -188,9 +190,9 @@ const Notes = () => {
                   ) : (
                       <div>
                               <PageHeader
-                                  text='All Notes'
+                                    text={allNotes_t_obj[lang]}
                                   total='20'
-                                  object='Notes'
+                                    object={`${add_t_obj[lang]} ${notes_t_obj[lang]}`}
                                   filterDiv={filterDiv}
                                   handleOpen={handleCreateNotesClick}
                                 
@@ -224,7 +226,7 @@ const Notes = () => {
                                           onMouseLeave={handleMouseLeave('all-notes')}
 
                                       >
-                                          All Notes
+                                            {allNotes_t_obj[lang]}
                                       </div>
                                       <div
                                           className='notes pinned-notes'
@@ -253,7 +255,7 @@ const Notes = () => {
                                             onMouseLeave={handleMouseLeave('pinned-notes')}
                                         
                                       >
-                                        Filtered Notes
+                                            {filteredNotes_t_obj[lang]}
                                       </div>
                                   </div>
                               </div>

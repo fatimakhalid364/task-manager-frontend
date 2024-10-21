@@ -11,12 +11,15 @@ import "src/components/tasks/sub_components/tasks.css";
 import TaskTable from "src/components/tasks/sub_components/TaskTable";
 import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
+import { deferredTasks_t_obj, importantTasks_t_obj, urgentTasks_t_obj } from "src/constants/translationObj";
 import { setHighPriorityTasks } from "src/store/slices/highPrioritySlice.js";
 import { setLowPriorityTasks } from "src/store/slices/lowPrioritySlice.js";
 import { setMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice.js";
 import { getPriorityTasksThunk } from "src/store/thunks/taskThunks";
 
 function PriorityTasks({ priority }) {
+    const lang = useSelector((state) => state.format.language);
+
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -154,10 +157,10 @@ function PriorityTasks({ priority }) {
                         showAdd={false}
                         titleHead={
                             priority == "HIGH"
-                                ? "Urgent"
+                                ? urgentTasks_t_obj[lang]
                                 : priority == "MEDIUM"
-                                    ? "Important"
-                                    : "Deferred"
+                                    ? importantTasks_t_obj[lang]
+                                    : deferredTasks_t_obj[lang]
                         }
                         total={priority == "HIGH" ? highPriorityTasks.highPriorityMetaData.total : 
                             priority == "MEDIUM" ? mediumPriorityTasks.mediumPriorityMetaData.total :
