@@ -17,9 +17,8 @@ import { addMediumPriorityTasks, setMediumPriorityMetaData, updateMediumPriority
 import { addTask, setHighPriorityCount, setLowPriorityCount, setMediumPriorityCount, setTasks } from "src/store/slices/taskSlice";
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
 import { fetchPriorityCountsThunk, updateTaskThunk } from 'src/store/thunks/taskThunks';
-import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
-
-
+import { encryptArrayValues, encryptObjectValues } from "src/utils/encryption
+import { setMetaData } from "src/store/slices/taskSlic
 
 
 const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({
