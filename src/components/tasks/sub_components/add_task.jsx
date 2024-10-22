@@ -5,26 +5,20 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import plus from 'src/assets/add-task-plus.svg';
 import cross from 'src/assets/cross.svg';
 import { errorToast, successToast } from 'src/components/toasters/toast.js';
 import { useResponsive } from 'src/constants/media_queries';
+import { addHighPriorityTasks, setHighPriorityMetaData, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
+import { addLowPriorityTasks, setLowPriorityMetaData, updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
+import { addMediumPriorityTasks, setMediumPriorityMetaData, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
+import { addTask, setHighPriorityCount, setLowPriorityCount, setMediumPriorityCount, setTasks } from "src/store/slices/taskSlice";
 import createTaskThunk from 'src/store/thunks/create_task_thunk';
-import { encryptArrayValues, encryptObjectValues } from "src/utils/encryptionUtil";
-import { setMetaData, addTask, setTasks } from "src/store/slices/taskSlice";
-import { setHighPriorityCount, setMediumPriorityCount, setLowPriorityCount } from 'src/store/slices/taskSlice';
-import { fetchPriorityCountsThunk } from 'src/store/thunks/taskThunks';
-import { addMediumPriorityTasks, updateMediumPriorityTasks } from 'src/store/slices/mediumPrioritySLice';
-import { addHighPriorityTasks, updateHighPriorityTasks } from 'src/store/slices/highPrioritySlice';
-import { addLowPriorityTasks,  updateLowPriorityTasks } from 'src/store/slices/lowPrioritySlice';
-import { updateTaskThunk } from 'src/store/thunks/taskThunks';
-import { useEffect } from 'react';
-import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
-import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
-import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
-
+import { fetchPriorityCountsThunk, updateTaskThunk } from 'src/store/thunks/taskThunks';
+import { encryptArrayValues, encryptObjectValues } from "src/utils/encryption
+import { setMetaData } from "src/store/slices/taskSlic
 
 
 const CssInputField = styled((props) => <TextField {...props} />)(({ theme }) => ({

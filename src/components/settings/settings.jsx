@@ -14,7 +14,7 @@ import SettingsHeader from 'src/components/settings/subComponents/SettingsHeader
 import { useResponsive } from 'src/constants/media_queries';
 import { useAuth } from 'src/contexts/AuthContext.jsx';
 import { setColor } from 'src/store/slices/appearanceSlice';
-import { setDateFormat, setTimeFormat } from 'src/store/slices/formatSlice';
+import { setDateFormat, setLanguageFormat, setTimeFormat } from 'src/store/slices/formatSlice';
 import {
     updatePasswordThunk
 } from "src/store/thunks/authThunks";
@@ -74,6 +74,7 @@ function Settings({ currentSettingsScreen }) {
     const [selectedColor, setSelectedColor] = useState('');
     const [timeFormatLocal, setTimeFormatLocal] = useState(useSelector((state) => state.format.timeFormat));
     const [dateFormatLocal, setDateFormatLocal] = useState(useSelector((state) => state.format.dateFormat));
+    const [language, setLanguage] = useState(useSelector((state) => state.format.language));
     const [modalOpen, setModalOpen] = useState(false);
     const [changePassObj, setchangePassObj] = useState({
         oldPassword: "",
@@ -119,6 +120,11 @@ function Settings({ currentSettingsScreen }) {
 
         setTimeFormatLocal(value);
     }
+    const handleLanguage = (value) => {
+        console.log(value)
+
+        setLanguage(value);
+    }
     const handleBlueClick = () => {
         setIsBlueClicked(prevValue=> !prevValue);
         setSelectedColor('blue');
@@ -162,12 +168,13 @@ function Settings({ currentSettingsScreen }) {
         }
         dispatch(setColor(selectedColor));
         dispatch(setDateFormat(dateFormatLocal))
-        dispatch(setTimeFormat(timeFormatLocal))
+        dispatch(setTimeFormat(timeFormatLocal));
+        dispatch(setLanguageFormat(language));
         setAllFalse(true);
-        setIsOrangeClicked(false);
-        setIsPinkClicked(false);
-        setIsGreenClicked(false);
-        setIsBlueClicked(false);
+        // setIsOrangeClicked(false);
+        // setIsPinkClicked(false);
+        // setIsGreenClicked(false);
+        // setIsBlueClicked(false);
 
 
     }
@@ -207,6 +214,8 @@ function Settings({ currentSettingsScreen }) {
                         handleDateFormat={handleDateFormat}
                         dateFormat={dateFormatLocal}
                         handleTimeFormat={handleTimeFormat}
+                    handleLanguage={handleLanguage}
+                    language={language}
                         timeFormat={timeFormatLocal}
                         selectedColor={selectedColor}
                         setSelectedColor={setSelectedColor}

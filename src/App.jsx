@@ -7,10 +7,11 @@ import Dashboard from './components/dashboard/Dashboard';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Settings from 'src/components/settings/settings';
+import UpdateTaskStatuses from "src/utils/taskUtils";
 import Notes from '../src/components/notes/Notes';
 import UpdateNote from '../src/components/notes/sub_components/update_notes/UpdateNote';
 import RouteGuard from './components/RouteGuard';
-import {Tasks} from './components/tasks/tasks';
+import { Tasks } from './components/tasks/tasks';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './pages/authentication/ForgotPassword';
 import SetPassword from './pages/authentication/SetPassword';
@@ -24,8 +25,10 @@ import MediumTasks from './pages/tasks/MediumTasks';
 import { persistor } from './store/index';
 import {Examination} from 'src/components/examination/examination';
 
+
 function App() {
-    const accentColor = useSelector((state) => state.appearance.color)
+    const accentColor = useSelector((state) => state.appearance.color);
+    UpdateTaskStatuses()
     useEffect(() => {
 
         // Update --active-background-color

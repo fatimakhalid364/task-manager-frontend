@@ -6,6 +6,8 @@ import { thunk } from 'redux-thunk';
 import { formatReducer } from './slices//formatSlice';
 import { appearanceReducer } from './slices/appearanceSlice';
 import { authReducer } from "./slices/authSlice";
+import { calendarDataReducer } from './slices/calendarSlice';
+import { graphDataReducer } from './slices/chartsDataSlice';
 import { filterByStatusReducer } from './slices/filterByStatusSlice';
 import { highPriorityTasksReducer } from './slices/highPrioritySlice.js';
 import { lowPriorityTasksReducer } from './slices/lowPrioritySlice.js';
@@ -30,6 +32,8 @@ const rootReducer = combineReducers({
     highPriorityTasks: highPriorityTasksReducer,
     mediumPriorityTasks: mediumPriorityTasksReducer,
     lowPriorityTasks: lowPriorityTasksReducer,
+    chartsData: graphDataReducer,
+    calendar: calendarDataReducer,
 
 });
 

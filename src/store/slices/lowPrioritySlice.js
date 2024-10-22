@@ -23,6 +23,11 @@ const lowPriorityTasksSlice = createSlice({
                 lowPriorityMetaData: action.payload
             }
         },
+        setLowPriorityMetaDecri: (state, action) => {
+            if (state.lowPriorityMetaData?.range?.end !== undefined) {
+                state.lowPriorityMetaData.range.end -= 1;
+            }
+        },
         addLowPriorityTasks: (state, action) => {
             return {
                 ...state,
@@ -40,6 +45,13 @@ const lowPriorityTasksSlice = createSlice({
                 ...state,
                 lowPriorityTasks: action.payload
             }
+        },
+        updateLowStatus: (state, action) => {
+            const { taskId, newStatus } = action.payload;
+            const task = state.lowPriorityTasks.find(task => task._id === taskId);
+            if (task) {
+                task.status = newStatus;
+            }
         }
     },
     extraReducers: (builder) => {
@@ -55,5 +67,5 @@ const lowPriorityTasksSlice = createSlice({
     },
 });
 
-export const { setLowPriorityTasks,  addLowPriorityTasks,  updateLowPriorityTasks,  clearLowPriorityTasks,   setLowPriorityMetaData } = lowPriorityTasksSlice.actions;
+export const { setLowPriorityTasks, updateLowStatus, setLowPriorityMetaDecri, addLowPriorityTasks, updateLowPriorityTasks, clearLowPriorityTasks, setLowPriorityMetaData } = lowPriorityTasksSlice.actions;
 export const lowPriorityTasksReducer = lowPriorityTasksSlice.reducer;

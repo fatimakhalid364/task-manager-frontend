@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import dayjs from "dayjs";
 import debounce from "lodash.debounce";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import BottomButtons from "src/components/BottomButtons";
@@ -11,15 +11,15 @@ import "src/components/tasks/sub_components/tasks.css";
 import TaskTable from "src/components/tasks/sub_components/TaskTable";
 import { errorToast } from "src/components/toasters/toast.js";
 import { useResponsive } from "src/constants/media_queries";
+import { deferredTasks_t_obj, importantTasks_t_obj, urgentTasks_t_obj } from "src/constants/translationObj";
 import { setHighPriorityTasks } from "src/store/slices/highPrioritySlice.js";
 import { setLowPriorityTasks } from "src/store/slices/lowPrioritySlice.js";
 import { setMediumPriorityTasks } from "src/store/slices/mediumPrioritySLice.js";
 import { getPriorityTasksThunk } from "src/store/thunks/taskThunks";
-import { setHighPriorityMetaData } from "src/store/slices/highPrioritySlice";
-import { setLowPriorityMetaData } from "src/store/slices/lowPrioritySlice";
-import { setMediumPriorityMetaData } from "src/store/slices/mediumPrioritySlice";
 
 function PriorityTasks({ priority }) {
+    const lang = useSelector((state) => state.format.language);
+
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
@@ -118,6 +118,34 @@ function PriorityTasks({ priority }) {
         }
     }, [page, limit]);
 
+    const intervalRef = useRef(null);
+    let tasksT = priority === "HIGH" ? highPriorityTasks?.highPriorityTasks : priority === "MEDIUM" ? mediumPriorityTasks?.mediumPriorityTasks : priority === "MEDIUM" ? lowPriorityTasks?.lowPriorityTasks : [];
+    // useEffect(() => {
+
+    //     intervalRef.current = setInterval(() => {
+    //         const today = dayjs();
+    //         tasksT.forEach(task => {
+    //             const dueDate = dayjs(task.dueDate);
+    //             const minutesUntilDueDate = dueDate.diff(today, 'minutes');
+
+    //             // Check if the due date is within the last 10 minutes
+    //             if (minutesUntilDueDate < 0 &&
+    //                 task.status !== 'PENDING' && task.status !== 'COMPLETED') {
+    //                 console.log("Inside the loggginggggggggggg inner");
+    //                 if (priority === "HIGH") {
+    //                     dispatch(updateHighStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 } else if (priority === "MEDIUM") {
+    //                     dispatch(updateMediumStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 } else if (priority === "LOW") {
+    //                     dispatch(updateLowStatus({ taskId: task._id, newStatus: 'PENDING' }));
+    //                 }
+    //             }
+    //         });
+    //     }, 60000); // Run every 1 minute (60 * 1000 milliseconds)
+
+    //     return () => clearInterval(intervalRef.current); // Clear interval on unmount
+    // }, [tasksT]);
+
     const { onWholeScreen } = useResponsive();
     return (
         <div className='task-page-div'>
@@ -129,10 +157,10 @@ function PriorityTasks({ priority }) {
                         showAdd={false}
                         titleHead={
                             priority == "HIGH"
-                                ? "Urgent"
+                                ? urgentTasks_t_obj[lang]
                                 : priority == "MEDIUM"
-                                    ? "Important"
-                                    : "Deferred"
+                                    ? importantTasks_t_obj[lang]
+                                    : deferredTasks_t_obj[lang]
                         }
                         total={priority == "HIGH" ? highPriorityTasks.highPriorityMetaData.total : 
                             priority == "MEDIUM" ? mediumPriorityTasks.mediumPriorityMetaData.total :

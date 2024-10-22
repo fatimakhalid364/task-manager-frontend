@@ -1,49 +1,96 @@
 import React from 'react';
 import {
-  PieChart,
-  Pie,
   Cell,
-  Tooltip,
+  Pie,
+  PieChart,
   ResponsiveContainer,
+  Tooltip,
 } from 'recharts';
 // import * as React from 'react';
 // import { PieChart } from '@mui/x-charts/PieChart';
+import { useSelector } from 'react-redux';
 
-const data = [
-  { name: 'Pending', value: 12 },
-  { name: 'In Progress', value: 11 },
-  { name: 'Not Started', value: 30 },
-  { name: 'Completed', value: 10 },
+const dataf = [
+  { name: 'Pending', value: 0 },
+  { name: 'In Progress', value: 0 },
+  { name: 'Not Started', value: 0 },
+  { name: 'Completed', value: 0 },
 ];
 
-const subData = {
+const subDdataF = {
   'Pending': [
-    { name: 'High', value: 3 },
-    { name: 'Medium', value: 4 },
-    { name: 'Low', value: 5 },
+    { name: 'High', value: 0 },
+    { name: 'Medium', value: 0 },
+    { name: 'Low', value: 0 },
   ],
   'In Progress': [
-    { name: 'High', value: 4 },
-    { name: 'Medium', value: 5 },
-    { name: 'Low', value: 2 },
+    { name: 'High', value: 0 },
+    { name: 'Medium', value: 0 },
+    { name: 'Low', value: 0 },
   ],
   'Not Started': [
-    { name: 'High', value: 5 },
-    { name: 'Medium', value: 10 },
-    { name: 'Low', value: 15 },
+    { name: 'High', value: 0 },
+    { name: 'Medium', value: 0 },
+    { name: 'Low', value: 0 },
   ],
   'Completed': [
-    { name: 'High', value: 2 },
-    { name: 'Medium', value: 6 },
-    { name: 'Low', value: 2 },
+    { name: 'High', value: 0 },
+    { name: 'Medium', value: 0 },
+    { name: 'Low', value: 0 },
   ],
 };
 
+
+const priorityLabels = {
+  HIGH: 'High',
+  MEDIUM: 'Medium',
+  LOW: 'Low'
+};
+
+const statusLabels = {
+  COMPLETED: 'Completed',
+  IN_PROGRESS: 'In Progress',
+  NOT_STARTED: 'Not Started',
+  PENDING: 'Pending'
+};
 const COLORS = ['#EF4444', '#F59E0B', '#1FDE43'];
 
 const TwoLevelPieChart = () => {
   const [activeGroup, setActiveGroup] = React.useState(null);
+  const pieGraohData = useSelector((state) => state.chartsData?.graphData?.pieGraph);
+  const totalCountData = useSelector((state) => state.chartsData?.graphData?.statusGraph);
+  const convertTaskData = (data) => {
+    if (data) {
+      return Object.keys(data).map((key) => ({
+        name: statusLabels[key], // Map the status key to the proper label
+        value: data[key] // Use the value from the original data
+      }));
+    } else {
+      return dataf
+    }
+    // Convert the input object into the desired array format
 
+  };
+  const data = convertTaskData(totalCountData)
+  const transformPieGraphData = (data) => {
+    if (data) {
+      return Object.keys(data).reduce((acc, status) => {
+        // Convert each status key to the new format
+        acc[statusLabels[status]] = Object.keys(data[status]).map((priority) => ({
+          name: priorityLabels[priority],
+          value: data[status][priority]
+        }));
+        return acc;
+      }, {});
+    } else {
+      return subDdataF
+    }
+
+  // Iterate over each status in the input data
+
+  };
+  const subData = transformPieGraphData(pieGraohData);
+  console.log(subData)
   const handleGroupMouseEnter = (data) => {
     setActiveGroup(data.name);
   };
