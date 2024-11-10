@@ -11,7 +11,7 @@
 
 .changing-component {
     margin-top: 35px;
-    height: 85%;
+    height: 100vh;
     background-color: var(--neutral-background-color);
     border-radius: 10px;
     display: flex;

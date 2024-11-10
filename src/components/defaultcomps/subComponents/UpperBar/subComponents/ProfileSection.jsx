@@ -38,12 +38,12 @@ function ProfileSection() {
 
     const formatUserName = () => {
         if (user) {
-            let fullName = `${user?.firstName} ${user?.lastName}`;
+            let fullName = `${user?.firstName}`;
 
             fullName = fullName.split(' ').map(name => capitalizeFirstLetter(name)).join(' ');
 
-            if (fullName.length > 12) {
-                fullName = fullName.slice(0, 12) + '...';
+            if (fullName.length > 6) {
+                fullName = fullName.slice(0, 6) + '...';
             }
 
             return fullName;

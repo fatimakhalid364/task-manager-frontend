@@ -57,6 +57,10 @@ import {
 import { decryptSingleValues } from "src/utils/encryptionUtil";
 import { errorToast, successToast } from "../../toasters/toast";
 import CustomPagination from "./CustomPagination";
+import emptyBlue from "src/assets/Empty-blue.svg";
+import emptyPink from "src/assets/Empty-pink.svg";
+import emptyGreen from "src/assets/Empty-green.svg";
+import emptyOrange from "src/assets/Empty-orange.svg"
 
 const calculateCellWidth = () => {
   const containerWidth =
@@ -241,74 +245,8 @@ const TaskTable = ({
       console.log("error in tasks", err);
     }
   };
-  //   const deleteTask = async (_id) => {
-  //     setSpinner(true);
-
-  //     try {
-  //         const tasksIds = tasks.map((task) => task._id);
-  //         const response = await dispatch(deleteTaskThunk({ _id, tasksIds })).unwrap();
-  //         let updtMeta;
-
-  //         if (response?.status === 200) {
-  //             const priorityCounts = await dispatch(fetchPriorityCountsThunk()).unwrap();
-
-  //             const filteredTasks = tasks.filter((task) => task._id !== _id);
-  //             const closestTask = response?.data?.closestTask;
-
-  //             if (closestTask) {
-  //                 closestTask.taskTitle = decryptSingleValues(closestTask?.taskTitle, privateKey);
-  //                 closestTask.taskDescription = decryptSingleValues(closestTask?.taskDescription, privateKey);
-  //                 if (Array.isArray(closestTask.taskDescription)) {
-  //                     closestTask.taskDescription = closestTask.taskDescription.join("");
-  //                 }
-  //                 filteredTasks.push(closestTask);
-  //                 updtMeta = { ...metaData, total: metaData.total - 1 };
-  //             } else {
-  //                 updtMeta = {
-  //                     ...metaData,
-  //                     total: metaData.total - 1,
-  //                     range: {
-  //                         ...metaData.range,
-  //                         end: metaData.range?.end ? metaData.range.end - 1 : 0,
-  //                     },
-  //                 };
-  //             }
-
-  //             dispatch(setTasks(filteredTasks));
-  //             dispatch(setMetaData(updtMeta));
-
-  //             if (priorityType == 'HIGH') {
-  //               dispatch (setHighPriorityMetaData(updtMeta));
-  //             } else if (priorityType == 'LOW') {
-  //               dispatch (setLowPriorityMetaData(updtMeta));
-  //             } else if (priorityType == 'MEDIUM') {
-  //               dispatch (setMediumPriorityMetaData(updtMeta));
-  //             }
-
-  //             const priorityTasks = {
-  //                 HIGH: filteredTasks.filter(task => task.priority === 'HIGH'),
-  //                 MEDIUM: filteredTasks.filter(task => task.priority === 'MEDIUM'),
-  //                 LOW: filteredTasks.filter(task => task.priority === 'LOW'),
-  //             };
-
-  //             dispatch(updateHighPriorityTasks(priorityTasks.HIGH));
-  //             dispatch(updateMediumPriorityTasks(priorityTasks.MEDIUM));
-  //             dispatch(updateLowPriorityTasks(priorityTasks.LOW));
-
-  //             dispatch(setHighPriorityCount(priorityCounts.data.high));
-  //             dispatch(setMediumPriorityCount(priorityCounts.data.medium));
-  //             dispatch(setLowPriorityCount(priorityCounts.data.low));
-
-  //             successToast(response.message, "task-deleted");
-  //         }
-  //     } catch (err) {
-  //         errorToast("Something went wrong", "getTask-pages-error");
-  //         console.log("Error:", err);
-  //     } finally {
-  //         setSpinner(false);
-  //     }
-  // };
-
+ 
+  const accentColor = useSelector((state) => state.appearance.color);
   useEffect(() => {
     console.log(
       "metaData being passed to high tasks is,,,,,,,,,,,,",
@@ -522,77 +460,73 @@ const TaskTable = ({
     handleMenuClose();
   };
 
-  // Ensure tasks are correctly sliced based on page and limit
-  // const startIndex = page * limit;
-  // const endIndex = startIndex + limit;
-  // const paginatedTasks = tasks.slice(startIndex, endIndex);
 
   return (
     <div>
       <SpinnerLoader showSpinner={spinner} />
       <Paper>
-        <TableContainer id='table-container'>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <StyledTableHeaders>{title_t_obj[lang]}</StyledTableHeaders>
-                <StyledTableHeaders>{description_t_obj[lang]}</StyledTableHeaders>
-                {!isMicroScreen && (
-                  <StyledTableHeaders>{dueDate_t_obj[lang]}</StyledTableHeaders>
-                )}
-                {!isMicroScreen && (
-                  <StyledTableHeaders>{priority_t_obj[lang]}</StyledTableHeaders>
-                )}
-                {!isMicroScreen && (
-                  <StyledTableHeaders>{status_t_obj[lang]}</StyledTableHeaders>
-                )}
-                <StyledTableHeadersA></StyledTableHeadersA>
-              </TableRow>
-            </TableHead>
-            {skeletonLoader ? (
-              <TableBody>
-                {Array.from({ length: limit }).map((_, index) => (
-                  <TableRow key={index}>
-                    <StyledTableCell>
-                      <div className='skeleton'></div>
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      <div className='skeleton'></div>
-                    </StyledTableCell>
+        {tasks.length > 0 ? (
+          <>
+            <TableContainer id='table-container'>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableHeaders>{title_t_obj[lang]}</StyledTableHeaders>
+                    <StyledTableHeaders>{description_t_obj[lang]}</StyledTableHeaders>
                     {!isMicroScreen && (
-                      <StyledTableCell>
-                        <div className='skeleton'></div>
-                      </StyledTableCell>
+                      <StyledTableHeaders>{dueDate_t_obj[lang]}</StyledTableHeaders>
                     )}
                     {!isMicroScreen && (
-                      <StyledTableCell>
-                        <div className='skeleton'></div>
-                      </StyledTableCell>
+                      <StyledTableHeaders>{priority_t_obj[lang]}</StyledTableHeaders>
                     )}
                     {!isMicroScreen && (
-                      <StyledTableCell>
-                        <div className='skeleton'></div>
-                      </StyledTableCell>
+                      <StyledTableHeaders>{status_t_obj[lang]}</StyledTableHeaders>
                     )}
-                    <StyledTableCell>
-                      <div className='skeleton'></div>
-                    </StyledTableCell>
+                    <StyledTableHeadersA></StyledTableHeadersA>
                   </TableRow>
-                ))}
-              </TableBody>
-            ) : (
-              <TableBody>
-                  {tasks.length > 0 ? (
-                    tasks.map((task) => (
+                </TableHead>
+                {skeletonLoader ? (
+                  <TableBody>
+                    {Array.from({ length: limit }).map((_, index) => (
+                      <TableRow key={index}>
+                        <StyledTableCell>
+                          <div className='skeleton'></div>
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          <div className='skeleton'></div>
+                        </StyledTableCell>
+                        {!isMicroScreen && (
+                          <StyledTableCell>
+                            <div className='skeleton'></div>
+                          </StyledTableCell>
+                        )}
+                        {!isMicroScreen && (
+                          <StyledTableCell>
+                            <div className='skeleton'></div>
+                          </StyledTableCell>
+                        )}
+                        {!isMicroScreen && (
+                          <StyledTableCell>
+                            <div className='skeleton'></div>
+                          </StyledTableCell>
+                        )}
+                        <StyledTableCell>
+                          <div className='skeleton'></div>
+                        </StyledTableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                ) : (
+                  <TableBody>
+                    {tasks.map((task) => (
                       <TableRow key={task._id}>
                         <StyledTableHeadersLeft>
                           <Tooltip title={task.taskTitle}>
                             <Typography
                               sx={{
-                                fontSize: "16px",
+                                fontSize: '16px',
                                 color:
-                                  isMicroScreen &&
-                                  handleStatusColorChange(task.status),
+                                  isMicroScreen && handleStatusColorChange(task.status),
                               }}
                               noWrap
                             >
@@ -604,9 +538,9 @@ const TaskTable = ({
                           <Tooltip title={task.taskDescription}>
                             <Typography
                               sx={{
-                                fontSize: "16px",
-                                color: "var(--quinary-font-color)",
-                                justifyContent: "left",
+                                fontSize: '16px',
+                                color: 'var(--quinary-font-color)',
+                                justifyContent: 'left',
                               }}
                               noWrap
                             >
@@ -626,8 +560,8 @@ const TaskTable = ({
                             >
                               <Typography
                                 sx={{
-                                  fontSize: "16px",
-                                  color: "var(--quinary-font-color)",
+                                  fontSize: '16px',
+                                  color: 'var(--quinary-font-color)',
                                 }}
                                 noWrap
                               >
@@ -637,14 +571,14 @@ const TaskTable = ({
                                   timeFormat,
                                   dateFormat
                                 )}
-                            </Typography>
-                          </Tooltip>
+                              </Typography>
+                            </Tooltip>
                           </StyledTableCell>
                         )}
                         {!isMicroScreen && (
                           <StyledTableCell
                             sx={{
-                              textAlign: "center",
+                              textAlign: 'center',
                               color: handlePriorityColorChange(task.priority),
                             }}
                           >
@@ -654,124 +588,151 @@ const TaskTable = ({
                         {!isMicroScreen && (
                           <StyledTableCell
                             sx={{
-                              textAlign: "center",
-                              justifyContent: "center",
+                              textAlign: 'center',
+                              justifyContent: 'center',
                               color: handleStatusColorChange(task.status),
                             }}
                           >
                             {getTranslatedStatus(task.status)}
                           </StyledTableCell>
                         )}
-                        <StyledAction sx={{ width: "1%" }}>
+                        <StyledAction sx={{ width: '1%' }}>
                           <Tooltip title='Options'>
                             <IconButton
                               size='small'
-                              onClick={(event) =>
-                                handleMenuClick(event, task._id)
-                              }
+                              onClick={(event) => handleMenuClick(event, task._id)}
                             >
                               <MoreVertIcon />
                             </IconButton>
                           </Tooltip>
                           <Menu
                             anchorEl={anchorEl}
-                            open={
-                              Boolean(anchorEl) && selectedTaskId === task._id
-                            }
+                            open={Boolean(anchorEl) && selectedTaskId === task._id}
                             onClose={handleMenuClose}
                             sx={{
                               height:
-                                task.status == "COMPLETED"
-                                  ? "210px"
-                                  : task.status == "IN_PROGRESS"
-                                    ? "259px"
-                                    : "450px",
-                              width:
-                                task.status == "COMPLETED" ? "199px" : "250px",
+                                task.status == 'COMPLETED'
+                                  ? '210px'
+                                  : task.status == 'IN_PROGRESS'
+                                  ? '259px'
+                                  : '450px',
+                              width: task.status == 'COMPLETED' ? '199px' : '250px',
                             }}
                           >
                             <MenuItem
                               onClick={() => {
                                 hadnleTaskViewOrEdit(task._id);
                               }}
-                              sx={{ gap: "12px" }}
+                              sx={{ gap: '12px' }}
                             >
                               <img src={edit} alt='edit-icon' />
-                              <div style={{ marginTop: "2px" }}>{viewOrEdit_t_obj[lang]}</div>
+                              <div style={{ marginTop: '2px' }}>
+                                {viewOrEdit_t_obj[lang]}
+                              </div>
                             </MenuItem>
-                            {task.status !== "COMPLETED" && (
+                            {task.status !== 'COMPLETED' && (
                               <MenuItem
                                 onClick={() => {
                                   handleChangeTaskStatus(
                                     task._id,
-                                    "COMPLETED",
+                                    'COMPLETED',
                                     task.priority
                                   );
                                 }}
-                                sx={{ gap: "12px" }}
+                                sx={{ gap: '12px' }}
                               >
-                              <img src={tickInCircle} alt='tick-in-circle' />
-                                <div style={{ marginTop: "2px" }}>
+                                <img src={tickInCircle} alt='tick-in-circle' />
+                                <div style={{ marginTop: '2px' }}>
                                   {markAsCompleted_t_obj[lang]}
                                 </div>
                               </MenuItem>
                             )}
-                            {task.status !== "COMPLETED" &&
-                              task.status !== "IN_PROGRESS" && (
+                            {task.status !== 'COMPLETED' &&
+                              task.status !== 'IN_PROGRESS' && (
                                 <MenuItem
                                   onClick={() => {
                                     handleChangeTaskStatus(
                                       task._id,
-                                      "IN_PROGRESS",
+                                      'IN_PROGRESS',
                                       task.priority
                                     );
                                   }}
-                                  sx={{ gap: "12px" }}
+                                  sx={{ gap: '12px' }}
                                 >
                                   <img src={tickInCircle} alt='tick-in-circle' />
-                                  <div style={{ marginTop: "2px" }}>
-                                  {markAsProgressing_t_obj[lang]}
+                                  <div style={{ marginTop: '2px' }}>
+                                    {markAsProgressing_t_obj[lang]}
                                   </div>
                                 </MenuItem>
                               )}
-
                             <MenuItem
                               onClick={handleDelete}
-                              sx={{ color: "var(--logout-color)", gap: "12px" }}
+                              sx={{ color: 'var(--logout-color)', gap: '12px' }}
                             >
                               <img src={redTrash} alt='red-trash-icon' />
-                              <div style={{ marginTop: "2px" }}>{deleteText_t_obj[lang]}</div>
+                              <div style={{ marginTop: '2px' }}>
+                                {deleteText_t_obj[lang]}
+                              </div>
                             </MenuItem>
                           </Menu>
                         </StyledAction>
                       </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                        <StyledTableCell colSpan={7} align='center'>
-                          {noTasksAvailable_t_obj[lang]}
-                        </StyledTableCell>
-                    </TableRow>
-                  )}
-              </TableBody>
-            )}
-          </Table>
-        </TableContainer>
-        <CustomPagination
-          total={total}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          totalPages={totalPages}
-          setLimit={setLimit}
-          hasNextPage={hasNextPage}
-          hasPreviousPage={hasPreviousPage}
-          nextPage={nextPage}
-          metaData={metaData}
-          previousPage={previousPage}
-          debouncedGetAllTasks={debouncedGetAllTasks}
-          language={lang}
-        />
+                    ))}
+                  </TableBody>
+                )}
+              </Table>
+            </TableContainer>
+            <CustomPagination
+              total={total}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+              setLimit={setLimit}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+              nextPage={nextPage}
+              metaData={metaData}
+              previousPage={previousPage}
+              debouncedGetAllTasks={debouncedGetAllTasks}
+              language={lang}
+            />
+          </>
+        ) : (
+          <div
+            style={{
+              width: '100%',
+              position: 'absolute',
+              top: '200px',
+              left: '5%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              style={{ width: '350px', height: '300px', marginLeft: '36px' }}
+              src={
+                accentColor === 'pink'
+                  ? emptyPink
+                  : accentColor === 'blue'
+                  ? emptyBlue
+                  : accentColor === 'green'
+                  ? emptyGreen
+                  : accentColor === 'orange'
+                  ? emptyOrange
+                  : emptyBlue
+              }
+              alt='empty'
+            />
+            <div
+              style={{ marginLeft: '40px', fontFamily: 'var(--secondary-font-family)' }}
+            >
+              {noTasksAvailable_t_obj[lang]}
+            </div>
+          </div>
+        )}
       </Paper>
     </div>
   );

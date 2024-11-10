@@ -15,6 +15,10 @@ import { useResponsive } from "src/constants/media_queries";
 import { add_t_obj, allNotes_t_obj, filteredNotes_t_obj, notes_t_obj } from "src/constants/translationObj";
 import { getAllNotesThunk } from "src/store/thunks/notesThunk";
 import NoteCard from "./sub_components/NoteCard";
+import emptyBlue from "src/assets/Empty-blue.svg";
+import emptyPink from "src/assets/Empty-pink.svg";
+import emptyGreen from "src/assets/Empty-green.svg";
+import emptyOrange from "src/assets/Empty-orange.svg"
 
 const Notes = () => {
     const lang = useSelector((state) => state.format.language);
@@ -267,7 +271,7 @@ const Notes = () => {
                                     {noteLoader}
                                    </div>
 
-                                ) : (
+                                ) : notes.notes.length > 0 ? (
                                     notes.notes?.map((note, index) => (
                                         <NoteCard
                                             key={note._id}
@@ -285,7 +289,39 @@ const Notes = () => {
                                          
                                         />
                                     ))
-                                )}
+                                ) : ( <div
+                                    style={{
+                                      width: '100%',
+                                      position: 'absolute',
+                                      top: '200px',
+                                      left: '5%',
+                                      display: 'flex',
+                                      flexDirection: 'column',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                    }}
+                                  >
+                                    <img
+                                      style={{ width: '350px', height: '300px', marginLeft: '36px' }}
+                                      src={
+                                        accentColor === 'pink'
+                                          ? emptyPink
+                                          : accentColor === 'blue'
+                                          ? emptyBlue
+                                          : accentColor === 'green'
+                                          ? emptyGreen
+                                          : accentColor === 'orange'
+                                          ? emptyOrange
+                                          : emptyBlue
+                                      }
+                                      alt='empty'
+                                    />
+                                    <div
+                                      style={{ marginLeft: '40px', fontFamily: 'var(--secondary-font-family)' }}
+                                    >
+                                        No Notes Available
+                                    </div>
+                                  </div>)}
                           </div>
                       </div>
                   )}
