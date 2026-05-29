@@ -56,7 +56,7 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                 </div>
             </div>
             <div className="end-line"></div>
-            <div className="account-change-password-div">
+            {/* <div className="account-change-password-div">
                 <div className="account-change-password-text" style={{marginLeft: isMicroScreen && '24%'}}>Change Password</div>
                 <div className="account-current-password account-password">
                     {  !isMicroScreen && (<div className="cp-text" >Current Password</div>)}
@@ -70,7 +70,7 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                         <a href='/authentication/forgot-password' style={{display: 'flex', justifyContent: 'flex-end', marginTop: '8px', color: 'var(--primary-background-color)', fontFamily: 'var(--secondary-font-family)', fontWeight: '500', fontSize: '14px'}}>Forgot Password?</a>
                     </div>
                   
-                </div>
+                </div> */}
               
                 <div className="account-new-password account-password">
                     {  !isMicroScreen && (<div className="np-text">New Password</div>)}
