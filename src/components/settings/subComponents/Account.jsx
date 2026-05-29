@@ -56,7 +56,7 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                 </div>
             </div>
             <div className="end-line"></div>
-            <div className="account-change-password-div">
+            {/* <div className="account-change-password-div">
                 <div className="account-change-password-text" style={{marginLeft: isMicroScreen && '24%'}}>Change Password</div>
                 <div className="account-current-password account-password">
                     {  !isMicroScreen && (<div className="cp-text" >Current Password</div>)}
@@ -70,9 +70,9 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                         <a href='/authentication/forgot-password' style={{display: 'flex', justifyContent: 'flex-end', marginTop: '8px', color: 'var(--primary-background-color)', fontFamily: 'var(--secondary-font-family)', fontWeight: '500', fontSize: '14px'}}>Forgot Password?</a>
                     </div>
                   
-                </div>
+                </div> */}
               
-                <div className="account-new-password account-password">
+                {/* <div className="account-new-password account-password">
                     {  !isMicroScreen && (<div className="np-text">New Password</div>)}
                     <div className="np-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="np-input-header">New Password</div>
@@ -85,8 +85,8 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                             style={{ width: isMicroScreen && '100%' }}
                         />
                     </div>
-                </div>
-                <div className="account-retype-password account-password">
+                </div> */}
+                {/* <div className="account-retype-password account-password">
                     {  !isMicroScreen && (<div className="rp-text">Retype Password</div>)}
                     <div className="rp-input-div" style={{width: isMicroScreen && '95%'}}>
                         <div className="rp-input-header">Retype Password</div>
@@ -96,7 +96,7 @@ const Account = ({ handlePassInputChange, changePassObj }) => {
                             onChange={handlePassInputChange}
                             type="password" className="rp-input" style={{ width: isMicroScreen && '100%' }} />
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
